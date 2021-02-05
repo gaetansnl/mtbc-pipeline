@@ -28,12 +28,12 @@ namespace MTBC.Annotation
         {
             var genome = await Reader.ReadSequenceAsync(referenceId);
 
-            if (genome[snp.Position].ToString() != snp.Reference) throw new Exception("Reference mismatch");
+            if (genome[snp.Position0].ToString() != snp.Reference) throw new Exception("Reference mismatch");
 
-            var beforeWindow = new Range(snp.Position - windowSize, snp.Position);
-            var afterWindow = new Range(snp.Position + 1, snp.Position + 1 + windowSize);
+            var beforeWindow = new Range(snp.Position0 - windowSize, snp.Position0);
+            var afterWindow = new Range(snp.Position0 + 1, snp.Position0 + 1 + windowSize);
 
-            var seq1 = genome[beforeWindow] + genome[snp.Position] + genome[afterWindow];
+            var seq1 = genome[beforeWindow] + genome[snp.Position0] + genome[afterWindow];
             var seq2 = genome[beforeWindow] + snp.Alternatives[0] + genome[afterWindow];
 
             var options = await BlastnOptions.FromInlineQuery($">id\n{seq2}");

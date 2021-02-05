@@ -14,6 +14,8 @@ namespace Core
         public string Reference;
         public string[] Alternatives;
 
+        public int Position0 => Position-1;
+
         public Snp(string sequenceId, int position, string id, string reference, string[] alternatives)
         {
             SequenceId = sequenceId;

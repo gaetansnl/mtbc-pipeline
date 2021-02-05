@@ -1,0 +1,27 @@
+syntax = "proto3";
+package api;
+option csharp_namespace = "Web";
+import "graph.proto";
+import "search.proto";
+
+// The greeting service definition.
+service Api {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc Search (SearchRequest) returns (SearchReply);
+}
+
+message HelloRequest {
+  double clusteringLevel = 1;
+}
+message HelloReply {
+  Graph graph = 1;
+}
+
+message SearchRequest {
+  BoolStrainCondition condition = 1;
+}
+message SearchReply {
+
+}
+

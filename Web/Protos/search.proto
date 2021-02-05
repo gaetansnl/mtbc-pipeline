@@ -1,0 +1,52 @@
+﻿syntax = "proto3";
+package api;
+option csharp_namespace = "Web";
+import "google/protobuf/timestamp.proto";
+
+enum BoolOperator {
+  OR = 0;
+  AND = 1;
+}
+
+message StrainCondition {
+  bool negate = 1;
+  oneof condition{
+    AccessionCondition accession = 2;
+    BiosampleCondition biosample = 3;
+    CountryCondition country = 4;
+    DateCondition date = 5;
+    GeneStrainCondition gene = 6;
+    LineageStrainCondition lineage = 7;
+    BoolStrainCondition bool = 8;
+  }
+}
+
+message BoolStrainCondition {
+  BoolOperator operator = 1;
+  repeated StrainCondition conditions = 3;
+}
+
+message DateCondition {
+  google.protobuf.Timestamp from = 1;
+  google.protobuf.Timestamp to = 2;
+}
+
+message CountryCondition {
+  repeated string iso_code = 1;
+}
+
+message AccessionCondition {
+  repeated string accession_number = 1;
+}
+message BiosampleCondition {
+  repeated string accession_number = 1;
+}
+
+message GeneStrainCondition {
+  repeated string accession_number = 1;
+}
+
+message LineageStrainCondition {
+  string classificationName = 1;
+  string name = 2;
+}
