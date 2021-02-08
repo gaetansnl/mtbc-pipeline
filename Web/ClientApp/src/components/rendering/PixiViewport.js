@@ -35,8 +35,7 @@ export default withApp(
                 instance.resize(newProps.width, newProps.height);
             }
             if (oldProps.onZoomChange !== newProps.onZoomChange) {
-                instance._onZoomChange &&
-                    instance.removeListener("zoomed", instance._onZoomChange);
+                instance._onZoomChange && instance.removeListener("zoomed", instance._onZoomChange);
 
                 instance._onZoomChange = () => {
                     newProps.onZoomChange(instance.scaled);

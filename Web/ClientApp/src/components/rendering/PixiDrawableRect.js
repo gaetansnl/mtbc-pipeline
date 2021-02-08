@@ -51,12 +51,7 @@ const PixiDrawableRect = ({ children, color, onEnd }) => {
             pointermove={handleDragMove}
         >
             {children}
-            <Selection
-                hidden={!isDragging}
-                from={startPoint}
-                to={currentPosition}
-                color={color}
-            />
+            <Selection hidden={!isDragging} from={startPoint} to={currentPosition} color={color} />
         </Container>
     );
 };

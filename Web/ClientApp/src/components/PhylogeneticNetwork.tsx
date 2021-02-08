@@ -1,29 +1,27 @@
-﻿// @ts-nocheck 
+﻿// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { client } from "state/state";
-import { HelloRequest } from "state/grpc/api_pb";
 import { Stage, Container } from "@inlet/react-pixi";
 import PixiGraph from "components/rendering/PixiGraph";
 import PixiViewport from "components/rendering/PixiViewport";
 import PhylogeneticNetworkInfo from "components/PhylogeneticNetworkInfo";
 import useResizeObserver from "use-resize-observer";
+import { api } from "../state/grpc";
 
 const preventDefault = (e) => e.preventDefault();
-function PhylogeneticNetwork({
-    edgePrecision = 0.0002,
-    onNodeClick,
-    selectedNodeIds,
-}) {
-    let [values, setValues] = useState(null);
+function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodeClick, selectedNodeIds }) {
+    let [values, setValues] = useState<api.IHelloReply>(null);
     let [graph, setGraph] = useState(null);
     let [zoomLevel, setZoomLevel] = useState(null);
     let [selectedNodes, setSelectedNodes] = useState([]);
     useEffect(() => {
-        let request = new HelloRequest();
-        request.setClusteringlevel(edgePrecision);
-        client.sayHello(request, {}).then((v) => {
-            setValues(v);
-        });
+        client
+            .sayHello({
+                clusteringLevel: edgePrecision,
+            })
+            .then((v) => {
+                setValues(v);
+            });
     }, [edgePrecision]);
     const { ref, width = 0, height = 0 } = useResizeObserver();
 
@@ -33,25 +31,19 @@ function PhylogeneticNetwork({
         let hiddenCount = 0;
         let visibleCount = 0;
         if (values) {
-            values
-                .getGraph()
-                .getNodesList()
-                .forEach((v) => {
-                    const hidden = v.getId() > 1600;
-                    nodes[v.getId()] = {
-                        id: v.getId(),
-                        x: v.getPositionx(),
-                        y: v.getPositiony(),
-                        hidden: v.getId() > 1600,
-                    };
-                    hidden ? hiddenCount++ : visibleCount++;
-                });
-            values
-                .getGraph()
-                .getEdgesList()
-                .forEach((v) => {
-                    edges.push([v.getFirstnode(), v.getSecondnode()]);
-                });
+            values.graph?.nodes.forEach((v) => {
+                const hidden = v.id > 1600;
+                nodes[v.id] = {
+                    id: v.id,
+                    x: v.positionX,
+                    y: v.positionY,
+                    hidden: v.id > 1600,
+                };
+                hidden ? hiddenCount++ : visibleCount++;
+            });
+            values.graph?.edges.forEach((v) => {
+                edges.push([v.firstNode, v.secondNode]);
+            });
             setGraph({ nodes, edges, hiddenCount, visibleCount });
         }
     }, [values]);
@@ -78,22 +70,15 @@ function PhylogeneticNetwork({
                             height={height}
                             onZoomChange={(v) => setZoomLevel(v)}
                         >
-                            <Container
-                                scale={0.1}
-                                position={{ x: 1000, y: 250 }}
-                            >
+                            <Container scale={0.1} position={{ x: 1000, y: 250 }}>
                                 {graph && (
                                     <PixiGraph
                                         graph={graph}
                                         nodeSize={zoomLevel < 4 ? 12 : 5}
-                                        selectedNodeSize={
-                                            zoomLevel < 4 ? 20 : 5
-                                        }
+                                        selectedNodeSize={zoomLevel < 4 ? 20 : 5}
                                         selectedNodesIds={selectedNodes}
                                         onNodesSelected={(v) => {
-                                            setSelectedNodes(
-                                                v.map((v) => v.id)
-                                            );
+                                            setSelectedNodes(v.map((v) => v.id));
                                         }}
                                         onNodeClick={(v) => {
                                             setSelectedNodes([v.id]);
@@ -102,12 +87,7 @@ function PhylogeneticNetwork({
                                 )}
                             </Container>
                         </PixiViewport>
-                        {graph && (
-                            <PhylogeneticNetworkInfo
-                                graph={graph}
-                                zoomLevel={zoomLevel}
-                            />
-                        )}
+                        {graph && <PhylogeneticNetworkInfo graph={graph} zoomLevel={zoomLevel} />}
                     </Stage>
                 )}
             </div>

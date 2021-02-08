@@ -1,29 +1,25 @@
 import React from "react";
-import { Input, Select } from "antd";
+import { Select } from "antd";
 import SearchConditionContainer from "./SearchConditionContainer";
-import { StrainCondition } from "../../state/grpc/search_pb";
-import {
-    getDefaultHandlers,
-    SearchConditionChangeCallback,
-    updateCondition,
-} from "./state";
+import { getDefaultHandlers, SearchConditionChangeCallback, updateCondition } from "./state";
+import { api } from "state/grpc";
 
 function SearchConditionAccession({
     rootCondition,
     condition,
     onChange,
 }: {
-    rootCondition: StrainCondition.AsObject;
-    condition: StrainCondition.AsObject;
+    rootCondition: api.IStrainCondition;
+    condition: api.IStrainCondition;
     onChange: SearchConditionChangeCallback;
 }) {
     const accessionCondition = condition.accession;
-    const handleChange = (accessionNumberList: string[]) => {
+    const handleChange = (accessionNumbers: string[]) => {
         onChange(
             updateCondition(rootCondition, condition, {
                 ...condition,
                 accession: {
-                    accessionNumberList,
+                    accessionNumbers,
                 },
             })
         );
@@ -38,7 +34,7 @@ function SearchConditionAccession({
                 <Select
                     mode="tags"
                     style={{ width: "100%" }}
-                    value={accessionCondition?.accessionNumberList || []}
+                    value={accessionCondition?.accessionNumbers || []}
                     onChange={handleChange}
                     placeholder="Accession number"
                 />

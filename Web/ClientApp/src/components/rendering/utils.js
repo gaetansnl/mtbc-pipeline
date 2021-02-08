@@ -6,8 +6,7 @@ export const findNodeAt = (nodes, x, y, scale, nodeSize) => {
         const node = nodes[i];
         const xScaled = node.x * scale;
         const yScaled = node.y * scale;
-        if ((x - xScaled) ** 2 + (y - yScaled) ** 2 <= nodeSize ** 2)
-            return node;
+        if ((x - xScaled) ** 2 + (y - yScaled) ** 2 <= nodeSize ** 2) return node;
     }
     return null;
 };
@@ -19,12 +18,7 @@ export const findNodeIn = (nodes, scale, from, to) => {
     return nodes.filter((node) => {
         const xScaled = node.x * scale;
         const yScaled = node.y * scale;
-        return (
-            fromXPos < xScaled &&
-            xScaled < toXPos &&
-            fromYPos < yScaled &&
-            yScaled < toYPos
-        );
+        return fromXPos < xScaled && xScaled < toXPos && fromYPos < yScaled && yScaled < toYPos;
     });
 };
 

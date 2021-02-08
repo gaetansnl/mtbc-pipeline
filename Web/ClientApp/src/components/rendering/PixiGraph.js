@@ -2,11 +2,7 @@ import React, { useMemo, useCallback } from "react";
 import { Container, PixiComponent } from "@inlet/react-pixi";
 import { Graphics } from "pixi.js";
 import PixiDrawableRect from "components/rendering/PixiDrawableRect";
-import {
-    findNodeAt,
-    findNodeIn,
-    findNodeMaxPosition,
-} from "components/rendering/utils";
+import { findNodeAt, findNodeIn, findNodeMaxPosition } from "components/rendering/utils";
 
 const Nodes = React.memo(
     PixiComponent("Nodes", {
@@ -37,11 +33,7 @@ const Nodes = React.memo(
             instance.lineStyle(2, edgeColor, 1);
             nodes.forEach((node) => {
                 if (!node.hidden) {
-                    instance.drawCircle(
-                        node.x * scale,
-                        node.y * scale,
-                        nodeSize
-                    );
+                    instance.drawCircle(node.x * scale, node.y * scale, nodeSize);
                 }
             });
         },
@@ -86,10 +78,10 @@ export default React.memo(function PixiGraph({
     const maxPosition = useMemo(() => findNodeMaxPosition(nodes), [nodes]);
     let scale = size / maxPosition;
 
-    const selectedNodes = useMemo(
-        () => selectedNodesIds.map((v) => graph.nodes[v]),
-        [selectedNodesIds, graph]
-    );
+    const selectedNodes = useMemo(() => selectedNodesIds.map((v) => graph.nodes[v]), [
+        selectedNodesIds,
+        graph,
+    ]);
     const onNodesClick = useCallback(
         ({ x, y }) => {
             const node = findNodeAt(nodes, x, y, scale, nodeSize);

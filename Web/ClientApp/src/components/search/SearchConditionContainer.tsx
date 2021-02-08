@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card, Space } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import { StrainCondition } from "../../state/grpc/search_pb";
+import { api } from "state/grpc";
 
 function SearchConditionContainer({
     title,
@@ -12,7 +12,7 @@ function SearchConditionContainer({
     condition,
 }: {
     title: string;
-    condition: StrainCondition.AsObject;
+    condition: api.IStrainCondition;
     extra?: any;
     children?: any;
     onRemove?: () => any;
@@ -28,7 +28,7 @@ function SearchConditionContainer({
                         {extra}
                         <Button
                             onClick={() => onNegateChange && onNegateChange(!condition.negate)}
-                            type={condition.negate ? "primary": "default"}
+                            type={condition.negate ? "primary" : "default"}
                             size="small"
                         >
                             NOT

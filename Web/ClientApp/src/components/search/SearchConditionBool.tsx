@@ -1,24 +1,24 @@
 import React from "react";
 import { Button } from "antd";
 import SearchConditionContainer from "./SearchConditionContainer";
-import {BoolOperator, StrainCondition} from "../../state/grpc/search_pb";
 import { SearchConditionChangeCallback } from "./state";
 import { SearchConditionAddButton } from "./SearchConditionAddButton";
 import SearchConditionBoolList from "./SearchConditionBoolList";
 import { PlusOutlined } from "@ant-design/icons";
+import { api } from "state/grpc";
 
 function SearchConditionBool({
     rootCondition,
     condition,
     onChange,
 }: {
-    rootCondition: StrainCondition.AsObject;
-    condition: StrainCondition.AsObject;
+    rootCondition: api.IStrainCondition;
+    condition: api.IStrainCondition;
     onChange: SearchConditionChangeCallback;
 }) {
     let boolCondition = condition.bool;
-    if(!boolCondition) return null;
-    const isOr = boolCondition.operator === BoolOperator.OR;
+    if (!boolCondition) return null;
+    const isOr = boolCondition.operator === api.BoolOperator.OR;
     return (
         <React.Fragment>
             <SearchConditionContainer
@@ -35,7 +35,11 @@ function SearchConditionBool({
                     </React.Fragment>
                 }
             >
-                <SearchConditionBoolList rootCondition={rootCondition} condition={condition} onChange={onChange} />
+                <SearchConditionBoolList
+                    rootCondition={rootCondition}
+                    condition={condition}
+                    onChange={onChange}
+                />
             </SearchConditionContainer>
         </React.Fragment>
     );

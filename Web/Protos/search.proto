@@ -32,21 +32,21 @@ message DateCondition {
 }
 
 message CountryCondition {
-  repeated string iso_code = 1;
+  repeated string iso_codes = 1;
 }
 
 message AccessionCondition {
-  repeated string accession_number = 1;
+  repeated string accession_numbers = 1;
 }
 message BiosampleCondition {
-  repeated string accession_number = 1;
+  repeated string accession_numbers = 1;
 }
 
 message GeneStrainCondition {
-  repeated string accession_number = 1;
+  repeated string accession_numbers = 1;
 }
 
 message LineageStrainCondition {
-  string classificationName = 1;
+  string classification_name = 1;
   string name = 2;
 }

@@ -1,19 +1,19 @@
-import { StrainCondition } from "../../state/grpc/search_pb";
+import { api } from "../../state/grpc";
 
-export type SearchConditionChangeCallback = (condition: StrainCondition.AsObject) => any;
+export type SearchConditionChangeCallback = (condition: api.IStrainCondition) => any;
 
 export function updateCondition(
-    rootCondition: StrainCondition.AsObject,
-    condition: StrainCondition.AsObject,
-    newCondition: StrainCondition.AsObject
-): StrainCondition.AsObject {
+    rootCondition: api.IStrainCondition,
+    condition: api.IStrainCondition,
+    newCondition: api.IStrainCondition
+): api.IStrainCondition {
     if (rootCondition === condition) return { ...condition, ...newCondition };
     if (rootCondition.bool) {
         return {
             ...rootCondition,
             bool: {
                 ...rootCondition.bool,
-                conditionsList: rootCondition.bool.conditionsList.map((v) => {
+                conditions: rootCondition.bool.conditions?.map((v) => {
                     return updateCondition(v, condition, newCondition);
                 }),
             },
@@ -23,17 +23,17 @@ export function updateCondition(
 }
 
 export function removeCondition(
-    rootCondition: StrainCondition.AsObject,
-    condition: StrainCondition.AsObject
-): StrainCondition.AsObject {
+    rootCondition: api.IStrainCondition,
+    condition: api.IStrainCondition
+): api.IStrainCondition {
     if (rootCondition === condition) throw new Error("Can't remove root");
     if (rootCondition.bool) {
         return {
             ...rootCondition,
             bool: {
                 ...rootCondition.bool,
-                conditionsList: rootCondition.bool.conditionsList
-                    .filter((v) => v !== condition)
+                conditions: rootCondition.bool.conditions
+                    ?.filter((v) => v !== condition)
                     .map((v) => removeCondition(v, condition)),
             },
         };
@@ -41,9 +41,37 @@ export function removeCondition(
     throw new Error("Not found");
 }
 
+export function addCondition(
+    rootCondition: api.IStrainCondition,
+    condition: api.IStrainCondition,
+    newCondition: api.IStrainCondition
+): api.IStrainCondition {
+    if (rootCondition.bool && rootCondition === condition) {
+        return {
+            ...rootCondition,
+            bool: {
+                ...rootCondition.bool,
+                conditions: [...(rootCondition.bool.conditions || []), newCondition],
+            },
+        };
+    }
+    if (rootCondition.bool) {
+        return {
+            ...rootCondition,
+            bool: {
+                ...rootCondition.bool,
+                conditions: rootCondition.bool.conditions?.map((v) =>
+                    addCondition(v, condition, newCondition)
+                ),
+            },
+        };
+    }
+    throw new Error("Not found");
+}
+
 export function getDefaultHandlers(
-    rootCondition: StrainCondition.AsObject,
-    condition: StrainCondition.AsObject,
+    rootCondition: api.IStrainCondition,
+    condition: api.IStrainCondition,
     callback: SearchConditionChangeCallback
 ) {
     return {
@@ -54,4 +82,15 @@ export function getDefaultHandlers(
             callback(updateCondition(rootCondition, condition, { ...condition, negate }));
         },
     };
+}
+
+export function createDate(value: Date) {
+    return {
+        seconds: Math.floor(value.getTime() / 1000),
+        nanos: value.getMilliseconds() * 1000000,
+    };
+}
+
+export function toDate(date: { seconds: number; nanos: number }) {
+    return new Date(date.seconds * 1000 + date.nanos / 1000000);
 }

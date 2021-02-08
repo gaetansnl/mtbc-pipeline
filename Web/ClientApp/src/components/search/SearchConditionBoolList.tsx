@@ -1,22 +1,22 @@
 import React from "react";
-import {  StrainCondition } from "../../state/grpc/search_pb";
 import { SearchConditionChangeCallback } from "./state";
 import SearchConditionAccession from "./SearchConditionAccession";
+import { api } from "state/grpc";
 
 function SearchConditionBoolList({
     rootCondition,
     condition,
     onChange,
 }: {
-    rootCondition: StrainCondition.AsObject;
-    condition: StrainCondition.AsObject;
+    rootCondition: api.IStrainCondition;
+    condition: api.IStrainCondition;
     onChange: SearchConditionChangeCallback;
 }) {
     const boolCondition = condition?.bool;
     if (!boolCondition) return null;
     return (
         <React.Fragment>
-            {boolCondition.conditionsList.map((condition) => {
+            {boolCondition.conditions?.map((condition) => {
                 if (condition.accession)
                     return (
                         <SearchConditionAccession
@@ -25,6 +25,7 @@ function SearchConditionBoolList({
                             onChange={onChange}
                         />
                     );
+                return null;
             })}
         </React.Fragment>
     );

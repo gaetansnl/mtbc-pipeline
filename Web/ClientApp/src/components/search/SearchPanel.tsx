@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { Button, Space } from "antd";
-import {BoolOperator, StrainCondition} from "../../state/grpc/search_pb";
 import SearchConditionBoolList from "./SearchConditionBoolList";
 import { SearchConditionAddButton } from "./SearchConditionAddButton";
+import { api } from "state/grpc";
 
 function SearchPanel(props: any) {
     const [state, setState] = useState({
         negate: false,
         bool: {
-            operator: BoolOperator.AND,
-            conditionsList: [
+            operator: api.BoolOperator.AND,
+            conditions: [
                 {
                     negate: false,
                     accession: {
-                        accessionNumberList: ["fdsdf"],
+                        accessionNumbers: ["fdsdf"],
                     },
                 },
             ],
         },
-    } as StrainCondition.AsObject);
+    } as api.IStrainCondition);
     return (
         <React.Fragment>
             <Space direction="vertical" style={{ width: "100%" }}>

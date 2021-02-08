@@ -1,7 +1,7 @@
 import React from "react";
 import { Slider, Typography } from "antd";
 
-function PhylogeneticNetworkSettings({ disabled }:any) {
+function PhylogeneticNetworkSettings({ disabled }: any) {
     return (
         <div>
             <Typography.Text>Network precision</Typography.Text>

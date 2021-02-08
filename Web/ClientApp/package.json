@@ -10,6 +10,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "antd": "4.12.2",
+    "browser-headers": "^0.4.1",
     "craco-antd": "^1.19.0",
     "google-protobuf": "^3.14.0",
     "grpc-web": "^1.2.1",
@@ -17,12 +18,12 @@
     "pixi-viewport": "^4.18.1",
     "pixi.js": "^5.3.7",
     "prettier": "^2.2.1",
+    "protobufjs": "^6.10.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.2",
     "rimraf": "^2.6.2",
-    "sigma": "^2.0.0-alpha40",
     "swr": "^0.4.1",
     "use-resize-observer": "^7.0.0"
   },
@@ -39,7 +40,7 @@
     "test": "cross-env CI=true craco test --env=jsdom",
     "eject": "craco eject",
     "lint": "eslint ./src/",
-    "grpc": "rimraf ./src/state/grpc/* && protoc -I=../Protos ../Protos/*.proto --js_out=import_style=commonjs:./src/state/grpc --grpc-web_out=import_style=commonjs+dts,mode=grpcweb:./src/state/grpc"
+    "grpc": "pbjs -t static-module -w es6 --es6 -o src/state/grpc.js ../Protos/*.proto && pbts -o src/state/grpc.d.ts src/state/grpc.js"
   },
   "browserslist": {
     "production": [
