@@ -26,7 +26,11 @@ function SearchConditionBool({
                 condition={condition}
                 extra={
                     <React.Fragment>
-                        <SearchConditionAddButton>
+                        <SearchConditionAddButton
+                            rootCondition={rootCondition}
+                            condition={condition}
+                            onChange={onChange}
+                        >
                             <Button shape="circle" size="small" icon={<PlusOutlined />} />
                         </SearchConditionAddButton>
                         <Button type={isOr ? "primary" : "default"} size="small">

@@ -19,7 +19,7 @@ export function updateCondition(
             },
         };
     }
-    throw new Error("Not found");
+    return rootCondition;
 }
 
 export function removeCondition(
@@ -38,7 +38,7 @@ export function removeCondition(
             },
         };
     }
-    throw new Error("Not found");
+    return rootCondition;
 }
 
 export function addCondition(
@@ -66,7 +66,7 @@ export function addCondition(
             },
         };
     }
-    throw new Error("Not found");
+    return rootCondition;
 }
 
 export function getDefaultHandlers(

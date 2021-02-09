@@ -1,81 +1,98 @@
 import { Menu, Dropdown } from "antd";
 import React, { ReactChild } from "react";
 import { api } from "state/grpc";
+import { addCondition, SearchConditionChangeCallback } from "./state";
 
-const items: { title: string; default: api.IStrainCondition }[] = [
+const items: { title: string; default: () => api.IStrainCondition }[] = [
     {
         title: "Accession",
-        default: {
+        default: () => ({
             negate: false,
             accession: {
                 accessionNumbers: [],
             },
-        },
+        }),
     },
     {
         title: "Biosample",
-        default: {
+        default: () => ({
             negate: false,
             biosample: {
                 accessionNumbers: [],
             },
-        },
+        }),
     },
     {
         title: "Country",
-        default: {
+        default: () => ({
             negate: false,
             country: {
                 isoCodes: [],
             },
-        },
+        }),
     },
     {
         title: "Date",
-        default: {
+        default: () => ({
             negate: false,
             date: {
                 from: null,
                 to: null,
             },
-        },
+        }),
     },
     {
         title: "Boolean",
-        default: {
+        default: () => ({
             negate: false,
             bool: {
                 operator: api.BoolOperator.OR,
                 conditions: [],
             },
-        },
+        }),
     },
     {
         title: "Gene",
-        default: {
+        default: () => ({
             negate: false,
             gene: {
                 accessionNumbers: [],
             },
-        },
+        }),
     },
     {
         title: "Lineage",
-        default: {
+        default: () => ({
             negate: false,
             lineage: {
                 classificationName: "",
                 name: "",
             },
-        },
+        }),
     },
 ];
 
-export const SearchConditionAddButton = ({ children }: { children: ReactChild }) => {
+export const SearchConditionAddButton = ({
+    children,
+    rootCondition,
+    condition,
+    onChange,
+}: {
+    children: ReactChild;
+    rootCondition: api.IStrainCondition;
+    condition: api.IStrainCondition;
+    onChange: SearchConditionChangeCallback;
+}) => {
     const menu = (
         <Menu>
             {items.map((v) => {
-                return <Menu.Item>{v.title}</Menu.Item>;
+                return (
+                    <Menu.Item
+                        onClick={() => onChange(addCondition(rootCondition, condition, v.default()))}
+                    >
+                        {v.title}
+                    </Menu.Item>
+                );
             })}
         </Menu>
     );
