@@ -55,6 +55,20 @@ export namespace api {
          * @returns Promise
          */
         public search(request: api.ISearchRequest): Promise<api.SearchReply>;
+
+        /**
+         * Calls ListSnp.
+         * @param request ListSnpRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and ListSnpReply
+         */
+        public listSnp(request: api.IListSnpRequest, callback: api.Api.ListSnpCallback): void;
+
+        /**
+         * Calls ListSnp.
+         * @param request ListSnpRequest message or plain object
+         * @returns Promise
+         */
+        public listSnp(request: api.IListSnpRequest): Promise<api.ListSnpReply>;
     }
 
     namespace Api {
@@ -71,6 +85,13 @@ export namespace api {
          * @param [response] SearchReply
          */
         type SearchCallback = (error: Error | null, response?: api.SearchReply) => void;
+
+        /**
+         * Callback as used by {@link api.Api#listSnp}.
+         * @param error Error, if any
+         * @param [response] ListSnpReply
+         */
+        type ListSnpCallback = (error: Error | null, response?: api.ListSnpReply) => void;
     }
 
     /** Properties of a HelloRequest. */
@@ -265,6 +286,206 @@ export namespace api {
 
         /**
          * Converts this HelloReply to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a ListSnpRequest. */
+    interface IListSnpRequest {
+        /** ListSnpRequest page */
+        page?: number | null;
+    }
+
+    /** Represents a ListSnpRequest. */
+    class ListSnpRequest implements IListSnpRequest {
+        /**
+         * Constructs a new ListSnpRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.IListSnpRequest);
+
+        /** ListSnpRequest page. */
+        public page: number;
+
+        /**
+         * Creates a new ListSnpRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListSnpRequest instance
+         */
+        public static create(properties?: api.IListSnpRequest): api.ListSnpRequest;
+
+        /**
+         * Encodes the specified ListSnpRequest message. Does not implicitly {@link api.ListSnpRequest.verify|verify} messages.
+         * @param message ListSnpRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+            message: api.IListSnpRequest,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListSnpRequest message, length delimited. Does not implicitly {@link api.ListSnpRequest.verify|verify} messages.
+         * @param message ListSnpRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(
+            message: api.IListSnpRequest,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a ListSnpRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListSnpRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+            reader: $protobuf.Reader | Uint8Array,
+            length?: number
+        ): api.ListSnpRequest;
+
+        /**
+         * Decodes a ListSnpRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListSnpRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): api.ListSnpRequest;
+
+        /**
+         * Verifies a ListSnpRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): string | null;
+
+        /**
+         * Creates a ListSnpRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListSnpRequest
+         */
+        public static fromObject(object: { [k: string]: any }): api.ListSnpRequest;
+
+        /**
+         * Creates a plain object from a ListSnpRequest message. Also converts values to other types if specified.
+         * @param message ListSnpRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(
+            message: api.ListSnpRequest,
+            options?: $protobuf.IConversionOptions
+        ): { [k: string]: any };
+
+        /**
+         * Converts this ListSnpRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a ListSnpReply. */
+    interface IListSnpReply {
+        /** ListSnpReply snps */
+        snps?: api.ISnp[] | null;
+    }
+
+    /** Represents a ListSnpReply. */
+    class ListSnpReply implements IListSnpReply {
+        /**
+         * Constructs a new ListSnpReply.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.IListSnpReply);
+
+        /** ListSnpReply snps. */
+        public snps: api.ISnp[];
+
+        /**
+         * Creates a new ListSnpReply instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListSnpReply instance
+         */
+        public static create(properties?: api.IListSnpReply): api.ListSnpReply;
+
+        /**
+         * Encodes the specified ListSnpReply message. Does not implicitly {@link api.ListSnpReply.verify|verify} messages.
+         * @param message ListSnpReply message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+            message: api.IListSnpReply,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListSnpReply message, length delimited. Does not implicitly {@link api.ListSnpReply.verify|verify} messages.
+         * @param message ListSnpReply message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(
+            message: api.IListSnpReply,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a ListSnpReply message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListSnpReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+            reader: $protobuf.Reader | Uint8Array,
+            length?: number
+        ): api.ListSnpReply;
+
+        /**
+         * Decodes a ListSnpReply message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListSnpReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): api.ListSnpReply;
+
+        /**
+         * Verifies a ListSnpReply message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): string | null;
+
+        /**
+         * Creates a ListSnpReply message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListSnpReply
+         */
+        public static fromObject(object: { [k: string]: any }): api.ListSnpReply;
+
+        /**
+         * Creates a plain object from a ListSnpReply message. Also converts values to other types if specified.
+         * @param message ListSnpReply
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(
+            message: api.ListSnpReply,
+            options?: $protobuf.IConversionOptions
+        ): { [k: string]: any };
+
+        /**
+         * Converts this ListSnpReply to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -1657,6 +1878,687 @@ export namespace api {
 
         /**
          * Converts this LineageStrainCondition to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a Snp. */
+    interface ISnp {
+        /** Snp id */
+        id?: string | null;
+
+        /** Snp sequenceId */
+        sequenceId?: string | null;
+
+        /** Snp position */
+        position?: number | null;
+
+        /** Snp reference */
+        reference?: string | null;
+
+        /** Snp insertion */
+        insertion?: string | null;
+
+        /** Snp ncbiUrl */
+        ncbiUrl?: string | null;
+
+        /** Snp annotations */
+        annotations?: api.ISnpAnnotation[] | null;
+    }
+
+    /** Represents a Snp. */
+    class Snp implements ISnp {
+        /**
+         * Constructs a new Snp.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.ISnp);
+
+        /** Snp id. */
+        public id: string;
+
+        /** Snp sequenceId. */
+        public sequenceId: string;
+
+        /** Snp position. */
+        public position: number;
+
+        /** Snp reference. */
+        public reference: string;
+
+        /** Snp insertion. */
+        public insertion: string;
+
+        /** Snp ncbiUrl. */
+        public ncbiUrl: string;
+
+        /** Snp annotations. */
+        public annotations: api.ISnpAnnotation[];
+
+        /**
+         * Creates a new Snp instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Snp instance
+         */
+        public static create(properties?: api.ISnp): api.Snp;
+
+        /**
+         * Encodes the specified Snp message. Does not implicitly {@link api.Snp.verify|verify} messages.
+         * @param message Snp message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.ISnp, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Snp message, length delimited. Does not implicitly {@link api.Snp.verify|verify} messages.
+         * @param message Snp message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(
+            message: api.ISnp,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a Snp message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Snp
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: $protobuf.Reader | Uint8Array, length?: number): api.Snp;
+
+        /**
+         * Decodes a Snp message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Snp
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): api.Snp;
+
+        /**
+         * Verifies a Snp message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): string | null;
+
+        /**
+         * Creates a Snp message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Snp
+         */
+        public static fromObject(object: { [k: string]: any }): api.Snp;
+
+        /**
+         * Creates a plain object from a Snp message. Also converts values to other types if specified.
+         * @param message Snp
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(
+            message: api.Snp,
+            options?: $protobuf.IConversionOptions
+        ): { [k: string]: any };
+
+        /**
+         * Converts this Snp to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a SnpAnnotation. */
+    interface ISnpAnnotation {
+        /** SnpAnnotation study */
+        study?: api.IStudy | null;
+
+        /** SnpAnnotation lineage */
+        lineage?: string | null;
+    }
+
+    /** Represents a SnpAnnotation. */
+    class SnpAnnotation implements ISnpAnnotation {
+        /**
+         * Constructs a new SnpAnnotation.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.ISnpAnnotation);
+
+        /** SnpAnnotation study. */
+        public study?: api.IStudy | null;
+
+        /** SnpAnnotation lineage. */
+        public lineage: string;
+
+        /**
+         * Creates a new SnpAnnotation instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns SnpAnnotation instance
+         */
+        public static create(properties?: api.ISnpAnnotation): api.SnpAnnotation;
+
+        /**
+         * Encodes the specified SnpAnnotation message. Does not implicitly {@link api.SnpAnnotation.verify|verify} messages.
+         * @param message SnpAnnotation message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+            message: api.ISnpAnnotation,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Encodes the specified SnpAnnotation message, length delimited. Does not implicitly {@link api.SnpAnnotation.verify|verify} messages.
+         * @param message SnpAnnotation message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(
+            message: api.ISnpAnnotation,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a SnpAnnotation message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns SnpAnnotation
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+            reader: $protobuf.Reader | Uint8Array,
+            length?: number
+        ): api.SnpAnnotation;
+
+        /**
+         * Decodes a SnpAnnotation message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns SnpAnnotation
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): api.SnpAnnotation;
+
+        /**
+         * Verifies a SnpAnnotation message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): string | null;
+
+        /**
+         * Creates a SnpAnnotation message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns SnpAnnotation
+         */
+        public static fromObject(object: { [k: string]: any }): api.SnpAnnotation;
+
+        /**
+         * Creates a plain object from a SnpAnnotation message. Also converts values to other types if specified.
+         * @param message SnpAnnotation
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(
+            message: api.SnpAnnotation,
+            options?: $protobuf.IConversionOptions
+        ): { [k: string]: any };
+
+        /**
+         * Converts this SnpAnnotation to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a Study. */
+    interface IStudy {
+        /** Study title */
+        title?: string | null;
+
+        /** Study publisher */
+        publisher?: string | null;
+
+        /** Study doi */
+        doi?: string | null;
+
+        /** Study url */
+        url?: string | null;
+
+        /** Study primaryAuthors */
+        primaryAuthors?: api.IAuthor[] | null;
+
+        /** Study mainAuthor */
+        mainAuthor?: api.IAuthor | null;
+    }
+
+    /** Represents a Study. */
+    class Study implements IStudy {
+        /**
+         * Constructs a new Study.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.IStudy);
+
+        /** Study title. */
+        public title: string;
+
+        /** Study publisher. */
+        public publisher: string;
+
+        /** Study doi. */
+        public doi: string;
+
+        /** Study url. */
+        public url: string;
+
+        /** Study primaryAuthors. */
+        public primaryAuthors: api.IAuthor[];
+
+        /** Study mainAuthor. */
+        public mainAuthor?: api.IAuthor | null;
+
+        /**
+         * Creates a new Study instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Study instance
+         */
+        public static create(properties?: api.IStudy): api.Study;
+
+        /**
+         * Encodes the specified Study message. Does not implicitly {@link api.Study.verify|verify} messages.
+         * @param message Study message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.IStudy, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Study message, length delimited. Does not implicitly {@link api.Study.verify|verify} messages.
+         * @param message Study message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(
+            message: api.IStudy,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a Study message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Study
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: $protobuf.Reader | Uint8Array, length?: number): api.Study;
+
+        /**
+         * Decodes a Study message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Study
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): api.Study;
+
+        /**
+         * Verifies a Study message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): string | null;
+
+        /**
+         * Creates a Study message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Study
+         */
+        public static fromObject(object: { [k: string]: any }): api.Study;
+
+        /**
+         * Creates a plain object from a Study message. Also converts values to other types if specified.
+         * @param message Study
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(
+            message: api.Study,
+            options?: $protobuf.IConversionOptions
+        ): { [k: string]: any };
+
+        /**
+         * Converts this Study to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of an Author. */
+    interface IAuthor {
+        /** Author given */
+        given?: string | null;
+
+        /** Author family */
+        family?: string | null;
+
+        /** Author fullName */
+        fullName?: string | null;
+    }
+
+    /** Represents an Author. */
+    class Author implements IAuthor {
+        /**
+         * Constructs a new Author.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.IAuthor);
+
+        /** Author given. */
+        public given: string;
+
+        /** Author family. */
+        public family: string;
+
+        /** Author fullName. */
+        public fullName: string;
+
+        /**
+         * Creates a new Author instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Author instance
+         */
+        public static create(properties?: api.IAuthor): api.Author;
+
+        /**
+         * Encodes the specified Author message. Does not implicitly {@link api.Author.verify|verify} messages.
+         * @param message Author message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.IAuthor, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Author message, length delimited. Does not implicitly {@link api.Author.verify|verify} messages.
+         * @param message Author message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(
+            message: api.IAuthor,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes an Author message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Author
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: $protobuf.Reader | Uint8Array, length?: number): api.Author;
+
+        /**
+         * Decodes an Author message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Author
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): api.Author;
+
+        /**
+         * Verifies an Author message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): string | null;
+
+        /**
+         * Creates an Author message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Author
+         */
+        public static fromObject(object: { [k: string]: any }): api.Author;
+
+        /**
+         * Creates a plain object from an Author message. Also converts values to other types if specified.
+         * @param message Author
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(
+            message: api.Author,
+            options?: $protobuf.IConversionOptions
+        ): { [k: string]: any };
+
+        /**
+         * Converts this Author to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a MtbcResult. */
+    interface IMtbcResult {
+        /** MtbcResult sraId */
+        sraId?: string | null;
+
+        /** MtbcResult snp */
+        snp?: api.ISnpMtbcResult[] | null;
+    }
+
+    /** Represents a MtbcResult. */
+    class MtbcResult implements IMtbcResult {
+        /**
+         * Constructs a new MtbcResult.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.IMtbcResult);
+
+        /** MtbcResult sraId. */
+        public sraId: string;
+
+        /** MtbcResult snp. */
+        public snp: api.ISnpMtbcResult[];
+
+        /**
+         * Creates a new MtbcResult instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MtbcResult instance
+         */
+        public static create(properties?: api.IMtbcResult): api.MtbcResult;
+
+        /**
+         * Encodes the specified MtbcResult message. Does not implicitly {@link api.MtbcResult.verify|verify} messages.
+         * @param message MtbcResult message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.IMtbcResult, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified MtbcResult message, length delimited. Does not implicitly {@link api.MtbcResult.verify|verify} messages.
+         * @param message MtbcResult message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(
+            message: api.IMtbcResult,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a MtbcResult message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns MtbcResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+            reader: $protobuf.Reader | Uint8Array,
+            length?: number
+        ): api.MtbcResult;
+
+        /**
+         * Decodes a MtbcResult message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns MtbcResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): api.MtbcResult;
+
+        /**
+         * Verifies a MtbcResult message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): string | null;
+
+        /**
+         * Creates a MtbcResult message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns MtbcResult
+         */
+        public static fromObject(object: { [k: string]: any }): api.MtbcResult;
+
+        /**
+         * Creates a plain object from a MtbcResult message. Also converts values to other types if specified.
+         * @param message MtbcResult
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(
+            message: api.MtbcResult,
+            options?: $protobuf.IConversionOptions
+        ): { [k: string]: any };
+
+        /**
+         * Converts this MtbcResult to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a SnpMtbcResult. */
+    interface ISnpMtbcResult {
+        /** SnpMtbcResult spdi */
+        spdi?: string | null;
+
+        /** SnpMtbcResult refCount */
+        refCount?: number | null;
+
+        /** SnpMtbcResult altCount */
+        altCount?: number | null;
+    }
+
+    /** Represents a SnpMtbcResult. */
+    class SnpMtbcResult implements ISnpMtbcResult {
+        /**
+         * Constructs a new SnpMtbcResult.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.ISnpMtbcResult);
+
+        /** SnpMtbcResult spdi. */
+        public spdi: string;
+
+        /** SnpMtbcResult refCount. */
+        public refCount: number;
+
+        /** SnpMtbcResult altCount. */
+        public altCount: number;
+
+        /**
+         * Creates a new SnpMtbcResult instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns SnpMtbcResult instance
+         */
+        public static create(properties?: api.ISnpMtbcResult): api.SnpMtbcResult;
+
+        /**
+         * Encodes the specified SnpMtbcResult message. Does not implicitly {@link api.SnpMtbcResult.verify|verify} messages.
+         * @param message SnpMtbcResult message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(
+            message: api.ISnpMtbcResult,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Encodes the specified SnpMtbcResult message, length delimited. Does not implicitly {@link api.SnpMtbcResult.verify|verify} messages.
+         * @param message SnpMtbcResult message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(
+            message: api.ISnpMtbcResult,
+            writer?: $protobuf.Writer
+        ): $protobuf.Writer;
+
+        /**
+         * Decodes a SnpMtbcResult message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns SnpMtbcResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(
+            reader: $protobuf.Reader | Uint8Array,
+            length?: number
+        ): api.SnpMtbcResult;
+
+        /**
+         * Decodes a SnpMtbcResult message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns SnpMtbcResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: $protobuf.Reader | Uint8Array): api.SnpMtbcResult;
+
+        /**
+         * Verifies a SnpMtbcResult message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): string | null;
+
+        /**
+         * Creates a SnpMtbcResult message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns SnpMtbcResult
+         */
+        public static fromObject(object: { [k: string]: any }): api.SnpMtbcResult;
+
+        /**
+         * Creates a plain object from a SnpMtbcResult message. Also converts values to other types if specified.
+         * @param message SnpMtbcResult
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(
+            message: api.SnpMtbcResult,
+            options?: $protobuf.IConversionOptions
+        ): { [k: string]: any };
+
+        /**
+         * Converts this SnpMtbcResult to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

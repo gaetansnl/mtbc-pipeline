@@ -88,7 +88,9 @@ export const SearchConditionAddButton = ({
             {items.map((v) => {
                 return (
                     <Menu.Item
-                        onClick={() => onChange(addCondition(rootCondition, condition, v.default()))}
+                        onClick={() =>
+                            onChange(addCondition(rootCondition, condition, v.default()))
+                        }
                     >
                         {v.title}
                     </Menu.Item>

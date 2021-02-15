@@ -5,7 +5,7 @@ import SearchPanel from "components/search/SearchPanel";
 import PhylogeneticNetworkSettings from "components/PhylogeneticNetworkSettings";
 
 const { Sider } = Layout;
-function Home(props: any) {
+function HomePage(props: any) {
     return (
         <Layout style={{ height: "100%" }}>
             <Sider width={300} style={{ padding: 15 }}>
@@ -31,7 +31,7 @@ function Home(props: any) {
     );
 }
 
-Home.propTypes = {};
+HomePage.propTypes = {};
 
-Home.defaultProps = {};
-export default Home;
+HomePage.defaultProps = {};
+export default HomePage;

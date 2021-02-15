@@ -27,9 +27,11 @@ function SearchPanel(props: any) {
                     condition={state}
                     onChange={(v) => setState(v)}
                 />
-                <SearchConditionAddButton     rootCondition={state}
-                                              condition={state}
-                                              onChange={(v) => setState(v)}>
+                <SearchConditionAddButton
+                    rootCondition={state}
+                    condition={state}
+                    onChange={(v) => setState(v)}
+                >
                     <Button style={{ width: "100%" }}>Add filter</Button>
                 </SearchConditionAddButton>
                 <Button style={{ width: "100%" }} type="primary">

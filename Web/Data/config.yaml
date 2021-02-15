@@ -1,0 +1,14 @@
+﻿snp:
+  - study:
+      doi: doi.org/10.1093/gbe/evy145
+    csv_file:
+      - ./snp/Ates.csv
+  - study:
+      doi: doi.org/10.1371/journal.pone.0214088
+    csv_file:
+      - ./snp/Borrell.csv
+      - ./snp/Borrell_indels.csv
+  - study:
+      doi: doi.org/10.7717/peerj.1905
+    csv_file:
+      - ./snp/Coker.csv  

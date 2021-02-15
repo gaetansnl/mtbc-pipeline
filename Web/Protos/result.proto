@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+package api;
+option csharp_namespace = "Web";
+
+message MtbcResult {
+  string sra_id = 1;
+  repeated SnpMtbcResult snp = 2;
+}
+
+message SnpMtbcResult {
+  string spdi = 1;
+  int32 ref_count = 2;
+  int32 alt_count = 3;
+}

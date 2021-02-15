@@ -134,6 +134,49 @@ export const api = ($root.api = (() => {
          * @variation 2
          */
 
+        /**
+         * Callback as used by {@link api.Api#listSnp}.
+         * @memberof api.Api
+         * @typedef ListSnpCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {api.ListSnpReply} [response] ListSnpReply
+         */
+
+        /**
+         * Calls ListSnp.
+         * @function listSnp
+         * @memberof api.Api
+         * @instance
+         * @param {api.IListSnpRequest} request ListSnpRequest message or plain object
+         * @param {api.Api.ListSnpCallback} callback Node-style callback called with the error, if any, and ListSnpReply
+         * @returns {undefined}
+         * @variation 1
+         */
+        Object.defineProperty(
+            (Api.prototype.listSnp = function listSnp(request, callback) {
+                return this.rpcCall(
+                    listSnp,
+                    $root.api.ListSnpRequest,
+                    $root.api.ListSnpReply,
+                    request,
+                    callback
+                );
+            }),
+            "name",
+            { value: "ListSnp" }
+        );
+
+        /**
+         * Calls ListSnp.
+         * @function listSnp
+         * @memberof api.Api
+         * @instance
+         * @param {api.IListSnpRequest} request ListSnpRequest message or plain object
+         * @returns {Promise<api.ListSnpReply>} Promise
+         * @variation 2
+         */
+
         return Api;
     })();
 
@@ -506,6 +549,382 @@ export const api = ($root.api = (() => {
         };
 
         return HelloReply;
+    })();
+
+    api.ListSnpRequest = (function () {
+        /**
+         * Properties of a ListSnpRequest.
+         * @memberof api
+         * @interface IListSnpRequest
+         * @property {number|null} [page] ListSnpRequest page
+         */
+
+        /**
+         * Constructs a new ListSnpRequest.
+         * @memberof api
+         * @classdesc Represents a ListSnpRequest.
+         * @implements IListSnpRequest
+         * @constructor
+         * @param {api.IListSnpRequest=} [properties] Properties to set
+         */
+        function ListSnpRequest(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListSnpRequest page.
+         * @member {number} page
+         * @memberof api.ListSnpRequest
+         * @instance
+         */
+        ListSnpRequest.prototype.page = 0;
+
+        /**
+         * Creates a new ListSnpRequest instance using the specified properties.
+         * @function create
+         * @memberof api.ListSnpRequest
+         * @static
+         * @param {api.IListSnpRequest=} [properties] Properties to set
+         * @returns {api.ListSnpRequest} ListSnpRequest instance
+         */
+        ListSnpRequest.create = function create(properties) {
+            return new ListSnpRequest(properties);
+        };
+
+        /**
+         * Encodes the specified ListSnpRequest message. Does not implicitly {@link api.ListSnpRequest.verify|verify} messages.
+         * @function encode
+         * @memberof api.ListSnpRequest
+         * @static
+         * @param {api.IListSnpRequest} message ListSnpRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListSnpRequest.encode = function encode(message, writer) {
+            if (!writer) writer = $Writer.create();
+            if (message.page != null && Object.hasOwnProperty.call(message, "page"))
+                writer.uint32(/* id 1, wireType 0 =*/ 8).int32(message.page);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListSnpRequest message, length delimited. Does not implicitly {@link api.ListSnpRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.ListSnpRequest
+         * @static
+         * @param {api.IListSnpRequest} message ListSnpRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListSnpRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListSnpRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.ListSnpRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.ListSnpRequest} ListSnpRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListSnpRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.api.ListSnpRequest();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                    case 1:
+                        message.page = reader.int32();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListSnpRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.ListSnpRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.ListSnpRequest} ListSnpRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListSnpRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListSnpRequest message.
+         * @function verify
+         * @memberof api.ListSnpRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListSnpRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null) return "object expected";
+            if (message.page != null && message.hasOwnProperty("page"))
+                if (!$util.isInteger(message.page)) return "page: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListSnpRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.ListSnpRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.ListSnpRequest} ListSnpRequest
+         */
+        ListSnpRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.ListSnpRequest) return object;
+            let message = new $root.api.ListSnpRequest();
+            if (object.page != null) message.page = object.page | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListSnpRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.ListSnpRequest
+         * @static
+         * @param {api.ListSnpRequest} message ListSnpRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListSnpRequest.toObject = function toObject(message, options) {
+            if (!options) options = {};
+            let object = {};
+            if (options.defaults) object.page = 0;
+            if (message.page != null && message.hasOwnProperty("page")) object.page = message.page;
+            return object;
+        };
+
+        /**
+         * Converts this ListSnpRequest to JSON.
+         * @function toJSON
+         * @memberof api.ListSnpRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListSnpRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ListSnpRequest;
+    })();
+
+    api.ListSnpReply = (function () {
+        /**
+         * Properties of a ListSnpReply.
+         * @memberof api
+         * @interface IListSnpReply
+         * @property {Array.<api.ISnp>|null} [snps] ListSnpReply snps
+         */
+
+        /**
+         * Constructs a new ListSnpReply.
+         * @memberof api
+         * @classdesc Represents a ListSnpReply.
+         * @implements IListSnpReply
+         * @constructor
+         * @param {api.IListSnpReply=} [properties] Properties to set
+         */
+        function ListSnpReply(properties) {
+            this.snps = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListSnpReply snps.
+         * @member {Array.<api.ISnp>} snps
+         * @memberof api.ListSnpReply
+         * @instance
+         */
+        ListSnpReply.prototype.snps = $util.emptyArray;
+
+        /**
+         * Creates a new ListSnpReply instance using the specified properties.
+         * @function create
+         * @memberof api.ListSnpReply
+         * @static
+         * @param {api.IListSnpReply=} [properties] Properties to set
+         * @returns {api.ListSnpReply} ListSnpReply instance
+         */
+        ListSnpReply.create = function create(properties) {
+            return new ListSnpReply(properties);
+        };
+
+        /**
+         * Encodes the specified ListSnpReply message. Does not implicitly {@link api.ListSnpReply.verify|verify} messages.
+         * @function encode
+         * @memberof api.ListSnpReply
+         * @static
+         * @param {api.IListSnpReply} message ListSnpReply message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListSnpReply.encode = function encode(message, writer) {
+            if (!writer) writer = $Writer.create();
+            if (message.snps != null && message.snps.length)
+                for (let i = 0; i < message.snps.length; ++i)
+                    $root.api.Snp.encode(
+                        message.snps[i],
+                        writer.uint32(/* id 1, wireType 2 =*/ 10).fork()
+                    ).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListSnpReply message, length delimited. Does not implicitly {@link api.ListSnpReply.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.ListSnpReply
+         * @static
+         * @param {api.IListSnpReply} message ListSnpReply message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListSnpReply.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListSnpReply message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.ListSnpReply
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.ListSnpReply} ListSnpReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListSnpReply.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.api.ListSnpReply();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                    case 1:
+                        if (!(message.snps && message.snps.length)) message.snps = [];
+                        message.snps.push($root.api.Snp.decode(reader, reader.uint32()));
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListSnpReply message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.ListSnpReply
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.ListSnpReply} ListSnpReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListSnpReply.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListSnpReply message.
+         * @function verify
+         * @memberof api.ListSnpReply
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListSnpReply.verify = function verify(message) {
+            if (typeof message !== "object" || message === null) return "object expected";
+            if (message.snps != null && message.hasOwnProperty("snps")) {
+                if (!Array.isArray(message.snps)) return "snps: array expected";
+                for (let i = 0; i < message.snps.length; ++i) {
+                    let error = $root.api.Snp.verify(message.snps[i]);
+                    if (error) return "snps." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a ListSnpReply message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.ListSnpReply
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.ListSnpReply} ListSnpReply
+         */
+        ListSnpReply.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.ListSnpReply) return object;
+            let message = new $root.api.ListSnpReply();
+            if (object.snps) {
+                if (!Array.isArray(object.snps))
+                    throw TypeError(".api.ListSnpReply.snps: array expected");
+                message.snps = [];
+                for (let i = 0; i < object.snps.length; ++i) {
+                    if (typeof object.snps[i] !== "object")
+                        throw TypeError(".api.ListSnpReply.snps: object expected");
+                    message.snps[i] = $root.api.Snp.fromObject(object.snps[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListSnpReply message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.ListSnpReply
+         * @static
+         * @param {api.ListSnpReply} message ListSnpReply
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListSnpReply.toObject = function toObject(message, options) {
+            if (!options) options = {};
+            let object = {};
+            if (options.arrays || options.defaults) object.snps = [];
+            if (message.snps && message.snps.length) {
+                object.snps = [];
+                for (let j = 0; j < message.snps.length; ++j)
+                    object.snps[j] = $root.api.Snp.toObject(message.snps[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this ListSnpReply to JSON.
+         * @function toJSON
+         * @memberof api.ListSnpReply
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListSnpReply.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ListSnpReply;
     })();
 
     api.SearchRequest = (function () {
@@ -3469,6 +3888,1517 @@ export const api = ($root.api = (() => {
         };
 
         return LineageStrainCondition;
+    })();
+
+    api.Snp = (function () {
+        /**
+         * Properties of a Snp.
+         * @memberof api
+         * @interface ISnp
+         * @property {string|null} [id] Snp id
+         * @property {string|null} [sequenceId] Snp sequenceId
+         * @property {number|null} [position] Snp position
+         * @property {string|null} [reference] Snp reference
+         * @property {string|null} [insertion] Snp insertion
+         * @property {string|null} [ncbiUrl] Snp ncbiUrl
+         * @property {Array.<api.ISnpAnnotation>|null} [annotations] Snp annotations
+         */
+
+        /**
+         * Constructs a new Snp.
+         * @memberof api
+         * @classdesc Represents a Snp.
+         * @implements ISnp
+         * @constructor
+         * @param {api.ISnp=} [properties] Properties to set
+         */
+        function Snp(properties) {
+            this.annotations = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Snp id.
+         * @member {string} id
+         * @memberof api.Snp
+         * @instance
+         */
+        Snp.prototype.id = "";
+
+        /**
+         * Snp sequenceId.
+         * @member {string} sequenceId
+         * @memberof api.Snp
+         * @instance
+         */
+        Snp.prototype.sequenceId = "";
+
+        /**
+         * Snp position.
+         * @member {number} position
+         * @memberof api.Snp
+         * @instance
+         */
+        Snp.prototype.position = 0;
+
+        /**
+         * Snp reference.
+         * @member {string} reference
+         * @memberof api.Snp
+         * @instance
+         */
+        Snp.prototype.reference = "";
+
+        /**
+         * Snp insertion.
+         * @member {string} insertion
+         * @memberof api.Snp
+         * @instance
+         */
+        Snp.prototype.insertion = "";
+
+        /**
+         * Snp ncbiUrl.
+         * @member {string} ncbiUrl
+         * @memberof api.Snp
+         * @instance
+         */
+        Snp.prototype.ncbiUrl = "";
+
+        /**
+         * Snp annotations.
+         * @member {Array.<api.ISnpAnnotation>} annotations
+         * @memberof api.Snp
+         * @instance
+         */
+        Snp.prototype.annotations = $util.emptyArray;
+
+        /**
+         * Creates a new Snp instance using the specified properties.
+         * @function create
+         * @memberof api.Snp
+         * @static
+         * @param {api.ISnp=} [properties] Properties to set
+         * @returns {api.Snp} Snp instance
+         */
+        Snp.create = function create(properties) {
+            return new Snp(properties);
+        };
+
+        /**
+         * Encodes the specified Snp message. Does not implicitly {@link api.Snp.verify|verify} messages.
+         * @function encode
+         * @memberof api.Snp
+         * @static
+         * @param {api.ISnp} message Snp message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Snp.encode = function encode(message, writer) {
+            if (!writer) writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.id);
+            if (message.sequenceId != null && Object.hasOwnProperty.call(message, "sequenceId"))
+                writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.sequenceId);
+            if (message.position != null && Object.hasOwnProperty.call(message, "position"))
+                writer.uint32(/* id 3, wireType 0 =*/ 24).int32(message.position);
+            if (message.reference != null && Object.hasOwnProperty.call(message, "reference"))
+                writer.uint32(/* id 4, wireType 2 =*/ 34).string(message.reference);
+            if (message.insertion != null && Object.hasOwnProperty.call(message, "insertion"))
+                writer.uint32(/* id 5, wireType 2 =*/ 42).string(message.insertion);
+            if (message.ncbiUrl != null && Object.hasOwnProperty.call(message, "ncbiUrl"))
+                writer.uint32(/* id 6, wireType 2 =*/ 50).string(message.ncbiUrl);
+            if (message.annotations != null && message.annotations.length)
+                for (let i = 0; i < message.annotations.length; ++i)
+                    $root.api.SnpAnnotation.encode(
+                        message.annotations[i],
+                        writer.uint32(/* id 7, wireType 2 =*/ 58).fork()
+                    ).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Snp message, length delimited. Does not implicitly {@link api.Snp.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.Snp
+         * @static
+         * @param {api.ISnp} message Snp message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Snp.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Snp message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.Snp
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.Snp} Snp
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Snp.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.api.Snp();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                    case 1:
+                        message.id = reader.string();
+                        break;
+                    case 2:
+                        message.sequenceId = reader.string();
+                        break;
+                    case 3:
+                        message.position = reader.int32();
+                        break;
+                    case 4:
+                        message.reference = reader.string();
+                        break;
+                    case 5:
+                        message.insertion = reader.string();
+                        break;
+                    case 6:
+                        message.ncbiUrl = reader.string();
+                        break;
+                    case 7:
+                        if (!(message.annotations && message.annotations.length))
+                            message.annotations = [];
+                        message.annotations.push(
+                            $root.api.SnpAnnotation.decode(reader, reader.uint32())
+                        );
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Snp message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.Snp
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.Snp} Snp
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Snp.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Snp message.
+         * @function verify
+         * @memberof api.Snp
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Snp.verify = function verify(message) {
+            if (typeof message !== "object" || message === null) return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id)) return "id: string expected";
+            if (message.sequenceId != null && message.hasOwnProperty("sequenceId"))
+                if (!$util.isString(message.sequenceId)) return "sequenceId: string expected";
+            if (message.position != null && message.hasOwnProperty("position"))
+                if (!$util.isInteger(message.position)) return "position: integer expected";
+            if (message.reference != null && message.hasOwnProperty("reference"))
+                if (!$util.isString(message.reference)) return "reference: string expected";
+            if (message.insertion != null && message.hasOwnProperty("insertion"))
+                if (!$util.isString(message.insertion)) return "insertion: string expected";
+            if (message.ncbiUrl != null && message.hasOwnProperty("ncbiUrl"))
+                if (!$util.isString(message.ncbiUrl)) return "ncbiUrl: string expected";
+            if (message.annotations != null && message.hasOwnProperty("annotations")) {
+                if (!Array.isArray(message.annotations)) return "annotations: array expected";
+                for (let i = 0; i < message.annotations.length; ++i) {
+                    let error = $root.api.SnpAnnotation.verify(message.annotations[i]);
+                    if (error) return "annotations." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a Snp message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.Snp
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.Snp} Snp
+         */
+        Snp.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.Snp) return object;
+            let message = new $root.api.Snp();
+            if (object.id != null) message.id = String(object.id);
+            if (object.sequenceId != null) message.sequenceId = String(object.sequenceId);
+            if (object.position != null) message.position = object.position | 0;
+            if (object.reference != null) message.reference = String(object.reference);
+            if (object.insertion != null) message.insertion = String(object.insertion);
+            if (object.ncbiUrl != null) message.ncbiUrl = String(object.ncbiUrl);
+            if (object.annotations) {
+                if (!Array.isArray(object.annotations))
+                    throw TypeError(".api.Snp.annotations: array expected");
+                message.annotations = [];
+                for (let i = 0; i < object.annotations.length; ++i) {
+                    if (typeof object.annotations[i] !== "object")
+                        throw TypeError(".api.Snp.annotations: object expected");
+                    message.annotations[i] = $root.api.SnpAnnotation.fromObject(
+                        object.annotations[i]
+                    );
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Snp message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.Snp
+         * @static
+         * @param {api.Snp} message Snp
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Snp.toObject = function toObject(message, options) {
+            if (!options) options = {};
+            let object = {};
+            if (options.arrays || options.defaults) object.annotations = [];
+            if (options.defaults) {
+                object.id = "";
+                object.sequenceId = "";
+                object.position = 0;
+                object.reference = "";
+                object.insertion = "";
+                object.ncbiUrl = "";
+            }
+            if (message.id != null && message.hasOwnProperty("id")) object.id = message.id;
+            if (message.sequenceId != null && message.hasOwnProperty("sequenceId"))
+                object.sequenceId = message.sequenceId;
+            if (message.position != null && message.hasOwnProperty("position"))
+                object.position = message.position;
+            if (message.reference != null && message.hasOwnProperty("reference"))
+                object.reference = message.reference;
+            if (message.insertion != null && message.hasOwnProperty("insertion"))
+                object.insertion = message.insertion;
+            if (message.ncbiUrl != null && message.hasOwnProperty("ncbiUrl"))
+                object.ncbiUrl = message.ncbiUrl;
+            if (message.annotations && message.annotations.length) {
+                object.annotations = [];
+                for (let j = 0; j < message.annotations.length; ++j)
+                    object.annotations[j] = $root.api.SnpAnnotation.toObject(
+                        message.annotations[j],
+                        options
+                    );
+            }
+            return object;
+        };
+
+        /**
+         * Converts this Snp to JSON.
+         * @function toJSON
+         * @memberof api.Snp
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Snp.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Snp;
+    })();
+
+    api.SnpAnnotation = (function () {
+        /**
+         * Properties of a SnpAnnotation.
+         * @memberof api
+         * @interface ISnpAnnotation
+         * @property {api.IStudy|null} [study] SnpAnnotation study
+         * @property {string|null} [lineage] SnpAnnotation lineage
+         */
+
+        /**
+         * Constructs a new SnpAnnotation.
+         * @memberof api
+         * @classdesc Represents a SnpAnnotation.
+         * @implements ISnpAnnotation
+         * @constructor
+         * @param {api.ISnpAnnotation=} [properties] Properties to set
+         */
+        function SnpAnnotation(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * SnpAnnotation study.
+         * @member {api.IStudy|null|undefined} study
+         * @memberof api.SnpAnnotation
+         * @instance
+         */
+        SnpAnnotation.prototype.study = null;
+
+        /**
+         * SnpAnnotation lineage.
+         * @member {string} lineage
+         * @memberof api.SnpAnnotation
+         * @instance
+         */
+        SnpAnnotation.prototype.lineage = "";
+
+        /**
+         * Creates a new SnpAnnotation instance using the specified properties.
+         * @function create
+         * @memberof api.SnpAnnotation
+         * @static
+         * @param {api.ISnpAnnotation=} [properties] Properties to set
+         * @returns {api.SnpAnnotation} SnpAnnotation instance
+         */
+        SnpAnnotation.create = function create(properties) {
+            return new SnpAnnotation(properties);
+        };
+
+        /**
+         * Encodes the specified SnpAnnotation message. Does not implicitly {@link api.SnpAnnotation.verify|verify} messages.
+         * @function encode
+         * @memberof api.SnpAnnotation
+         * @static
+         * @param {api.ISnpAnnotation} message SnpAnnotation message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SnpAnnotation.encode = function encode(message, writer) {
+            if (!writer) writer = $Writer.create();
+            if (message.study != null && Object.hasOwnProperty.call(message, "study"))
+                $root.api.Study.encode(
+                    message.study,
+                    writer.uint32(/* id 1, wireType 2 =*/ 10).fork()
+                ).ldelim();
+            if (message.lineage != null && Object.hasOwnProperty.call(message, "lineage"))
+                writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.lineage);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified SnpAnnotation message, length delimited. Does not implicitly {@link api.SnpAnnotation.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.SnpAnnotation
+         * @static
+         * @param {api.ISnpAnnotation} message SnpAnnotation message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SnpAnnotation.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a SnpAnnotation message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.SnpAnnotation
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.SnpAnnotation} SnpAnnotation
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SnpAnnotation.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.api.SnpAnnotation();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                    case 1:
+                        message.study = $root.api.Study.decode(reader, reader.uint32());
+                        break;
+                    case 2:
+                        message.lineage = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a SnpAnnotation message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.SnpAnnotation
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.SnpAnnotation} SnpAnnotation
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SnpAnnotation.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a SnpAnnotation message.
+         * @function verify
+         * @memberof api.SnpAnnotation
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        SnpAnnotation.verify = function verify(message) {
+            if (typeof message !== "object" || message === null) return "object expected";
+            if (message.study != null && message.hasOwnProperty("study")) {
+                let error = $root.api.Study.verify(message.study);
+                if (error) return "study." + error;
+            }
+            if (message.lineage != null && message.hasOwnProperty("lineage"))
+                if (!$util.isString(message.lineage)) return "lineage: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a SnpAnnotation message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.SnpAnnotation
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.SnpAnnotation} SnpAnnotation
+         */
+        SnpAnnotation.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.SnpAnnotation) return object;
+            let message = new $root.api.SnpAnnotation();
+            if (object.study != null) {
+                if (typeof object.study !== "object")
+                    throw TypeError(".api.SnpAnnotation.study: object expected");
+                message.study = $root.api.Study.fromObject(object.study);
+            }
+            if (object.lineage != null) message.lineage = String(object.lineage);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a SnpAnnotation message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.SnpAnnotation
+         * @static
+         * @param {api.SnpAnnotation} message SnpAnnotation
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        SnpAnnotation.toObject = function toObject(message, options) {
+            if (!options) options = {};
+            let object = {};
+            if (options.defaults) {
+                object.study = null;
+                object.lineage = "";
+            }
+            if (message.study != null && message.hasOwnProperty("study"))
+                object.study = $root.api.Study.toObject(message.study, options);
+            if (message.lineage != null && message.hasOwnProperty("lineage"))
+                object.lineage = message.lineage;
+            return object;
+        };
+
+        /**
+         * Converts this SnpAnnotation to JSON.
+         * @function toJSON
+         * @memberof api.SnpAnnotation
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        SnpAnnotation.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return SnpAnnotation;
+    })();
+
+    api.Study = (function () {
+        /**
+         * Properties of a Study.
+         * @memberof api
+         * @interface IStudy
+         * @property {string|null} [title] Study title
+         * @property {string|null} [publisher] Study publisher
+         * @property {string|null} [doi] Study doi
+         * @property {string|null} [url] Study url
+         * @property {Array.<api.IAuthor>|null} [primaryAuthors] Study primaryAuthors
+         * @property {api.IAuthor|null} [mainAuthor] Study mainAuthor
+         */
+
+        /**
+         * Constructs a new Study.
+         * @memberof api
+         * @classdesc Represents a Study.
+         * @implements IStudy
+         * @constructor
+         * @param {api.IStudy=} [properties] Properties to set
+         */
+        function Study(properties) {
+            this.primaryAuthors = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Study title.
+         * @member {string} title
+         * @memberof api.Study
+         * @instance
+         */
+        Study.prototype.title = "";
+
+        /**
+         * Study publisher.
+         * @member {string} publisher
+         * @memberof api.Study
+         * @instance
+         */
+        Study.prototype.publisher = "";
+
+        /**
+         * Study doi.
+         * @member {string} doi
+         * @memberof api.Study
+         * @instance
+         */
+        Study.prototype.doi = "";
+
+        /**
+         * Study url.
+         * @member {string} url
+         * @memberof api.Study
+         * @instance
+         */
+        Study.prototype.url = "";
+
+        /**
+         * Study primaryAuthors.
+         * @member {Array.<api.IAuthor>} primaryAuthors
+         * @memberof api.Study
+         * @instance
+         */
+        Study.prototype.primaryAuthors = $util.emptyArray;
+
+        /**
+         * Study mainAuthor.
+         * @member {api.IAuthor|null|undefined} mainAuthor
+         * @memberof api.Study
+         * @instance
+         */
+        Study.prototype.mainAuthor = null;
+
+        /**
+         * Creates a new Study instance using the specified properties.
+         * @function create
+         * @memberof api.Study
+         * @static
+         * @param {api.IStudy=} [properties] Properties to set
+         * @returns {api.Study} Study instance
+         */
+        Study.create = function create(properties) {
+            return new Study(properties);
+        };
+
+        /**
+         * Encodes the specified Study message. Does not implicitly {@link api.Study.verify|verify} messages.
+         * @function encode
+         * @memberof api.Study
+         * @static
+         * @param {api.IStudy} message Study message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Study.encode = function encode(message, writer) {
+            if (!writer) writer = $Writer.create();
+            if (message.title != null && Object.hasOwnProperty.call(message, "title"))
+                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.title);
+            if (message.publisher != null && Object.hasOwnProperty.call(message, "publisher"))
+                writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.publisher);
+            if (message.doi != null && Object.hasOwnProperty.call(message, "doi"))
+                writer.uint32(/* id 3, wireType 2 =*/ 26).string(message.doi);
+            if (message.url != null && Object.hasOwnProperty.call(message, "url"))
+                writer.uint32(/* id 4, wireType 2 =*/ 34).string(message.url);
+            if (message.primaryAuthors != null && message.primaryAuthors.length)
+                for (let i = 0; i < message.primaryAuthors.length; ++i)
+                    $root.api.Author.encode(
+                        message.primaryAuthors[i],
+                        writer.uint32(/* id 5, wireType 2 =*/ 42).fork()
+                    ).ldelim();
+            if (message.mainAuthor != null && Object.hasOwnProperty.call(message, "mainAuthor"))
+                $root.api.Author.encode(
+                    message.mainAuthor,
+                    writer.uint32(/* id 6, wireType 2 =*/ 50).fork()
+                ).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Study message, length delimited. Does not implicitly {@link api.Study.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.Study
+         * @static
+         * @param {api.IStudy} message Study message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Study.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Study message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.Study
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.Study} Study
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Study.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.api.Study();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                    case 1:
+                        message.title = reader.string();
+                        break;
+                    case 2:
+                        message.publisher = reader.string();
+                        break;
+                    case 3:
+                        message.doi = reader.string();
+                        break;
+                    case 4:
+                        message.url = reader.string();
+                        break;
+                    case 5:
+                        if (!(message.primaryAuthors && message.primaryAuthors.length))
+                            message.primaryAuthors = [];
+                        message.primaryAuthors.push(
+                            $root.api.Author.decode(reader, reader.uint32())
+                        );
+                        break;
+                    case 6:
+                        message.mainAuthor = $root.api.Author.decode(reader, reader.uint32());
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Study message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.Study
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.Study} Study
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Study.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Study message.
+         * @function verify
+         * @memberof api.Study
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Study.verify = function verify(message) {
+            if (typeof message !== "object" || message === null) return "object expected";
+            if (message.title != null && message.hasOwnProperty("title"))
+                if (!$util.isString(message.title)) return "title: string expected";
+            if (message.publisher != null && message.hasOwnProperty("publisher"))
+                if (!$util.isString(message.publisher)) return "publisher: string expected";
+            if (message.doi != null && message.hasOwnProperty("doi"))
+                if (!$util.isString(message.doi)) return "doi: string expected";
+            if (message.url != null && message.hasOwnProperty("url"))
+                if (!$util.isString(message.url)) return "url: string expected";
+            if (message.primaryAuthors != null && message.hasOwnProperty("primaryAuthors")) {
+                if (!Array.isArray(message.primaryAuthors)) return "primaryAuthors: array expected";
+                for (let i = 0; i < message.primaryAuthors.length; ++i) {
+                    let error = $root.api.Author.verify(message.primaryAuthors[i]);
+                    if (error) return "primaryAuthors." + error;
+                }
+            }
+            if (message.mainAuthor != null && message.hasOwnProperty("mainAuthor")) {
+                let error = $root.api.Author.verify(message.mainAuthor);
+                if (error) return "mainAuthor." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a Study message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.Study
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.Study} Study
+         */
+        Study.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.Study) return object;
+            let message = new $root.api.Study();
+            if (object.title != null) message.title = String(object.title);
+            if (object.publisher != null) message.publisher = String(object.publisher);
+            if (object.doi != null) message.doi = String(object.doi);
+            if (object.url != null) message.url = String(object.url);
+            if (object.primaryAuthors) {
+                if (!Array.isArray(object.primaryAuthors))
+                    throw TypeError(".api.Study.primaryAuthors: array expected");
+                message.primaryAuthors = [];
+                for (let i = 0; i < object.primaryAuthors.length; ++i) {
+                    if (typeof object.primaryAuthors[i] !== "object")
+                        throw TypeError(".api.Study.primaryAuthors: object expected");
+                    message.primaryAuthors[i] = $root.api.Author.fromObject(
+                        object.primaryAuthors[i]
+                    );
+                }
+            }
+            if (object.mainAuthor != null) {
+                if (typeof object.mainAuthor !== "object")
+                    throw TypeError(".api.Study.mainAuthor: object expected");
+                message.mainAuthor = $root.api.Author.fromObject(object.mainAuthor);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Study message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.Study
+         * @static
+         * @param {api.Study} message Study
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Study.toObject = function toObject(message, options) {
+            if (!options) options = {};
+            let object = {};
+            if (options.arrays || options.defaults) object.primaryAuthors = [];
+            if (options.defaults) {
+                object.title = "";
+                object.publisher = "";
+                object.doi = "";
+                object.url = "";
+                object.mainAuthor = null;
+            }
+            if (message.title != null && message.hasOwnProperty("title"))
+                object.title = message.title;
+            if (message.publisher != null && message.hasOwnProperty("publisher"))
+                object.publisher = message.publisher;
+            if (message.doi != null && message.hasOwnProperty("doi")) object.doi = message.doi;
+            if (message.url != null && message.hasOwnProperty("url")) object.url = message.url;
+            if (message.primaryAuthors && message.primaryAuthors.length) {
+                object.primaryAuthors = [];
+                for (let j = 0; j < message.primaryAuthors.length; ++j)
+                    object.primaryAuthors[j] = $root.api.Author.toObject(
+                        message.primaryAuthors[j],
+                        options
+                    );
+            }
+            if (message.mainAuthor != null && message.hasOwnProperty("mainAuthor"))
+                object.mainAuthor = $root.api.Author.toObject(message.mainAuthor, options);
+            return object;
+        };
+
+        /**
+         * Converts this Study to JSON.
+         * @function toJSON
+         * @memberof api.Study
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Study.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Study;
+    })();
+
+    api.Author = (function () {
+        /**
+         * Properties of an Author.
+         * @memberof api
+         * @interface IAuthor
+         * @property {string|null} [given] Author given
+         * @property {string|null} [family] Author family
+         * @property {string|null} [fullName] Author fullName
+         */
+
+        /**
+         * Constructs a new Author.
+         * @memberof api
+         * @classdesc Represents an Author.
+         * @implements IAuthor
+         * @constructor
+         * @param {api.IAuthor=} [properties] Properties to set
+         */
+        function Author(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Author given.
+         * @member {string} given
+         * @memberof api.Author
+         * @instance
+         */
+        Author.prototype.given = "";
+
+        /**
+         * Author family.
+         * @member {string} family
+         * @memberof api.Author
+         * @instance
+         */
+        Author.prototype.family = "";
+
+        /**
+         * Author fullName.
+         * @member {string} fullName
+         * @memberof api.Author
+         * @instance
+         */
+        Author.prototype.fullName = "";
+
+        /**
+         * Creates a new Author instance using the specified properties.
+         * @function create
+         * @memberof api.Author
+         * @static
+         * @param {api.IAuthor=} [properties] Properties to set
+         * @returns {api.Author} Author instance
+         */
+        Author.create = function create(properties) {
+            return new Author(properties);
+        };
+
+        /**
+         * Encodes the specified Author message. Does not implicitly {@link api.Author.verify|verify} messages.
+         * @function encode
+         * @memberof api.Author
+         * @static
+         * @param {api.IAuthor} message Author message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Author.encode = function encode(message, writer) {
+            if (!writer) writer = $Writer.create();
+            if (message.given != null && Object.hasOwnProperty.call(message, "given"))
+                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.given);
+            if (message.family != null && Object.hasOwnProperty.call(message, "family"))
+                writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.family);
+            if (message.fullName != null && Object.hasOwnProperty.call(message, "fullName"))
+                writer.uint32(/* id 3, wireType 2 =*/ 26).string(message.fullName);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Author message, length delimited. Does not implicitly {@link api.Author.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.Author
+         * @static
+         * @param {api.IAuthor} message Author message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Author.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an Author message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.Author
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.Author} Author
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Author.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.api.Author();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                    case 1:
+                        message.given = reader.string();
+                        break;
+                    case 2:
+                        message.family = reader.string();
+                        break;
+                    case 3:
+                        message.fullName = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an Author message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.Author
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.Author} Author
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Author.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an Author message.
+         * @function verify
+         * @memberof api.Author
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Author.verify = function verify(message) {
+            if (typeof message !== "object" || message === null) return "object expected";
+            if (message.given != null && message.hasOwnProperty("given"))
+                if (!$util.isString(message.given)) return "given: string expected";
+            if (message.family != null && message.hasOwnProperty("family"))
+                if (!$util.isString(message.family)) return "family: string expected";
+            if (message.fullName != null && message.hasOwnProperty("fullName"))
+                if (!$util.isString(message.fullName)) return "fullName: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an Author message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.Author
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.Author} Author
+         */
+        Author.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.Author) return object;
+            let message = new $root.api.Author();
+            if (object.given != null) message.given = String(object.given);
+            if (object.family != null) message.family = String(object.family);
+            if (object.fullName != null) message.fullName = String(object.fullName);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an Author message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.Author
+         * @static
+         * @param {api.Author} message Author
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Author.toObject = function toObject(message, options) {
+            if (!options) options = {};
+            let object = {};
+            if (options.defaults) {
+                object.given = "";
+                object.family = "";
+                object.fullName = "";
+            }
+            if (message.given != null && message.hasOwnProperty("given"))
+                object.given = message.given;
+            if (message.family != null && message.hasOwnProperty("family"))
+                object.family = message.family;
+            if (message.fullName != null && message.hasOwnProperty("fullName"))
+                object.fullName = message.fullName;
+            return object;
+        };
+
+        /**
+         * Converts this Author to JSON.
+         * @function toJSON
+         * @memberof api.Author
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Author.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Author;
+    })();
+
+    api.MtbcResult = (function () {
+        /**
+         * Properties of a MtbcResult.
+         * @memberof api
+         * @interface IMtbcResult
+         * @property {string|null} [sraId] MtbcResult sraId
+         * @property {Array.<api.ISnpMtbcResult>|null} [snp] MtbcResult snp
+         */
+
+        /**
+         * Constructs a new MtbcResult.
+         * @memberof api
+         * @classdesc Represents a MtbcResult.
+         * @implements IMtbcResult
+         * @constructor
+         * @param {api.IMtbcResult=} [properties] Properties to set
+         */
+        function MtbcResult(properties) {
+            this.snp = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * MtbcResult sraId.
+         * @member {string} sraId
+         * @memberof api.MtbcResult
+         * @instance
+         */
+        MtbcResult.prototype.sraId = "";
+
+        /**
+         * MtbcResult snp.
+         * @member {Array.<api.ISnpMtbcResult>} snp
+         * @memberof api.MtbcResult
+         * @instance
+         */
+        MtbcResult.prototype.snp = $util.emptyArray;
+
+        /**
+         * Creates a new MtbcResult instance using the specified properties.
+         * @function create
+         * @memberof api.MtbcResult
+         * @static
+         * @param {api.IMtbcResult=} [properties] Properties to set
+         * @returns {api.MtbcResult} MtbcResult instance
+         */
+        MtbcResult.create = function create(properties) {
+            return new MtbcResult(properties);
+        };
+
+        /**
+         * Encodes the specified MtbcResult message. Does not implicitly {@link api.MtbcResult.verify|verify} messages.
+         * @function encode
+         * @memberof api.MtbcResult
+         * @static
+         * @param {api.IMtbcResult} message MtbcResult message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MtbcResult.encode = function encode(message, writer) {
+            if (!writer) writer = $Writer.create();
+            if (message.sraId != null && Object.hasOwnProperty.call(message, "sraId"))
+                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.sraId);
+            if (message.snp != null && message.snp.length)
+                for (let i = 0; i < message.snp.length; ++i)
+                    $root.api.SnpMtbcResult.encode(
+                        message.snp[i],
+                        writer.uint32(/* id 2, wireType 2 =*/ 18).fork()
+                    ).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified MtbcResult message, length delimited. Does not implicitly {@link api.MtbcResult.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.MtbcResult
+         * @static
+         * @param {api.IMtbcResult} message MtbcResult message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MtbcResult.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a MtbcResult message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.MtbcResult
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.MtbcResult} MtbcResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MtbcResult.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.api.MtbcResult();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                    case 1:
+                        message.sraId = reader.string();
+                        break;
+                    case 2:
+                        if (!(message.snp && message.snp.length)) message.snp = [];
+                        message.snp.push($root.api.SnpMtbcResult.decode(reader, reader.uint32()));
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a MtbcResult message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.MtbcResult
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.MtbcResult} MtbcResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MtbcResult.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a MtbcResult message.
+         * @function verify
+         * @memberof api.MtbcResult
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        MtbcResult.verify = function verify(message) {
+            if (typeof message !== "object" || message === null) return "object expected";
+            if (message.sraId != null && message.hasOwnProperty("sraId"))
+                if (!$util.isString(message.sraId)) return "sraId: string expected";
+            if (message.snp != null && message.hasOwnProperty("snp")) {
+                if (!Array.isArray(message.snp)) return "snp: array expected";
+                for (let i = 0; i < message.snp.length; ++i) {
+                    let error = $root.api.SnpMtbcResult.verify(message.snp[i]);
+                    if (error) return "snp." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a MtbcResult message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.MtbcResult
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.MtbcResult} MtbcResult
+         */
+        MtbcResult.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.MtbcResult) return object;
+            let message = new $root.api.MtbcResult();
+            if (object.sraId != null) message.sraId = String(object.sraId);
+            if (object.snp) {
+                if (!Array.isArray(object.snp))
+                    throw TypeError(".api.MtbcResult.snp: array expected");
+                message.snp = [];
+                for (let i = 0; i < object.snp.length; ++i) {
+                    if (typeof object.snp[i] !== "object")
+                        throw TypeError(".api.MtbcResult.snp: object expected");
+                    message.snp[i] = $root.api.SnpMtbcResult.fromObject(object.snp[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a MtbcResult message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.MtbcResult
+         * @static
+         * @param {api.MtbcResult} message MtbcResult
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        MtbcResult.toObject = function toObject(message, options) {
+            if (!options) options = {};
+            let object = {};
+            if (options.arrays || options.defaults) object.snp = [];
+            if (options.defaults) object.sraId = "";
+            if (message.sraId != null && message.hasOwnProperty("sraId"))
+                object.sraId = message.sraId;
+            if (message.snp && message.snp.length) {
+                object.snp = [];
+                for (let j = 0; j < message.snp.length; ++j)
+                    object.snp[j] = $root.api.SnpMtbcResult.toObject(message.snp[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this MtbcResult to JSON.
+         * @function toJSON
+         * @memberof api.MtbcResult
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        MtbcResult.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return MtbcResult;
+    })();
+
+    api.SnpMtbcResult = (function () {
+        /**
+         * Properties of a SnpMtbcResult.
+         * @memberof api
+         * @interface ISnpMtbcResult
+         * @property {string|null} [spdi] SnpMtbcResult spdi
+         * @property {number|null} [refCount] SnpMtbcResult refCount
+         * @property {number|null} [altCount] SnpMtbcResult altCount
+         */
+
+        /**
+         * Constructs a new SnpMtbcResult.
+         * @memberof api
+         * @classdesc Represents a SnpMtbcResult.
+         * @implements ISnpMtbcResult
+         * @constructor
+         * @param {api.ISnpMtbcResult=} [properties] Properties to set
+         */
+        function SnpMtbcResult(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * SnpMtbcResult spdi.
+         * @member {string} spdi
+         * @memberof api.SnpMtbcResult
+         * @instance
+         */
+        SnpMtbcResult.prototype.spdi = "";
+
+        /**
+         * SnpMtbcResult refCount.
+         * @member {number} refCount
+         * @memberof api.SnpMtbcResult
+         * @instance
+         */
+        SnpMtbcResult.prototype.refCount = 0;
+
+        /**
+         * SnpMtbcResult altCount.
+         * @member {number} altCount
+         * @memberof api.SnpMtbcResult
+         * @instance
+         */
+        SnpMtbcResult.prototype.altCount = 0;
+
+        /**
+         * Creates a new SnpMtbcResult instance using the specified properties.
+         * @function create
+         * @memberof api.SnpMtbcResult
+         * @static
+         * @param {api.ISnpMtbcResult=} [properties] Properties to set
+         * @returns {api.SnpMtbcResult} SnpMtbcResult instance
+         */
+        SnpMtbcResult.create = function create(properties) {
+            return new SnpMtbcResult(properties);
+        };
+
+        /**
+         * Encodes the specified SnpMtbcResult message. Does not implicitly {@link api.SnpMtbcResult.verify|verify} messages.
+         * @function encode
+         * @memberof api.SnpMtbcResult
+         * @static
+         * @param {api.ISnpMtbcResult} message SnpMtbcResult message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SnpMtbcResult.encode = function encode(message, writer) {
+            if (!writer) writer = $Writer.create();
+            if (message.spdi != null && Object.hasOwnProperty.call(message, "spdi"))
+                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.spdi);
+            if (message.refCount != null && Object.hasOwnProperty.call(message, "refCount"))
+                writer.uint32(/* id 2, wireType 0 =*/ 16).int32(message.refCount);
+            if (message.altCount != null && Object.hasOwnProperty.call(message, "altCount"))
+                writer.uint32(/* id 3, wireType 0 =*/ 24).int32(message.altCount);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified SnpMtbcResult message, length delimited. Does not implicitly {@link api.SnpMtbcResult.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.SnpMtbcResult
+         * @static
+         * @param {api.ISnpMtbcResult} message SnpMtbcResult message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SnpMtbcResult.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a SnpMtbcResult message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.SnpMtbcResult
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.SnpMtbcResult} SnpMtbcResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SnpMtbcResult.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length,
+                message = new $root.api.SnpMtbcResult();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                    case 1:
+                        message.spdi = reader.string();
+                        break;
+                    case 2:
+                        message.refCount = reader.int32();
+                        break;
+                    case 3:
+                        message.altCount = reader.int32();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a SnpMtbcResult message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.SnpMtbcResult
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.SnpMtbcResult} SnpMtbcResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SnpMtbcResult.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a SnpMtbcResult message.
+         * @function verify
+         * @memberof api.SnpMtbcResult
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        SnpMtbcResult.verify = function verify(message) {
+            if (typeof message !== "object" || message === null) return "object expected";
+            if (message.spdi != null && message.hasOwnProperty("spdi"))
+                if (!$util.isString(message.spdi)) return "spdi: string expected";
+            if (message.refCount != null && message.hasOwnProperty("refCount"))
+                if (!$util.isInteger(message.refCount)) return "refCount: integer expected";
+            if (message.altCount != null && message.hasOwnProperty("altCount"))
+                if (!$util.isInteger(message.altCount)) return "altCount: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a SnpMtbcResult message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.SnpMtbcResult
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.SnpMtbcResult} SnpMtbcResult
+         */
+        SnpMtbcResult.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.SnpMtbcResult) return object;
+            let message = new $root.api.SnpMtbcResult();
+            if (object.spdi != null) message.spdi = String(object.spdi);
+            if (object.refCount != null) message.refCount = object.refCount | 0;
+            if (object.altCount != null) message.altCount = object.altCount | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a SnpMtbcResult message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.SnpMtbcResult
+         * @static
+         * @param {api.SnpMtbcResult} message SnpMtbcResult
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        SnpMtbcResult.toObject = function toObject(message, options) {
+            if (!options) options = {};
+            let object = {};
+            if (options.defaults) {
+                object.spdi = "";
+                object.refCount = 0;
+                object.altCount = 0;
+            }
+            if (message.spdi != null && message.hasOwnProperty("spdi")) object.spdi = message.spdi;
+            if (message.refCount != null && message.hasOwnProperty("refCount"))
+                object.refCount = message.refCount;
+            if (message.altCount != null && message.hasOwnProperty("altCount"))
+                object.altCount = message.altCount;
+            return object;
+        };
+
+        /**
+         * Converts this SnpMtbcResult to JSON.
+         * @function toJSON
+         * @memberof api.SnpMtbcResult
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        SnpMtbcResult.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return SnpMtbcResult;
     })();
 
     return api;

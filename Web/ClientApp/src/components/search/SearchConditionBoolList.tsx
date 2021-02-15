@@ -17,7 +17,7 @@ function SearchConditionBoolList({
     if (!boolCondition) return null;
     return (
         <React.Fragment>
-            <Space direction="vertical" style={{width: '100%'}}>
+            <Space direction="vertical" style={{ width: "100%" }}>
                 {boolCondition.conditions?.map((condition) => {
                     if (condition.accession)
                         return (

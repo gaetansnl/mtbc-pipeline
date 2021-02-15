@@ -34,7 +34,7 @@ namespace MTBC.Annotation
             var afterWindow = new Range(snp.Position0 + 1, snp.Position0 + 1 + windowSize);
 
             var seq1 = genome[beforeWindow] + genome[snp.Position0] + genome[afterWindow];
-            var seq2 = genome[beforeWindow] + snp.Alternatives[0] + genome[afterWindow];
+            var seq2 = genome[beforeWindow] + snp.Insertion + genome[afterWindow];
 
             var options = await BlastnOptions.FromInlineQuery($">id\n{seq2}");
             options.Evalue = "1e-5";

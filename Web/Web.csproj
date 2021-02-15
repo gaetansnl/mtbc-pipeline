@@ -11,11 +11,20 @@
 
     <ItemGroup>
         <Protobuf Include="Protos\*.proto" GrpcServices="Server" ProtoRoot="Protos" />
+        <Protobuf Update="Protos\result.proto">
+          <Access>Public</Access>
+          <ProtoCompile>True</ProtoCompile>
+          <CompileOutputs>True</CompileOutputs>
+          <OutputDir>obj\Debug\net5.0\</OutputDir>
+          <Generator>MSBuild:Compile</Generator>
+        </Protobuf>
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="10.1.1" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.32.0" />
         <PackageReference Include="Grpc.AspNetCore.Web" Version="2.35.0-pre1" />
+        <PackageReference Include="LiteDB" Version="5.0.10" />
         <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.2" />
     </ItemGroup>
     
@@ -44,6 +53,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Core\Core.csproj" />
+      <ProjectReference Include="..\Indexer\Indexer.csproj" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

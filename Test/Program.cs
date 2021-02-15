@@ -4,8 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Core;
-using Couchbase.Lite;
-using Couchbase.Lite.Query;
 
 namespace Test
 {
@@ -13,8 +11,15 @@ namespace Test
     {
         static async Task Main(string[] args)
         {
-            var database = new Database("mydb");
-            var random = new Random();
+
+            // var config = Configuration.FromYaml("C:\\Users\\Gaetan\\RiderProjects\\API\\Web\\Data\\config.yaml");
+            // // config.ResolvePath(config.Snp[0].SpdiFile);
+            // var db = new LiteDatabase("db");
+            // var indexer = new Indexer(config);
+            var r = await SnpFileReader.FromCsv(@"C:\Users\Gaetan\Downloads\tb-tools\data\transform\Borrell_indels.csv");
+            
+            // var database = new Database("mydb");
+            // var random = new Random();
 // Create a new document (i.e. a record) in the database
             // for (int i = 0; i < 80000; i++)
             // {

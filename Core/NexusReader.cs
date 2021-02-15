@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.IO.Pipelines;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,8 +42,6 @@ namespace Core
 
                 while (TryReadLine(ref buffer))
                 {
-                    // Process the line.
-                    //ProcessLine(line);
                 }
 
                 // Tell the PipeReader how much of the buffer has been consumed.
@@ -80,12 +77,12 @@ namespace Core
             {
                 buffer.Skip(separators);
                 if (buffer.PositionOf((byte) ',') == null) return false;
-                
+
                 var reader = new SequenceReader<byte>(buffer);
                 if (!reader.TryReadTo(out ReadOnlySpan<byte> vertexIdSpan, (byte) ' ')) throw new Exception();
                 if (!reader.TryReadTo(out ReadOnlySpan<byte> taxonNameSpan, (byte) ',')) throw new Exception();
                 var vertexId = int.Parse(Encoding.UTF8.GetString(vertexIdSpan));
-                var taxonName = Encoding.UTF8.GetString(taxonNameSpan.Slice(1, taxonNameSpan.Length-2));
+                var taxonName = Encoding.UTF8.GetString(taxonNameSpan.Slice(1, taxonNameSpan.Length - 2));
                 Vertices[vertexId] = taxonName;
                 buffer = reader.UnreadSequence;
                 return !reader.UnreadSequence.IsEmpty;
@@ -94,14 +91,16 @@ namespace Core
             {
                 buffer.Skip(separators);
                 if (buffer.PositionOf((byte) ',') == null) return false;
-                
+
                 var reader = new SequenceReader<byte>(buffer);
                 if (!reader.TryReadTo(out ReadOnlySpan<byte> vertexIdSpan, (byte) ' ')) throw new Exception();
                 if (!reader.TryReadTo(out ReadOnlySpan<byte> xPositionSpan, (byte) ' ')) throw new Exception();
                 if (!reader.TryReadTo(out ReadOnlySpan<byte> yPositionSpan, (byte) ' ')) throw new Exception();
                 var vertexId = int.Parse(Encoding.UTF8.GetString(vertexIdSpan));
-                var xPosition = double.Parse(Encoding.UTF8.GetString(xPositionSpan), NumberStyles.Any, CultureInfo.InvariantCulture);
-                var yPosition = double.Parse(Encoding.UTF8.GetString(yPositionSpan), NumberStyles.Any, CultureInfo.InvariantCulture);
+                var xPosition = double.Parse(Encoding.UTF8.GetString(xPositionSpan), NumberStyles.Any,
+                    CultureInfo.InvariantCulture);
+                var yPosition = double.Parse(Encoding.UTF8.GetString(yPositionSpan), NumberStyles.Any,
+                    CultureInfo.InvariantCulture);
                 NetworkVertices[vertexId] = (xPosition, yPosition);
                 reader.TryReadTo(out ReadOnlySpan<byte> _, (byte) ',');
                 buffer = reader.UnreadSequence;
@@ -111,7 +110,7 @@ namespace Core
             {
                 buffer.Skip(separators);
                 if (buffer.PositionOf((byte) ',') == null) return false;
-                
+
                 var reader = new SequenceReader<byte>(buffer);
                 if (!reader.TryReadTo(out ReadOnlySpan<byte> edgeIdSpan, (byte) ' ')) throw new Exception();
                 if (!reader.TryReadTo(out ReadOnlySpan<byte> vertex1Span, (byte) ' ')) throw new Exception();
@@ -167,13 +166,19 @@ namespace Core
             if (endPosition != null)
             {
                 var slice = buffer.Slice(0, endPosition.Value);
-                while (ProcessCommand(ref slice)){}
-                Console.WriteLine(StateCurrentInstruction);
+                while (ProcessCommand(ref slice))
+                {
+                }
+
                 StateCurrentInstruction = null;
                 buffer = buffer.Slice(buffer.GetPosition(2, endPosition.Value));
                 return true;
             }
-            while (ProcessCommand(ref buffer)){}
+
+            while (ProcessCommand(ref buffer))
+            {
+            }
+
             return false;
         }
     }

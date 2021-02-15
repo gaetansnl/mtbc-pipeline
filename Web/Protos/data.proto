@@ -1,0 +1,33 @@
+﻿syntax = "proto3";
+package api;
+option csharp_namespace = "Web";
+
+message Snp {
+  string id = 1;
+  string sequence_id = 2;
+  int32 position = 3;
+  string reference = 4;
+  string insertion = 5;
+  string ncbi_url = 6;
+  repeated SnpAnnotation annotations = 7;
+}
+
+message SnpAnnotation {
+  Study study = 1;
+  string lineage = 2;
+}
+
+message Study {
+  string title = 1;
+  string publisher = 2;
+  string doi = 3;
+  string url = 4;
+  repeated Author primary_authors = 5;
+  Author main_author = 6;
+}
+
+message Author {
+  string given = 1;
+  string family = 2;
+  string full_name = 3;
+}

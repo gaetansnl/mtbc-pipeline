@@ -2,8 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core;
+using Core.Doi;
+using Google.Protobuf.Collections;
 using Grpc.Core;
+using Indexer;
+using LiteDB;
 using Microsoft.Extensions.Logging;
 
 namespace Web.Services
@@ -77,6 +82,30 @@ namespace Web.Services
             }
 
             return response;
+        }
+ private static LiteDatabase db = new LiteDatabase(@"C:\Users\Gaetan\RiderProjects\API\Indexer\bin\Debug\net5.0\db");
+        public override async Task<ListSnpReply> ListSnp(ListSnpRequest request, ServerCallContext context)
+        {
+           
+            var driver = new LiteDBDriver(db);
+            var list = await driver.ListSnp();
+            
+            var configuration = new MapperConfiguration(cfg => 
+            {
+                cfg.CreateMap<Indexer.Data.Snp, Snp>(MemberList.None);
+                cfg.CreateMap<DoiCitation, Study>(MemberList.None);
+                cfg.CreateMap<DoiCitation.Author, Author>(MemberList.None);
+                cfg.CreateMap<Indexer.Data.SnpAnnotation, SnpAnnotation>(MemberList.None);
+                cfg.ForAllPropertyMaps(
+                    map => map.DestinationType.IsGenericType && map.DestinationType.GetGenericTypeDefinition() == typeof(RepeatedField<>),
+                    (map, options) => options.UseDestinationValue());
+            });
+            configuration.AssertConfigurationIsValid();
+            var mapper = configuration.CreateMapper();
+            var gg = mapper.Map<IEnumerable<Snp>>(list);
+            ListSnpReply reply = new();
+            reply.Snps.AddRange(gg);
+            return reply;
         }
     }
 }
