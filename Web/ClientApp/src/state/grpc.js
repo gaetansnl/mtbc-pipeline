@@ -2,14 +2,13 @@
 import * as $protobuf from "protobufjs/minimal";
 
 // Common aliases
-const $Reader = $protobuf.Reader,
-    $Writer = $protobuf.Writer,
-    $util = $protobuf.util;
+const $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
 
 // Exported root namespace
 const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
-export const api = ($root.api = (() => {
+export const api = $root.api = (() => {
+
     /**
      * Namespace api.
      * @exports api
@@ -17,7 +16,8 @@ export const api = ($root.api = (() => {
      */
     const api = {};
 
-    api.Api = (function () {
+    api.Api = (function() {
+
         /**
          * Constructs a new Api service.
          * @memberof api
@@ -67,19 +67,9 @@ export const api = ($root.api = (() => {
          * @returns {undefined}
          * @variation 1
          */
-        Object.defineProperty(
-            (Api.prototype.sayHello = function sayHello(request, callback) {
-                return this.rpcCall(
-                    sayHello,
-                    $root.api.HelloRequest,
-                    $root.api.HelloReply,
-                    request,
-                    callback
-                );
-            }),
-            "name",
-            { value: "SayHello" }
-        );
+        Object.defineProperty(Api.prototype.sayHello = function sayHello(request, callback) {
+            return this.rpcCall(sayHello, $root.api.HelloRequest, $root.api.HelloReply, request, callback);
+        }, "name", { value: "SayHello" });
 
         /**
          * Calls SayHello.
@@ -110,19 +100,9 @@ export const api = ($root.api = (() => {
          * @returns {undefined}
          * @variation 1
          */
-        Object.defineProperty(
-            (Api.prototype.search = function search(request, callback) {
-                return this.rpcCall(
-                    search,
-                    $root.api.SearchRequest,
-                    $root.api.SearchReply,
-                    request,
-                    callback
-                );
-            }),
-            "name",
-            { value: "Search" }
-        );
+        Object.defineProperty(Api.prototype.search = function search(request, callback) {
+            return this.rpcCall(search, $root.api.SearchRequest, $root.api.SearchReply, request, callback);
+        }, "name", { value: "Search" });
 
         /**
          * Calls Search.
@@ -153,19 +133,9 @@ export const api = ($root.api = (() => {
          * @returns {undefined}
          * @variation 1
          */
-        Object.defineProperty(
-            (Api.prototype.listSnp = function listSnp(request, callback) {
-                return this.rpcCall(
-                    listSnp,
-                    $root.api.ListSnpRequest,
-                    $root.api.ListSnpReply,
-                    request,
-                    callback
-                );
-            }),
-            "name",
-            { value: "ListSnp" }
-        );
+        Object.defineProperty(Api.prototype.listSnp = function listSnp(request, callback) {
+            return this.rpcCall(listSnp, $root.api.ListSnpRequest, $root.api.ListSnpReply, request, callback);
+        }, "name", { value: "ListSnp" });
 
         /**
          * Calls ListSnp.
@@ -177,10 +147,44 @@ export const api = ($root.api = (() => {
          * @variation 2
          */
 
+        /**
+         * Callback as used by {@link api.Api#getStrain}.
+         * @memberof api.Api
+         * @typedef GetStrainCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {api.GetStrainReply} [response] GetStrainReply
+         */
+
+        /**
+         * Calls GetStrain.
+         * @function getStrain
+         * @memberof api.Api
+         * @instance
+         * @param {api.IGetStrainRequest} request GetStrainRequest message or plain object
+         * @param {api.Api.GetStrainCallback} callback Node-style callback called with the error, if any, and GetStrainReply
+         * @returns {undefined}
+         * @variation 1
+         */
+        Object.defineProperty(Api.prototype.getStrain = function getStrain(request, callback) {
+            return this.rpcCall(getStrain, $root.api.GetStrainRequest, $root.api.GetStrainReply, request, callback);
+        }, "name", { value: "GetStrain" });
+
+        /**
+         * Calls GetStrain.
+         * @function getStrain
+         * @memberof api.Api
+         * @instance
+         * @param {api.IGetStrainRequest} request GetStrainRequest message or plain object
+         * @returns {Promise<api.GetStrainReply>} Promise
+         * @variation 2
+         */
+
         return Api;
     })();
 
-    api.HelloRequest = (function () {
+    api.HelloRequest = (function() {
+
         /**
          * Properties of a HelloRequest.
          * @memberof api
@@ -199,7 +203,8 @@ export const api = ($root.api = (() => {
         function HelloRequest(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -232,12 +237,10 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         HelloRequest.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
-            if (
-                message.clusteringLevel != null &&
-                Object.hasOwnProperty.call(message, "clusteringLevel")
-            )
-                writer.uint32(/* id 1, wireType 1 =*/ 9).double(message.clusteringLevel);
+            if (!writer)
+                writer = $Writer.create();
+            if (message.clusteringLevel != null && Object.hasOwnProperty.call(message, "clusteringLevel"))
+                writer.uint32(/* id 1, wireType 1 =*/9).double(message.clusteringLevel);
             return writer;
         };
 
@@ -266,18 +269,18 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         HelloRequest.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.HelloRequest();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.HelloRequest();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.clusteringLevel = reader.double();
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.clusteringLevel = reader.double();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -294,7 +297,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         HelloRequest.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -307,7 +311,8 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         HelloRequest.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.clusteringLevel != null && message.hasOwnProperty("clusteringLevel"))
                 if (typeof message.clusteringLevel !== "number")
                     return "clusteringLevel: number expected";
@@ -323,7 +328,8 @@ export const api = ($root.api = (() => {
          * @returns {api.HelloRequest} HelloRequest
          */
         HelloRequest.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.HelloRequest) return object;
+            if (object instanceof $root.api.HelloRequest)
+                return object;
             let message = new $root.api.HelloRequest();
             if (object.clusteringLevel != null)
                 message.clusteringLevel = Number(object.clusteringLevel);
@@ -340,14 +346,13 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         HelloRequest.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.defaults) object.clusteringLevel = 0;
+            if (options.defaults)
+                object.clusteringLevel = 0;
             if (message.clusteringLevel != null && message.hasOwnProperty("clusteringLevel"))
-                object.clusteringLevel =
-                    options.json && !isFinite(message.clusteringLevel)
-                        ? String(message.clusteringLevel)
-                        : message.clusteringLevel;
+                object.clusteringLevel = options.json && !isFinite(message.clusteringLevel) ? String(message.clusteringLevel) : message.clusteringLevel;
             return object;
         };
 
@@ -365,7 +370,8 @@ export const api = ($root.api = (() => {
         return HelloRequest;
     })();
 
-    api.HelloReply = (function () {
+    api.HelloReply = (function() {
+
         /**
          * Properties of a HelloReply.
          * @memberof api
@@ -384,7 +390,8 @@ export const api = ($root.api = (() => {
         function HelloReply(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -417,12 +424,10 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         HelloReply.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.graph != null && Object.hasOwnProperty.call(message, "graph"))
-                $root.api.Graph.encode(
-                    message.graph,
-                    writer.uint32(/* id 1, wireType 2 =*/ 10).fork()
-                ).ldelim();
+                $root.api.Graph.encode(message.graph, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             return writer;
         };
 
@@ -451,18 +456,18 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         HelloReply.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.HelloReply();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.HelloReply();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.graph = $root.api.Graph.decode(reader, reader.uint32());
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.graph = $root.api.Graph.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -479,7 +484,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         HelloReply.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -492,10 +498,12 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         HelloReply.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.graph != null && message.hasOwnProperty("graph")) {
                 let error = $root.api.Graph.verify(message.graph);
-                if (error) return "graph." + error;
+                if (error)
+                    return "graph." + error;
             }
             return null;
         };
@@ -509,7 +517,8 @@ export const api = ($root.api = (() => {
          * @returns {api.HelloReply} HelloReply
          */
         HelloReply.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.HelloReply) return object;
+            if (object instanceof $root.api.HelloReply)
+                return object;
             let message = new $root.api.HelloReply();
             if (object.graph != null) {
                 if (typeof object.graph !== "object")
@@ -529,9 +538,11 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         HelloReply.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.defaults) object.graph = null;
+            if (options.defaults)
+                object.graph = null;
             if (message.graph != null && message.hasOwnProperty("graph"))
                 object.graph = $root.api.Graph.toObject(message.graph, options);
             return object;
@@ -551,7 +562,8 @@ export const api = ($root.api = (() => {
         return HelloReply;
     })();
 
-    api.ListSnpRequest = (function () {
+    api.ListSnpRequest = (function() {
+
         /**
          * Properties of a ListSnpRequest.
          * @memberof api
@@ -570,7 +582,8 @@ export const api = ($root.api = (() => {
         function ListSnpRequest(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -603,9 +616,10 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         ListSnpRequest.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.page != null && Object.hasOwnProperty.call(message, "page"))
-                writer.uint32(/* id 1, wireType 0 =*/ 8).int32(message.page);
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.page);
             return writer;
         };
 
@@ -634,18 +648,18 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         ListSnpRequest.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.ListSnpRequest();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.ListSnpRequest();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.page = reader.int32();
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.page = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -662,7 +676,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         ListSnpRequest.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -675,9 +690,11 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         ListSnpRequest.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.page != null && message.hasOwnProperty("page"))
-                if (!$util.isInteger(message.page)) return "page: integer expected";
+                if (!$util.isInteger(message.page))
+                    return "page: integer expected";
             return null;
         };
 
@@ -690,9 +707,11 @@ export const api = ($root.api = (() => {
          * @returns {api.ListSnpRequest} ListSnpRequest
          */
         ListSnpRequest.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.ListSnpRequest) return object;
+            if (object instanceof $root.api.ListSnpRequest)
+                return object;
             let message = new $root.api.ListSnpRequest();
-            if (object.page != null) message.page = object.page | 0;
+            if (object.page != null)
+                message.page = object.page | 0;
             return message;
         };
 
@@ -706,10 +725,13 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         ListSnpRequest.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.defaults) object.page = 0;
-            if (message.page != null && message.hasOwnProperty("page")) object.page = message.page;
+            if (options.defaults)
+                object.page = 0;
+            if (message.page != null && message.hasOwnProperty("page"))
+                object.page = message.page;
             return object;
         };
 
@@ -727,7 +749,8 @@ export const api = ($root.api = (() => {
         return ListSnpRequest;
     })();
 
-    api.ListSnpReply = (function () {
+    api.ListSnpReply = (function() {
+
         /**
          * Properties of a ListSnpReply.
          * @memberof api
@@ -747,7 +770,8 @@ export const api = ($root.api = (() => {
             this.snps = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -780,13 +804,11 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         ListSnpReply.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.snps != null && message.snps.length)
                 for (let i = 0; i < message.snps.length; ++i)
-                    $root.api.Snp.encode(
-                        message.snps[i],
-                        writer.uint32(/* id 1, wireType 2 =*/ 10).fork()
-                    ).ldelim();
+                    $root.api.Snp.encode(message.snps[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             return writer;
         };
 
@@ -815,19 +837,20 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         ListSnpReply.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.ListSnpReply();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.ListSnpReply();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        if (!(message.snps && message.snps.length)) message.snps = [];
-                        message.snps.push($root.api.Snp.decode(reader, reader.uint32()));
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    if (!(message.snps && message.snps.length))
+                        message.snps = [];
+                    message.snps.push($root.api.Snp.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -844,7 +867,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         ListSnpReply.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -857,12 +881,15 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         ListSnpReply.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.snps != null && message.hasOwnProperty("snps")) {
-                if (!Array.isArray(message.snps)) return "snps: array expected";
+                if (!Array.isArray(message.snps))
+                    return "snps: array expected";
                 for (let i = 0; i < message.snps.length; ++i) {
                     let error = $root.api.Snp.verify(message.snps[i]);
-                    if (error) return "snps." + error;
+                    if (error)
+                        return "snps." + error;
                 }
             }
             return null;
@@ -877,7 +904,8 @@ export const api = ($root.api = (() => {
          * @returns {api.ListSnpReply} ListSnpReply
          */
         ListSnpReply.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.ListSnpReply) return object;
+            if (object instanceof $root.api.ListSnpReply)
+                return object;
             let message = new $root.api.ListSnpReply();
             if (object.snps) {
                 if (!Array.isArray(object.snps))
@@ -902,9 +930,11 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         ListSnpReply.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.arrays || options.defaults) object.snps = [];
+            if (options.arrays || options.defaults)
+                object.snps = [];
             if (message.snps && message.snps.length) {
                 object.snps = [];
                 for (let j = 0; j < message.snps.length; ++j)
@@ -927,7 +957,387 @@ export const api = ($root.api = (() => {
         return ListSnpReply;
     })();
 
-    api.SearchRequest = (function () {
+    api.GetStrainRequest = (function() {
+
+        /**
+         * Properties of a GetStrainRequest.
+         * @memberof api
+         * @interface IGetStrainRequest
+         * @property {string|null} [id] GetStrainRequest id
+         */
+
+        /**
+         * Constructs a new GetStrainRequest.
+         * @memberof api
+         * @classdesc Represents a GetStrainRequest.
+         * @implements IGetStrainRequest
+         * @constructor
+         * @param {api.IGetStrainRequest=} [properties] Properties to set
+         */
+        function GetStrainRequest(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetStrainRequest id.
+         * @member {string} id
+         * @memberof api.GetStrainRequest
+         * @instance
+         */
+        GetStrainRequest.prototype.id = "";
+
+        /**
+         * Creates a new GetStrainRequest instance using the specified properties.
+         * @function create
+         * @memberof api.GetStrainRequest
+         * @static
+         * @param {api.IGetStrainRequest=} [properties] Properties to set
+         * @returns {api.GetStrainRequest} GetStrainRequest instance
+         */
+        GetStrainRequest.create = function create(properties) {
+            return new GetStrainRequest(properties);
+        };
+
+        /**
+         * Encodes the specified GetStrainRequest message. Does not implicitly {@link api.GetStrainRequest.verify|verify} messages.
+         * @function encode
+         * @memberof api.GetStrainRequest
+         * @static
+         * @param {api.IGetStrainRequest} message GetStrainRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetStrainRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetStrainRequest message, length delimited. Does not implicitly {@link api.GetStrainRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.GetStrainRequest
+         * @static
+         * @param {api.IGetStrainRequest} message GetStrainRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetStrainRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetStrainRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.GetStrainRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.GetStrainRequest} GetStrainRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetStrainRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.GetStrainRequest();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetStrainRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.GetStrainRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.GetStrainRequest} GetStrainRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetStrainRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetStrainRequest message.
+         * @function verify
+         * @memberof api.GetStrainRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetStrainRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a GetStrainRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.GetStrainRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.GetStrainRequest} GetStrainRequest
+         */
+        GetStrainRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.GetStrainRequest)
+                return object;
+            let message = new $root.api.GetStrainRequest();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetStrainRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.GetStrainRequest
+         * @static
+         * @param {api.GetStrainRequest} message GetStrainRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetStrainRequest.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this GetStrainRequest to JSON.
+         * @function toJSON
+         * @memberof api.GetStrainRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetStrainRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GetStrainRequest;
+    })();
+
+    api.GetStrainReply = (function() {
+
+        /**
+         * Properties of a GetStrainReply.
+         * @memberof api
+         * @interface IGetStrainReply
+         * @property {api.IStrainResult|null} [result] GetStrainReply result
+         */
+
+        /**
+         * Constructs a new GetStrainReply.
+         * @memberof api
+         * @classdesc Represents a GetStrainReply.
+         * @implements IGetStrainReply
+         * @constructor
+         * @param {api.IGetStrainReply=} [properties] Properties to set
+         */
+        function GetStrainReply(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetStrainReply result.
+         * @member {api.IStrainResult|null|undefined} result
+         * @memberof api.GetStrainReply
+         * @instance
+         */
+        GetStrainReply.prototype.result = null;
+
+        /**
+         * Creates a new GetStrainReply instance using the specified properties.
+         * @function create
+         * @memberof api.GetStrainReply
+         * @static
+         * @param {api.IGetStrainReply=} [properties] Properties to set
+         * @returns {api.GetStrainReply} GetStrainReply instance
+         */
+        GetStrainReply.create = function create(properties) {
+            return new GetStrainReply(properties);
+        };
+
+        /**
+         * Encodes the specified GetStrainReply message. Does not implicitly {@link api.GetStrainReply.verify|verify} messages.
+         * @function encode
+         * @memberof api.GetStrainReply
+         * @static
+         * @param {api.IGetStrainReply} message GetStrainReply message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetStrainReply.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.result != null && Object.hasOwnProperty.call(message, "result"))
+                $root.api.StrainResult.encode(message.result, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetStrainReply message, length delimited. Does not implicitly {@link api.GetStrainReply.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.GetStrainReply
+         * @static
+         * @param {api.IGetStrainReply} message GetStrainReply message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetStrainReply.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetStrainReply message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.GetStrainReply
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.GetStrainReply} GetStrainReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetStrainReply.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.GetStrainReply();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.result = $root.api.StrainResult.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetStrainReply message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.GetStrainReply
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.GetStrainReply} GetStrainReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetStrainReply.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetStrainReply message.
+         * @function verify
+         * @memberof api.GetStrainReply
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetStrainReply.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.result != null && message.hasOwnProperty("result")) {
+                let error = $root.api.StrainResult.verify(message.result);
+                if (error)
+                    return "result." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GetStrainReply message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.GetStrainReply
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.GetStrainReply} GetStrainReply
+         */
+        GetStrainReply.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.GetStrainReply)
+                return object;
+            let message = new $root.api.GetStrainReply();
+            if (object.result != null) {
+                if (typeof object.result !== "object")
+                    throw TypeError(".api.GetStrainReply.result: object expected");
+                message.result = $root.api.StrainResult.fromObject(object.result);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetStrainReply message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.GetStrainReply
+         * @static
+         * @param {api.GetStrainReply} message GetStrainReply
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetStrainReply.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.result = null;
+            if (message.result != null && message.hasOwnProperty("result"))
+                object.result = $root.api.StrainResult.toObject(message.result, options);
+            return object;
+        };
+
+        /**
+         * Converts this GetStrainReply to JSON.
+         * @function toJSON
+         * @memberof api.GetStrainReply
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetStrainReply.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GetStrainReply;
+    })();
+
+    api.SearchRequest = (function() {
+
         /**
          * Properties of a SearchRequest.
          * @memberof api
@@ -946,7 +1356,8 @@ export const api = ($root.api = (() => {
         function SearchRequest(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -979,12 +1390,10 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         SearchRequest.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.condition != null && Object.hasOwnProperty.call(message, "condition"))
-                $root.api.BoolStrainCondition.encode(
-                    message.condition,
-                    writer.uint32(/* id 1, wireType 2 =*/ 10).fork()
-                ).ldelim();
+                $root.api.BoolStrainCondition.encode(message.condition, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             return writer;
         };
 
@@ -1013,21 +1422,18 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         SearchRequest.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.SearchRequest();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.SearchRequest();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.condition = $root.api.BoolStrainCondition.decode(
-                            reader,
-                            reader.uint32()
-                        );
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.condition = $root.api.BoolStrainCondition.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -1044,7 +1450,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         SearchRequest.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -1057,10 +1464,12 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         SearchRequest.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.condition != null && message.hasOwnProperty("condition")) {
                 let error = $root.api.BoolStrainCondition.verify(message.condition);
-                if (error) return "condition." + error;
+                if (error)
+                    return "condition." + error;
             }
             return null;
         };
@@ -1074,7 +1483,8 @@ export const api = ($root.api = (() => {
          * @returns {api.SearchRequest} SearchRequest
          */
         SearchRequest.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.SearchRequest) return object;
+            if (object instanceof $root.api.SearchRequest)
+                return object;
             let message = new $root.api.SearchRequest();
             if (object.condition != null) {
                 if (typeof object.condition !== "object")
@@ -1094,14 +1504,13 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         SearchRequest.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.defaults) object.condition = null;
+            if (options.defaults)
+                object.condition = null;
             if (message.condition != null && message.hasOwnProperty("condition"))
-                object.condition = $root.api.BoolStrainCondition.toObject(
-                    message.condition,
-                    options
-                );
+                object.condition = $root.api.BoolStrainCondition.toObject(message.condition, options);
             return object;
         };
 
@@ -1119,7 +1528,8 @@ export const api = ($root.api = (() => {
         return SearchRequest;
     })();
 
-    api.SearchReply = (function () {
+    api.SearchReply = (function() {
+
         /**
          * Properties of a SearchReply.
          * @memberof api
@@ -1137,7 +1547,8 @@ export const api = ($root.api = (() => {
         function SearchReply(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -1162,7 +1573,8 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         SearchReply.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             return writer;
         };
 
@@ -1191,15 +1603,15 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         SearchReply.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.SearchReply();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.SearchReply();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -1216,7 +1628,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         SearchReply.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -1229,7 +1642,8 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         SearchReply.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             return null;
         };
 
@@ -1242,7 +1656,8 @@ export const api = ($root.api = (() => {
          * @returns {api.SearchReply} SearchReply
          */
         SearchReply.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.SearchReply) return object;
+            if (object instanceof $root.api.SearchReply)
+                return object;
             return new $root.api.SearchReply();
         };
 
@@ -1273,7 +1688,8 @@ export const api = ($root.api = (() => {
         return SearchReply;
     })();
 
-    api.Graph = (function () {
+    api.Graph = (function() {
+
         /**
          * Properties of a Graph.
          * @memberof api
@@ -1295,7 +1711,8 @@ export const api = ($root.api = (() => {
             this.edges = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -1336,19 +1753,14 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         Graph.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.nodes != null && message.nodes.length)
                 for (let i = 0; i < message.nodes.length; ++i)
-                    $root.api.Node.encode(
-                        message.nodes[i],
-                        writer.uint32(/* id 1, wireType 2 =*/ 10).fork()
-                    ).ldelim();
+                    $root.api.Node.encode(message.nodes[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.edges != null && message.edges.length)
                 for (let i = 0; i < message.edges.length; ++i)
-                    $root.api.Edge.encode(
-                        message.edges[i],
-                        writer.uint32(/* id 2, wireType 2 =*/ 18).fork()
-                    ).ldelim();
+                    $root.api.Edge.encode(message.edges[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             return writer;
         };
 
@@ -1377,23 +1789,25 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Graph.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.Graph();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.Graph();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        if (!(message.nodes && message.nodes.length)) message.nodes = [];
-                        message.nodes.push($root.api.Node.decode(reader, reader.uint32()));
-                        break;
-                    case 2:
-                        if (!(message.edges && message.edges.length)) message.edges = [];
-                        message.edges.push($root.api.Edge.decode(reader, reader.uint32()));
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    if (!(message.nodes && message.nodes.length))
+                        message.nodes = [];
+                    message.nodes.push($root.api.Node.decode(reader, reader.uint32()));
+                    break;
+                case 2:
+                    if (!(message.edges && message.edges.length))
+                        message.edges = [];
+                    message.edges.push($root.api.Edge.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -1410,7 +1824,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Graph.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -1423,19 +1838,24 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         Graph.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.nodes != null && message.hasOwnProperty("nodes")) {
-                if (!Array.isArray(message.nodes)) return "nodes: array expected";
+                if (!Array.isArray(message.nodes))
+                    return "nodes: array expected";
                 for (let i = 0; i < message.nodes.length; ++i) {
                     let error = $root.api.Node.verify(message.nodes[i]);
-                    if (error) return "nodes." + error;
+                    if (error)
+                        return "nodes." + error;
                 }
             }
             if (message.edges != null && message.hasOwnProperty("edges")) {
-                if (!Array.isArray(message.edges)) return "edges: array expected";
+                if (!Array.isArray(message.edges))
+                    return "edges: array expected";
                 for (let i = 0; i < message.edges.length; ++i) {
                     let error = $root.api.Edge.verify(message.edges[i]);
-                    if (error) return "edges." + error;
+                    if (error)
+                        return "edges." + error;
                 }
             }
             return null;
@@ -1450,7 +1870,8 @@ export const api = ($root.api = (() => {
          * @returns {api.Graph} Graph
          */
         Graph.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.Graph) return object;
+            if (object instanceof $root.api.Graph)
+                return object;
             let message = new $root.api.Graph();
             if (object.nodes) {
                 if (!Array.isArray(object.nodes))
@@ -1485,7 +1906,8 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         Graph.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
             if (options.arrays || options.defaults) {
                 object.nodes = [];
@@ -1518,12 +1940,14 @@ export const api = ($root.api = (() => {
         return Graph;
     })();
 
-    api.Node = (function () {
+    api.Node = (function() {
+
         /**
          * Properties of a Node.
          * @memberof api
          * @interface INode
          * @property {number|null} [id] Node id
+         * @property {string|null} [name] Node name
          * @property {number|null} [positionX] Node positionX
          * @property {number|null} [positionY] Node positionY
          */
@@ -1539,7 +1963,8 @@ export const api = ($root.api = (() => {
         function Node(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -1549,6 +1974,14 @@ export const api = ($root.api = (() => {
          * @instance
          */
         Node.prototype.id = 0;
+
+        /**
+         * Node name.
+         * @member {string} name
+         * @memberof api.Node
+         * @instance
+         */
+        Node.prototype.name = "";
 
         /**
          * Node positionX.
@@ -1588,13 +2021,16 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         Node.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.id != null && Object.hasOwnProperty.call(message, "id"))
-                writer.uint32(/* id 1, wireType 0 =*/ 8).int32(message.id);
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.id);
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             if (message.positionX != null && Object.hasOwnProperty.call(message, "positionX"))
-                writer.uint32(/* id 2, wireType 1 =*/ 17).double(message.positionX);
+                writer.uint32(/* id 3, wireType 1 =*/25).double(message.positionX);
             if (message.positionY != null && Object.hasOwnProperty.call(message, "positionY"))
-                writer.uint32(/* id 3, wireType 1 =*/ 25).double(message.positionY);
+                writer.uint32(/* id 4, wireType 1 =*/33).double(message.positionY);
             return writer;
         };
 
@@ -1623,24 +2059,27 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Node.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.Node();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.Node();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.id = reader.int32();
-                        break;
-                    case 2:
-                        message.positionX = reader.double();
-                        break;
-                    case 3:
-                        message.positionY = reader.double();
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.id = reader.int32();
+                    break;
+                case 2:
+                    message.name = reader.string();
+                    break;
+                case 3:
+                    message.positionX = reader.double();
+                    break;
+                case 4:
+                    message.positionY = reader.double();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -1657,7 +2096,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Node.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -1670,13 +2110,20 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         Node.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.id != null && message.hasOwnProperty("id"))
-                if (!$util.isInteger(message.id)) return "id: integer expected";
+                if (!$util.isInteger(message.id))
+                    return "id: integer expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
             if (message.positionX != null && message.hasOwnProperty("positionX"))
-                if (typeof message.positionX !== "number") return "positionX: number expected";
+                if (typeof message.positionX !== "number")
+                    return "positionX: number expected";
             if (message.positionY != null && message.hasOwnProperty("positionY"))
-                if (typeof message.positionY !== "number") return "positionY: number expected";
+                if (typeof message.positionY !== "number")
+                    return "positionY: number expected";
             return null;
         };
 
@@ -1689,11 +2136,17 @@ export const api = ($root.api = (() => {
          * @returns {api.Node} Node
          */
         Node.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.Node) return object;
+            if (object instanceof $root.api.Node)
+                return object;
             let message = new $root.api.Node();
-            if (object.id != null) message.id = object.id | 0;
-            if (object.positionX != null) message.positionX = Number(object.positionX);
-            if (object.positionY != null) message.positionY = Number(object.positionY);
+            if (object.id != null)
+                message.id = object.id | 0;
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.positionX != null)
+                message.positionX = Number(object.positionX);
+            if (object.positionY != null)
+                message.positionY = Number(object.positionY);
             return message;
         };
 
@@ -1707,24 +2160,23 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         Node.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
             if (options.defaults) {
                 object.id = 0;
+                object.name = "";
                 object.positionX = 0;
                 object.positionY = 0;
             }
-            if (message.id != null && message.hasOwnProperty("id")) object.id = message.id;
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
             if (message.positionX != null && message.hasOwnProperty("positionX"))
-                object.positionX =
-                    options.json && !isFinite(message.positionX)
-                        ? String(message.positionX)
-                        : message.positionX;
+                object.positionX = options.json && !isFinite(message.positionX) ? String(message.positionX) : message.positionX;
             if (message.positionY != null && message.hasOwnProperty("positionY"))
-                object.positionY =
-                    options.json && !isFinite(message.positionY)
-                        ? String(message.positionY)
-                        : message.positionY;
+                object.positionY = options.json && !isFinite(message.positionY) ? String(message.positionY) : message.positionY;
             return object;
         };
 
@@ -1742,7 +2194,8 @@ export const api = ($root.api = (() => {
         return Node;
     })();
 
-    api.Edge = (function () {
+    api.Edge = (function() {
+
         /**
          * Properties of an Edge.
          * @memberof api
@@ -1763,7 +2216,8 @@ export const api = ($root.api = (() => {
         function Edge(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -1812,13 +2266,14 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         Edge.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.id != null && Object.hasOwnProperty.call(message, "id"))
-                writer.uint32(/* id 1, wireType 0 =*/ 8).int32(message.id);
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.id);
             if (message.firstNode != null && Object.hasOwnProperty.call(message, "firstNode"))
-                writer.uint32(/* id 2, wireType 0 =*/ 16).int32(message.firstNode);
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.firstNode);
             if (message.secondNode != null && Object.hasOwnProperty.call(message, "secondNode"))
-                writer.uint32(/* id 3, wireType 0 =*/ 24).int32(message.secondNode);
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.secondNode);
             return writer;
         };
 
@@ -1847,24 +2302,24 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Edge.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.Edge();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.Edge();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.id = reader.int32();
-                        break;
-                    case 2:
-                        message.firstNode = reader.int32();
-                        break;
-                    case 3:
-                        message.secondNode = reader.int32();
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.id = reader.int32();
+                    break;
+                case 2:
+                    message.firstNode = reader.int32();
+                    break;
+                case 3:
+                    message.secondNode = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -1881,7 +2336,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Edge.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -1894,13 +2350,17 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         Edge.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.id != null && message.hasOwnProperty("id"))
-                if (!$util.isInteger(message.id)) return "id: integer expected";
+                if (!$util.isInteger(message.id))
+                    return "id: integer expected";
             if (message.firstNode != null && message.hasOwnProperty("firstNode"))
-                if (!$util.isInteger(message.firstNode)) return "firstNode: integer expected";
+                if (!$util.isInteger(message.firstNode))
+                    return "firstNode: integer expected";
             if (message.secondNode != null && message.hasOwnProperty("secondNode"))
-                if (!$util.isInteger(message.secondNode)) return "secondNode: integer expected";
+                if (!$util.isInteger(message.secondNode))
+                    return "secondNode: integer expected";
             return null;
         };
 
@@ -1913,11 +2373,15 @@ export const api = ($root.api = (() => {
          * @returns {api.Edge} Edge
          */
         Edge.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.Edge) return object;
+            if (object instanceof $root.api.Edge)
+                return object;
             let message = new $root.api.Edge();
-            if (object.id != null) message.id = object.id | 0;
-            if (object.firstNode != null) message.firstNode = object.firstNode | 0;
-            if (object.secondNode != null) message.secondNode = object.secondNode | 0;
+            if (object.id != null)
+                message.id = object.id | 0;
+            if (object.firstNode != null)
+                message.firstNode = object.firstNode | 0;
+            if (object.secondNode != null)
+                message.secondNode = object.secondNode | 0;
             return message;
         };
 
@@ -1931,14 +2395,16 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         Edge.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
             if (options.defaults) {
                 object.id = 0;
                 object.firstNode = 0;
                 object.secondNode = 0;
             }
-            if (message.id != null && message.hasOwnProperty("id")) object.id = message.id;
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
             if (message.firstNode != null && message.hasOwnProperty("firstNode"))
                 object.firstNode = message.firstNode;
             if (message.secondNode != null && message.hasOwnProperty("secondNode"))
@@ -1967,15 +2433,15 @@ export const api = ($root.api = (() => {
      * @property {number} OR=0 OR value
      * @property {number} AND=1 AND value
      */
-    api.BoolOperator = (function () {
-        const valuesById = {},
-            values = Object.create(valuesById);
-        values[(valuesById[0] = "OR")] = 0;
-        values[(valuesById[1] = "AND")] = 1;
+    api.BoolOperator = (function() {
+        const valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "OR"] = 0;
+        values[valuesById[1] = "AND"] = 1;
         return values;
     })();
 
-    api.StrainCondition = (function () {
+    api.StrainCondition = (function() {
+
         /**
          * Properties of a StrainCondition.
          * @memberof api
@@ -2001,7 +2467,8 @@ export const api = ($root.api = (() => {
         function StrainCondition(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -2078,18 +2545,8 @@ export const api = ($root.api = (() => {
          * @instance
          */
         Object.defineProperty(StrainCondition.prototype, "condition", {
-            get: $util.oneOfGetter(
-                ($oneOfFields = [
-                    "accession",
-                    "biosample",
-                    "country",
-                    "date",
-                    "gene",
-                    "lineage",
-                    "bool",
-                ])
-            ),
-            set: $util.oneOfSetter($oneOfFields),
+            get: $util.oneOfGetter($oneOfFields = ["accession", "biosample", "country", "date", "gene", "lineage", "bool"]),
+            set: $util.oneOfSetter($oneOfFields)
         });
 
         /**
@@ -2114,44 +2571,24 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         StrainCondition.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.negate != null && Object.hasOwnProperty.call(message, "negate"))
-                writer.uint32(/* id 1, wireType 0 =*/ 8).bool(message.negate);
+                writer.uint32(/* id 1, wireType 0 =*/8).bool(message.negate);
             if (message.accession != null && Object.hasOwnProperty.call(message, "accession"))
-                $root.api.AccessionCondition.encode(
-                    message.accession,
-                    writer.uint32(/* id 2, wireType 2 =*/ 18).fork()
-                ).ldelim();
+                $root.api.AccessionCondition.encode(message.accession, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             if (message.biosample != null && Object.hasOwnProperty.call(message, "biosample"))
-                $root.api.BiosampleCondition.encode(
-                    message.biosample,
-                    writer.uint32(/* id 3, wireType 2 =*/ 26).fork()
-                ).ldelim();
+                $root.api.BiosampleCondition.encode(message.biosample, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             if (message.country != null && Object.hasOwnProperty.call(message, "country"))
-                $root.api.CountryCondition.encode(
-                    message.country,
-                    writer.uint32(/* id 4, wireType 2 =*/ 34).fork()
-                ).ldelim();
+                $root.api.CountryCondition.encode(message.country, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             if (message.date != null && Object.hasOwnProperty.call(message, "date"))
-                $root.api.DateCondition.encode(
-                    message.date,
-                    writer.uint32(/* id 5, wireType 2 =*/ 42).fork()
-                ).ldelim();
+                $root.api.DateCondition.encode(message.date, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             if (message.gene != null && Object.hasOwnProperty.call(message, "gene"))
-                $root.api.GeneStrainCondition.encode(
-                    message.gene,
-                    writer.uint32(/* id 6, wireType 2 =*/ 50).fork()
-                ).ldelim();
+                $root.api.GeneStrainCondition.encode(message.gene, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
             if (message.lineage != null && Object.hasOwnProperty.call(message, "lineage"))
-                $root.api.LineageStrainCondition.encode(
-                    message.lineage,
-                    writer.uint32(/* id 7, wireType 2 =*/ 58).fork()
-                ).ldelim();
+                $root.api.LineageStrainCondition.encode(message.lineage, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
             if (message.bool != null && Object.hasOwnProperty.call(message, "bool"))
-                $root.api.BoolStrainCondition.encode(
-                    message.bool,
-                    writer.uint32(/* id 8, wireType 2 =*/ 66).fork()
-                ).ldelim();
+                $root.api.BoolStrainCondition.encode(message.bool, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
             return writer;
         };
 
@@ -2180,57 +2617,39 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         StrainCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.StrainCondition();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.StrainCondition();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.negate = reader.bool();
-                        break;
-                    case 2:
-                        message.accession = $root.api.AccessionCondition.decode(
-                            reader,
-                            reader.uint32()
-                        );
-                        break;
-                    case 3:
-                        message.biosample = $root.api.BiosampleCondition.decode(
-                            reader,
-                            reader.uint32()
-                        );
-                        break;
-                    case 4:
-                        message.country = $root.api.CountryCondition.decode(
-                            reader,
-                            reader.uint32()
-                        );
-                        break;
-                    case 5:
-                        message.date = $root.api.DateCondition.decode(reader, reader.uint32());
-                        break;
-                    case 6:
-                        message.gene = $root.api.GeneStrainCondition.decode(
-                            reader,
-                            reader.uint32()
-                        );
-                        break;
-                    case 7:
-                        message.lineage = $root.api.LineageStrainCondition.decode(
-                            reader,
-                            reader.uint32()
-                        );
-                        break;
-                    case 8:
-                        message.bool = $root.api.BoolStrainCondition.decode(
-                            reader,
-                            reader.uint32()
-                        );
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.negate = reader.bool();
+                    break;
+                case 2:
+                    message.accession = $root.api.AccessionCondition.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    message.biosample = $root.api.BiosampleCondition.decode(reader, reader.uint32());
+                    break;
+                case 4:
+                    message.country = $root.api.CountryCondition.decode(reader, reader.uint32());
+                    break;
+                case 5:
+                    message.date = $root.api.DateCondition.decode(reader, reader.uint32());
+                    break;
+                case 6:
+                    message.gene = $root.api.GeneStrainCondition.decode(reader, reader.uint32());
+                    break;
+                case 7:
+                    message.lineage = $root.api.LineageStrainCondition.decode(reader, reader.uint32());
+                    break;
+                case 8:
+                    message.bool = $root.api.BoolStrainCondition.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -2247,7 +2666,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         StrainCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -2260,63 +2680,78 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         StrainCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             let properties = {};
             if (message.negate != null && message.hasOwnProperty("negate"))
-                if (typeof message.negate !== "boolean") return "negate: boolean expected";
+                if (typeof message.negate !== "boolean")
+                    return "negate: boolean expected";
             if (message.accession != null && message.hasOwnProperty("accession")) {
                 properties.condition = 1;
                 {
                     let error = $root.api.AccessionCondition.verify(message.accession);
-                    if (error) return "accession." + error;
+                    if (error)
+                        return "accession." + error;
                 }
             }
             if (message.biosample != null && message.hasOwnProperty("biosample")) {
-                if (properties.condition === 1) return "condition: multiple values";
+                if (properties.condition === 1)
+                    return "condition: multiple values";
                 properties.condition = 1;
                 {
                     let error = $root.api.BiosampleCondition.verify(message.biosample);
-                    if (error) return "biosample." + error;
+                    if (error)
+                        return "biosample." + error;
                 }
             }
             if (message.country != null && message.hasOwnProperty("country")) {
-                if (properties.condition === 1) return "condition: multiple values";
+                if (properties.condition === 1)
+                    return "condition: multiple values";
                 properties.condition = 1;
                 {
                     let error = $root.api.CountryCondition.verify(message.country);
-                    if (error) return "country." + error;
+                    if (error)
+                        return "country." + error;
                 }
             }
             if (message.date != null && message.hasOwnProperty("date")) {
-                if (properties.condition === 1) return "condition: multiple values";
+                if (properties.condition === 1)
+                    return "condition: multiple values";
                 properties.condition = 1;
                 {
                     let error = $root.api.DateCondition.verify(message.date);
-                    if (error) return "date." + error;
+                    if (error)
+                        return "date." + error;
                 }
             }
             if (message.gene != null && message.hasOwnProperty("gene")) {
-                if (properties.condition === 1) return "condition: multiple values";
+                if (properties.condition === 1)
+                    return "condition: multiple values";
                 properties.condition = 1;
                 {
                     let error = $root.api.GeneStrainCondition.verify(message.gene);
-                    if (error) return "gene." + error;
+                    if (error)
+                        return "gene." + error;
                 }
             }
             if (message.lineage != null && message.hasOwnProperty("lineage")) {
-                if (properties.condition === 1) return "condition: multiple values";
+                if (properties.condition === 1)
+                    return "condition: multiple values";
                 properties.condition = 1;
                 {
                     let error = $root.api.LineageStrainCondition.verify(message.lineage);
-                    if (error) return "lineage." + error;
+                    if (error)
+                        return "lineage." + error;
                 }
             }
             if (message.bool != null && message.hasOwnProperty("bool")) {
-                if (properties.condition === 1) return "condition: multiple values";
+                if (properties.condition === 1)
+                    return "condition: multiple values";
                 properties.condition = 1;
                 {
                     let error = $root.api.BoolStrainCondition.verify(message.bool);
-                    if (error) return "bool." + error;
+                    if (error)
+                        return "bool." + error;
                 }
             }
             return null;
@@ -2331,9 +2766,11 @@ export const api = ($root.api = (() => {
          * @returns {api.StrainCondition} StrainCondition
          */
         StrainCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.StrainCondition) return object;
+            if (object instanceof $root.api.StrainCondition)
+                return object;
             let message = new $root.api.StrainCondition();
-            if (object.negate != null) message.negate = Boolean(object.negate);
+            if (object.negate != null)
+                message.negate = Boolean(object.negate);
             if (object.accession != null) {
                 if (typeof object.accession !== "object")
                     throw TypeError(".api.StrainCondition.accession: object expected");
@@ -2382,47 +2819,47 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         StrainCondition.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.defaults) object.negate = false;
+            if (options.defaults)
+                object.negate = false;
             if (message.negate != null && message.hasOwnProperty("negate"))
                 object.negate = message.negate;
             if (message.accession != null && message.hasOwnProperty("accession")) {
-                object.accession = $root.api.AccessionCondition.toObject(
-                    message.accession,
-                    options
-                );
-                if (options.oneofs) object.condition = "accession";
+                object.accession = $root.api.AccessionCondition.toObject(message.accession, options);
+                if (options.oneofs)
+                    object.condition = "accession";
             }
             if (message.biosample != null && message.hasOwnProperty("biosample")) {
-                object.biosample = $root.api.BiosampleCondition.toObject(
-                    message.biosample,
-                    options
-                );
-                if (options.oneofs) object.condition = "biosample";
+                object.biosample = $root.api.BiosampleCondition.toObject(message.biosample, options);
+                if (options.oneofs)
+                    object.condition = "biosample";
             }
             if (message.country != null && message.hasOwnProperty("country")) {
                 object.country = $root.api.CountryCondition.toObject(message.country, options);
-                if (options.oneofs) object.condition = "country";
+                if (options.oneofs)
+                    object.condition = "country";
             }
             if (message.date != null && message.hasOwnProperty("date")) {
                 object.date = $root.api.DateCondition.toObject(message.date, options);
-                if (options.oneofs) object.condition = "date";
+                if (options.oneofs)
+                    object.condition = "date";
             }
             if (message.gene != null && message.hasOwnProperty("gene")) {
                 object.gene = $root.api.GeneStrainCondition.toObject(message.gene, options);
-                if (options.oneofs) object.condition = "gene";
+                if (options.oneofs)
+                    object.condition = "gene";
             }
             if (message.lineage != null && message.hasOwnProperty("lineage")) {
-                object.lineage = $root.api.LineageStrainCondition.toObject(
-                    message.lineage,
-                    options
-                );
-                if (options.oneofs) object.condition = "lineage";
+                object.lineage = $root.api.LineageStrainCondition.toObject(message.lineage, options);
+                if (options.oneofs)
+                    object.condition = "lineage";
             }
             if (message.bool != null && message.hasOwnProperty("bool")) {
                 object.bool = $root.api.BoolStrainCondition.toObject(message.bool, options);
-                if (options.oneofs) object.condition = "bool";
+                if (options.oneofs)
+                    object.condition = "bool";
             }
             return object;
         };
@@ -2441,7 +2878,8 @@ export const api = ($root.api = (() => {
         return StrainCondition;
     })();
 
-    api.BoolStrainCondition = (function () {
+    api.BoolStrainCondition = (function() {
+
         /**
          * Properties of a BoolStrainCondition.
          * @memberof api
@@ -2462,7 +2900,8 @@ export const api = ($root.api = (() => {
             this.conditions = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -2503,15 +2942,13 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         BoolStrainCondition.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.operator != null && Object.hasOwnProperty.call(message, "operator"))
-                writer.uint32(/* id 1, wireType 0 =*/ 8).int32(message.operator);
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.operator);
             if (message.conditions != null && message.conditions.length)
                 for (let i = 0; i < message.conditions.length; ++i)
-                    $root.api.StrainCondition.encode(
-                        message.conditions[i],
-                        writer.uint32(/* id 3, wireType 2 =*/ 26).fork()
-                    ).ldelim();
+                    $root.api.StrainCondition.encode(message.conditions[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             return writer;
         };
 
@@ -2540,25 +2977,23 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         BoolStrainCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.BoolStrainCondition();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.BoolStrainCondition();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.operator = reader.int32();
-                        break;
-                    case 3:
-                        if (!(message.conditions && message.conditions.length))
-                            message.conditions = [];
-                        message.conditions.push(
-                            $root.api.StrainCondition.decode(reader, reader.uint32())
-                        );
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.operator = reader.int32();
+                    break;
+                case 3:
+                    if (!(message.conditions && message.conditions.length))
+                        message.conditions = [];
+                    message.conditions.push($root.api.StrainCondition.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -2575,7 +3010,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         BoolStrainCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -2588,20 +3024,23 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         BoolStrainCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.operator != null && message.hasOwnProperty("operator"))
                 switch (message.operator) {
-                    default:
-                        return "operator: enum value expected";
-                    case 0:
-                    case 1:
-                        break;
+                default:
+                    return "operator: enum value expected";
+                case 0:
+                case 1:
+                    break;
                 }
             if (message.conditions != null && message.hasOwnProperty("conditions")) {
-                if (!Array.isArray(message.conditions)) return "conditions: array expected";
+                if (!Array.isArray(message.conditions))
+                    return "conditions: array expected";
                 for (let i = 0; i < message.conditions.length; ++i) {
                     let error = $root.api.StrainCondition.verify(message.conditions[i]);
-                    if (error) return "conditions." + error;
+                    if (error)
+                        return "conditions." + error;
                 }
             }
             return null;
@@ -2616,17 +3055,18 @@ export const api = ($root.api = (() => {
          * @returns {api.BoolStrainCondition} BoolStrainCondition
          */
         BoolStrainCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.BoolStrainCondition) return object;
+            if (object instanceof $root.api.BoolStrainCondition)
+                return object;
             let message = new $root.api.BoolStrainCondition();
             switch (object.operator) {
-                case "OR":
-                case 0:
-                    message.operator = 0;
-                    break;
-                case "AND":
-                case 1:
-                    message.operator = 1;
-                    break;
+            case "OR":
+            case 0:
+                message.operator = 0;
+                break;
+            case "AND":
+            case 1:
+                message.operator = 1;
+                break;
             }
             if (object.conditions) {
                 if (!Array.isArray(object.conditions))
@@ -2635,9 +3075,7 @@ export const api = ($root.api = (() => {
                 for (let i = 0; i < object.conditions.length; ++i) {
                     if (typeof object.conditions[i] !== "object")
                         throw TypeError(".api.BoolStrainCondition.conditions: object expected");
-                    message.conditions[i] = $root.api.StrainCondition.fromObject(
-                        object.conditions[i]
-                    );
+                    message.conditions[i] = $root.api.StrainCondition.fromObject(object.conditions[i]);
                 }
             }
             return message;
@@ -2653,22 +3091,19 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         BoolStrainCondition.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.arrays || options.defaults) object.conditions = [];
-            if (options.defaults) object.operator = options.enums === String ? "OR" : 0;
+            if (options.arrays || options.defaults)
+                object.conditions = [];
+            if (options.defaults)
+                object.operator = options.enums === String ? "OR" : 0;
             if (message.operator != null && message.hasOwnProperty("operator"))
-                object.operator =
-                    options.enums === String
-                        ? $root.api.BoolOperator[message.operator]
-                        : message.operator;
+                object.operator = options.enums === String ? $root.api.BoolOperator[message.operator] : message.operator;
             if (message.conditions && message.conditions.length) {
                 object.conditions = [];
                 for (let j = 0; j < message.conditions.length; ++j)
-                    object.conditions[j] = $root.api.StrainCondition.toObject(
-                        message.conditions[j],
-                        options
-                    );
+                    object.conditions[j] = $root.api.StrainCondition.toObject(message.conditions[j], options);
             }
             return object;
         };
@@ -2687,7 +3122,8 @@ export const api = ($root.api = (() => {
         return BoolStrainCondition;
     })();
 
-    api.DateCondition = (function () {
+    api.DateCondition = (function() {
+
         /**
          * Properties of a DateCondition.
          * @memberof api
@@ -2707,7 +3143,8 @@ export const api = ($root.api = (() => {
         function DateCondition(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -2748,17 +3185,12 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         DateCondition.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.from != null && Object.hasOwnProperty.call(message, "from"))
-                $root.google.protobuf.Timestamp.encode(
-                    message.from,
-                    writer.uint32(/* id 1, wireType 2 =*/ 10).fork()
-                ).ldelim();
+                $root.google.protobuf.Timestamp.encode(message.from, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.to != null && Object.hasOwnProperty.call(message, "to"))
-                $root.google.protobuf.Timestamp.encode(
-                    message.to,
-                    writer.uint32(/* id 2, wireType 2 =*/ 18).fork()
-                ).ldelim();
+                $root.google.protobuf.Timestamp.encode(message.to, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             return writer;
         };
 
@@ -2787,27 +3219,21 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         DateCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.DateCondition();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.DateCondition();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.from = $root.google.protobuf.Timestamp.decode(
-                            reader,
-                            reader.uint32()
-                        );
-                        break;
-                    case 2:
-                        message.to = $root.google.protobuf.Timestamp.decode(
-                            reader,
-                            reader.uint32()
-                        );
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.from = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                case 2:
+                    message.to = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -2824,7 +3250,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         DateCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -2837,14 +3264,17 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         DateCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.from != null && message.hasOwnProperty("from")) {
                 let error = $root.google.protobuf.Timestamp.verify(message.from);
-                if (error) return "from." + error;
+                if (error)
+                    return "from." + error;
             }
             if (message.to != null && message.hasOwnProperty("to")) {
                 let error = $root.google.protobuf.Timestamp.verify(message.to);
-                if (error) return "to." + error;
+                if (error)
+                    return "to." + error;
             }
             return null;
         };
@@ -2858,7 +3288,8 @@ export const api = ($root.api = (() => {
          * @returns {api.DateCondition} DateCondition
          */
         DateCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.DateCondition) return object;
+            if (object instanceof $root.api.DateCondition)
+                return object;
             let message = new $root.api.DateCondition();
             if (object.from != null) {
                 if (typeof object.from !== "object")
@@ -2883,7 +3314,8 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         DateCondition.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
             if (options.defaults) {
                 object.from = null;
@@ -2910,7 +3342,8 @@ export const api = ($root.api = (() => {
         return DateCondition;
     })();
 
-    api.CountryCondition = (function () {
+    api.CountryCondition = (function() {
+
         /**
          * Properties of a CountryCondition.
          * @memberof api
@@ -2930,7 +3363,8 @@ export const api = ($root.api = (() => {
             this.isoCodes = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -2963,10 +3397,11 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         CountryCondition.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.isoCodes != null && message.isoCodes.length)
                 for (let i = 0; i < message.isoCodes.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.isoCodes[i]);
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.isoCodes[i]);
             return writer;
         };
 
@@ -2995,19 +3430,20 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         CountryCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.CountryCondition();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.CountryCondition();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        if (!(message.isoCodes && message.isoCodes.length)) message.isoCodes = [];
-                        message.isoCodes.push(reader.string());
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    if (!(message.isoCodes && message.isoCodes.length))
+                        message.isoCodes = [];
+                    message.isoCodes.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -3024,7 +3460,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         CountryCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -3037,11 +3474,14 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         CountryCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.isoCodes != null && message.hasOwnProperty("isoCodes")) {
-                if (!Array.isArray(message.isoCodes)) return "isoCodes: array expected";
+                if (!Array.isArray(message.isoCodes))
+                    return "isoCodes: array expected";
                 for (let i = 0; i < message.isoCodes.length; ++i)
-                    if (!$util.isString(message.isoCodes[i])) return "isoCodes: string[] expected";
+                    if (!$util.isString(message.isoCodes[i]))
+                        return "isoCodes: string[] expected";
             }
             return null;
         };
@@ -3055,7 +3495,8 @@ export const api = ($root.api = (() => {
          * @returns {api.CountryCondition} CountryCondition
          */
         CountryCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.CountryCondition) return object;
+            if (object instanceof $root.api.CountryCondition)
+                return object;
             let message = new $root.api.CountryCondition();
             if (object.isoCodes) {
                 if (!Array.isArray(object.isoCodes))
@@ -3077,9 +3518,11 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         CountryCondition.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.arrays || options.defaults) object.isoCodes = [];
+            if (options.arrays || options.defaults)
+                object.isoCodes = [];
             if (message.isoCodes && message.isoCodes.length) {
                 object.isoCodes = [];
                 for (let j = 0; j < message.isoCodes.length; ++j)
@@ -3102,7 +3545,8 @@ export const api = ($root.api = (() => {
         return CountryCondition;
     })();
 
-    api.AccessionCondition = (function () {
+    api.AccessionCondition = (function() {
+
         /**
          * Properties of an AccessionCondition.
          * @memberof api
@@ -3122,7 +3566,8 @@ export const api = ($root.api = (() => {
             this.accessionNumbers = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -3155,10 +3600,11 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         AccessionCondition.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.accessionNumbers != null && message.accessionNumbers.length)
                 for (let i = 0; i < message.accessionNumbers.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.accessionNumbers[i]);
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.accessionNumbers[i]);
             return writer;
         };
 
@@ -3187,20 +3633,20 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         AccessionCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.AccessionCondition();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.AccessionCondition();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        if (!(message.accessionNumbers && message.accessionNumbers.length))
-                            message.accessionNumbers = [];
-                        message.accessionNumbers.push(reader.string());
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    if (!(message.accessionNumbers && message.accessionNumbers.length))
+                        message.accessionNumbers = [];
+                    message.accessionNumbers.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -3217,7 +3663,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         AccessionCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -3230,7 +3677,8 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         AccessionCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.accessionNumbers != null && message.hasOwnProperty("accessionNumbers")) {
                 if (!Array.isArray(message.accessionNumbers))
                     return "accessionNumbers: array expected";
@@ -3250,7 +3698,8 @@ export const api = ($root.api = (() => {
          * @returns {api.AccessionCondition} AccessionCondition
          */
         AccessionCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.AccessionCondition) return object;
+            if (object instanceof $root.api.AccessionCondition)
+                return object;
             let message = new $root.api.AccessionCondition();
             if (object.accessionNumbers) {
                 if (!Array.isArray(object.accessionNumbers))
@@ -3272,9 +3721,11 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         AccessionCondition.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.arrays || options.defaults) object.accessionNumbers = [];
+            if (options.arrays || options.defaults)
+                object.accessionNumbers = [];
             if (message.accessionNumbers && message.accessionNumbers.length) {
                 object.accessionNumbers = [];
                 for (let j = 0; j < message.accessionNumbers.length; ++j)
@@ -3297,7 +3748,8 @@ export const api = ($root.api = (() => {
         return AccessionCondition;
     })();
 
-    api.BiosampleCondition = (function () {
+    api.BiosampleCondition = (function() {
+
         /**
          * Properties of a BiosampleCondition.
          * @memberof api
@@ -3317,7 +3769,8 @@ export const api = ($root.api = (() => {
             this.accessionNumbers = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -3350,10 +3803,11 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         BiosampleCondition.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.accessionNumbers != null && message.accessionNumbers.length)
                 for (let i = 0; i < message.accessionNumbers.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.accessionNumbers[i]);
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.accessionNumbers[i]);
             return writer;
         };
 
@@ -3382,20 +3836,20 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         BiosampleCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.BiosampleCondition();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.BiosampleCondition();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        if (!(message.accessionNumbers && message.accessionNumbers.length))
-                            message.accessionNumbers = [];
-                        message.accessionNumbers.push(reader.string());
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    if (!(message.accessionNumbers && message.accessionNumbers.length))
+                        message.accessionNumbers = [];
+                    message.accessionNumbers.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -3412,7 +3866,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         BiosampleCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -3425,7 +3880,8 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         BiosampleCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.accessionNumbers != null && message.hasOwnProperty("accessionNumbers")) {
                 if (!Array.isArray(message.accessionNumbers))
                     return "accessionNumbers: array expected";
@@ -3445,7 +3901,8 @@ export const api = ($root.api = (() => {
          * @returns {api.BiosampleCondition} BiosampleCondition
          */
         BiosampleCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.BiosampleCondition) return object;
+            if (object instanceof $root.api.BiosampleCondition)
+                return object;
             let message = new $root.api.BiosampleCondition();
             if (object.accessionNumbers) {
                 if (!Array.isArray(object.accessionNumbers))
@@ -3467,9 +3924,11 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         BiosampleCondition.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.arrays || options.defaults) object.accessionNumbers = [];
+            if (options.arrays || options.defaults)
+                object.accessionNumbers = [];
             if (message.accessionNumbers && message.accessionNumbers.length) {
                 object.accessionNumbers = [];
                 for (let j = 0; j < message.accessionNumbers.length; ++j)
@@ -3492,7 +3951,8 @@ export const api = ($root.api = (() => {
         return BiosampleCondition;
     })();
 
-    api.GeneStrainCondition = (function () {
+    api.GeneStrainCondition = (function() {
+
         /**
          * Properties of a GeneStrainCondition.
          * @memberof api
@@ -3512,7 +3972,8 @@ export const api = ($root.api = (() => {
             this.accessionNumbers = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -3545,10 +4006,11 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         GeneStrainCondition.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.accessionNumbers != null && message.accessionNumbers.length)
                 for (let i = 0; i < message.accessionNumbers.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.accessionNumbers[i]);
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.accessionNumbers[i]);
             return writer;
         };
 
@@ -3577,20 +4039,20 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         GeneStrainCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.GeneStrainCondition();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.GeneStrainCondition();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        if (!(message.accessionNumbers && message.accessionNumbers.length))
-                            message.accessionNumbers = [];
-                        message.accessionNumbers.push(reader.string());
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    if (!(message.accessionNumbers && message.accessionNumbers.length))
+                        message.accessionNumbers = [];
+                    message.accessionNumbers.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -3607,7 +4069,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         GeneStrainCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -3620,7 +4083,8 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         GeneStrainCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.accessionNumbers != null && message.hasOwnProperty("accessionNumbers")) {
                 if (!Array.isArray(message.accessionNumbers))
                     return "accessionNumbers: array expected";
@@ -3640,7 +4104,8 @@ export const api = ($root.api = (() => {
          * @returns {api.GeneStrainCondition} GeneStrainCondition
          */
         GeneStrainCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.GeneStrainCondition) return object;
+            if (object instanceof $root.api.GeneStrainCondition)
+                return object;
             let message = new $root.api.GeneStrainCondition();
             if (object.accessionNumbers) {
                 if (!Array.isArray(object.accessionNumbers))
@@ -3662,9 +4127,11 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         GeneStrainCondition.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.arrays || options.defaults) object.accessionNumbers = [];
+            if (options.arrays || options.defaults)
+                object.accessionNumbers = [];
             if (message.accessionNumbers && message.accessionNumbers.length) {
                 object.accessionNumbers = [];
                 for (let j = 0; j < message.accessionNumbers.length; ++j)
@@ -3687,7 +4154,8 @@ export const api = ($root.api = (() => {
         return GeneStrainCondition;
     })();
 
-    api.LineageStrainCondition = (function () {
+    api.LineageStrainCondition = (function() {
+
         /**
          * Properties of a LineageStrainCondition.
          * @memberof api
@@ -3707,7 +4175,8 @@ export const api = ($root.api = (() => {
         function LineageStrainCondition(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -3748,14 +4217,12 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         LineageStrainCondition.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
-            if (
-                message.classificationName != null &&
-                Object.hasOwnProperty.call(message, "classificationName")
-            )
-                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.classificationName);
+            if (!writer)
+                writer = $Writer.create();
+            if (message.classificationName != null && Object.hasOwnProperty.call(message, "classificationName"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.classificationName);
             if (message.name != null && Object.hasOwnProperty.call(message, "name"))
-                writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.name);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             return writer;
         };
 
@@ -3784,21 +4251,21 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         LineageStrainCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.LineageStrainCondition();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.LineageStrainCondition();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.classificationName = reader.string();
-                        break;
-                    case 2:
-                        message.name = reader.string();
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.classificationName = reader.string();
+                    break;
+                case 2:
+                    message.name = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -3815,7 +4282,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         LineageStrainCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -3828,12 +4296,14 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         LineageStrainCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.classificationName != null && message.hasOwnProperty("classificationName"))
                 if (!$util.isString(message.classificationName))
                     return "classificationName: string expected";
             if (message.name != null && message.hasOwnProperty("name"))
-                if (!$util.isString(message.name)) return "name: string expected";
+                if (!$util.isString(message.name))
+                    return "name: string expected";
             return null;
         };
 
@@ -3846,11 +4316,13 @@ export const api = ($root.api = (() => {
          * @returns {api.LineageStrainCondition} LineageStrainCondition
          */
         LineageStrainCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.LineageStrainCondition) return object;
+            if (object instanceof $root.api.LineageStrainCondition)
+                return object;
             let message = new $root.api.LineageStrainCondition();
             if (object.classificationName != null)
                 message.classificationName = String(object.classificationName);
-            if (object.name != null) message.name = String(object.name);
+            if (object.name != null)
+                message.name = String(object.name);
             return message;
         };
 
@@ -3864,7 +4336,8 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         LineageStrainCondition.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
             if (options.defaults) {
                 object.classificationName = "";
@@ -3872,7 +4345,8 @@ export const api = ($root.api = (() => {
             }
             if (message.classificationName != null && message.hasOwnProperty("classificationName"))
                 object.classificationName = message.classificationName;
-            if (message.name != null && message.hasOwnProperty("name")) object.name = message.name;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
             return object;
         };
 
@@ -3890,7 +4364,8 @@ export const api = ($root.api = (() => {
         return LineageStrainCondition;
     })();
 
-    api.Snp = (function () {
+    api.Snp = (function() {
+
         /**
          * Properties of a Snp.
          * @memberof api
@@ -3916,7 +4391,8 @@ export const api = ($root.api = (() => {
             this.annotations = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -3997,25 +4473,23 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         Snp.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.id != null && Object.hasOwnProperty.call(message, "id"))
-                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.id);
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
             if (message.sequenceId != null && Object.hasOwnProperty.call(message, "sequenceId"))
-                writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.sequenceId);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sequenceId);
             if (message.position != null && Object.hasOwnProperty.call(message, "position"))
-                writer.uint32(/* id 3, wireType 0 =*/ 24).int32(message.position);
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.position);
             if (message.reference != null && Object.hasOwnProperty.call(message, "reference"))
-                writer.uint32(/* id 4, wireType 2 =*/ 34).string(message.reference);
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.reference);
             if (message.insertion != null && Object.hasOwnProperty.call(message, "insertion"))
-                writer.uint32(/* id 5, wireType 2 =*/ 42).string(message.insertion);
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.insertion);
             if (message.ncbiUrl != null && Object.hasOwnProperty.call(message, "ncbiUrl"))
-                writer.uint32(/* id 6, wireType 2 =*/ 50).string(message.ncbiUrl);
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.ncbiUrl);
             if (message.annotations != null && message.annotations.length)
                 for (let i = 0; i < message.annotations.length; ++i)
-                    $root.api.SnpAnnotation.encode(
-                        message.annotations[i],
-                        writer.uint32(/* id 7, wireType 2 =*/ 58).fork()
-                    ).ldelim();
+                    $root.api.SnpAnnotation.encode(message.annotations[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
             return writer;
         };
 
@@ -4044,40 +4518,38 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Snp.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.Snp();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.Snp();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.id = reader.string();
-                        break;
-                    case 2:
-                        message.sequenceId = reader.string();
-                        break;
-                    case 3:
-                        message.position = reader.int32();
-                        break;
-                    case 4:
-                        message.reference = reader.string();
-                        break;
-                    case 5:
-                        message.insertion = reader.string();
-                        break;
-                    case 6:
-                        message.ncbiUrl = reader.string();
-                        break;
-                    case 7:
-                        if (!(message.annotations && message.annotations.length))
-                            message.annotations = [];
-                        message.annotations.push(
-                            $root.api.SnpAnnotation.decode(reader, reader.uint32())
-                        );
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.id = reader.string();
+                    break;
+                case 2:
+                    message.sequenceId = reader.string();
+                    break;
+                case 3:
+                    message.position = reader.int32();
+                    break;
+                case 4:
+                    message.reference = reader.string();
+                    break;
+                case 5:
+                    message.insertion = reader.string();
+                    break;
+                case 6:
+                    message.ncbiUrl = reader.string();
+                    break;
+                case 7:
+                    if (!(message.annotations && message.annotations.length))
+                        message.annotations = [];
+                    message.annotations.push($root.api.SnpAnnotation.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -4094,7 +4566,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Snp.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -4107,24 +4580,33 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         Snp.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.id != null && message.hasOwnProperty("id"))
-                if (!$util.isString(message.id)) return "id: string expected";
+                if (!$util.isString(message.id))
+                    return "id: string expected";
             if (message.sequenceId != null && message.hasOwnProperty("sequenceId"))
-                if (!$util.isString(message.sequenceId)) return "sequenceId: string expected";
+                if (!$util.isString(message.sequenceId))
+                    return "sequenceId: string expected";
             if (message.position != null && message.hasOwnProperty("position"))
-                if (!$util.isInteger(message.position)) return "position: integer expected";
+                if (!$util.isInteger(message.position))
+                    return "position: integer expected";
             if (message.reference != null && message.hasOwnProperty("reference"))
-                if (!$util.isString(message.reference)) return "reference: string expected";
+                if (!$util.isString(message.reference))
+                    return "reference: string expected";
             if (message.insertion != null && message.hasOwnProperty("insertion"))
-                if (!$util.isString(message.insertion)) return "insertion: string expected";
+                if (!$util.isString(message.insertion))
+                    return "insertion: string expected";
             if (message.ncbiUrl != null && message.hasOwnProperty("ncbiUrl"))
-                if (!$util.isString(message.ncbiUrl)) return "ncbiUrl: string expected";
+                if (!$util.isString(message.ncbiUrl))
+                    return "ncbiUrl: string expected";
             if (message.annotations != null && message.hasOwnProperty("annotations")) {
-                if (!Array.isArray(message.annotations)) return "annotations: array expected";
+                if (!Array.isArray(message.annotations))
+                    return "annotations: array expected";
                 for (let i = 0; i < message.annotations.length; ++i) {
                     let error = $root.api.SnpAnnotation.verify(message.annotations[i]);
-                    if (error) return "annotations." + error;
+                    if (error)
+                        return "annotations." + error;
                 }
             }
             return null;
@@ -4139,14 +4621,21 @@ export const api = ($root.api = (() => {
          * @returns {api.Snp} Snp
          */
         Snp.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.Snp) return object;
+            if (object instanceof $root.api.Snp)
+                return object;
             let message = new $root.api.Snp();
-            if (object.id != null) message.id = String(object.id);
-            if (object.sequenceId != null) message.sequenceId = String(object.sequenceId);
-            if (object.position != null) message.position = object.position | 0;
-            if (object.reference != null) message.reference = String(object.reference);
-            if (object.insertion != null) message.insertion = String(object.insertion);
-            if (object.ncbiUrl != null) message.ncbiUrl = String(object.ncbiUrl);
+            if (object.id != null)
+                message.id = String(object.id);
+            if (object.sequenceId != null)
+                message.sequenceId = String(object.sequenceId);
+            if (object.position != null)
+                message.position = object.position | 0;
+            if (object.reference != null)
+                message.reference = String(object.reference);
+            if (object.insertion != null)
+                message.insertion = String(object.insertion);
+            if (object.ncbiUrl != null)
+                message.ncbiUrl = String(object.ncbiUrl);
             if (object.annotations) {
                 if (!Array.isArray(object.annotations))
                     throw TypeError(".api.Snp.annotations: array expected");
@@ -4154,9 +4643,7 @@ export const api = ($root.api = (() => {
                 for (let i = 0; i < object.annotations.length; ++i) {
                     if (typeof object.annotations[i] !== "object")
                         throw TypeError(".api.Snp.annotations: object expected");
-                    message.annotations[i] = $root.api.SnpAnnotation.fromObject(
-                        object.annotations[i]
-                    );
+                    message.annotations[i] = $root.api.SnpAnnotation.fromObject(object.annotations[i]);
                 }
             }
             return message;
@@ -4172,9 +4659,11 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         Snp.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.arrays || options.defaults) object.annotations = [];
+            if (options.arrays || options.defaults)
+                object.annotations = [];
             if (options.defaults) {
                 object.id = "";
                 object.sequenceId = "";
@@ -4183,7 +4672,8 @@ export const api = ($root.api = (() => {
                 object.insertion = "";
                 object.ncbiUrl = "";
             }
-            if (message.id != null && message.hasOwnProperty("id")) object.id = message.id;
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
             if (message.sequenceId != null && message.hasOwnProperty("sequenceId"))
                 object.sequenceId = message.sequenceId;
             if (message.position != null && message.hasOwnProperty("position"))
@@ -4197,10 +4687,7 @@ export const api = ($root.api = (() => {
             if (message.annotations && message.annotations.length) {
                 object.annotations = [];
                 for (let j = 0; j < message.annotations.length; ++j)
-                    object.annotations[j] = $root.api.SnpAnnotation.toObject(
-                        message.annotations[j],
-                        options
-                    );
+                    object.annotations[j] = $root.api.SnpAnnotation.toObject(message.annotations[j], options);
             }
             return object;
         };
@@ -4219,13 +4706,300 @@ export const api = ($root.api = (() => {
         return Snp;
     })();
 
-    api.SnpAnnotation = (function () {
+    api.Gene = (function() {
+
+        /**
+         * Properties of a Gene.
+         * @memberof api
+         * @interface IGene
+         * @property {string|null} [id] Gene id
+         * @property {string|null} [sequenceId] Gene sequenceId
+         * @property {google.protobuf.IStringValue|null} [symbol] Gene symbol
+         * @property {google.protobuf.IStringValue|null} [description] Gene description
+         * @property {string|null} [locusTag] Gene locusTag
+         */
+
+        /**
+         * Constructs a new Gene.
+         * @memberof api
+         * @classdesc Represents a Gene.
+         * @implements IGene
+         * @constructor
+         * @param {api.IGene=} [properties] Properties to set
+         */
+        function Gene(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Gene id.
+         * @member {string} id
+         * @memberof api.Gene
+         * @instance
+         */
+        Gene.prototype.id = "";
+
+        /**
+         * Gene sequenceId.
+         * @member {string} sequenceId
+         * @memberof api.Gene
+         * @instance
+         */
+        Gene.prototype.sequenceId = "";
+
+        /**
+         * Gene symbol.
+         * @member {google.protobuf.IStringValue|null|undefined} symbol
+         * @memberof api.Gene
+         * @instance
+         */
+        Gene.prototype.symbol = null;
+
+        /**
+         * Gene description.
+         * @member {google.protobuf.IStringValue|null|undefined} description
+         * @memberof api.Gene
+         * @instance
+         */
+        Gene.prototype.description = null;
+
+        /**
+         * Gene locusTag.
+         * @member {string} locusTag
+         * @memberof api.Gene
+         * @instance
+         */
+        Gene.prototype.locusTag = "";
+
+        /**
+         * Creates a new Gene instance using the specified properties.
+         * @function create
+         * @memberof api.Gene
+         * @static
+         * @param {api.IGene=} [properties] Properties to set
+         * @returns {api.Gene} Gene instance
+         */
+        Gene.create = function create(properties) {
+            return new Gene(properties);
+        };
+
+        /**
+         * Encodes the specified Gene message. Does not implicitly {@link api.Gene.verify|verify} messages.
+         * @function encode
+         * @memberof api.Gene
+         * @static
+         * @param {api.IGene} message Gene message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Gene.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            if (message.sequenceId != null && Object.hasOwnProperty.call(message, "sequenceId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sequenceId);
+            if (message.symbol != null && Object.hasOwnProperty.call(message, "symbol"))
+                $root.google.protobuf.StringValue.encode(message.symbol, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.description != null && Object.hasOwnProperty.call(message, "description"))
+                $root.google.protobuf.StringValue.encode(message.description, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.locusTag != null && Object.hasOwnProperty.call(message, "locusTag"))
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.locusTag);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Gene message, length delimited. Does not implicitly {@link api.Gene.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.Gene
+         * @static
+         * @param {api.IGene} message Gene message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Gene.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Gene message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.Gene
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.Gene} Gene
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Gene.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.Gene();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.string();
+                    break;
+                case 2:
+                    message.sequenceId = reader.string();
+                    break;
+                case 3:
+                    message.symbol = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 4:
+                    message.description = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 5:
+                    message.locusTag = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Gene message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.Gene
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.Gene} Gene
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Gene.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Gene message.
+         * @function verify
+         * @memberof api.Gene
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Gene.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            if (message.sequenceId != null && message.hasOwnProperty("sequenceId"))
+                if (!$util.isString(message.sequenceId))
+                    return "sequenceId: string expected";
+            if (message.symbol != null && message.hasOwnProperty("symbol")) {
+                let error = $root.google.protobuf.StringValue.verify(message.symbol);
+                if (error)
+                    return "symbol." + error;
+            }
+            if (message.description != null && message.hasOwnProperty("description")) {
+                let error = $root.google.protobuf.StringValue.verify(message.description);
+                if (error)
+                    return "description." + error;
+            }
+            if (message.locusTag != null && message.hasOwnProperty("locusTag"))
+                if (!$util.isString(message.locusTag))
+                    return "locusTag: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a Gene message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.Gene
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.Gene} Gene
+         */
+        Gene.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.Gene)
+                return object;
+            let message = new $root.api.Gene();
+            if (object.id != null)
+                message.id = String(object.id);
+            if (object.sequenceId != null)
+                message.sequenceId = String(object.sequenceId);
+            if (object.symbol != null) {
+                if (typeof object.symbol !== "object")
+                    throw TypeError(".api.Gene.symbol: object expected");
+                message.symbol = $root.google.protobuf.StringValue.fromObject(object.symbol);
+            }
+            if (object.description != null) {
+                if (typeof object.description !== "object")
+                    throw TypeError(".api.Gene.description: object expected");
+                message.description = $root.google.protobuf.StringValue.fromObject(object.description);
+            }
+            if (object.locusTag != null)
+                message.locusTag = String(object.locusTag);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Gene message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.Gene
+         * @static
+         * @param {api.Gene} message Gene
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Gene.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.id = "";
+                object.sequenceId = "";
+                object.symbol = null;
+                object.description = null;
+                object.locusTag = "";
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.sequenceId != null && message.hasOwnProperty("sequenceId"))
+                object.sequenceId = message.sequenceId;
+            if (message.symbol != null && message.hasOwnProperty("symbol"))
+                object.symbol = $root.google.protobuf.StringValue.toObject(message.symbol, options);
+            if (message.description != null && message.hasOwnProperty("description"))
+                object.description = $root.google.protobuf.StringValue.toObject(message.description, options);
+            if (message.locusTag != null && message.hasOwnProperty("locusTag"))
+                object.locusTag = message.locusTag;
+            return object;
+        };
+
+        /**
+         * Converts this Gene to JSON.
+         * @function toJSON
+         * @memberof api.Gene
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Gene.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Gene;
+    })();
+
+    api.SnpAnnotation = (function() {
+
         /**
          * Properties of a SnpAnnotation.
          * @memberof api
          * @interface ISnpAnnotation
          * @property {api.IStudy|null} [study] SnpAnnotation study
-         * @property {string|null} [lineage] SnpAnnotation lineage
+         * @property {google.protobuf.IStringValue|null} [lineage] SnpAnnotation lineage
          */
 
         /**
@@ -4239,7 +5013,8 @@ export const api = ($root.api = (() => {
         function SnpAnnotation(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -4252,11 +5027,11 @@ export const api = ($root.api = (() => {
 
         /**
          * SnpAnnotation lineage.
-         * @member {string} lineage
+         * @member {google.protobuf.IStringValue|null|undefined} lineage
          * @memberof api.SnpAnnotation
          * @instance
          */
-        SnpAnnotation.prototype.lineage = "";
+        SnpAnnotation.prototype.lineage = null;
 
         /**
          * Creates a new SnpAnnotation instance using the specified properties.
@@ -4280,14 +5055,12 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         SnpAnnotation.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.study != null && Object.hasOwnProperty.call(message, "study"))
-                $root.api.Study.encode(
-                    message.study,
-                    writer.uint32(/* id 1, wireType 2 =*/ 10).fork()
-                ).ldelim();
+                $root.api.Study.encode(message.study, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             if (message.lineage != null && Object.hasOwnProperty.call(message, "lineage"))
-                writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.lineage);
+                $root.google.protobuf.StringValue.encode(message.lineage, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             return writer;
         };
 
@@ -4316,21 +5089,21 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         SnpAnnotation.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.SnpAnnotation();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.SnpAnnotation();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.study = $root.api.Study.decode(reader, reader.uint32());
-                        break;
-                    case 2:
-                        message.lineage = reader.string();
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.study = $root.api.Study.decode(reader, reader.uint32());
+                    break;
+                case 2:
+                    message.lineage = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -4347,7 +5120,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         SnpAnnotation.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -4360,13 +5134,18 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         SnpAnnotation.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.study != null && message.hasOwnProperty("study")) {
                 let error = $root.api.Study.verify(message.study);
-                if (error) return "study." + error;
+                if (error)
+                    return "study." + error;
             }
-            if (message.lineage != null && message.hasOwnProperty("lineage"))
-                if (!$util.isString(message.lineage)) return "lineage: string expected";
+            if (message.lineage != null && message.hasOwnProperty("lineage")) {
+                let error = $root.google.protobuf.StringValue.verify(message.lineage);
+                if (error)
+                    return "lineage." + error;
+            }
             return null;
         };
 
@@ -4379,14 +5158,19 @@ export const api = ($root.api = (() => {
          * @returns {api.SnpAnnotation} SnpAnnotation
          */
         SnpAnnotation.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.SnpAnnotation) return object;
+            if (object instanceof $root.api.SnpAnnotation)
+                return object;
             let message = new $root.api.SnpAnnotation();
             if (object.study != null) {
                 if (typeof object.study !== "object")
                     throw TypeError(".api.SnpAnnotation.study: object expected");
                 message.study = $root.api.Study.fromObject(object.study);
             }
-            if (object.lineage != null) message.lineage = String(object.lineage);
+            if (object.lineage != null) {
+                if (typeof object.lineage !== "object")
+                    throw TypeError(".api.SnpAnnotation.lineage: object expected");
+                message.lineage = $root.google.protobuf.StringValue.fromObject(object.lineage);
+            }
             return message;
         };
 
@@ -4400,16 +5184,17 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         SnpAnnotation.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
             if (options.defaults) {
                 object.study = null;
-                object.lineage = "";
+                object.lineage = null;
             }
             if (message.study != null && message.hasOwnProperty("study"))
                 object.study = $root.api.Study.toObject(message.study, options);
             if (message.lineage != null && message.hasOwnProperty("lineage"))
-                object.lineage = message.lineage;
+                object.lineage = $root.google.protobuf.StringValue.toObject(message.lineage, options);
             return object;
         };
 
@@ -4427,7 +5212,8 @@ export const api = ($root.api = (() => {
         return SnpAnnotation;
     })();
 
-    api.Study = (function () {
+    api.Study = (function() {
+
         /**
          * Properties of a Study.
          * @memberof api
@@ -4452,7 +5238,8 @@ export const api = ($root.api = (() => {
             this.primaryAuthors = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -4525,26 +5312,21 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         Study.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.title != null && Object.hasOwnProperty.call(message, "title"))
-                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.title);
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.title);
             if (message.publisher != null && Object.hasOwnProperty.call(message, "publisher"))
-                writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.publisher);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.publisher);
             if (message.doi != null && Object.hasOwnProperty.call(message, "doi"))
-                writer.uint32(/* id 3, wireType 2 =*/ 26).string(message.doi);
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.doi);
             if (message.url != null && Object.hasOwnProperty.call(message, "url"))
-                writer.uint32(/* id 4, wireType 2 =*/ 34).string(message.url);
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.url);
             if (message.primaryAuthors != null && message.primaryAuthors.length)
                 for (let i = 0; i < message.primaryAuthors.length; ++i)
-                    $root.api.Author.encode(
-                        message.primaryAuthors[i],
-                        writer.uint32(/* id 5, wireType 2 =*/ 42).fork()
-                    ).ldelim();
+                    $root.api.Author.encode(message.primaryAuthors[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             if (message.mainAuthor != null && Object.hasOwnProperty.call(message, "mainAuthor"))
-                $root.api.Author.encode(
-                    message.mainAuthor,
-                    writer.uint32(/* id 6, wireType 2 =*/ 50).fork()
-                ).ldelim();
+                $root.api.Author.encode(message.mainAuthor, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
             return writer;
         };
 
@@ -4573,37 +5355,35 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Study.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.Study();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.Study();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.title = reader.string();
-                        break;
-                    case 2:
-                        message.publisher = reader.string();
-                        break;
-                    case 3:
-                        message.doi = reader.string();
-                        break;
-                    case 4:
-                        message.url = reader.string();
-                        break;
-                    case 5:
-                        if (!(message.primaryAuthors && message.primaryAuthors.length))
-                            message.primaryAuthors = [];
-                        message.primaryAuthors.push(
-                            $root.api.Author.decode(reader, reader.uint32())
-                        );
-                        break;
-                    case 6:
-                        message.mainAuthor = $root.api.Author.decode(reader, reader.uint32());
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.title = reader.string();
+                    break;
+                case 2:
+                    message.publisher = reader.string();
+                    break;
+                case 3:
+                    message.doi = reader.string();
+                    break;
+                case 4:
+                    message.url = reader.string();
+                    break;
+                case 5:
+                    if (!(message.primaryAuthors && message.primaryAuthors.length))
+                        message.primaryAuthors = [];
+                    message.primaryAuthors.push($root.api.Author.decode(reader, reader.uint32()));
+                    break;
+                case 6:
+                    message.mainAuthor = $root.api.Author.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -4620,7 +5400,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Study.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -4633,25 +5414,33 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         Study.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.title != null && message.hasOwnProperty("title"))
-                if (!$util.isString(message.title)) return "title: string expected";
+                if (!$util.isString(message.title))
+                    return "title: string expected";
             if (message.publisher != null && message.hasOwnProperty("publisher"))
-                if (!$util.isString(message.publisher)) return "publisher: string expected";
+                if (!$util.isString(message.publisher))
+                    return "publisher: string expected";
             if (message.doi != null && message.hasOwnProperty("doi"))
-                if (!$util.isString(message.doi)) return "doi: string expected";
+                if (!$util.isString(message.doi))
+                    return "doi: string expected";
             if (message.url != null && message.hasOwnProperty("url"))
-                if (!$util.isString(message.url)) return "url: string expected";
+                if (!$util.isString(message.url))
+                    return "url: string expected";
             if (message.primaryAuthors != null && message.hasOwnProperty("primaryAuthors")) {
-                if (!Array.isArray(message.primaryAuthors)) return "primaryAuthors: array expected";
+                if (!Array.isArray(message.primaryAuthors))
+                    return "primaryAuthors: array expected";
                 for (let i = 0; i < message.primaryAuthors.length; ++i) {
                     let error = $root.api.Author.verify(message.primaryAuthors[i]);
-                    if (error) return "primaryAuthors." + error;
+                    if (error)
+                        return "primaryAuthors." + error;
                 }
             }
             if (message.mainAuthor != null && message.hasOwnProperty("mainAuthor")) {
                 let error = $root.api.Author.verify(message.mainAuthor);
-                if (error) return "mainAuthor." + error;
+                if (error)
+                    return "mainAuthor." + error;
             }
             return null;
         };
@@ -4665,12 +5454,17 @@ export const api = ($root.api = (() => {
          * @returns {api.Study} Study
          */
         Study.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.Study) return object;
+            if (object instanceof $root.api.Study)
+                return object;
             let message = new $root.api.Study();
-            if (object.title != null) message.title = String(object.title);
-            if (object.publisher != null) message.publisher = String(object.publisher);
-            if (object.doi != null) message.doi = String(object.doi);
-            if (object.url != null) message.url = String(object.url);
+            if (object.title != null)
+                message.title = String(object.title);
+            if (object.publisher != null)
+                message.publisher = String(object.publisher);
+            if (object.doi != null)
+                message.doi = String(object.doi);
+            if (object.url != null)
+                message.url = String(object.url);
             if (object.primaryAuthors) {
                 if (!Array.isArray(object.primaryAuthors))
                     throw TypeError(".api.Study.primaryAuthors: array expected");
@@ -4678,9 +5472,7 @@ export const api = ($root.api = (() => {
                 for (let i = 0; i < object.primaryAuthors.length; ++i) {
                     if (typeof object.primaryAuthors[i] !== "object")
                         throw TypeError(".api.Study.primaryAuthors: object expected");
-                    message.primaryAuthors[i] = $root.api.Author.fromObject(
-                        object.primaryAuthors[i]
-                    );
+                    message.primaryAuthors[i] = $root.api.Author.fromObject(object.primaryAuthors[i]);
                 }
             }
             if (object.mainAuthor != null) {
@@ -4701,9 +5493,11 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         Study.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
-            if (options.arrays || options.defaults) object.primaryAuthors = [];
+            if (options.arrays || options.defaults)
+                object.primaryAuthors = [];
             if (options.defaults) {
                 object.title = "";
                 object.publisher = "";
@@ -4715,15 +5509,14 @@ export const api = ($root.api = (() => {
                 object.title = message.title;
             if (message.publisher != null && message.hasOwnProperty("publisher"))
                 object.publisher = message.publisher;
-            if (message.doi != null && message.hasOwnProperty("doi")) object.doi = message.doi;
-            if (message.url != null && message.hasOwnProperty("url")) object.url = message.url;
+            if (message.doi != null && message.hasOwnProperty("doi"))
+                object.doi = message.doi;
+            if (message.url != null && message.hasOwnProperty("url"))
+                object.url = message.url;
             if (message.primaryAuthors && message.primaryAuthors.length) {
                 object.primaryAuthors = [];
                 for (let j = 0; j < message.primaryAuthors.length; ++j)
-                    object.primaryAuthors[j] = $root.api.Author.toObject(
-                        message.primaryAuthors[j],
-                        options
-                    );
+                    object.primaryAuthors[j] = $root.api.Author.toObject(message.primaryAuthors[j], options);
             }
             if (message.mainAuthor != null && message.hasOwnProperty("mainAuthor"))
                 object.mainAuthor = $root.api.Author.toObject(message.mainAuthor, options);
@@ -4744,7 +5537,8 @@ export const api = ($root.api = (() => {
         return Study;
     })();
 
-    api.Author = (function () {
+    api.Author = (function() {
+
         /**
          * Properties of an Author.
          * @memberof api
@@ -4765,7 +5559,8 @@ export const api = ($root.api = (() => {
         function Author(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
@@ -4814,13 +5609,14 @@ export const api = ($root.api = (() => {
          * @returns {$protobuf.Writer} Writer
          */
         Author.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
+            if (!writer)
+                writer = $Writer.create();
             if (message.given != null && Object.hasOwnProperty.call(message, "given"))
-                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.given);
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.given);
             if (message.family != null && Object.hasOwnProperty.call(message, "family"))
-                writer.uint32(/* id 2, wireType 2 =*/ 18).string(message.family);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.family);
             if (message.fullName != null && Object.hasOwnProperty.call(message, "fullName"))
-                writer.uint32(/* id 3, wireType 2 =*/ 26).string(message.fullName);
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.fullName);
             return writer;
         };
 
@@ -4849,24 +5645,24 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Author.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.Author();
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.Author();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.given = reader.string();
-                        break;
-                    case 2:
-                        message.family = reader.string();
-                        break;
-                    case 3:
-                        message.fullName = reader.string();
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.given = reader.string();
+                    break;
+                case 2:
+                    message.family = reader.string();
+                    break;
+                case 3:
+                    message.fullName = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
@@ -4883,7 +5679,8 @@ export const api = ($root.api = (() => {
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         Author.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
@@ -4896,13 +5693,17 @@ export const api = ($root.api = (() => {
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
         Author.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
+            if (typeof message !== "object" || message === null)
+                return "object expected";
             if (message.given != null && message.hasOwnProperty("given"))
-                if (!$util.isString(message.given)) return "given: string expected";
+                if (!$util.isString(message.given))
+                    return "given: string expected";
             if (message.family != null && message.hasOwnProperty("family"))
-                if (!$util.isString(message.family)) return "family: string expected";
+                if (!$util.isString(message.family))
+                    return "family: string expected";
             if (message.fullName != null && message.hasOwnProperty("fullName"))
-                if (!$util.isString(message.fullName)) return "fullName: string expected";
+                if (!$util.isString(message.fullName))
+                    return "fullName: string expected";
             return null;
         };
 
@@ -4915,11 +5716,15 @@ export const api = ($root.api = (() => {
          * @returns {api.Author} Author
          */
         Author.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.Author) return object;
+            if (object instanceof $root.api.Author)
+                return object;
             let message = new $root.api.Author();
-            if (object.given != null) message.given = String(object.given);
-            if (object.family != null) message.family = String(object.family);
-            if (object.fullName != null) message.fullName = String(object.fullName);
+            if (object.given != null)
+                message.given = String(object.given);
+            if (object.family != null)
+                message.family = String(object.family);
+            if (object.fullName != null)
+                message.fullName = String(object.fullName);
             return message;
         };
 
@@ -4933,7 +5738,8 @@ export const api = ($root.api = (() => {
          * @returns {Object.<string,*>} Plain object
          */
         Author.toObject = function toObject(message, options) {
-            if (!options) options = {};
+            if (!options)
+                options = {};
             let object = {};
             if (options.defaults) {
                 object.given = "";
@@ -4963,448 +5769,2842 @@ export const api = ($root.api = (() => {
         return Author;
     })();
 
-    api.MtbcResult = (function () {
+    api.InsertionSequencePosition = (function() {
+
         /**
-         * Properties of a MtbcResult.
+         * Properties of an InsertionSequencePosition.
          * @memberof api
-         * @interface IMtbcResult
-         * @property {string|null} [sraId] MtbcResult sraId
-         * @property {Array.<api.ISnpMtbcResult>|null} [snp] MtbcResult snp
+         * @interface IInsertionSequencePosition
+         * @property {number|null} [position] InsertionSequencePosition position
+         * @property {string|null} [prefix] InsertionSequencePosition prefix
          */
 
         /**
-         * Constructs a new MtbcResult.
+         * Constructs a new InsertionSequencePosition.
          * @memberof api
-         * @classdesc Represents a MtbcResult.
-         * @implements IMtbcResult
+         * @classdesc Represents an InsertionSequencePosition.
+         * @implements IInsertionSequencePosition
          * @constructor
-         * @param {api.IMtbcResult=} [properties] Properties to set
+         * @param {api.IInsertionSequencePosition=} [properties] Properties to set
          */
-        function MtbcResult(properties) {
+        function InsertionSequencePosition(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * InsertionSequencePosition position.
+         * @member {number} position
+         * @memberof api.InsertionSequencePosition
+         * @instance
+         */
+        InsertionSequencePosition.prototype.position = 0;
+
+        /**
+         * InsertionSequencePosition prefix.
+         * @member {string} prefix
+         * @memberof api.InsertionSequencePosition
+         * @instance
+         */
+        InsertionSequencePosition.prototype.prefix = "";
+
+        /**
+         * Creates a new InsertionSequencePosition instance using the specified properties.
+         * @function create
+         * @memberof api.InsertionSequencePosition
+         * @static
+         * @param {api.IInsertionSequencePosition=} [properties] Properties to set
+         * @returns {api.InsertionSequencePosition} InsertionSequencePosition instance
+         */
+        InsertionSequencePosition.create = function create(properties) {
+            return new InsertionSequencePosition(properties);
+        };
+
+        /**
+         * Encodes the specified InsertionSequencePosition message. Does not implicitly {@link api.InsertionSequencePosition.verify|verify} messages.
+         * @function encode
+         * @memberof api.InsertionSequencePosition
+         * @static
+         * @param {api.IInsertionSequencePosition} message InsertionSequencePosition message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        InsertionSequencePosition.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.position != null && Object.hasOwnProperty.call(message, "position"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.position);
+            if (message.prefix != null && Object.hasOwnProperty.call(message, "prefix"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.prefix);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified InsertionSequencePosition message, length delimited. Does not implicitly {@link api.InsertionSequencePosition.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.InsertionSequencePosition
+         * @static
+         * @param {api.IInsertionSequencePosition} message InsertionSequencePosition message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        InsertionSequencePosition.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an InsertionSequencePosition message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.InsertionSequencePosition
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.InsertionSequencePosition} InsertionSequencePosition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        InsertionSequencePosition.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.InsertionSequencePosition();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.position = reader.int32();
+                    break;
+                case 2:
+                    message.prefix = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an InsertionSequencePosition message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.InsertionSequencePosition
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.InsertionSequencePosition} InsertionSequencePosition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        InsertionSequencePosition.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an InsertionSequencePosition message.
+         * @function verify
+         * @memberof api.InsertionSequencePosition
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        InsertionSequencePosition.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.position != null && message.hasOwnProperty("position"))
+                if (!$util.isInteger(message.position))
+                    return "position: integer expected";
+            if (message.prefix != null && message.hasOwnProperty("prefix"))
+                if (!$util.isString(message.prefix))
+                    return "prefix: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an InsertionSequencePosition message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.InsertionSequencePosition
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.InsertionSequencePosition} InsertionSequencePosition
+         */
+        InsertionSequencePosition.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.InsertionSequencePosition)
+                return object;
+            let message = new $root.api.InsertionSequencePosition();
+            if (object.position != null)
+                message.position = object.position | 0;
+            if (object.prefix != null)
+                message.prefix = String(object.prefix);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an InsertionSequencePosition message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.InsertionSequencePosition
+         * @static
+         * @param {api.InsertionSequencePosition} message InsertionSequencePosition
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        InsertionSequencePosition.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.position = 0;
+                object.prefix = "";
+            }
+            if (message.position != null && message.hasOwnProperty("position"))
+                object.position = message.position;
+            if (message.prefix != null && message.hasOwnProperty("prefix"))
+                object.prefix = message.prefix;
+            return object;
+        };
+
+        /**
+         * Converts this InsertionSequencePosition to JSON.
+         * @function toJSON
+         * @memberof api.InsertionSequencePosition
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        InsertionSequencePosition.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return InsertionSequencePosition;
+    })();
+
+    api.InsertionSequence = (function() {
+
+        /**
+         * Properties of an InsertionSequence.
+         * @memberof api
+         * @interface IInsertionSequence
+         * @property {string|null} [name] InsertionSequence name
+         * @property {Array.<api.IInsertionSequencePosition>|null} [positions] InsertionSequence positions
+         */
+
+        /**
+         * Constructs a new InsertionSequence.
+         * @memberof api
+         * @classdesc Represents an InsertionSequence.
+         * @implements IInsertionSequence
+         * @constructor
+         * @param {api.IInsertionSequence=} [properties] Properties to set
+         */
+        function InsertionSequence(properties) {
+            this.positions = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * InsertionSequence name.
+         * @member {string} name
+         * @memberof api.InsertionSequence
+         * @instance
+         */
+        InsertionSequence.prototype.name = "";
+
+        /**
+         * InsertionSequence positions.
+         * @member {Array.<api.IInsertionSequencePosition>} positions
+         * @memberof api.InsertionSequence
+         * @instance
+         */
+        InsertionSequence.prototype.positions = $util.emptyArray;
+
+        /**
+         * Creates a new InsertionSequence instance using the specified properties.
+         * @function create
+         * @memberof api.InsertionSequence
+         * @static
+         * @param {api.IInsertionSequence=} [properties] Properties to set
+         * @returns {api.InsertionSequence} InsertionSequence instance
+         */
+        InsertionSequence.create = function create(properties) {
+            return new InsertionSequence(properties);
+        };
+
+        /**
+         * Encodes the specified InsertionSequence message. Does not implicitly {@link api.InsertionSequence.verify|verify} messages.
+         * @function encode
+         * @memberof api.InsertionSequence
+         * @static
+         * @param {api.IInsertionSequence} message InsertionSequence message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        InsertionSequence.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.positions != null && message.positions.length)
+                for (let i = 0; i < message.positions.length; ++i)
+                    $root.api.InsertionSequencePosition.encode(message.positions[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified InsertionSequence message, length delimited. Does not implicitly {@link api.InsertionSequence.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.InsertionSequence
+         * @static
+         * @param {api.IInsertionSequence} message InsertionSequence message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        InsertionSequence.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an InsertionSequence message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.InsertionSequence
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.InsertionSequence} InsertionSequence
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        InsertionSequence.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.InsertionSequence();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.name = reader.string();
+                    break;
+                case 2:
+                    if (!(message.positions && message.positions.length))
+                        message.positions = [];
+                    message.positions.push($root.api.InsertionSequencePosition.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an InsertionSequence message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.InsertionSequence
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.InsertionSequence} InsertionSequence
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        InsertionSequence.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an InsertionSequence message.
+         * @function verify
+         * @memberof api.InsertionSequence
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        InsertionSequence.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.positions != null && message.hasOwnProperty("positions")) {
+                if (!Array.isArray(message.positions))
+                    return "positions: array expected";
+                for (let i = 0; i < message.positions.length; ++i) {
+                    let error = $root.api.InsertionSequencePosition.verify(message.positions[i]);
+                    if (error)
+                        return "positions." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates an InsertionSequence message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.InsertionSequence
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.InsertionSequence} InsertionSequence
+         */
+        InsertionSequence.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.InsertionSequence)
+                return object;
+            let message = new $root.api.InsertionSequence();
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.positions) {
+                if (!Array.isArray(object.positions))
+                    throw TypeError(".api.InsertionSequence.positions: array expected");
+                message.positions = [];
+                for (let i = 0; i < object.positions.length; ++i) {
+                    if (typeof object.positions[i] !== "object")
+                        throw TypeError(".api.InsertionSequence.positions: object expected");
+                    message.positions[i] = $root.api.InsertionSequencePosition.fromObject(object.positions[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an InsertionSequence message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.InsertionSequence
+         * @static
+         * @param {api.InsertionSequence} message InsertionSequence
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        InsertionSequence.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults)
+                object.positions = [];
+            if (options.defaults)
+                object.name = "";
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.positions && message.positions.length) {
+                object.positions = [];
+                for (let j = 0; j < message.positions.length; ++j)
+                    object.positions[j] = $root.api.InsertionSequencePosition.toObject(message.positions[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this InsertionSequence to JSON.
+         * @function toJSON
+         * @memberof api.InsertionSequence
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        InsertionSequence.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return InsertionSequence;
+    })();
+
+    api.CrisprPart = (function() {
+
+        /**
+         * Properties of a CrisprPart.
+         * @memberof api
+         * @interface ICrisprPart
+         * @property {api.IDirectRepeatCrisprPart|null} [directRepeat] CrisprPart directRepeat
+         * @property {api.ISpacerCrisprPart|null} [spacer] CrisprPart spacer
+         * @property {api.IInsertionSequenceCrisprPart|null} [insertionSequence] CrisprPart insertionSequence
+         * @property {api.INamedSequenceCrisprPart|null} [namedEquence] CrisprPart namedEquence
+         * @property {api.ISequenceCrisprPart|null} [sequence] CrisprPart sequence
+         * @property {api.IGeneCrisprPart|null} [gene] CrisprPart gene
+         */
+
+        /**
+         * Constructs a new CrisprPart.
+         * @memberof api
+         * @classdesc Represents a CrisprPart.
+         * @implements ICrisprPart
+         * @constructor
+         * @param {api.ICrisprPart=} [properties] Properties to set
+         */
+        function CrisprPart(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * CrisprPart directRepeat.
+         * @member {api.IDirectRepeatCrisprPart|null|undefined} directRepeat
+         * @memberof api.CrisprPart
+         * @instance
+         */
+        CrisprPart.prototype.directRepeat = null;
+
+        /**
+         * CrisprPart spacer.
+         * @member {api.ISpacerCrisprPart|null|undefined} spacer
+         * @memberof api.CrisprPart
+         * @instance
+         */
+        CrisprPart.prototype.spacer = null;
+
+        /**
+         * CrisprPart insertionSequence.
+         * @member {api.IInsertionSequenceCrisprPart|null|undefined} insertionSequence
+         * @memberof api.CrisprPart
+         * @instance
+         */
+        CrisprPart.prototype.insertionSequence = null;
+
+        /**
+         * CrisprPart namedEquence.
+         * @member {api.INamedSequenceCrisprPart|null|undefined} namedEquence
+         * @memberof api.CrisprPart
+         * @instance
+         */
+        CrisprPart.prototype.namedEquence = null;
+
+        /**
+         * CrisprPart sequence.
+         * @member {api.ISequenceCrisprPart|null|undefined} sequence
+         * @memberof api.CrisprPart
+         * @instance
+         */
+        CrisprPart.prototype.sequence = null;
+
+        /**
+         * CrisprPart gene.
+         * @member {api.IGeneCrisprPart|null|undefined} gene
+         * @memberof api.CrisprPart
+         * @instance
+         */
+        CrisprPart.prototype.gene = null;
+
+        // OneOf field names bound to virtual getters and setters
+        let $oneOfFields;
+
+        /**
+         * CrisprPart part.
+         * @member {"directRepeat"|"spacer"|"insertionSequence"|"namedEquence"|"sequence"|"gene"|undefined} part
+         * @memberof api.CrisprPart
+         * @instance
+         */
+        Object.defineProperty(CrisprPart.prototype, "part", {
+            get: $util.oneOfGetter($oneOfFields = ["directRepeat", "spacer", "insertionSequence", "namedEquence", "sequence", "gene"]),
+            set: $util.oneOfSetter($oneOfFields)
+        });
+
+        /**
+         * Creates a new CrisprPart instance using the specified properties.
+         * @function create
+         * @memberof api.CrisprPart
+         * @static
+         * @param {api.ICrisprPart=} [properties] Properties to set
+         * @returns {api.CrisprPart} CrisprPart instance
+         */
+        CrisprPart.create = function create(properties) {
+            return new CrisprPart(properties);
+        };
+
+        /**
+         * Encodes the specified CrisprPart message. Does not implicitly {@link api.CrisprPart.verify|verify} messages.
+         * @function encode
+         * @memberof api.CrisprPart
+         * @static
+         * @param {api.ICrisprPart} message CrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CrisprPart.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.directRepeat != null && Object.hasOwnProperty.call(message, "directRepeat"))
+                $root.api.DirectRepeatCrisprPart.encode(message.directRepeat, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            if (message.spacer != null && Object.hasOwnProperty.call(message, "spacer"))
+                $root.api.SpacerCrisprPart.encode(message.spacer, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.insertionSequence != null && Object.hasOwnProperty.call(message, "insertionSequence"))
+                $root.api.InsertionSequenceCrisprPart.encode(message.insertionSequence, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.namedEquence != null && Object.hasOwnProperty.call(message, "namedEquence"))
+                $root.api.NamedSequenceCrisprPart.encode(message.namedEquence, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.sequence != null && Object.hasOwnProperty.call(message, "sequence"))
+                $root.api.SequenceCrisprPart.encode(message.sequence, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+            if (message.gene != null && Object.hasOwnProperty.call(message, "gene"))
+                $root.api.GeneCrisprPart.encode(message.gene, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified CrisprPart message, length delimited. Does not implicitly {@link api.CrisprPart.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.CrisprPart
+         * @static
+         * @param {api.ICrisprPart} message CrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CrisprPart.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a CrisprPart message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.CrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.CrisprPart} CrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CrisprPart.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.CrisprPart();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.directRepeat = $root.api.DirectRepeatCrisprPart.decode(reader, reader.uint32());
+                    break;
+                case 2:
+                    message.spacer = $root.api.SpacerCrisprPart.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    message.insertionSequence = $root.api.InsertionSequenceCrisprPart.decode(reader, reader.uint32());
+                    break;
+                case 4:
+                    message.namedEquence = $root.api.NamedSequenceCrisprPart.decode(reader, reader.uint32());
+                    break;
+                case 5:
+                    message.sequence = $root.api.SequenceCrisprPart.decode(reader, reader.uint32());
+                    break;
+                case 6:
+                    message.gene = $root.api.GeneCrisprPart.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a CrisprPart message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.CrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.CrisprPart} CrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CrisprPart.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a CrisprPart message.
+         * @function verify
+         * @memberof api.CrisprPart
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        CrisprPart.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            let properties = {};
+            if (message.directRepeat != null && message.hasOwnProperty("directRepeat")) {
+                properties.part = 1;
+                {
+                    let error = $root.api.DirectRepeatCrisprPart.verify(message.directRepeat);
+                    if (error)
+                        return "directRepeat." + error;
+                }
+            }
+            if (message.spacer != null && message.hasOwnProperty("spacer")) {
+                if (properties.part === 1)
+                    return "part: multiple values";
+                properties.part = 1;
+                {
+                    let error = $root.api.SpacerCrisprPart.verify(message.spacer);
+                    if (error)
+                        return "spacer." + error;
+                }
+            }
+            if (message.insertionSequence != null && message.hasOwnProperty("insertionSequence")) {
+                if (properties.part === 1)
+                    return "part: multiple values";
+                properties.part = 1;
+                {
+                    let error = $root.api.InsertionSequenceCrisprPart.verify(message.insertionSequence);
+                    if (error)
+                        return "insertionSequence." + error;
+                }
+            }
+            if (message.namedEquence != null && message.hasOwnProperty("namedEquence")) {
+                if (properties.part === 1)
+                    return "part: multiple values";
+                properties.part = 1;
+                {
+                    let error = $root.api.NamedSequenceCrisprPart.verify(message.namedEquence);
+                    if (error)
+                        return "namedEquence." + error;
+                }
+            }
+            if (message.sequence != null && message.hasOwnProperty("sequence")) {
+                if (properties.part === 1)
+                    return "part: multiple values";
+                properties.part = 1;
+                {
+                    let error = $root.api.SequenceCrisprPart.verify(message.sequence);
+                    if (error)
+                        return "sequence." + error;
+                }
+            }
+            if (message.gene != null && message.hasOwnProperty("gene")) {
+                if (properties.part === 1)
+                    return "part: multiple values";
+                properties.part = 1;
+                {
+                    let error = $root.api.GeneCrisprPart.verify(message.gene);
+                    if (error)
+                        return "gene." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a CrisprPart message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.CrisprPart
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.CrisprPart} CrisprPart
+         */
+        CrisprPart.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.CrisprPart)
+                return object;
+            let message = new $root.api.CrisprPart();
+            if (object.directRepeat != null) {
+                if (typeof object.directRepeat !== "object")
+                    throw TypeError(".api.CrisprPart.directRepeat: object expected");
+                message.directRepeat = $root.api.DirectRepeatCrisprPart.fromObject(object.directRepeat);
+            }
+            if (object.spacer != null) {
+                if (typeof object.spacer !== "object")
+                    throw TypeError(".api.CrisprPart.spacer: object expected");
+                message.spacer = $root.api.SpacerCrisprPart.fromObject(object.spacer);
+            }
+            if (object.insertionSequence != null) {
+                if (typeof object.insertionSequence !== "object")
+                    throw TypeError(".api.CrisprPart.insertionSequence: object expected");
+                message.insertionSequence = $root.api.InsertionSequenceCrisprPart.fromObject(object.insertionSequence);
+            }
+            if (object.namedEquence != null) {
+                if (typeof object.namedEquence !== "object")
+                    throw TypeError(".api.CrisprPart.namedEquence: object expected");
+                message.namedEquence = $root.api.NamedSequenceCrisprPart.fromObject(object.namedEquence);
+            }
+            if (object.sequence != null) {
+                if (typeof object.sequence !== "object")
+                    throw TypeError(".api.CrisprPart.sequence: object expected");
+                message.sequence = $root.api.SequenceCrisprPart.fromObject(object.sequence);
+            }
+            if (object.gene != null) {
+                if (typeof object.gene !== "object")
+                    throw TypeError(".api.CrisprPart.gene: object expected");
+                message.gene = $root.api.GeneCrisprPart.fromObject(object.gene);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a CrisprPart message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.CrisprPart
+         * @static
+         * @param {api.CrisprPart} message CrisprPart
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        CrisprPart.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (message.directRepeat != null && message.hasOwnProperty("directRepeat")) {
+                object.directRepeat = $root.api.DirectRepeatCrisprPart.toObject(message.directRepeat, options);
+                if (options.oneofs)
+                    object.part = "directRepeat";
+            }
+            if (message.spacer != null && message.hasOwnProperty("spacer")) {
+                object.spacer = $root.api.SpacerCrisprPart.toObject(message.spacer, options);
+                if (options.oneofs)
+                    object.part = "spacer";
+            }
+            if (message.insertionSequence != null && message.hasOwnProperty("insertionSequence")) {
+                object.insertionSequence = $root.api.InsertionSequenceCrisprPart.toObject(message.insertionSequence, options);
+                if (options.oneofs)
+                    object.part = "insertionSequence";
+            }
+            if (message.namedEquence != null && message.hasOwnProperty("namedEquence")) {
+                object.namedEquence = $root.api.NamedSequenceCrisprPart.toObject(message.namedEquence, options);
+                if (options.oneofs)
+                    object.part = "namedEquence";
+            }
+            if (message.sequence != null && message.hasOwnProperty("sequence")) {
+                object.sequence = $root.api.SequenceCrisprPart.toObject(message.sequence, options);
+                if (options.oneofs)
+                    object.part = "sequence";
+            }
+            if (message.gene != null && message.hasOwnProperty("gene")) {
+                object.gene = $root.api.GeneCrisprPart.toObject(message.gene, options);
+                if (options.oneofs)
+                    object.part = "gene";
+            }
+            return object;
+        };
+
+        /**
+         * Converts this CrisprPart to JSON.
+         * @function toJSON
+         * @memberof api.CrisprPart
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        CrisprPart.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return CrisprPart;
+    })();
+
+    api.GeneCrisprPart = (function() {
+
+        /**
+         * Properties of a GeneCrisprPart.
+         * @memberof api
+         * @interface IGeneCrisprPart
+         * @property {string|null} [name] GeneCrisprPart name
+         * @property {api.IGene|null} [gene] GeneCrisprPart gene
+         */
+
+        /**
+         * Constructs a new GeneCrisprPart.
+         * @memberof api
+         * @classdesc Represents a GeneCrisprPart.
+         * @implements IGeneCrisprPart
+         * @constructor
+         * @param {api.IGeneCrisprPart=} [properties] Properties to set
+         */
+        function GeneCrisprPart(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GeneCrisprPart name.
+         * @member {string} name
+         * @memberof api.GeneCrisprPart
+         * @instance
+         */
+        GeneCrisprPart.prototype.name = "";
+
+        /**
+         * GeneCrisprPart gene.
+         * @member {api.IGene|null|undefined} gene
+         * @memberof api.GeneCrisprPart
+         * @instance
+         */
+        GeneCrisprPart.prototype.gene = null;
+
+        /**
+         * Creates a new GeneCrisprPart instance using the specified properties.
+         * @function create
+         * @memberof api.GeneCrisprPart
+         * @static
+         * @param {api.IGeneCrisprPart=} [properties] Properties to set
+         * @returns {api.GeneCrisprPart} GeneCrisprPart instance
+         */
+        GeneCrisprPart.create = function create(properties) {
+            return new GeneCrisprPart(properties);
+        };
+
+        /**
+         * Encodes the specified GeneCrisprPart message. Does not implicitly {@link api.GeneCrisprPart.verify|verify} messages.
+         * @function encode
+         * @memberof api.GeneCrisprPart
+         * @static
+         * @param {api.IGeneCrisprPart} message GeneCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GeneCrisprPart.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.gene != null && Object.hasOwnProperty.call(message, "gene"))
+                $root.api.Gene.encode(message.gene, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GeneCrisprPart message, length delimited. Does not implicitly {@link api.GeneCrisprPart.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.GeneCrisprPart
+         * @static
+         * @param {api.IGeneCrisprPart} message GeneCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GeneCrisprPart.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GeneCrisprPart message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.GeneCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.GeneCrisprPart} GeneCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GeneCrisprPart.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.GeneCrisprPart();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.name = reader.string();
+                    break;
+                case 2:
+                    message.gene = $root.api.Gene.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GeneCrisprPart message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.GeneCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.GeneCrisprPart} GeneCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GeneCrisprPart.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GeneCrisprPart message.
+         * @function verify
+         * @memberof api.GeneCrisprPart
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GeneCrisprPart.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.gene != null && message.hasOwnProperty("gene")) {
+                let error = $root.api.Gene.verify(message.gene);
+                if (error)
+                    return "gene." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GeneCrisprPart message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.GeneCrisprPart
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.GeneCrisprPart} GeneCrisprPart
+         */
+        GeneCrisprPart.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.GeneCrisprPart)
+                return object;
+            let message = new $root.api.GeneCrisprPart();
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.gene != null) {
+                if (typeof object.gene !== "object")
+                    throw TypeError(".api.GeneCrisprPart.gene: object expected");
+                message.gene = $root.api.Gene.fromObject(object.gene);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GeneCrisprPart message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.GeneCrisprPart
+         * @static
+         * @param {api.GeneCrisprPart} message GeneCrisprPart
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GeneCrisprPart.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.name = "";
+                object.gene = null;
+            }
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.gene != null && message.hasOwnProperty("gene"))
+                object.gene = $root.api.Gene.toObject(message.gene, options);
+            return object;
+        };
+
+        /**
+         * Converts this GeneCrisprPart to JSON.
+         * @function toJSON
+         * @memberof api.GeneCrisprPart
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GeneCrisprPart.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GeneCrisprPart;
+    })();
+
+    api.DirectRepeatCrisprPart = (function() {
+
+        /**
+         * Properties of a DirectRepeatCrisprPart.
+         * @memberof api
+         * @interface IDirectRepeatCrisprPart
+         * @property {string|null} [name] DirectRepeatCrisprPart name
+         * @property {number|null} [version] DirectRepeatCrisprPart version
+         * @property {api.IRange|null} [range] DirectRepeatCrisprPart range
+         */
+
+        /**
+         * Constructs a new DirectRepeatCrisprPart.
+         * @memberof api
+         * @classdesc Represents a DirectRepeatCrisprPart.
+         * @implements IDirectRepeatCrisprPart
+         * @constructor
+         * @param {api.IDirectRepeatCrisprPart=} [properties] Properties to set
+         */
+        function DirectRepeatCrisprPart(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DirectRepeatCrisprPart name.
+         * @member {string} name
+         * @memberof api.DirectRepeatCrisprPart
+         * @instance
+         */
+        DirectRepeatCrisprPart.prototype.name = "";
+
+        /**
+         * DirectRepeatCrisprPart version.
+         * @member {number} version
+         * @memberof api.DirectRepeatCrisprPart
+         * @instance
+         */
+        DirectRepeatCrisprPart.prototype.version = 0;
+
+        /**
+         * DirectRepeatCrisprPart range.
+         * @member {api.IRange|null|undefined} range
+         * @memberof api.DirectRepeatCrisprPart
+         * @instance
+         */
+        DirectRepeatCrisprPart.prototype.range = null;
+
+        /**
+         * Creates a new DirectRepeatCrisprPart instance using the specified properties.
+         * @function create
+         * @memberof api.DirectRepeatCrisprPart
+         * @static
+         * @param {api.IDirectRepeatCrisprPart=} [properties] Properties to set
+         * @returns {api.DirectRepeatCrisprPart} DirectRepeatCrisprPart instance
+         */
+        DirectRepeatCrisprPart.create = function create(properties) {
+            return new DirectRepeatCrisprPart(properties);
+        };
+
+        /**
+         * Encodes the specified DirectRepeatCrisprPart message. Does not implicitly {@link api.DirectRepeatCrisprPart.verify|verify} messages.
+         * @function encode
+         * @memberof api.DirectRepeatCrisprPart
+         * @static
+         * @param {api.IDirectRepeatCrisprPart} message DirectRepeatCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DirectRepeatCrisprPart.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.version != null && Object.hasOwnProperty.call(message, "version"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.version);
+            if (message.range != null && Object.hasOwnProperty.call(message, "range"))
+                $root.api.Range.encode(message.range, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DirectRepeatCrisprPart message, length delimited. Does not implicitly {@link api.DirectRepeatCrisprPart.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.DirectRepeatCrisprPart
+         * @static
+         * @param {api.IDirectRepeatCrisprPart} message DirectRepeatCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DirectRepeatCrisprPart.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DirectRepeatCrisprPart message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.DirectRepeatCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.DirectRepeatCrisprPart} DirectRepeatCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DirectRepeatCrisprPart.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.DirectRepeatCrisprPart();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.name = reader.string();
+                    break;
+                case 2:
+                    message.version = reader.int32();
+                    break;
+                case 3:
+                    message.range = $root.api.Range.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DirectRepeatCrisprPart message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.DirectRepeatCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.DirectRepeatCrisprPart} DirectRepeatCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DirectRepeatCrisprPart.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DirectRepeatCrisprPart message.
+         * @function verify
+         * @memberof api.DirectRepeatCrisprPart
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DirectRepeatCrisprPart.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.version != null && message.hasOwnProperty("version"))
+                if (!$util.isInteger(message.version))
+                    return "version: integer expected";
+            if (message.range != null && message.hasOwnProperty("range")) {
+                let error = $root.api.Range.verify(message.range);
+                if (error)
+                    return "range." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a DirectRepeatCrisprPart message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.DirectRepeatCrisprPart
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.DirectRepeatCrisprPart} DirectRepeatCrisprPart
+         */
+        DirectRepeatCrisprPart.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.DirectRepeatCrisprPart)
+                return object;
+            let message = new $root.api.DirectRepeatCrisprPart();
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.version != null)
+                message.version = object.version | 0;
+            if (object.range != null) {
+                if (typeof object.range !== "object")
+                    throw TypeError(".api.DirectRepeatCrisprPart.range: object expected");
+                message.range = $root.api.Range.fromObject(object.range);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DirectRepeatCrisprPart message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.DirectRepeatCrisprPart
+         * @static
+         * @param {api.DirectRepeatCrisprPart} message DirectRepeatCrisprPart
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DirectRepeatCrisprPart.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.name = "";
+                object.version = 0;
+                object.range = null;
+            }
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.version != null && message.hasOwnProperty("version"))
+                object.version = message.version;
+            if (message.range != null && message.hasOwnProperty("range"))
+                object.range = $root.api.Range.toObject(message.range, options);
+            return object;
+        };
+
+        /**
+         * Converts this DirectRepeatCrisprPart to JSON.
+         * @function toJSON
+         * @memberof api.DirectRepeatCrisprPart
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DirectRepeatCrisprPart.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return DirectRepeatCrisprPart;
+    })();
+
+    api.SpacerCrisprPart = (function() {
+
+        /**
+         * Properties of a SpacerCrisprPart.
+         * @memberof api
+         * @interface ISpacerCrisprPart
+         * @property {number|null} [id] SpacerCrisprPart id
+         * @property {number|null} [version] SpacerCrisprPart version
+         * @property {api.IRange|null} [range] SpacerCrisprPart range
+         */
+
+        /**
+         * Constructs a new SpacerCrisprPart.
+         * @memberof api
+         * @classdesc Represents a SpacerCrisprPart.
+         * @implements ISpacerCrisprPart
+         * @constructor
+         * @param {api.ISpacerCrisprPart=} [properties] Properties to set
+         */
+        function SpacerCrisprPart(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * SpacerCrisprPart id.
+         * @member {number} id
+         * @memberof api.SpacerCrisprPart
+         * @instance
+         */
+        SpacerCrisprPart.prototype.id = 0;
+
+        /**
+         * SpacerCrisprPart version.
+         * @member {number} version
+         * @memberof api.SpacerCrisprPart
+         * @instance
+         */
+        SpacerCrisprPart.prototype.version = 0;
+
+        /**
+         * SpacerCrisprPart range.
+         * @member {api.IRange|null|undefined} range
+         * @memberof api.SpacerCrisprPart
+         * @instance
+         */
+        SpacerCrisprPart.prototype.range = null;
+
+        /**
+         * Creates a new SpacerCrisprPart instance using the specified properties.
+         * @function create
+         * @memberof api.SpacerCrisprPart
+         * @static
+         * @param {api.ISpacerCrisprPart=} [properties] Properties to set
+         * @returns {api.SpacerCrisprPart} SpacerCrisprPart instance
+         */
+        SpacerCrisprPart.create = function create(properties) {
+            return new SpacerCrisprPart(properties);
+        };
+
+        /**
+         * Encodes the specified SpacerCrisprPart message. Does not implicitly {@link api.SpacerCrisprPart.verify|verify} messages.
+         * @function encode
+         * @memberof api.SpacerCrisprPart
+         * @static
+         * @param {api.ISpacerCrisprPart} message SpacerCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SpacerCrisprPart.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.id);
+            if (message.version != null && Object.hasOwnProperty.call(message, "version"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.version);
+            if (message.range != null && Object.hasOwnProperty.call(message, "range"))
+                $root.api.Range.encode(message.range, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified SpacerCrisprPart message, length delimited. Does not implicitly {@link api.SpacerCrisprPart.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.SpacerCrisprPart
+         * @static
+         * @param {api.ISpacerCrisprPart} message SpacerCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SpacerCrisprPart.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a SpacerCrisprPart message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.SpacerCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.SpacerCrisprPart} SpacerCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SpacerCrisprPart.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.SpacerCrisprPart();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.int32();
+                    break;
+                case 2:
+                    message.version = reader.int32();
+                    break;
+                case 3:
+                    message.range = $root.api.Range.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a SpacerCrisprPart message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.SpacerCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.SpacerCrisprPart} SpacerCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SpacerCrisprPart.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a SpacerCrisprPart message.
+         * @function verify
+         * @memberof api.SpacerCrisprPart
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        SpacerCrisprPart.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id))
+                    return "id: integer expected";
+            if (message.version != null && message.hasOwnProperty("version"))
+                if (!$util.isInteger(message.version))
+                    return "version: integer expected";
+            if (message.range != null && message.hasOwnProperty("range")) {
+                let error = $root.api.Range.verify(message.range);
+                if (error)
+                    return "range." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a SpacerCrisprPart message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.SpacerCrisprPart
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.SpacerCrisprPart} SpacerCrisprPart
+         */
+        SpacerCrisprPart.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.SpacerCrisprPart)
+                return object;
+            let message = new $root.api.SpacerCrisprPart();
+            if (object.id != null)
+                message.id = object.id | 0;
+            if (object.version != null)
+                message.version = object.version | 0;
+            if (object.range != null) {
+                if (typeof object.range !== "object")
+                    throw TypeError(".api.SpacerCrisprPart.range: object expected");
+                message.range = $root.api.Range.fromObject(object.range);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a SpacerCrisprPart message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.SpacerCrisprPart
+         * @static
+         * @param {api.SpacerCrisprPart} message SpacerCrisprPart
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        SpacerCrisprPart.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.id = 0;
+                object.version = 0;
+                object.range = null;
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.version != null && message.hasOwnProperty("version"))
+                object.version = message.version;
+            if (message.range != null && message.hasOwnProperty("range"))
+                object.range = $root.api.Range.toObject(message.range, options);
+            return object;
+        };
+
+        /**
+         * Converts this SpacerCrisprPart to JSON.
+         * @function toJSON
+         * @memberof api.SpacerCrisprPart
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        SpacerCrisprPart.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return SpacerCrisprPart;
+    })();
+
+    api.InsertionSequenceCrisprPart = (function() {
+
+        /**
+         * Properties of an InsertionSequenceCrisprPart.
+         * @memberof api
+         * @interface IInsertionSequenceCrisprPart
+         * @property {string|null} [name] InsertionSequenceCrisprPart name
+         * @property {boolean|null} [isReverse] InsertionSequenceCrisprPart isReverse
+         * @property {api.IRange|null} [range] InsertionSequenceCrisprPart range
+         */
+
+        /**
+         * Constructs a new InsertionSequenceCrisprPart.
+         * @memberof api
+         * @classdesc Represents an InsertionSequenceCrisprPart.
+         * @implements IInsertionSequenceCrisprPart
+         * @constructor
+         * @param {api.IInsertionSequenceCrisprPart=} [properties] Properties to set
+         */
+        function InsertionSequenceCrisprPart(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * InsertionSequenceCrisprPart name.
+         * @member {string} name
+         * @memberof api.InsertionSequenceCrisprPart
+         * @instance
+         */
+        InsertionSequenceCrisprPart.prototype.name = "";
+
+        /**
+         * InsertionSequenceCrisprPart isReverse.
+         * @member {boolean} isReverse
+         * @memberof api.InsertionSequenceCrisprPart
+         * @instance
+         */
+        InsertionSequenceCrisprPart.prototype.isReverse = false;
+
+        /**
+         * InsertionSequenceCrisprPart range.
+         * @member {api.IRange|null|undefined} range
+         * @memberof api.InsertionSequenceCrisprPart
+         * @instance
+         */
+        InsertionSequenceCrisprPart.prototype.range = null;
+
+        /**
+         * Creates a new InsertionSequenceCrisprPart instance using the specified properties.
+         * @function create
+         * @memberof api.InsertionSequenceCrisprPart
+         * @static
+         * @param {api.IInsertionSequenceCrisprPart=} [properties] Properties to set
+         * @returns {api.InsertionSequenceCrisprPart} InsertionSequenceCrisprPart instance
+         */
+        InsertionSequenceCrisprPart.create = function create(properties) {
+            return new InsertionSequenceCrisprPart(properties);
+        };
+
+        /**
+         * Encodes the specified InsertionSequenceCrisprPart message. Does not implicitly {@link api.InsertionSequenceCrisprPart.verify|verify} messages.
+         * @function encode
+         * @memberof api.InsertionSequenceCrisprPart
+         * @static
+         * @param {api.IInsertionSequenceCrisprPart} message InsertionSequenceCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        InsertionSequenceCrisprPart.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.isReverse != null && Object.hasOwnProperty.call(message, "isReverse"))
+                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.isReverse);
+            if (message.range != null && Object.hasOwnProperty.call(message, "range"))
+                $root.api.Range.encode(message.range, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified InsertionSequenceCrisprPart message, length delimited. Does not implicitly {@link api.InsertionSequenceCrisprPart.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.InsertionSequenceCrisprPart
+         * @static
+         * @param {api.IInsertionSequenceCrisprPart} message InsertionSequenceCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        InsertionSequenceCrisprPart.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an InsertionSequenceCrisprPart message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.InsertionSequenceCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.InsertionSequenceCrisprPart} InsertionSequenceCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        InsertionSequenceCrisprPart.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.InsertionSequenceCrisprPart();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.name = reader.string();
+                    break;
+                case 2:
+                    message.isReverse = reader.bool();
+                    break;
+                case 3:
+                    message.range = $root.api.Range.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an InsertionSequenceCrisprPart message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.InsertionSequenceCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.InsertionSequenceCrisprPart} InsertionSequenceCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        InsertionSequenceCrisprPart.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an InsertionSequenceCrisprPart message.
+         * @function verify
+         * @memberof api.InsertionSequenceCrisprPart
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        InsertionSequenceCrisprPart.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.isReverse != null && message.hasOwnProperty("isReverse"))
+                if (typeof message.isReverse !== "boolean")
+                    return "isReverse: boolean expected";
+            if (message.range != null && message.hasOwnProperty("range")) {
+                let error = $root.api.Range.verify(message.range);
+                if (error)
+                    return "range." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates an InsertionSequenceCrisprPart message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.InsertionSequenceCrisprPart
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.InsertionSequenceCrisprPart} InsertionSequenceCrisprPart
+         */
+        InsertionSequenceCrisprPart.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.InsertionSequenceCrisprPart)
+                return object;
+            let message = new $root.api.InsertionSequenceCrisprPart();
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.isReverse != null)
+                message.isReverse = Boolean(object.isReverse);
+            if (object.range != null) {
+                if (typeof object.range !== "object")
+                    throw TypeError(".api.InsertionSequenceCrisprPart.range: object expected");
+                message.range = $root.api.Range.fromObject(object.range);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an InsertionSequenceCrisprPart message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.InsertionSequenceCrisprPart
+         * @static
+         * @param {api.InsertionSequenceCrisprPart} message InsertionSequenceCrisprPart
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        InsertionSequenceCrisprPart.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.name = "";
+                object.isReverse = false;
+                object.range = null;
+            }
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.isReverse != null && message.hasOwnProperty("isReverse"))
+                object.isReverse = message.isReverse;
+            if (message.range != null && message.hasOwnProperty("range"))
+                object.range = $root.api.Range.toObject(message.range, options);
+            return object;
+        };
+
+        /**
+         * Converts this InsertionSequenceCrisprPart to JSON.
+         * @function toJSON
+         * @memberof api.InsertionSequenceCrisprPart
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        InsertionSequenceCrisprPart.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return InsertionSequenceCrisprPart;
+    })();
+
+    api.NamedSequenceCrisprPart = (function() {
+
+        /**
+         * Properties of a NamedSequenceCrisprPart.
+         * @memberof api
+         * @interface INamedSequenceCrisprPart
+         * @property {string|null} [name] NamedSequenceCrisprPart name
+         */
+
+        /**
+         * Constructs a new NamedSequenceCrisprPart.
+         * @memberof api
+         * @classdesc Represents a NamedSequenceCrisprPart.
+         * @implements INamedSequenceCrisprPart
+         * @constructor
+         * @param {api.INamedSequenceCrisprPart=} [properties] Properties to set
+         */
+        function NamedSequenceCrisprPart(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * NamedSequenceCrisprPart name.
+         * @member {string} name
+         * @memberof api.NamedSequenceCrisprPart
+         * @instance
+         */
+        NamedSequenceCrisprPart.prototype.name = "";
+
+        /**
+         * Creates a new NamedSequenceCrisprPart instance using the specified properties.
+         * @function create
+         * @memberof api.NamedSequenceCrisprPart
+         * @static
+         * @param {api.INamedSequenceCrisprPart=} [properties] Properties to set
+         * @returns {api.NamedSequenceCrisprPart} NamedSequenceCrisprPart instance
+         */
+        NamedSequenceCrisprPart.create = function create(properties) {
+            return new NamedSequenceCrisprPart(properties);
+        };
+
+        /**
+         * Encodes the specified NamedSequenceCrisprPart message. Does not implicitly {@link api.NamedSequenceCrisprPart.verify|verify} messages.
+         * @function encode
+         * @memberof api.NamedSequenceCrisprPart
+         * @static
+         * @param {api.INamedSequenceCrisprPart} message NamedSequenceCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NamedSequenceCrisprPart.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified NamedSequenceCrisprPart message, length delimited. Does not implicitly {@link api.NamedSequenceCrisprPart.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.NamedSequenceCrisprPart
+         * @static
+         * @param {api.INamedSequenceCrisprPart} message NamedSequenceCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NamedSequenceCrisprPart.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a NamedSequenceCrisprPart message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.NamedSequenceCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.NamedSequenceCrisprPart} NamedSequenceCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NamedSequenceCrisprPart.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.NamedSequenceCrisprPart();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.name = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a NamedSequenceCrisprPart message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.NamedSequenceCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.NamedSequenceCrisprPart} NamedSequenceCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NamedSequenceCrisprPart.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a NamedSequenceCrisprPart message.
+         * @function verify
+         * @memberof api.NamedSequenceCrisprPart
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        NamedSequenceCrisprPart.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a NamedSequenceCrisprPart message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.NamedSequenceCrisprPart
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.NamedSequenceCrisprPart} NamedSequenceCrisprPart
+         */
+        NamedSequenceCrisprPart.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.NamedSequenceCrisprPart)
+                return object;
+            let message = new $root.api.NamedSequenceCrisprPart();
+            if (object.name != null)
+                message.name = String(object.name);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a NamedSequenceCrisprPart message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.NamedSequenceCrisprPart
+         * @static
+         * @param {api.NamedSequenceCrisprPart} message NamedSequenceCrisprPart
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        NamedSequenceCrisprPart.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.name = "";
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            return object;
+        };
+
+        /**
+         * Converts this NamedSequenceCrisprPart to JSON.
+         * @function toJSON
+         * @memberof api.NamedSequenceCrisprPart
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        NamedSequenceCrisprPart.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return NamedSequenceCrisprPart;
+    })();
+
+    api.SequenceCrisprPart = (function() {
+
+        /**
+         * Properties of a SequenceCrisprPart.
+         * @memberof api
+         * @interface ISequenceCrisprPart
+         * @property {string|null} [value] SequenceCrisprPart value
+         */
+
+        /**
+         * Constructs a new SequenceCrisprPart.
+         * @memberof api
+         * @classdesc Represents a SequenceCrisprPart.
+         * @implements ISequenceCrisprPart
+         * @constructor
+         * @param {api.ISequenceCrisprPart=} [properties] Properties to set
+         */
+        function SequenceCrisprPart(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * SequenceCrisprPart value.
+         * @member {string} value
+         * @memberof api.SequenceCrisprPart
+         * @instance
+         */
+        SequenceCrisprPart.prototype.value = "";
+
+        /**
+         * Creates a new SequenceCrisprPart instance using the specified properties.
+         * @function create
+         * @memberof api.SequenceCrisprPart
+         * @static
+         * @param {api.ISequenceCrisprPart=} [properties] Properties to set
+         * @returns {api.SequenceCrisprPart} SequenceCrisprPart instance
+         */
+        SequenceCrisprPart.create = function create(properties) {
+            return new SequenceCrisprPart(properties);
+        };
+
+        /**
+         * Encodes the specified SequenceCrisprPart message. Does not implicitly {@link api.SequenceCrisprPart.verify|verify} messages.
+         * @function encode
+         * @memberof api.SequenceCrisprPart
+         * @static
+         * @param {api.ISequenceCrisprPart} message SequenceCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SequenceCrisprPart.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.value);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified SequenceCrisprPart message, length delimited. Does not implicitly {@link api.SequenceCrisprPart.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.SequenceCrisprPart
+         * @static
+         * @param {api.ISequenceCrisprPart} message SequenceCrisprPart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        SequenceCrisprPart.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a SequenceCrisprPart message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.SequenceCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.SequenceCrisprPart} SequenceCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SequenceCrisprPart.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.SequenceCrisprPart();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.value = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a SequenceCrisprPart message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.SequenceCrisprPart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.SequenceCrisprPart} SequenceCrisprPart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        SequenceCrisprPart.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a SequenceCrisprPart message.
+         * @function verify
+         * @memberof api.SequenceCrisprPart
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        SequenceCrisprPart.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.value != null && message.hasOwnProperty("value"))
+                if (!$util.isString(message.value))
+                    return "value: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a SequenceCrisprPart message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.SequenceCrisprPart
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.SequenceCrisprPart} SequenceCrisprPart
+         */
+        SequenceCrisprPart.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.SequenceCrisprPart)
+                return object;
+            let message = new $root.api.SequenceCrisprPart();
+            if (object.value != null)
+                message.value = String(object.value);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a SequenceCrisprPart message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.SequenceCrisprPart
+         * @static
+         * @param {api.SequenceCrisprPart} message SequenceCrisprPart
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        SequenceCrisprPart.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.value = "";
+            if (message.value != null && message.hasOwnProperty("value"))
+                object.value = message.value;
+            return object;
+        };
+
+        /**
+         * Converts this SequenceCrisprPart to JSON.
+         * @function toJSON
+         * @memberof api.SequenceCrisprPart
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        SequenceCrisprPart.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return SequenceCrisprPart;
+    })();
+
+    api.Range = (function() {
+
+        /**
+         * Properties of a Range.
+         * @memberof api
+         * @interface IRange
+         * @property {number|null} [from] Range from
+         * @property {number|null} [to] Range to
+         */
+
+        /**
+         * Constructs a new Range.
+         * @memberof api
+         * @classdesc Represents a Range.
+         * @implements IRange
+         * @constructor
+         * @param {api.IRange=} [properties] Properties to set
+         */
+        function Range(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Range from.
+         * @member {number} from
+         * @memberof api.Range
+         * @instance
+         */
+        Range.prototype.from = 0;
+
+        /**
+         * Range to.
+         * @member {number} to
+         * @memberof api.Range
+         * @instance
+         */
+        Range.prototype.to = 0;
+
+        /**
+         * Creates a new Range instance using the specified properties.
+         * @function create
+         * @memberof api.Range
+         * @static
+         * @param {api.IRange=} [properties] Properties to set
+         * @returns {api.Range} Range instance
+         */
+        Range.create = function create(properties) {
+            return new Range(properties);
+        };
+
+        /**
+         * Encodes the specified Range message. Does not implicitly {@link api.Range.verify|verify} messages.
+         * @function encode
+         * @memberof api.Range
+         * @static
+         * @param {api.IRange} message Range message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Range.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.from != null && Object.hasOwnProperty.call(message, "from"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.from);
+            if (message.to != null && Object.hasOwnProperty.call(message, "to"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.to);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Range message, length delimited. Does not implicitly {@link api.Range.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.Range
+         * @static
+         * @param {api.IRange} message Range message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Range.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Range message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.Range
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.Range} Range
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Range.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.Range();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.from = reader.int32();
+                    break;
+                case 2:
+                    message.to = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Range message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.Range
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.Range} Range
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Range.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Range message.
+         * @function verify
+         * @memberof api.Range
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Range.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.from != null && message.hasOwnProperty("from"))
+                if (!$util.isInteger(message.from))
+                    return "from: integer expected";
+            if (message.to != null && message.hasOwnProperty("to"))
+                if (!$util.isInteger(message.to))
+                    return "to: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a Range message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.Range
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.Range} Range
+         */
+        Range.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.Range)
+                return object;
+            let message = new $root.api.Range();
+            if (object.from != null)
+                message.from = object.from | 0;
+            if (object.to != null)
+                message.to = object.to | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Range message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.Range
+         * @static
+         * @param {api.Range} message Range
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Range.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.from = 0;
+                object.to = 0;
+            }
+            if (message.from != null && message.hasOwnProperty("from"))
+                object.from = message.from;
+            if (message.to != null && message.hasOwnProperty("to"))
+                object.to = message.to;
+            return object;
+        };
+
+        /**
+         * Converts this Range to JSON.
+         * @function toJSON
+         * @memberof api.Range
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Range.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Range;
+    })();
+
+    api.StrainResult = (function() {
+
+        /**
+         * Properties of a StrainResult.
+         * @memberof api
+         * @interface IStrainResult
+         * @property {string|null} [strainId] StrainResult strainId
+         * @property {Array.<api.IGene>|null} [missingGenes] StrainResult missingGenes
+         * @property {Array.<api.IInsertionSequence>|null} [insertionSequences] StrainResult insertionSequences
+         * @property {Array.<boolean>|null} [spoligotype43Blast] StrainResult spoligotype43Blast
+         * @property {Array.<boolean>|null} [spoligotype98Blast] StrainResult spoligotype98Blast
+         * @property {Array.<boolean>|null} [spoligotypeBloinBlast] StrainResult spoligotypeBloinBlast
+         * @property {Array.<api.ICrisprPart>|null} [crispr] StrainResult crispr
+         * @property {Array.<api.ISnp>|null} [snp] StrainResult snp
+         */
+
+        /**
+         * Constructs a new StrainResult.
+         * @memberof api
+         * @classdesc Represents a StrainResult.
+         * @implements IStrainResult
+         * @constructor
+         * @param {api.IStrainResult=} [properties] Properties to set
+         */
+        function StrainResult(properties) {
+            this.missingGenes = [];
+            this.insertionSequences = [];
+            this.spoligotype43Blast = [];
+            this.spoligotype98Blast = [];
+            this.spoligotypeBloinBlast = [];
+            this.crispr = [];
             this.snp = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
         }
 
         /**
-         * MtbcResult sraId.
-         * @member {string} sraId
-         * @memberof api.MtbcResult
+         * StrainResult strainId.
+         * @member {string} strainId
+         * @memberof api.StrainResult
          * @instance
          */
-        MtbcResult.prototype.sraId = "";
+        StrainResult.prototype.strainId = "";
 
         /**
-         * MtbcResult snp.
-         * @member {Array.<api.ISnpMtbcResult>} snp
-         * @memberof api.MtbcResult
+         * StrainResult missingGenes.
+         * @member {Array.<api.IGene>} missingGenes
+         * @memberof api.StrainResult
          * @instance
          */
-        MtbcResult.prototype.snp = $util.emptyArray;
+        StrainResult.prototype.missingGenes = $util.emptyArray;
 
         /**
-         * Creates a new MtbcResult instance using the specified properties.
+         * StrainResult insertionSequences.
+         * @member {Array.<api.IInsertionSequence>} insertionSequences
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.insertionSequences = $util.emptyArray;
+
+        /**
+         * StrainResult spoligotype43Blast.
+         * @member {Array.<boolean>} spoligotype43Blast
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotype43Blast = $util.emptyArray;
+
+        /**
+         * StrainResult spoligotype98Blast.
+         * @member {Array.<boolean>} spoligotype98Blast
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotype98Blast = $util.emptyArray;
+
+        /**
+         * StrainResult spoligotypeBloinBlast.
+         * @member {Array.<boolean>} spoligotypeBloinBlast
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotypeBloinBlast = $util.emptyArray;
+
+        /**
+         * StrainResult crispr.
+         * @member {Array.<api.ICrisprPart>} crispr
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.crispr = $util.emptyArray;
+
+        /**
+         * StrainResult snp.
+         * @member {Array.<api.ISnp>} snp
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.snp = $util.emptyArray;
+
+        /**
+         * Creates a new StrainResult instance using the specified properties.
          * @function create
-         * @memberof api.MtbcResult
+         * @memberof api.StrainResult
          * @static
-         * @param {api.IMtbcResult=} [properties] Properties to set
-         * @returns {api.MtbcResult} MtbcResult instance
+         * @param {api.IStrainResult=} [properties] Properties to set
+         * @returns {api.StrainResult} StrainResult instance
          */
-        MtbcResult.create = function create(properties) {
-            return new MtbcResult(properties);
+        StrainResult.create = function create(properties) {
+            return new StrainResult(properties);
         };
 
         /**
-         * Encodes the specified MtbcResult message. Does not implicitly {@link api.MtbcResult.verify|verify} messages.
+         * Encodes the specified StrainResult message. Does not implicitly {@link api.StrainResult.verify|verify} messages.
          * @function encode
-         * @memberof api.MtbcResult
+         * @memberof api.StrainResult
          * @static
-         * @param {api.IMtbcResult} message MtbcResult message or plain object to encode
+         * @param {api.IStrainResult} message StrainResult message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        MtbcResult.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
-            if (message.sraId != null && Object.hasOwnProperty.call(message, "sraId"))
-                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.sraId);
+        StrainResult.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.strainId != null && Object.hasOwnProperty.call(message, "strainId"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.strainId);
+            if (message.missingGenes != null && message.missingGenes.length)
+                for (let i = 0; i < message.missingGenes.length; ++i)
+                    $root.api.Gene.encode(message.missingGenes[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.insertionSequences != null && message.insertionSequences.length)
+                for (let i = 0; i < message.insertionSequences.length; ++i)
+                    $root.api.InsertionSequence.encode(message.insertionSequences[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.spoligotype43Blast != null && message.spoligotype43Blast.length) {
+                writer.uint32(/* id 4, wireType 2 =*/34).fork();
+                for (let i = 0; i < message.spoligotype43Blast.length; ++i)
+                    writer.bool(message.spoligotype43Blast[i]);
+                writer.ldelim();
+            }
+            if (message.spoligotype98Blast != null && message.spoligotype98Blast.length) {
+                writer.uint32(/* id 5, wireType 2 =*/42).fork();
+                for (let i = 0; i < message.spoligotype98Blast.length; ++i)
+                    writer.bool(message.spoligotype98Blast[i]);
+                writer.ldelim();
+            }
+            if (message.spoligotypeBloinBlast != null && message.spoligotypeBloinBlast.length) {
+                writer.uint32(/* id 6, wireType 2 =*/50).fork();
+                for (let i = 0; i < message.spoligotypeBloinBlast.length; ++i)
+                    writer.bool(message.spoligotypeBloinBlast[i]);
+                writer.ldelim();
+            }
+            if (message.crispr != null && message.crispr.length)
+                for (let i = 0; i < message.crispr.length; ++i)
+                    $root.api.CrisprPart.encode(message.crispr[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
             if (message.snp != null && message.snp.length)
                 for (let i = 0; i < message.snp.length; ++i)
-                    $root.api.SnpMtbcResult.encode(
-                        message.snp[i],
-                        writer.uint32(/* id 2, wireType 2 =*/ 18).fork()
-                    ).ldelim();
+                    $root.api.Snp.encode(message.snp[i], writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
             return writer;
         };
 
         /**
-         * Encodes the specified MtbcResult message, length delimited. Does not implicitly {@link api.MtbcResult.verify|verify} messages.
+         * Encodes the specified StrainResult message, length delimited. Does not implicitly {@link api.StrainResult.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof api.MtbcResult
+         * @memberof api.StrainResult
          * @static
-         * @param {api.IMtbcResult} message MtbcResult message or plain object to encode
+         * @param {api.IStrainResult} message StrainResult message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        MtbcResult.encodeDelimited = function encodeDelimited(message, writer) {
+        StrainResult.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a MtbcResult message from the specified reader or buffer.
+         * Decodes a StrainResult message from the specified reader or buffer.
          * @function decode
-         * @memberof api.MtbcResult
+         * @memberof api.StrainResult
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {api.MtbcResult} MtbcResult
+         * @returns {api.StrainResult} StrainResult
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        MtbcResult.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.MtbcResult();
+        StrainResult.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.StrainResult();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
-                    case 1:
-                        message.sraId = reader.string();
-                        break;
-                    case 2:
-                        if (!(message.snp && message.snp.length)) message.snp = [];
-                        message.snp.push($root.api.SnpMtbcResult.decode(reader, reader.uint32()));
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
+                case 1:
+                    message.strainId = reader.string();
+                    break;
+                case 2:
+                    if (!(message.missingGenes && message.missingGenes.length))
+                        message.missingGenes = [];
+                    message.missingGenes.push($root.api.Gene.decode(reader, reader.uint32()));
+                    break;
+                case 3:
+                    if (!(message.insertionSequences && message.insertionSequences.length))
+                        message.insertionSequences = [];
+                    message.insertionSequences.push($root.api.InsertionSequence.decode(reader, reader.uint32()));
+                    break;
+                case 4:
+                    if (!(message.spoligotype43Blast && message.spoligotype43Blast.length))
+                        message.spoligotype43Blast = [];
+                    if ((tag & 7) === 2) {
+                        let end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.spoligotype43Blast.push(reader.bool());
+                    } else
+                        message.spoligotype43Blast.push(reader.bool());
+                    break;
+                case 5:
+                    if (!(message.spoligotype98Blast && message.spoligotype98Blast.length))
+                        message.spoligotype98Blast = [];
+                    if ((tag & 7) === 2) {
+                        let end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.spoligotype98Blast.push(reader.bool());
+                    } else
+                        message.spoligotype98Blast.push(reader.bool());
+                    break;
+                case 6:
+                    if (!(message.spoligotypeBloinBlast && message.spoligotypeBloinBlast.length))
+                        message.spoligotypeBloinBlast = [];
+                    if ((tag & 7) === 2) {
+                        let end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.spoligotypeBloinBlast.push(reader.bool());
+                    } else
+                        message.spoligotypeBloinBlast.push(reader.bool());
+                    break;
+                case 7:
+                    if (!(message.crispr && message.crispr.length))
+                        message.crispr = [];
+                    message.crispr.push($root.api.CrisprPart.decode(reader, reader.uint32()));
+                    break;
+                case 8:
+                    if (!(message.snp && message.snp.length))
+                        message.snp = [];
+                    message.snp.push($root.api.Snp.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
                 }
             }
             return message;
         };
 
         /**
-         * Decodes a MtbcResult message from the specified reader or buffer, length delimited.
+         * Decodes a StrainResult message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof api.MtbcResult
+         * @memberof api.StrainResult
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {api.MtbcResult} MtbcResult
+         * @returns {api.StrainResult} StrainResult
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        MtbcResult.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+        StrainResult.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a MtbcResult message.
+         * Verifies a StrainResult message.
          * @function verify
-         * @memberof api.MtbcResult
+         * @memberof api.StrainResult
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        MtbcResult.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
-            if (message.sraId != null && message.hasOwnProperty("sraId"))
-                if (!$util.isString(message.sraId)) return "sraId: string expected";
+        StrainResult.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.strainId != null && message.hasOwnProperty("strainId"))
+                if (!$util.isString(message.strainId))
+                    return "strainId: string expected";
+            if (message.missingGenes != null && message.hasOwnProperty("missingGenes")) {
+                if (!Array.isArray(message.missingGenes))
+                    return "missingGenes: array expected";
+                for (let i = 0; i < message.missingGenes.length; ++i) {
+                    let error = $root.api.Gene.verify(message.missingGenes[i]);
+                    if (error)
+                        return "missingGenes." + error;
+                }
+            }
+            if (message.insertionSequences != null && message.hasOwnProperty("insertionSequences")) {
+                if (!Array.isArray(message.insertionSequences))
+                    return "insertionSequences: array expected";
+                for (let i = 0; i < message.insertionSequences.length; ++i) {
+                    let error = $root.api.InsertionSequence.verify(message.insertionSequences[i]);
+                    if (error)
+                        return "insertionSequences." + error;
+                }
+            }
+            if (message.spoligotype43Blast != null && message.hasOwnProperty("spoligotype43Blast")) {
+                if (!Array.isArray(message.spoligotype43Blast))
+                    return "spoligotype43Blast: array expected";
+                for (let i = 0; i < message.spoligotype43Blast.length; ++i)
+                    if (typeof message.spoligotype43Blast[i] !== "boolean")
+                        return "spoligotype43Blast: boolean[] expected";
+            }
+            if (message.spoligotype98Blast != null && message.hasOwnProperty("spoligotype98Blast")) {
+                if (!Array.isArray(message.spoligotype98Blast))
+                    return "spoligotype98Blast: array expected";
+                for (let i = 0; i < message.spoligotype98Blast.length; ++i)
+                    if (typeof message.spoligotype98Blast[i] !== "boolean")
+                        return "spoligotype98Blast: boolean[] expected";
+            }
+            if (message.spoligotypeBloinBlast != null && message.hasOwnProperty("spoligotypeBloinBlast")) {
+                if (!Array.isArray(message.spoligotypeBloinBlast))
+                    return "spoligotypeBloinBlast: array expected";
+                for (let i = 0; i < message.spoligotypeBloinBlast.length; ++i)
+                    if (typeof message.spoligotypeBloinBlast[i] !== "boolean")
+                        return "spoligotypeBloinBlast: boolean[] expected";
+            }
+            if (message.crispr != null && message.hasOwnProperty("crispr")) {
+                if (!Array.isArray(message.crispr))
+                    return "crispr: array expected";
+                for (let i = 0; i < message.crispr.length; ++i) {
+                    let error = $root.api.CrisprPart.verify(message.crispr[i]);
+                    if (error)
+                        return "crispr." + error;
+                }
+            }
             if (message.snp != null && message.hasOwnProperty("snp")) {
-                if (!Array.isArray(message.snp)) return "snp: array expected";
+                if (!Array.isArray(message.snp))
+                    return "snp: array expected";
                 for (let i = 0; i < message.snp.length; ++i) {
-                    let error = $root.api.SnpMtbcResult.verify(message.snp[i]);
-                    if (error) return "snp." + error;
+                    let error = $root.api.Snp.verify(message.snp[i]);
+                    if (error)
+                        return "snp." + error;
                 }
             }
             return null;
         };
 
         /**
-         * Creates a MtbcResult message from a plain object. Also converts values to their respective internal types.
+         * Creates a StrainResult message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof api.MtbcResult
+         * @memberof api.StrainResult
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {api.MtbcResult} MtbcResult
+         * @returns {api.StrainResult} StrainResult
          */
-        MtbcResult.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.MtbcResult) return object;
-            let message = new $root.api.MtbcResult();
-            if (object.sraId != null) message.sraId = String(object.sraId);
+        StrainResult.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.StrainResult)
+                return object;
+            let message = new $root.api.StrainResult();
+            if (object.strainId != null)
+                message.strainId = String(object.strainId);
+            if (object.missingGenes) {
+                if (!Array.isArray(object.missingGenes))
+                    throw TypeError(".api.StrainResult.missingGenes: array expected");
+                message.missingGenes = [];
+                for (let i = 0; i < object.missingGenes.length; ++i) {
+                    if (typeof object.missingGenes[i] !== "object")
+                        throw TypeError(".api.StrainResult.missingGenes: object expected");
+                    message.missingGenes[i] = $root.api.Gene.fromObject(object.missingGenes[i]);
+                }
+            }
+            if (object.insertionSequences) {
+                if (!Array.isArray(object.insertionSequences))
+                    throw TypeError(".api.StrainResult.insertionSequences: array expected");
+                message.insertionSequences = [];
+                for (let i = 0; i < object.insertionSequences.length; ++i) {
+                    if (typeof object.insertionSequences[i] !== "object")
+                        throw TypeError(".api.StrainResult.insertionSequences: object expected");
+                    message.insertionSequences[i] = $root.api.InsertionSequence.fromObject(object.insertionSequences[i]);
+                }
+            }
+            if (object.spoligotype43Blast) {
+                if (!Array.isArray(object.spoligotype43Blast))
+                    throw TypeError(".api.StrainResult.spoligotype43Blast: array expected");
+                message.spoligotype43Blast = [];
+                for (let i = 0; i < object.spoligotype43Blast.length; ++i)
+                    message.spoligotype43Blast[i] = Boolean(object.spoligotype43Blast[i]);
+            }
+            if (object.spoligotype98Blast) {
+                if (!Array.isArray(object.spoligotype98Blast))
+                    throw TypeError(".api.StrainResult.spoligotype98Blast: array expected");
+                message.spoligotype98Blast = [];
+                for (let i = 0; i < object.spoligotype98Blast.length; ++i)
+                    message.spoligotype98Blast[i] = Boolean(object.spoligotype98Blast[i]);
+            }
+            if (object.spoligotypeBloinBlast) {
+                if (!Array.isArray(object.spoligotypeBloinBlast))
+                    throw TypeError(".api.StrainResult.spoligotypeBloinBlast: array expected");
+                message.spoligotypeBloinBlast = [];
+                for (let i = 0; i < object.spoligotypeBloinBlast.length; ++i)
+                    message.spoligotypeBloinBlast[i] = Boolean(object.spoligotypeBloinBlast[i]);
+            }
+            if (object.crispr) {
+                if (!Array.isArray(object.crispr))
+                    throw TypeError(".api.StrainResult.crispr: array expected");
+                message.crispr = [];
+                for (let i = 0; i < object.crispr.length; ++i) {
+                    if (typeof object.crispr[i] !== "object")
+                        throw TypeError(".api.StrainResult.crispr: object expected");
+                    message.crispr[i] = $root.api.CrisprPart.fromObject(object.crispr[i]);
+                }
+            }
             if (object.snp) {
                 if (!Array.isArray(object.snp))
-                    throw TypeError(".api.MtbcResult.snp: array expected");
+                    throw TypeError(".api.StrainResult.snp: array expected");
                 message.snp = [];
                 for (let i = 0; i < object.snp.length; ++i) {
                     if (typeof object.snp[i] !== "object")
-                        throw TypeError(".api.MtbcResult.snp: object expected");
-                    message.snp[i] = $root.api.SnpMtbcResult.fromObject(object.snp[i]);
+                        throw TypeError(".api.StrainResult.snp: object expected");
+                    message.snp[i] = $root.api.Snp.fromObject(object.snp[i]);
                 }
             }
             return message;
         };
 
         /**
-         * Creates a plain object from a MtbcResult message. Also converts values to other types if specified.
+         * Creates a plain object from a StrainResult message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof api.MtbcResult
+         * @memberof api.StrainResult
          * @static
-         * @param {api.MtbcResult} message MtbcResult
+         * @param {api.StrainResult} message StrainResult
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        MtbcResult.toObject = function toObject(message, options) {
-            if (!options) options = {};
+        StrainResult.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
             let object = {};
-            if (options.arrays || options.defaults) object.snp = [];
-            if (options.defaults) object.sraId = "";
-            if (message.sraId != null && message.hasOwnProperty("sraId"))
-                object.sraId = message.sraId;
+            if (options.arrays || options.defaults) {
+                object.missingGenes = [];
+                object.insertionSequences = [];
+                object.spoligotype43Blast = [];
+                object.spoligotype98Blast = [];
+                object.spoligotypeBloinBlast = [];
+                object.crispr = [];
+                object.snp = [];
+            }
+            if (options.defaults)
+                object.strainId = "";
+            if (message.strainId != null && message.hasOwnProperty("strainId"))
+                object.strainId = message.strainId;
+            if (message.missingGenes && message.missingGenes.length) {
+                object.missingGenes = [];
+                for (let j = 0; j < message.missingGenes.length; ++j)
+                    object.missingGenes[j] = $root.api.Gene.toObject(message.missingGenes[j], options);
+            }
+            if (message.insertionSequences && message.insertionSequences.length) {
+                object.insertionSequences = [];
+                for (let j = 0; j < message.insertionSequences.length; ++j)
+                    object.insertionSequences[j] = $root.api.InsertionSequence.toObject(message.insertionSequences[j], options);
+            }
+            if (message.spoligotype43Blast && message.spoligotype43Blast.length) {
+                object.spoligotype43Blast = [];
+                for (let j = 0; j < message.spoligotype43Blast.length; ++j)
+                    object.spoligotype43Blast[j] = message.spoligotype43Blast[j];
+            }
+            if (message.spoligotype98Blast && message.spoligotype98Blast.length) {
+                object.spoligotype98Blast = [];
+                for (let j = 0; j < message.spoligotype98Blast.length; ++j)
+                    object.spoligotype98Blast[j] = message.spoligotype98Blast[j];
+            }
+            if (message.spoligotypeBloinBlast && message.spoligotypeBloinBlast.length) {
+                object.spoligotypeBloinBlast = [];
+                for (let j = 0; j < message.spoligotypeBloinBlast.length; ++j)
+                    object.spoligotypeBloinBlast[j] = message.spoligotypeBloinBlast[j];
+            }
+            if (message.crispr && message.crispr.length) {
+                object.crispr = [];
+                for (let j = 0; j < message.crispr.length; ++j)
+                    object.crispr[j] = $root.api.CrisprPart.toObject(message.crispr[j], options);
+            }
             if (message.snp && message.snp.length) {
                 object.snp = [];
                 for (let j = 0; j < message.snp.length; ++j)
-                    object.snp[j] = $root.api.SnpMtbcResult.toObject(message.snp[j], options);
+                    object.snp[j] = $root.api.Snp.toObject(message.snp[j], options);
             }
             return object;
         };
 
         /**
-         * Converts this MtbcResult to JSON.
+         * Converts this StrainResult to JSON.
          * @function toJSON
-         * @memberof api.MtbcResult
+         * @memberof api.StrainResult
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        MtbcResult.prototype.toJSON = function toJSON() {
+        StrainResult.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return MtbcResult;
-    })();
-
-    api.SnpMtbcResult = (function () {
-        /**
-         * Properties of a SnpMtbcResult.
-         * @memberof api
-         * @interface ISnpMtbcResult
-         * @property {string|null} [spdi] SnpMtbcResult spdi
-         * @property {number|null} [refCount] SnpMtbcResult refCount
-         * @property {number|null} [altCount] SnpMtbcResult altCount
-         */
-
-        /**
-         * Constructs a new SnpMtbcResult.
-         * @memberof api
-         * @classdesc Represents a SnpMtbcResult.
-         * @implements ISnpMtbcResult
-         * @constructor
-         * @param {api.ISnpMtbcResult=} [properties] Properties to set
-         */
-        function SnpMtbcResult(properties) {
-            if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * SnpMtbcResult spdi.
-         * @member {string} spdi
-         * @memberof api.SnpMtbcResult
-         * @instance
-         */
-        SnpMtbcResult.prototype.spdi = "";
-
-        /**
-         * SnpMtbcResult refCount.
-         * @member {number} refCount
-         * @memberof api.SnpMtbcResult
-         * @instance
-         */
-        SnpMtbcResult.prototype.refCount = 0;
-
-        /**
-         * SnpMtbcResult altCount.
-         * @member {number} altCount
-         * @memberof api.SnpMtbcResult
-         * @instance
-         */
-        SnpMtbcResult.prototype.altCount = 0;
-
-        /**
-         * Creates a new SnpMtbcResult instance using the specified properties.
-         * @function create
-         * @memberof api.SnpMtbcResult
-         * @static
-         * @param {api.ISnpMtbcResult=} [properties] Properties to set
-         * @returns {api.SnpMtbcResult} SnpMtbcResult instance
-         */
-        SnpMtbcResult.create = function create(properties) {
-            return new SnpMtbcResult(properties);
-        };
-
-        /**
-         * Encodes the specified SnpMtbcResult message. Does not implicitly {@link api.SnpMtbcResult.verify|verify} messages.
-         * @function encode
-         * @memberof api.SnpMtbcResult
-         * @static
-         * @param {api.ISnpMtbcResult} message SnpMtbcResult message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        SnpMtbcResult.encode = function encode(message, writer) {
-            if (!writer) writer = $Writer.create();
-            if (message.spdi != null && Object.hasOwnProperty.call(message, "spdi"))
-                writer.uint32(/* id 1, wireType 2 =*/ 10).string(message.spdi);
-            if (message.refCount != null && Object.hasOwnProperty.call(message, "refCount"))
-                writer.uint32(/* id 2, wireType 0 =*/ 16).int32(message.refCount);
-            if (message.altCount != null && Object.hasOwnProperty.call(message, "altCount"))
-                writer.uint32(/* id 3, wireType 0 =*/ 24).int32(message.altCount);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified SnpMtbcResult message, length delimited. Does not implicitly {@link api.SnpMtbcResult.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof api.SnpMtbcResult
-         * @static
-         * @param {api.ISnpMtbcResult} message SnpMtbcResult message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        SnpMtbcResult.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a SnpMtbcResult message from the specified reader or buffer.
-         * @function decode
-         * @memberof api.SnpMtbcResult
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {api.SnpMtbcResult} SnpMtbcResult
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        SnpMtbcResult.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length,
-                message = new $root.api.SnpMtbcResult();
-            while (reader.pos < end) {
-                let tag = reader.uint32();
-                switch (tag >>> 3) {
-                    case 1:
-                        message.spdi = reader.string();
-                        break;
-                    case 2:
-                        message.refCount = reader.int32();
-                        break;
-                    case 3:
-                        message.altCount = reader.int32();
-                        break;
-                    default:
-                        reader.skipType(tag & 7);
-                        break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a SnpMtbcResult message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof api.SnpMtbcResult
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {api.SnpMtbcResult} SnpMtbcResult
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        SnpMtbcResult.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader)) reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a SnpMtbcResult message.
-         * @function verify
-         * @memberof api.SnpMtbcResult
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        SnpMtbcResult.verify = function verify(message) {
-            if (typeof message !== "object" || message === null) return "object expected";
-            if (message.spdi != null && message.hasOwnProperty("spdi"))
-                if (!$util.isString(message.spdi)) return "spdi: string expected";
-            if (message.refCount != null && message.hasOwnProperty("refCount"))
-                if (!$util.isInteger(message.refCount)) return "refCount: integer expected";
-            if (message.altCount != null && message.hasOwnProperty("altCount"))
-                if (!$util.isInteger(message.altCount)) return "altCount: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a SnpMtbcResult message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof api.SnpMtbcResult
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {api.SnpMtbcResult} SnpMtbcResult
-         */
-        SnpMtbcResult.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.SnpMtbcResult) return object;
-            let message = new $root.api.SnpMtbcResult();
-            if (object.spdi != null) message.spdi = String(object.spdi);
-            if (object.refCount != null) message.refCount = object.refCount | 0;
-            if (object.altCount != null) message.altCount = object.altCount | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a SnpMtbcResult message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof api.SnpMtbcResult
-         * @static
-         * @param {api.SnpMtbcResult} message SnpMtbcResult
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        SnpMtbcResult.toObject = function toObject(message, options) {
-            if (!options) options = {};
-            let object = {};
-            if (options.defaults) {
-                object.spdi = "";
-                object.refCount = 0;
-                object.altCount = 0;
-            }
-            if (message.spdi != null && message.hasOwnProperty("spdi")) object.spdi = message.spdi;
-            if (message.refCount != null && message.hasOwnProperty("refCount"))
-                object.refCount = message.refCount;
-            if (message.altCount != null && message.hasOwnProperty("altCount"))
-                object.altCount = message.altCount;
-            return object;
-        };
-
-        /**
-         * Converts this SnpMtbcResult to JSON.
-         * @function toJSON
-         * @memberof api.SnpMtbcResult
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        SnpMtbcResult.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return SnpMtbcResult;
+        return StrainResult;
     })();
 
     return api;
-})());
+})();
 
-export const google = ($root.google = (() => {
+export const google = $root.google = (() => {
+
     /**
      * Namespace google.
      * @exports google
@@ -5412,7 +8612,8 @@ export const google = ($root.google = (() => {
      */
     const google = {};
 
-    google.protobuf = (function () {
+    google.protobuf = (function() {
+
         /**
          * Namespace protobuf.
          * @memberof google
@@ -5420,7 +8621,8 @@ export const google = ($root.google = (() => {
          */
         const protobuf = {};
 
-        protobuf.Timestamp = (function () {
+        protobuf.Timestamp = (function() {
+
             /**
              * Properties of a Timestamp.
              * @memberof google.protobuf
@@ -5440,7 +8642,8 @@ export const google = ($root.google = (() => {
             function Timestamp(properties) {
                 if (properties)
                     for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                        if (properties[keys[i]] != null) this[keys[i]] = properties[keys[i]];
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
             }
 
             /**
@@ -5449,7 +8652,7 @@ export const google = ($root.google = (() => {
              * @memberof google.protobuf.Timestamp
              * @instance
              */
-            Timestamp.prototype.seconds = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+            Timestamp.prototype.seconds = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
             /**
              * Timestamp nanos.
@@ -5481,11 +8684,12 @@ export const google = ($root.google = (() => {
              * @returns {$protobuf.Writer} Writer
              */
             Timestamp.encode = function encode(message, writer) {
-                if (!writer) writer = $Writer.create();
+                if (!writer)
+                    writer = $Writer.create();
                 if (message.seconds != null && Object.hasOwnProperty.call(message, "seconds"))
-                    writer.uint32(/* id 1, wireType 0 =*/ 8).int64(message.seconds);
+                    writer.uint32(/* id 1, wireType 0 =*/8).int64(message.seconds);
                 if (message.nanos != null && Object.hasOwnProperty.call(message, "nanos"))
-                    writer.uint32(/* id 2, wireType 0 =*/ 16).int32(message.nanos);
+                    writer.uint32(/* id 2, wireType 0 =*/16).int32(message.nanos);
                 return writer;
             };
 
@@ -5514,21 +8718,21 @@ export const google = ($root.google = (() => {
              * @throws {$protobuf.util.ProtocolError} If required fields are missing
              */
             Timestamp.decode = function decode(reader, length) {
-                if (!(reader instanceof $Reader)) reader = $Reader.create(reader);
-                let end = length === undefined ? reader.len : reader.pos + length,
-                    message = new $root.google.protobuf.Timestamp();
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Timestamp();
                 while (reader.pos < end) {
                     let tag = reader.uint32();
                     switch (tag >>> 3) {
-                        case 1:
-                            message.seconds = reader.int64();
-                            break;
-                        case 2:
-                            message.nanos = reader.int32();
-                            break;
-                        default:
-                            reader.skipType(tag & 7);
-                            break;
+                    case 1:
+                        message.seconds = reader.int64();
+                        break;
+                    case 2:
+                        message.nanos = reader.int32();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
                     }
                 }
                 return message;
@@ -5545,7 +8749,8 @@ export const google = ($root.google = (() => {
              * @throws {$protobuf.util.ProtocolError} If required fields are missing
              */
             Timestamp.decodeDelimited = function decodeDelimited(reader) {
-                if (!(reader instanceof $Reader)) reader = new $Reader(reader);
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
                 return this.decode(reader, reader.uint32());
             };
 
@@ -5558,19 +8763,14 @@ export const google = ($root.google = (() => {
              * @returns {string|null} `null` if valid, otherwise the reason why it is not
              */
             Timestamp.verify = function verify(message) {
-                if (typeof message !== "object" || message === null) return "object expected";
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
                 if (message.seconds != null && message.hasOwnProperty("seconds"))
-                    if (
-                        !$util.isInteger(message.seconds) &&
-                        !(
-                            message.seconds &&
-                            $util.isInteger(message.seconds.low) &&
-                            $util.isInteger(message.seconds.high)
-                        )
-                    )
+                    if (!$util.isInteger(message.seconds) && !(message.seconds && $util.isInteger(message.seconds.low) && $util.isInteger(message.seconds.high)))
                         return "seconds: integer|Long expected";
                 if (message.nanos != null && message.hasOwnProperty("nanos"))
-                    if (!$util.isInteger(message.nanos)) return "nanos: integer expected";
+                    if (!$util.isInteger(message.nanos))
+                        return "nanos: integer expected";
                 return null;
             };
 
@@ -5583,20 +8783,20 @@ export const google = ($root.google = (() => {
              * @returns {google.protobuf.Timestamp} Timestamp
              */
             Timestamp.fromObject = function fromObject(object) {
-                if (object instanceof $root.google.protobuf.Timestamp) return object;
+                if (object instanceof $root.google.protobuf.Timestamp)
+                    return object;
                 let message = new $root.google.protobuf.Timestamp();
                 if (object.seconds != null)
                     if ($util.Long)
                         (message.seconds = $util.Long.fromValue(object.seconds)).unsigned = false;
                     else if (typeof object.seconds === "string")
                         message.seconds = parseInt(object.seconds, 10);
-                    else if (typeof object.seconds === "number") message.seconds = object.seconds;
+                    else if (typeof object.seconds === "number")
+                        message.seconds = object.seconds;
                     else if (typeof object.seconds === "object")
-                        message.seconds = new $util.LongBits(
-                            object.seconds.low >>> 0,
-                            object.seconds.high >>> 0
-                        ).toNumber();
-                if (object.nanos != null) message.nanos = object.nanos | 0;
+                        message.seconds = new $util.LongBits(object.seconds.low >>> 0, object.seconds.high >>> 0).toNumber();
+                if (object.nanos != null)
+                    message.nanos = object.nanos | 0;
                 return message;
             };
 
@@ -5610,34 +8810,22 @@ export const google = ($root.google = (() => {
              * @returns {Object.<string,*>} Plain object
              */
             Timestamp.toObject = function toObject(message, options) {
-                if (!options) options = {};
+                if (!options)
+                    options = {};
                 let object = {};
                 if (options.defaults) {
                     if ($util.Long) {
                         let long = new $util.Long(0, 0, false);
-                        object.seconds =
-                            options.longs === String
-                                ? long.toString()
-                                : options.longs === Number
-                                ? long.toNumber()
-                                : long;
-                    } else object.seconds = options.longs === String ? "0" : 0;
+                        object.seconds = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                    } else
+                        object.seconds = options.longs === String ? "0" : 0;
                     object.nanos = 0;
                 }
                 if (message.seconds != null && message.hasOwnProperty("seconds"))
                     if (typeof message.seconds === "number")
-                        object.seconds =
-                            options.longs === String ? String(message.seconds) : message.seconds;
+                        object.seconds = options.longs === String ? String(message.seconds) : message.seconds;
                     else
-                        object.seconds =
-                            options.longs === String
-                                ? $util.Long.prototype.toString.call(message.seconds)
-                                : options.longs === Number
-                                ? new $util.LongBits(
-                                      message.seconds.low >>> 0,
-                                      message.seconds.high >>> 0
-                                  ).toNumber()
-                                : message.seconds;
+                        object.seconds = options.longs === String ? $util.Long.prototype.toString.call(message.seconds) : options.longs === Number ? new $util.LongBits(message.seconds.low >>> 0, message.seconds.high >>> 0).toNumber() : message.seconds;
                 if (message.nanos != null && message.hasOwnProperty("nanos"))
                     object.nanos = message.nanos;
                 return object;
@@ -5657,10 +8845,1730 @@ export const google = ($root.google = (() => {
             return Timestamp;
         })();
 
+        protobuf.DoubleValue = (function() {
+
+            /**
+             * Properties of a DoubleValue.
+             * @memberof google.protobuf
+             * @interface IDoubleValue
+             * @property {number|null} [value] DoubleValue value
+             */
+
+            /**
+             * Constructs a new DoubleValue.
+             * @memberof google.protobuf
+             * @classdesc Represents a DoubleValue.
+             * @implements IDoubleValue
+             * @constructor
+             * @param {google.protobuf.IDoubleValue=} [properties] Properties to set
+             */
+            function DoubleValue(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * DoubleValue value.
+             * @member {number} value
+             * @memberof google.protobuf.DoubleValue
+             * @instance
+             */
+            DoubleValue.prototype.value = 0;
+
+            /**
+             * Creates a new DoubleValue instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.DoubleValue
+             * @static
+             * @param {google.protobuf.IDoubleValue=} [properties] Properties to set
+             * @returns {google.protobuf.DoubleValue} DoubleValue instance
+             */
+            DoubleValue.create = function create(properties) {
+                return new DoubleValue(properties);
+            };
+
+            /**
+             * Encodes the specified DoubleValue message. Does not implicitly {@link google.protobuf.DoubleValue.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.DoubleValue
+             * @static
+             * @param {google.protobuf.IDoubleValue} message DoubleValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            DoubleValue.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                    writer.uint32(/* id 1, wireType 1 =*/9).double(message.value);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified DoubleValue message, length delimited. Does not implicitly {@link google.protobuf.DoubleValue.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.DoubleValue
+             * @static
+             * @param {google.protobuf.IDoubleValue} message DoubleValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            DoubleValue.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a DoubleValue message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.DoubleValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.DoubleValue} DoubleValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            DoubleValue.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.DoubleValue();
+                while (reader.pos < end) {
+                    let tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.value = reader.double();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a DoubleValue message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.DoubleValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.DoubleValue} DoubleValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            DoubleValue.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a DoubleValue message.
+             * @function verify
+             * @memberof google.protobuf.DoubleValue
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            DoubleValue.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (typeof message.value !== "number")
+                        return "value: number expected";
+                return null;
+            };
+
+            /**
+             * Creates a DoubleValue message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.DoubleValue
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.DoubleValue} DoubleValue
+             */
+            DoubleValue.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.DoubleValue)
+                    return object;
+                let message = new $root.google.protobuf.DoubleValue();
+                if (object.value != null)
+                    message.value = Number(object.value);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a DoubleValue message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.DoubleValue
+             * @static
+             * @param {google.protobuf.DoubleValue} message DoubleValue
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            DoubleValue.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    object.value = 0;
+                if (message.value != null && message.hasOwnProperty("value"))
+                    object.value = options.json && !isFinite(message.value) ? String(message.value) : message.value;
+                return object;
+            };
+
+            /**
+             * Converts this DoubleValue to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.DoubleValue
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            DoubleValue.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return DoubleValue;
+        })();
+
+        protobuf.FloatValue = (function() {
+
+            /**
+             * Properties of a FloatValue.
+             * @memberof google.protobuf
+             * @interface IFloatValue
+             * @property {number|null} [value] FloatValue value
+             */
+
+            /**
+             * Constructs a new FloatValue.
+             * @memberof google.protobuf
+             * @classdesc Represents a FloatValue.
+             * @implements IFloatValue
+             * @constructor
+             * @param {google.protobuf.IFloatValue=} [properties] Properties to set
+             */
+            function FloatValue(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * FloatValue value.
+             * @member {number} value
+             * @memberof google.protobuf.FloatValue
+             * @instance
+             */
+            FloatValue.prototype.value = 0;
+
+            /**
+             * Creates a new FloatValue instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.FloatValue
+             * @static
+             * @param {google.protobuf.IFloatValue=} [properties] Properties to set
+             * @returns {google.protobuf.FloatValue} FloatValue instance
+             */
+            FloatValue.create = function create(properties) {
+                return new FloatValue(properties);
+            };
+
+            /**
+             * Encodes the specified FloatValue message. Does not implicitly {@link google.protobuf.FloatValue.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.FloatValue
+             * @static
+             * @param {google.protobuf.IFloatValue} message FloatValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            FloatValue.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                    writer.uint32(/* id 1, wireType 5 =*/13).float(message.value);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified FloatValue message, length delimited. Does not implicitly {@link google.protobuf.FloatValue.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.FloatValue
+             * @static
+             * @param {google.protobuf.IFloatValue} message FloatValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            FloatValue.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a FloatValue message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.FloatValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.FloatValue} FloatValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            FloatValue.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.FloatValue();
+                while (reader.pos < end) {
+                    let tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.value = reader.float();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a FloatValue message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.FloatValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.FloatValue} FloatValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            FloatValue.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a FloatValue message.
+             * @function verify
+             * @memberof google.protobuf.FloatValue
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            FloatValue.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (typeof message.value !== "number")
+                        return "value: number expected";
+                return null;
+            };
+
+            /**
+             * Creates a FloatValue message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.FloatValue
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.FloatValue} FloatValue
+             */
+            FloatValue.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.FloatValue)
+                    return object;
+                let message = new $root.google.protobuf.FloatValue();
+                if (object.value != null)
+                    message.value = Number(object.value);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a FloatValue message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.FloatValue
+             * @static
+             * @param {google.protobuf.FloatValue} message FloatValue
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            FloatValue.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    object.value = 0;
+                if (message.value != null && message.hasOwnProperty("value"))
+                    object.value = options.json && !isFinite(message.value) ? String(message.value) : message.value;
+                return object;
+            };
+
+            /**
+             * Converts this FloatValue to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.FloatValue
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            FloatValue.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return FloatValue;
+        })();
+
+        protobuf.Int64Value = (function() {
+
+            /**
+             * Properties of an Int64Value.
+             * @memberof google.protobuf
+             * @interface IInt64Value
+             * @property {number|Long|null} [value] Int64Value value
+             */
+
+            /**
+             * Constructs a new Int64Value.
+             * @memberof google.protobuf
+             * @classdesc Represents an Int64Value.
+             * @implements IInt64Value
+             * @constructor
+             * @param {google.protobuf.IInt64Value=} [properties] Properties to set
+             */
+            function Int64Value(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Int64Value value.
+             * @member {number|Long} value
+             * @memberof google.protobuf.Int64Value
+             * @instance
+             */
+            Int64Value.prototype.value = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+            /**
+             * Creates a new Int64Value instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.Int64Value
+             * @static
+             * @param {google.protobuf.IInt64Value=} [properties] Properties to set
+             * @returns {google.protobuf.Int64Value} Int64Value instance
+             */
+            Int64Value.create = function create(properties) {
+                return new Int64Value(properties);
+            };
+
+            /**
+             * Encodes the specified Int64Value message. Does not implicitly {@link google.protobuf.Int64Value.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.Int64Value
+             * @static
+             * @param {google.protobuf.IInt64Value} message Int64Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Int64Value.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                    writer.uint32(/* id 1, wireType 0 =*/8).int64(message.value);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified Int64Value message, length delimited. Does not implicitly {@link google.protobuf.Int64Value.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.Int64Value
+             * @static
+             * @param {google.protobuf.IInt64Value} message Int64Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Int64Value.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes an Int64Value message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.Int64Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.Int64Value} Int64Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Int64Value.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Int64Value();
+                while (reader.pos < end) {
+                    let tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.value = reader.int64();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes an Int64Value message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.Int64Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.Int64Value} Int64Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Int64Value.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies an Int64Value message.
+             * @function verify
+             * @memberof google.protobuf.Int64Value
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            Int64Value.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (!$util.isInteger(message.value) && !(message.value && $util.isInteger(message.value.low) && $util.isInteger(message.value.high)))
+                        return "value: integer|Long expected";
+                return null;
+            };
+
+            /**
+             * Creates an Int64Value message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.Int64Value
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.Int64Value} Int64Value
+             */
+            Int64Value.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.Int64Value)
+                    return object;
+                let message = new $root.google.protobuf.Int64Value();
+                if (object.value != null)
+                    if ($util.Long)
+                        (message.value = $util.Long.fromValue(object.value)).unsigned = false;
+                    else if (typeof object.value === "string")
+                        message.value = parseInt(object.value, 10);
+                    else if (typeof object.value === "number")
+                        message.value = object.value;
+                    else if (typeof object.value === "object")
+                        message.value = new $util.LongBits(object.value.low >>> 0, object.value.high >>> 0).toNumber();
+                return message;
+            };
+
+            /**
+             * Creates a plain object from an Int64Value message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.Int64Value
+             * @static
+             * @param {google.protobuf.Int64Value} message Int64Value
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            Int64Value.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    if ($util.Long) {
+                        let long = new $util.Long(0, 0, false);
+                        object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                    } else
+                        object.value = options.longs === String ? "0" : 0;
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (typeof message.value === "number")
+                        object.value = options.longs === String ? String(message.value) : message.value;
+                    else
+                        object.value = options.longs === String ? $util.Long.prototype.toString.call(message.value) : options.longs === Number ? new $util.LongBits(message.value.low >>> 0, message.value.high >>> 0).toNumber() : message.value;
+                return object;
+            };
+
+            /**
+             * Converts this Int64Value to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.Int64Value
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            Int64Value.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return Int64Value;
+        })();
+
+        protobuf.UInt64Value = (function() {
+
+            /**
+             * Properties of a UInt64Value.
+             * @memberof google.protobuf
+             * @interface IUInt64Value
+             * @property {number|Long|null} [value] UInt64Value value
+             */
+
+            /**
+             * Constructs a new UInt64Value.
+             * @memberof google.protobuf
+             * @classdesc Represents a UInt64Value.
+             * @implements IUInt64Value
+             * @constructor
+             * @param {google.protobuf.IUInt64Value=} [properties] Properties to set
+             */
+            function UInt64Value(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * UInt64Value value.
+             * @member {number|Long} value
+             * @memberof google.protobuf.UInt64Value
+             * @instance
+             */
+            UInt64Value.prototype.value = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+            /**
+             * Creates a new UInt64Value instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.UInt64Value
+             * @static
+             * @param {google.protobuf.IUInt64Value=} [properties] Properties to set
+             * @returns {google.protobuf.UInt64Value} UInt64Value instance
+             */
+            UInt64Value.create = function create(properties) {
+                return new UInt64Value(properties);
+            };
+
+            /**
+             * Encodes the specified UInt64Value message. Does not implicitly {@link google.protobuf.UInt64Value.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.UInt64Value
+             * @static
+             * @param {google.protobuf.IUInt64Value} message UInt64Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            UInt64Value.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                    writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.value);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified UInt64Value message, length delimited. Does not implicitly {@link google.protobuf.UInt64Value.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.UInt64Value
+             * @static
+             * @param {google.protobuf.IUInt64Value} message UInt64Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            UInt64Value.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a UInt64Value message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.UInt64Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.UInt64Value} UInt64Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            UInt64Value.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.UInt64Value();
+                while (reader.pos < end) {
+                    let tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.value = reader.uint64();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a UInt64Value message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.UInt64Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.UInt64Value} UInt64Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            UInt64Value.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a UInt64Value message.
+             * @function verify
+             * @memberof google.protobuf.UInt64Value
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            UInt64Value.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (!$util.isInteger(message.value) && !(message.value && $util.isInteger(message.value.low) && $util.isInteger(message.value.high)))
+                        return "value: integer|Long expected";
+                return null;
+            };
+
+            /**
+             * Creates a UInt64Value message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.UInt64Value
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.UInt64Value} UInt64Value
+             */
+            UInt64Value.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.UInt64Value)
+                    return object;
+                let message = new $root.google.protobuf.UInt64Value();
+                if (object.value != null)
+                    if ($util.Long)
+                        (message.value = $util.Long.fromValue(object.value)).unsigned = true;
+                    else if (typeof object.value === "string")
+                        message.value = parseInt(object.value, 10);
+                    else if (typeof object.value === "number")
+                        message.value = object.value;
+                    else if (typeof object.value === "object")
+                        message.value = new $util.LongBits(object.value.low >>> 0, object.value.high >>> 0).toNumber(true);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a UInt64Value message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.UInt64Value
+             * @static
+             * @param {google.protobuf.UInt64Value} message UInt64Value
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            UInt64Value.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    if ($util.Long) {
+                        let long = new $util.Long(0, 0, true);
+                        object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                    } else
+                        object.value = options.longs === String ? "0" : 0;
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (typeof message.value === "number")
+                        object.value = options.longs === String ? String(message.value) : message.value;
+                    else
+                        object.value = options.longs === String ? $util.Long.prototype.toString.call(message.value) : options.longs === Number ? new $util.LongBits(message.value.low >>> 0, message.value.high >>> 0).toNumber(true) : message.value;
+                return object;
+            };
+
+            /**
+             * Converts this UInt64Value to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.UInt64Value
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            UInt64Value.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return UInt64Value;
+        })();
+
+        protobuf.Int32Value = (function() {
+
+            /**
+             * Properties of an Int32Value.
+             * @memberof google.protobuf
+             * @interface IInt32Value
+             * @property {number|null} [value] Int32Value value
+             */
+
+            /**
+             * Constructs a new Int32Value.
+             * @memberof google.protobuf
+             * @classdesc Represents an Int32Value.
+             * @implements IInt32Value
+             * @constructor
+             * @param {google.protobuf.IInt32Value=} [properties] Properties to set
+             */
+            function Int32Value(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Int32Value value.
+             * @member {number} value
+             * @memberof google.protobuf.Int32Value
+             * @instance
+             */
+            Int32Value.prototype.value = 0;
+
+            /**
+             * Creates a new Int32Value instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.Int32Value
+             * @static
+             * @param {google.protobuf.IInt32Value=} [properties] Properties to set
+             * @returns {google.protobuf.Int32Value} Int32Value instance
+             */
+            Int32Value.create = function create(properties) {
+                return new Int32Value(properties);
+            };
+
+            /**
+             * Encodes the specified Int32Value message. Does not implicitly {@link google.protobuf.Int32Value.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.Int32Value
+             * @static
+             * @param {google.protobuf.IInt32Value} message Int32Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Int32Value.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                    writer.uint32(/* id 1, wireType 0 =*/8).int32(message.value);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified Int32Value message, length delimited. Does not implicitly {@link google.protobuf.Int32Value.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.Int32Value
+             * @static
+             * @param {google.protobuf.IInt32Value} message Int32Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Int32Value.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes an Int32Value message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.Int32Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.Int32Value} Int32Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Int32Value.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Int32Value();
+                while (reader.pos < end) {
+                    let tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.value = reader.int32();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes an Int32Value message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.Int32Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.Int32Value} Int32Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Int32Value.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies an Int32Value message.
+             * @function verify
+             * @memberof google.protobuf.Int32Value
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            Int32Value.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (!$util.isInteger(message.value))
+                        return "value: integer expected";
+                return null;
+            };
+
+            /**
+             * Creates an Int32Value message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.Int32Value
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.Int32Value} Int32Value
+             */
+            Int32Value.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.Int32Value)
+                    return object;
+                let message = new $root.google.protobuf.Int32Value();
+                if (object.value != null)
+                    message.value = object.value | 0;
+                return message;
+            };
+
+            /**
+             * Creates a plain object from an Int32Value message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.Int32Value
+             * @static
+             * @param {google.protobuf.Int32Value} message Int32Value
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            Int32Value.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    object.value = 0;
+                if (message.value != null && message.hasOwnProperty("value"))
+                    object.value = message.value;
+                return object;
+            };
+
+            /**
+             * Converts this Int32Value to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.Int32Value
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            Int32Value.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return Int32Value;
+        })();
+
+        protobuf.UInt32Value = (function() {
+
+            /**
+             * Properties of a UInt32Value.
+             * @memberof google.protobuf
+             * @interface IUInt32Value
+             * @property {number|null} [value] UInt32Value value
+             */
+
+            /**
+             * Constructs a new UInt32Value.
+             * @memberof google.protobuf
+             * @classdesc Represents a UInt32Value.
+             * @implements IUInt32Value
+             * @constructor
+             * @param {google.protobuf.IUInt32Value=} [properties] Properties to set
+             */
+            function UInt32Value(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * UInt32Value value.
+             * @member {number} value
+             * @memberof google.protobuf.UInt32Value
+             * @instance
+             */
+            UInt32Value.prototype.value = 0;
+
+            /**
+             * Creates a new UInt32Value instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.UInt32Value
+             * @static
+             * @param {google.protobuf.IUInt32Value=} [properties] Properties to set
+             * @returns {google.protobuf.UInt32Value} UInt32Value instance
+             */
+            UInt32Value.create = function create(properties) {
+                return new UInt32Value(properties);
+            };
+
+            /**
+             * Encodes the specified UInt32Value message. Does not implicitly {@link google.protobuf.UInt32Value.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.UInt32Value
+             * @static
+             * @param {google.protobuf.IUInt32Value} message UInt32Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            UInt32Value.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                    writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.value);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified UInt32Value message, length delimited. Does not implicitly {@link google.protobuf.UInt32Value.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.UInt32Value
+             * @static
+             * @param {google.protobuf.IUInt32Value} message UInt32Value message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            UInt32Value.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a UInt32Value message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.UInt32Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.UInt32Value} UInt32Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            UInt32Value.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.UInt32Value();
+                while (reader.pos < end) {
+                    let tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.value = reader.uint32();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a UInt32Value message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.UInt32Value
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.UInt32Value} UInt32Value
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            UInt32Value.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a UInt32Value message.
+             * @function verify
+             * @memberof google.protobuf.UInt32Value
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            UInt32Value.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (!$util.isInteger(message.value))
+                        return "value: integer expected";
+                return null;
+            };
+
+            /**
+             * Creates a UInt32Value message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.UInt32Value
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.UInt32Value} UInt32Value
+             */
+            UInt32Value.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.UInt32Value)
+                    return object;
+                let message = new $root.google.protobuf.UInt32Value();
+                if (object.value != null)
+                    message.value = object.value >>> 0;
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a UInt32Value message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.UInt32Value
+             * @static
+             * @param {google.protobuf.UInt32Value} message UInt32Value
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            UInt32Value.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    object.value = 0;
+                if (message.value != null && message.hasOwnProperty("value"))
+                    object.value = message.value;
+                return object;
+            };
+
+            /**
+             * Converts this UInt32Value to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.UInt32Value
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            UInt32Value.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return UInt32Value;
+        })();
+
+        protobuf.BoolValue = (function() {
+
+            /**
+             * Properties of a BoolValue.
+             * @memberof google.protobuf
+             * @interface IBoolValue
+             * @property {boolean|null} [value] BoolValue value
+             */
+
+            /**
+             * Constructs a new BoolValue.
+             * @memberof google.protobuf
+             * @classdesc Represents a BoolValue.
+             * @implements IBoolValue
+             * @constructor
+             * @param {google.protobuf.IBoolValue=} [properties] Properties to set
+             */
+            function BoolValue(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * BoolValue value.
+             * @member {boolean} value
+             * @memberof google.protobuf.BoolValue
+             * @instance
+             */
+            BoolValue.prototype.value = false;
+
+            /**
+             * Creates a new BoolValue instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.BoolValue
+             * @static
+             * @param {google.protobuf.IBoolValue=} [properties] Properties to set
+             * @returns {google.protobuf.BoolValue} BoolValue instance
+             */
+            BoolValue.create = function create(properties) {
+                return new BoolValue(properties);
+            };
+
+            /**
+             * Encodes the specified BoolValue message. Does not implicitly {@link google.protobuf.BoolValue.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.BoolValue
+             * @static
+             * @param {google.protobuf.IBoolValue} message BoolValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            BoolValue.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                    writer.uint32(/* id 1, wireType 0 =*/8).bool(message.value);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified BoolValue message, length delimited. Does not implicitly {@link google.protobuf.BoolValue.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.BoolValue
+             * @static
+             * @param {google.protobuf.IBoolValue} message BoolValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            BoolValue.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a BoolValue message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.BoolValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.BoolValue} BoolValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            BoolValue.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.BoolValue();
+                while (reader.pos < end) {
+                    let tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.value = reader.bool();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a BoolValue message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.BoolValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.BoolValue} BoolValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            BoolValue.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a BoolValue message.
+             * @function verify
+             * @memberof google.protobuf.BoolValue
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            BoolValue.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (typeof message.value !== "boolean")
+                        return "value: boolean expected";
+                return null;
+            };
+
+            /**
+             * Creates a BoolValue message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.BoolValue
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.BoolValue} BoolValue
+             */
+            BoolValue.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.BoolValue)
+                    return object;
+                let message = new $root.google.protobuf.BoolValue();
+                if (object.value != null)
+                    message.value = Boolean(object.value);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a BoolValue message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.BoolValue
+             * @static
+             * @param {google.protobuf.BoolValue} message BoolValue
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            BoolValue.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    object.value = false;
+                if (message.value != null && message.hasOwnProperty("value"))
+                    object.value = message.value;
+                return object;
+            };
+
+            /**
+             * Converts this BoolValue to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.BoolValue
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            BoolValue.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return BoolValue;
+        })();
+
+        protobuf.StringValue = (function() {
+
+            /**
+             * Properties of a StringValue.
+             * @memberof google.protobuf
+             * @interface IStringValue
+             * @property {string|null} [value] StringValue value
+             */
+
+            /**
+             * Constructs a new StringValue.
+             * @memberof google.protobuf
+             * @classdesc Represents a StringValue.
+             * @implements IStringValue
+             * @constructor
+             * @param {google.protobuf.IStringValue=} [properties] Properties to set
+             */
+            function StringValue(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * StringValue value.
+             * @member {string} value
+             * @memberof google.protobuf.StringValue
+             * @instance
+             */
+            StringValue.prototype.value = "";
+
+            /**
+             * Creates a new StringValue instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.StringValue
+             * @static
+             * @param {google.protobuf.IStringValue=} [properties] Properties to set
+             * @returns {google.protobuf.StringValue} StringValue instance
+             */
+            StringValue.create = function create(properties) {
+                return new StringValue(properties);
+            };
+
+            /**
+             * Encodes the specified StringValue message. Does not implicitly {@link google.protobuf.StringValue.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.StringValue
+             * @static
+             * @param {google.protobuf.IStringValue} message StringValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            StringValue.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.value);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified StringValue message, length delimited. Does not implicitly {@link google.protobuf.StringValue.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.StringValue
+             * @static
+             * @param {google.protobuf.IStringValue} message StringValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            StringValue.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a StringValue message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.StringValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.StringValue} StringValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            StringValue.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.StringValue();
+                while (reader.pos < end) {
+                    let tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.value = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a StringValue message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.StringValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.StringValue} StringValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            StringValue.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a StringValue message.
+             * @function verify
+             * @memberof google.protobuf.StringValue
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            StringValue.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (!$util.isString(message.value))
+                        return "value: string expected";
+                return null;
+            };
+
+            /**
+             * Creates a StringValue message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.StringValue
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.StringValue} StringValue
+             */
+            StringValue.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.StringValue)
+                    return object;
+                let message = new $root.google.protobuf.StringValue();
+                if (object.value != null)
+                    message.value = String(object.value);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a StringValue message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.StringValue
+             * @static
+             * @param {google.protobuf.StringValue} message StringValue
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            StringValue.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    object.value = "";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    object.value = message.value;
+                return object;
+            };
+
+            /**
+             * Converts this StringValue to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.StringValue
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            StringValue.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return StringValue;
+        })();
+
+        protobuf.BytesValue = (function() {
+
+            /**
+             * Properties of a BytesValue.
+             * @memberof google.protobuf
+             * @interface IBytesValue
+             * @property {Uint8Array|null} [value] BytesValue value
+             */
+
+            /**
+             * Constructs a new BytesValue.
+             * @memberof google.protobuf
+             * @classdesc Represents a BytesValue.
+             * @implements IBytesValue
+             * @constructor
+             * @param {google.protobuf.IBytesValue=} [properties] Properties to set
+             */
+            function BytesValue(properties) {
+                if (properties)
+                    for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * BytesValue value.
+             * @member {Uint8Array} value
+             * @memberof google.protobuf.BytesValue
+             * @instance
+             */
+            BytesValue.prototype.value = $util.newBuffer([]);
+
+            /**
+             * Creates a new BytesValue instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.BytesValue
+             * @static
+             * @param {google.protobuf.IBytesValue=} [properties] Properties to set
+             * @returns {google.protobuf.BytesValue} BytesValue instance
+             */
+            BytesValue.create = function create(properties) {
+                return new BytesValue(properties);
+            };
+
+            /**
+             * Encodes the specified BytesValue message. Does not implicitly {@link google.protobuf.BytesValue.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.BytesValue
+             * @static
+             * @param {google.protobuf.IBytesValue} message BytesValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            BytesValue.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).bytes(message.value);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified BytesValue message, length delimited. Does not implicitly {@link google.protobuf.BytesValue.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.BytesValue
+             * @static
+             * @param {google.protobuf.IBytesValue} message BytesValue message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            BytesValue.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a BytesValue message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.BytesValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.BytesValue} BytesValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            BytesValue.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                let end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.BytesValue();
+                while (reader.pos < end) {
+                    let tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.value = reader.bytes();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a BytesValue message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.BytesValue
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.BytesValue} BytesValue
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            BytesValue.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a BytesValue message.
+             * @function verify
+             * @memberof google.protobuf.BytesValue
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            BytesValue.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.value != null && message.hasOwnProperty("value"))
+                    if (!(message.value && typeof message.value.length === "number" || $util.isString(message.value)))
+                        return "value: buffer expected";
+                return null;
+            };
+
+            /**
+             * Creates a BytesValue message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.BytesValue
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.BytesValue} BytesValue
+             */
+            BytesValue.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.BytesValue)
+                    return object;
+                let message = new $root.google.protobuf.BytesValue();
+                if (object.value != null)
+                    if (typeof object.value === "string")
+                        $util.base64.decode(object.value, message.value = $util.newBuffer($util.base64.length(object.value)), 0);
+                    else if (object.value.length)
+                        message.value = object.value;
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a BytesValue message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.BytesValue
+             * @static
+             * @param {google.protobuf.BytesValue} message BytesValue
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            BytesValue.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                let object = {};
+                if (options.defaults)
+                    if (options.bytes === String)
+                        object.value = "";
+                    else {
+                        object.value = [];
+                        if (options.bytes !== Array)
+                            object.value = $util.newBuffer(object.value);
+                    }
+                if (message.value != null && message.hasOwnProperty("value"))
+                    object.value = options.bytes === String ? $util.base64.encode(message.value, 0, message.value.length) : options.bytes === Array ? Array.prototype.slice.call(message.value) : message.value;
+                return object;
+            };
+
+            /**
+             * Converts this BytesValue to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.BytesValue
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            BytesValue.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return BytesValue;
+        })();
+
         return protobuf;
     })();
 
     return google;
-})());
+})();
 
 export { $root as default };

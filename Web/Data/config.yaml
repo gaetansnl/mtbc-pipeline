@@ -1,4 +1,5 @@
-﻿snp:
+﻿analysis_result_path: C:\Users\Gaetan\Downloads\tb-tools\data\results
+snp:
   - study:
       doi: doi.org/10.1093/gbe/evy145
     csv_file:

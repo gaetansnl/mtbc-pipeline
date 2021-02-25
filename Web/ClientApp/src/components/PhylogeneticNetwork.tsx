@@ -7,13 +7,12 @@ import PixiViewport from "components/rendering/PixiViewport";
 import PhylogeneticNetworkInfo from "components/PhylogeneticNetworkInfo";
 import useResizeObserver from "use-resize-observer";
 import { api } from "../state/grpc";
-
+const gg = []
 const preventDefault = (e) => e.preventDefault();
-function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodeClick, selectedNodeIds }) {
+function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodesSelected, selectedNodeIds }) {
     let [values, setValues] = useState<api.IHelloReply>(null);
     let [graph, setGraph] = useState(null);
     let [zoomLevel, setZoomLevel] = useState(null);
-    let [selectedNodes, setSelectedNodes] = useState([]);
     useEffect(() => {
         client
             .sayHello({
@@ -35,6 +34,7 @@ function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodeClick, selectedNode
                 const hidden = v.id > 1600;
                 nodes[v.id] = {
                     id: v.id,
+                    name: v.name,
                     x: v.positionX,
                     y: v.positionY,
                     hidden: v.id > 1600,
@@ -76,12 +76,12 @@ function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodeClick, selectedNode
                                         graph={graph}
                                         nodeSize={zoomLevel < 4 ? 12 : 5}
                                         selectedNodeSize={zoomLevel < 4 ? 20 : 5}
-                                        selectedNodesIds={selectedNodes}
+                                        selectedNodesIds={selectedNodeIds}
                                         onNodesSelected={(v) => {
-                                            setSelectedNodes(v.map((v) => v.id));
+                                            onNodesSelected(v);
                                         }}
                                         onNodeClick={(v) => {
-                                            setSelectedNodes([v.id]);
+                                            onNodesSelected([v]);
                                         }}
                                     />
                                 )}

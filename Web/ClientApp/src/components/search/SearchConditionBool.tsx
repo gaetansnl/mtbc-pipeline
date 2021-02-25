@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import SearchConditionContainer from "./SearchConditionContainer";
-import { SearchConditionChangeCallback } from "./state";
+import { getDefaultHandlers, SearchConditionChangeCallback, updateCondition } from "./state";
 import { SearchConditionAddButton } from "./SearchConditionAddButton";
 import SearchConditionBoolList from "./SearchConditionBoolList";
 import { PlusOutlined } from "@ant-design/icons";
@@ -19,11 +19,18 @@ function SearchConditionBool({
     let boolCondition = condition.bool;
     if (!boolCondition) return null;
     const isOr = boolCondition.operator === api.BoolOperator.OR;
+    const handleOrClick = () => {
+        onChange(updateCondition(rootCondition, condition, {
+            ...condition,
+            bool: { ...condition.bool, operator: isOr ? api.BoolOperator.AND : api.BoolOperator.OR },
+        }));
+    };
     return (
         <React.Fragment>
             <SearchConditionContainer
                 title="Boolean"
                 condition={condition}
+                {...getDefaultHandlers(rootCondition, condition, onChange)}
                 extra={
                     <React.Fragment>
                         <SearchConditionAddButton
@@ -33,7 +40,11 @@ function SearchConditionBool({
                         >
                             <Button shape="circle" size="small" icon={<PlusOutlined />} />
                         </SearchConditionAddButton>
-                        <Button type={isOr ? "primary" : "default"} size="small">
+                        <Button
+                            type={isOr ? "primary" : "default"}
+                            size="small"
+                            onClick={handleOrClick}
+                        >
                             OR
                         </Button>
                     </React.Fragment>

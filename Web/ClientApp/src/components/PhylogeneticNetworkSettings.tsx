@@ -1,11 +1,29 @@
 import React from "react";
 import { Slider, Typography } from "antd";
 
-function PhylogeneticNetworkSettings({ disabled }: any) {
+interface PhylogeneticNetworkSettingsValue {
+    precision: number;
+}
+
+function PhylogeneticNetworkSettings({
+    disabled,
+    onChange,
+    value,
+}: {
+    value: PhylogeneticNetworkSettingsValue;
+    onChange: (v: PhylogeneticNetworkSettingsValue) => any;
+    disabled: boolean | undefined;
+}) {
     return (
         <div>
             <Typography.Text>Network precision</Typography.Text>
-            <Slider max={10} min={1} defaultValue={2} disabled={disabled} />
+            <Slider
+                max={10}
+                min={1}
+                value={value.precision}
+                disabled={disabled}
+                onChange={(precision: number) => onChange({ ...value, precision })}
+            />
         </div>
     );
 }

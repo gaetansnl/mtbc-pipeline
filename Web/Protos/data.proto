@@ -1,6 +1,7 @@
 ﻿syntax = "proto3";
 package api;
 option csharp_namespace = "Web";
+import "google/protobuf/wrappers.proto";
 
 message Snp {
   string id = 1;
@@ -12,9 +13,17 @@ message Snp {
   repeated SnpAnnotation annotations = 7;
 }
 
+message Gene {
+  string id = 1;
+  string sequence_id = 2;
+  google.protobuf.StringValue symbol = 3;
+  google.protobuf.StringValue description = 4;
+  string locus_tag = 5;
+}
+
 message SnpAnnotation {
   Study study = 1;
-  string lineage = 2;
+  google.protobuf.StringValue lineage = 2;
 }
 
 message Study {

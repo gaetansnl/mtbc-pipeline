@@ -1,14 +1,66 @@
 ﻿syntax = "proto3";
 package api;
 option csharp_namespace = "Web";
+import "data.proto";
 
-message MtbcResult {
-  string sra_id = 1;
-  repeated SnpMtbcResult snp = 2;
+message InsertionSequencePosition{
+  int32 position = 1;
+  string prefix = 2;
+}
+message InsertionSequence{
+  string name = 1;
+  repeated InsertionSequencePosition positions = 2;
 }
 
-message SnpMtbcResult {
-  string spdi = 1;
-  int32 ref_count = 2;
-  int32 alt_count = 3;
+message CrisprPart{
+  oneof part{
+    DirectRepeatCrisprPart direct_repeat = 1;
+    SpacerCrisprPart spacer = 2;
+    InsertionSequenceCrisprPart insertion_sequence = 3;
+    NamedSequenceCrisprPart named_equence = 4;
+    SequenceCrisprPart sequence = 5;
+    GeneCrisprPart gene = 6;
+  }
+}
+message GeneCrisprPart{
+  string name = 1;
+  Gene gene = 2;
+}
+message DirectRepeatCrisprPart{
+  string name = 1;
+  int32 version = 2;
+  Range range = 3;
+}
+message SpacerCrisprPart{
+  int32 id = 1;
+  int32 version = 2;
+  Range range = 3;
+}
+message InsertionSequenceCrisprPart{
+  string name = 1;
+  bool is_reverse = 2;
+  Range range = 3;
+}
+message NamedSequenceCrisprPart{
+  string name = 1;
+
+}
+message SequenceCrisprPart{
+  string value = 1;
+}
+
+message Range{
+  int32 from = 1;
+  int32 to = 2;
+}
+
+message StrainResult{
+  string strain_id = 1;
+  repeated Gene missing_genes = 2;
+  repeated InsertionSequence insertion_sequences = 3;
+  repeated bool spoligotype43_blast = 4;
+  repeated bool spoligotype98_blast = 5;
+  repeated bool spoligotype_bloin_blast = 6;
+  repeated CrisprPart crispr = 7;
+  repeated Snp snp = 8;
 }

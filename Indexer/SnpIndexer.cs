@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Core;
 using Core.Doi;
@@ -8,13 +11,13 @@ using Snp = Core.Snp;
 
 namespace Indexer
 {
-    public class Indexer
+    public class SnpIndexer
     {
         protected Configuration Config;
-        protected LiteDBDriver Database;
+        protected LiteDbDriver Database;
         protected DoiClient DoiClient;
 
-        public Indexer(Configuration config, LiteDBDriver database, DoiClient doiClient)
+        public SnpIndexer(Configuration config, LiteDbDriver database, DoiClient doiClient)
         {
             Config = config;
             Database = database;
@@ -24,29 +27,22 @@ namespace Indexer
         public async Task IndexSnp(SnpSource source, Snp snp)
         {
             var doi = source.Study?.Doi;
-            Data.Snp dataSnp = new()
-            {
-                Id = snp.Spdi,
-                SequenceId = snp.SequenceId,
-                Insertion = snp.Insertion,
-                Reference = snp.Reference,
-                Position = snp.Position,
-            };
+            SnpData snpData = SnpData.FromSnp(snp);
             if (doi != null)
             {
                 var citation = await DoiClient.GetCitation(doi);
                 if (citation != null)
-                    dataSnp.Annotations.Add(new SnpAnnotation
+                    snpData.Annotations.Add(new SnpData.Annotation
                     {
                         Study = citation,
                         Lineage = snp.Attributes.GetValueOrDefault("lineage")
                     });
             }
 
-            await Database.IndexSnp(dataSnp);
+            await Database.Index(snpData);
         }
 
-        public async Task IndexSnps()
+        public async Task Index()
         {
             if (Config.Snp == null) return;
             foreach (var snpSource in Config.Snp)
@@ -63,11 +59,6 @@ namespace Indexer
                     }
                 }
             }
-        }
-
-
-        public void Index()
-        {
         }
     }
 }

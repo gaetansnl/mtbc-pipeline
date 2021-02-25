@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Core.Doi;
 using EasyCaching.Core;
 using EasyCaching.LiteDB;
+using Indexer.Data;
 using LiteDB;
 using Microsoft.Extensions.DependencyInjection;
 using MTBC.Configuration;
@@ -32,9 +33,18 @@ namespace Indexer
             var doiClient = new DoiClient(factory.GetCachingProvider("doi"));
             var config = Configuration.FromYaml("C:\\Users\\Gaetan\\RiderProjects\\API\\Web\\Data\\config.yaml");
             var db = new LiteDatabase("db");
-            var driver = new LiteDBDriver(db);
-            var indexer = new Indexer(config, driver, doiClient);
-            await indexer.IndexSnps();
+            var driver = new LiteDbDriver(db);
+            
+            var snpIndexer = new SnpIndexer(config, driver, doiClient);
+            await snpIndexer.Index();
+
+            var geneIndexer = new FastaGeneIndexer(driver, "NC_000962.3", "C:\\Users\\Gaetan\\RiderProjects\\API\\Web\\Data\\genes\\H37Rv.fasta");
+            await geneIndexer.Index();
+            
+            var strainIndexer = new StrainIndexer(config, driver);
+            await strainIndexer.Index();
+
+
             Console.WriteLine("gg");
         }
     }

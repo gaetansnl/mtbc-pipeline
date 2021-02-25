@@ -3,6 +3,7 @@ import { SearchConditionChangeCallback } from "./state";
 import SearchConditionAccession from "./SearchConditionAccession";
 import { api } from "state/grpc";
 import { Space } from "antd";
+import SearchConditionBool from "./SearchConditionBool";
 
 function SearchConditionBoolList({
     rootCondition,
@@ -22,6 +23,14 @@ function SearchConditionBoolList({
                     if (condition.accession)
                         return (
                             <SearchConditionAccession
+                                rootCondition={rootCondition}
+                                condition={condition}
+                                onChange={onChange}
+                            />
+                        );
+                    if (condition.bool)
+                        return (
+                            <SearchConditionBool
                                 rootCondition={rootCondition}
                                 condition={condition}
                                 onChange={onChange}

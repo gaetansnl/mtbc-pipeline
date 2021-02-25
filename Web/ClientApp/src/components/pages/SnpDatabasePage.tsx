@@ -1,7 +1,8 @@
-import { Table, Typography, Tag, Button, Alert } from "antd";
+import { Table, Typography, Tag, Button, Tooltip } from "antd";
 import { client } from "../../state/state";
 import { api } from "../../state/grpc";
 import { GenericErrorMessage } from "../../ui/GenericErrorMessage";
+import  SnpAnnotationList  from "../../components/SnpAnnotationList";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { useQuery } from "react-query";
 
@@ -40,19 +41,7 @@ const columns = [
         title: "Authors",
         render: (text: string, record: api.ISnp) => {
             return (
-                <span>
-                    {record.annotations?.map(
-                        (v) =>
-                            v.study && (
-                                <a target="_blank" href={v.study.url || undefined}>
-                                    <Tag>
-                                        {v.study.mainAuthor?.fullName} et al.{" "}
-                                        {v.lineage && `(Lineage ${v.lineage})`}
-                                    </Tag>
-                                </a>
-                            )
-                    )}
-                </span>
+                <SnpAnnotationList snp={record}/>
             );
         },
         dataIndex: "authors",
@@ -63,7 +52,7 @@ const columns = [
             return (
                 <span>
                     {record.ncbiUrl && (
-                        <a target="_blank" href={record.ncbiUrl}>
+                        <a target="_blank" rel="noreferrer" href={record.ncbiUrl}>
                             <Button>Viewer</Button>
                         </a>
                     )}
@@ -73,6 +62,7 @@ const columns = [
         dataIndex: "actions",
     },
 ];
+
 export function SnpDatabasePage() {
     const { isLoading, isError, data } = useQuery("snp-list", () => client.listSnp({ page: 0 }));
     if (isError) return <GenericErrorMessage />;

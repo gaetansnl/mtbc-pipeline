@@ -8,6 +8,7 @@ using Core.Doi;
 using Google.Protobuf.Collections;
 using Grpc.Core;
 using Indexer;
+using Indexer.Data;
 using LiteDB;
 using Microsoft.Extensions.Logging;
 
@@ -71,7 +72,7 @@ namespace Web.Services
             foreach (var id in nodes)
             {
                 var position = idToPosition.ContainsKey(id) ? idToPosition[id] : _gg.NetworkVertices[id];
-                response.Graph.Nodes.Add(new Node() {Id = id, PositionX = position.Item1, PositionY = position.Item2});
+                response.Graph.Nodes.Add(new Node() {Id = id, Name = _gg.Vertices.GetValueOrDefault(id, "VIRTUAL"), PositionX = position.Item1, PositionY = position.Item2});
             }
 
             var i = 1;
@@ -87,15 +88,15 @@ namespace Web.Services
         public override async Task<ListSnpReply> ListSnp(ListSnpRequest request, ServerCallContext context)
         {
            
-            var driver = new LiteDBDriver(db);
+            var driver = new LiteDbDriver(db);
             var list = await driver.ListSnp();
             
             var configuration = new MapperConfiguration(cfg => 
             {
-                cfg.CreateMap<Indexer.Data.Snp, Snp>(MemberList.None);
+                cfg.CreateMap<SnpData, Snp>(MemberList.None);
                 cfg.CreateMap<DoiCitation, Study>(MemberList.None);
                 cfg.CreateMap<DoiCitation.Author, Author>(MemberList.None);
-                cfg.CreateMap<Indexer.Data.SnpAnnotation, SnpAnnotation>(MemberList.None);
+                cfg.CreateMap<SnpData.Annotation, SnpAnnotation>(MemberList.None);
                 cfg.ForAllPropertyMaps(
                     map => map.DestinationType.IsGenericType && map.DestinationType.GetGenericTypeDefinition() == typeof(RepeatedField<>),
                     (map, options) => options.UseDestinationValue());
@@ -107,5 +108,41 @@ namespace Web.Services
             reply.Snps.AddRange(gg);
             return reply;
         }
+        public override async Task<GetStrainReply> GetStrain(GetStrainRequest request, ServerCallContext context)
+        {
+           
+            var driver = new LiteDbDriver(db);
+            var result = await driver.GetResult(request.Id);
+
+            var configuration = new MapperConfiguration(cfg => 
+            {
+                cfg.CreateMap<SnpData, Snp>(MemberList.None);
+                cfg.CreateMap<DoiCitation, Study>(MemberList.None);
+                cfg.CreateMap<DoiCitation.Author, Author>(MemberList.None);
+                cfg.CreateMap<SnpData.Annotation, SnpAnnotation>(MemberList.None);
+                cfg.CreateMap<AnalysisData, StrainResult>(MemberList.None);
+                cfg.CreateMap<AnalysisData.InsertionSequence, InsertionSequence>(MemberList.None);
+                cfg.CreateMap<AnalysisData.InsertionSequence.PrefixedPosition, InsertionSequencePosition>(MemberList.None);
+                cfg.CreateMap<CrisprPartData, CrisprPart>(MemberList.None);
+                cfg.CreateMap<CrisprPartData.SequencePart, SequenceCrisprPart>(MemberList.None);
+                cfg.CreateMap<CrisprPartData.SpacerPart, SpacerCrisprPart>(MemberList.None);
+                cfg.CreateMap<CrisprPartData.DirectRepeatPart, DirectRepeatCrisprPart>(MemberList.None);
+                cfg.CreateMap<CrisprPartData.InsertionSequencePart, InsertionSequenceCrisprPart>(MemberList.None);
+                cfg.CreateMap<CrisprPartData.NamedSequencePart, NamedSequenceCrisprPart>(MemberList.None);
+                cfg.CreateMap<CrisprPartData.SequenceRange, Range>(MemberList.None);
+                cfg.CreateMap<CrisprPartData.GenePart, GeneCrisprPart>(MemberList.None);
+                cfg.CreateMap<GeneData, Gene>(MemberList.None);
+                cfg.ForAllPropertyMaps(
+                    map => map.DestinationType.IsGenericType && map.DestinationType.GetGenericTypeDefinition() == typeof(RepeatedField<>),
+                    (map, options) => options.UseDestinationValue());
+            });
+            configuration.AssertConfigurationIsValid();
+            var mapper = configuration.CreateMapper();
+            var gg = mapper.Map<StrainResult>(result);
+            GetStrainReply reply = new();
+            reply.Result = gg;
+            return reply;
+        }
+        
     }
 }

@@ -26,7 +26,7 @@ export default function App() {
                         </Menu.Item>
                     </Menu>
                 </Header>
-                <Content style={{ overflowY: "scroll", overflowX:'hidden' }}>
+                <Content style={{ overflowY: "auto", overflowX:'hidden' }}>
                     <Route exact path="/" component={HomePage} />
                     <Route exact path="/snp" component={SnpDatabasePage} />
                 </Content>

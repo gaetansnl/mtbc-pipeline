@@ -9,8 +9,9 @@ message Graph {
 
 message Node {
   int32 id = 1;
-  double positionX = 2;
-  double positionY = 3;
+  string name = 2;
+  double positionX = 3;
+  double positionY = 4;
 }
 
 message Edge {

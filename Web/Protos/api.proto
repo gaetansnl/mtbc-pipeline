@@ -4,11 +4,13 @@ option csharp_namespace = "Web";
 import "graph.proto";
 import "search.proto";
 import "data.proto";
+import "result.proto";
 
 service Api {
   rpc SayHello (HelloRequest) returns (HelloReply);
   rpc Search (SearchRequest) returns (SearchReply);
   rpc ListSnp (ListSnpRequest) returns (ListSnpReply);
+  rpc GetStrain (GetStrainRequest) returns (GetStrainReply);
 }
 
 message HelloRequest {
@@ -23,6 +25,13 @@ message ListSnpRequest{
 }
 message ListSnpReply{
   repeated Snp snps = 1;
+}
+
+message GetStrainRequest{
+  string id = 1;
+}
+message GetStrainReply{
+  StrainResult result = 1;
 }
 
 message SearchRequest {

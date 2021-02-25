@@ -25,6 +25,7 @@
     "react-query": "^3.9.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.2",
+    "react-virtual": "^2.4.0",
     "rimraf": "^2.6.2",
     "use-resize-observer": "^7.0.0"
   },
