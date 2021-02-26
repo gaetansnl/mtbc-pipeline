@@ -44,7 +44,7 @@ function HomePage(props: any) {
             </Layout>
             {infoOpened && (
                 <Sider width={500} style={{height: '100%', overflowY: "scroll"}}>
-                    <StrainInfo id={"ERR718209"} />
+                    <StrainInfo id={"ERR245662"} />
                 </Sider>
             )}
         </Layout>

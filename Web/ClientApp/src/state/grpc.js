@@ -6219,7 +6219,7 @@ export const api = $root.api = (() => {
          * @property {api.IDirectRepeatCrisprPart|null} [directRepeat] CrisprPart directRepeat
          * @property {api.ISpacerCrisprPart|null} [spacer] CrisprPart spacer
          * @property {api.IInsertionSequenceCrisprPart|null} [insertionSequence] CrisprPart insertionSequence
-         * @property {api.INamedSequenceCrisprPart|null} [namedEquence] CrisprPart namedEquence
+         * @property {api.INamedSequenceCrisprPart|null} [namedSequence] CrisprPart namedSequence
          * @property {api.ISequenceCrisprPart|null} [sequence] CrisprPart sequence
          * @property {api.IGeneCrisprPart|null} [gene] CrisprPart gene
          */
@@ -6264,12 +6264,12 @@ export const api = $root.api = (() => {
         CrisprPart.prototype.insertionSequence = null;
 
         /**
-         * CrisprPart namedEquence.
-         * @member {api.INamedSequenceCrisprPart|null|undefined} namedEquence
+         * CrisprPart namedSequence.
+         * @member {api.INamedSequenceCrisprPart|null|undefined} namedSequence
          * @memberof api.CrisprPart
          * @instance
          */
-        CrisprPart.prototype.namedEquence = null;
+        CrisprPart.prototype.namedSequence = null;
 
         /**
          * CrisprPart sequence.
@@ -6292,12 +6292,12 @@ export const api = $root.api = (() => {
 
         /**
          * CrisprPart part.
-         * @member {"directRepeat"|"spacer"|"insertionSequence"|"namedEquence"|"sequence"|"gene"|undefined} part
+         * @member {"directRepeat"|"spacer"|"insertionSequence"|"namedSequence"|"sequence"|"gene"|undefined} part
          * @memberof api.CrisprPart
          * @instance
          */
         Object.defineProperty(CrisprPart.prototype, "part", {
-            get: $util.oneOfGetter($oneOfFields = ["directRepeat", "spacer", "insertionSequence", "namedEquence", "sequence", "gene"]),
+            get: $util.oneOfGetter($oneOfFields = ["directRepeat", "spacer", "insertionSequence", "namedSequence", "sequence", "gene"]),
             set: $util.oneOfSetter($oneOfFields)
         });
 
@@ -6331,8 +6331,8 @@ export const api = $root.api = (() => {
                 $root.api.SpacerCrisprPart.encode(message.spacer, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             if (message.insertionSequence != null && Object.hasOwnProperty.call(message, "insertionSequence"))
                 $root.api.InsertionSequenceCrisprPart.encode(message.insertionSequence, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
-            if (message.namedEquence != null && Object.hasOwnProperty.call(message, "namedEquence"))
-                $root.api.NamedSequenceCrisprPart.encode(message.namedEquence, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.namedSequence != null && Object.hasOwnProperty.call(message, "namedSequence"))
+                $root.api.NamedSequenceCrisprPart.encode(message.namedSequence, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             if (message.sequence != null && Object.hasOwnProperty.call(message, "sequence"))
                 $root.api.SequenceCrisprPart.encode(message.sequence, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             if (message.gene != null && Object.hasOwnProperty.call(message, "gene"))
@@ -6381,7 +6381,7 @@ export const api = $root.api = (() => {
                     message.insertionSequence = $root.api.InsertionSequenceCrisprPart.decode(reader, reader.uint32());
                     break;
                 case 4:
-                    message.namedEquence = $root.api.NamedSequenceCrisprPart.decode(reader, reader.uint32());
+                    message.namedSequence = $root.api.NamedSequenceCrisprPart.decode(reader, reader.uint32());
                     break;
                 case 5:
                     message.sequence = $root.api.SequenceCrisprPart.decode(reader, reader.uint32());
@@ -6453,14 +6453,14 @@ export const api = $root.api = (() => {
                         return "insertionSequence." + error;
                 }
             }
-            if (message.namedEquence != null && message.hasOwnProperty("namedEquence")) {
+            if (message.namedSequence != null && message.hasOwnProperty("namedSequence")) {
                 if (properties.part === 1)
                     return "part: multiple values";
                 properties.part = 1;
                 {
-                    let error = $root.api.NamedSequenceCrisprPart.verify(message.namedEquence);
+                    let error = $root.api.NamedSequenceCrisprPart.verify(message.namedSequence);
                     if (error)
-                        return "namedEquence." + error;
+                        return "namedSequence." + error;
                 }
             }
             if (message.sequence != null && message.hasOwnProperty("sequence")) {
@@ -6513,10 +6513,10 @@ export const api = $root.api = (() => {
                     throw TypeError(".api.CrisprPart.insertionSequence: object expected");
                 message.insertionSequence = $root.api.InsertionSequenceCrisprPart.fromObject(object.insertionSequence);
             }
-            if (object.namedEquence != null) {
-                if (typeof object.namedEquence !== "object")
-                    throw TypeError(".api.CrisprPart.namedEquence: object expected");
-                message.namedEquence = $root.api.NamedSequenceCrisprPart.fromObject(object.namedEquence);
+            if (object.namedSequence != null) {
+                if (typeof object.namedSequence !== "object")
+                    throw TypeError(".api.CrisprPart.namedSequence: object expected");
+                message.namedSequence = $root.api.NamedSequenceCrisprPart.fromObject(object.namedSequence);
             }
             if (object.sequence != null) {
                 if (typeof object.sequence !== "object")
@@ -6559,10 +6559,10 @@ export const api = $root.api = (() => {
                 if (options.oneofs)
                     object.part = "insertionSequence";
             }
-            if (message.namedEquence != null && message.hasOwnProperty("namedEquence")) {
-                object.namedEquence = $root.api.NamedSequenceCrisprPart.toObject(message.namedEquence, options);
+            if (message.namedSequence != null && message.hasOwnProperty("namedSequence")) {
+                object.namedSequence = $root.api.NamedSequenceCrisprPart.toObject(message.namedSequence, options);
                 if (options.oneofs)
-                    object.part = "namedEquence";
+                    object.part = "namedSequence";
             }
             if (message.sequence != null && message.hasOwnProperty("sequence")) {
                 object.sequence = $root.api.SequenceCrisprPart.toObject(message.sequence, options);
@@ -8112,6 +8112,10 @@ export const api = $root.api = (() => {
          * @property {Array.<api.IInsertionSequence>|null} [insertionSequences] StrainResult insertionSequences
          * @property {Array.<boolean>|null} [spoligotype43Blast] StrainResult spoligotype43Blast
          * @property {Array.<boolean>|null} [spoligotype98Blast] StrainResult spoligotype98Blast
+         * @property {Array.<boolean>|null} [spoligotype43Crispr] StrainResult spoligotype43Crispr
+         * @property {Array.<boolean>|null} [spoligotype98Crispr] StrainResult spoligotype98Crispr
+         * @property {boolean|null} [spoligotype43MatchBlast] StrainResult spoligotype43MatchBlast
+         * @property {boolean|null} [spoligotype98MatchBlast] StrainResult spoligotype98MatchBlast
          * @property {Array.<boolean>|null} [spoligotypeBloinBlast] StrainResult spoligotypeBloinBlast
          * @property {Array.<api.ICrisprPart>|null} [crispr] StrainResult crispr
          * @property {Array.<api.ISnp>|null} [snp] StrainResult snp
@@ -8130,6 +8134,8 @@ export const api = $root.api = (() => {
             this.insertionSequences = [];
             this.spoligotype43Blast = [];
             this.spoligotype98Blast = [];
+            this.spoligotype43Crispr = [];
+            this.spoligotype98Crispr = [];
             this.spoligotypeBloinBlast = [];
             this.crispr = [];
             this.snp = [];
@@ -8178,6 +8184,38 @@ export const api = $root.api = (() => {
          * @instance
          */
         StrainResult.prototype.spoligotype98Blast = $util.emptyArray;
+
+        /**
+         * StrainResult spoligotype43Crispr.
+         * @member {Array.<boolean>} spoligotype43Crispr
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotype43Crispr = $util.emptyArray;
+
+        /**
+         * StrainResult spoligotype98Crispr.
+         * @member {Array.<boolean>} spoligotype98Crispr
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotype98Crispr = $util.emptyArray;
+
+        /**
+         * StrainResult spoligotype43MatchBlast.
+         * @member {boolean} spoligotype43MatchBlast
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotype43MatchBlast = false;
+
+        /**
+         * StrainResult spoligotype98MatchBlast.
+         * @member {boolean} spoligotype98MatchBlast
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotype98MatchBlast = false;
 
         /**
          * StrainResult spoligotypeBloinBlast.
@@ -8247,18 +8285,34 @@ export const api = $root.api = (() => {
                     writer.bool(message.spoligotype98Blast[i]);
                 writer.ldelim();
             }
-            if (message.spoligotypeBloinBlast != null && message.spoligotypeBloinBlast.length) {
+            if (message.spoligotype43Crispr != null && message.spoligotype43Crispr.length) {
                 writer.uint32(/* id 6, wireType 2 =*/50).fork();
+                for (let i = 0; i < message.spoligotype43Crispr.length; ++i)
+                    writer.bool(message.spoligotype43Crispr[i]);
+                writer.ldelim();
+            }
+            if (message.spoligotype98Crispr != null && message.spoligotype98Crispr.length) {
+                writer.uint32(/* id 7, wireType 2 =*/58).fork();
+                for (let i = 0; i < message.spoligotype98Crispr.length; ++i)
+                    writer.bool(message.spoligotype98Crispr[i]);
+                writer.ldelim();
+            }
+            if (message.spoligotype43MatchBlast != null && Object.hasOwnProperty.call(message, "spoligotype43MatchBlast"))
+                writer.uint32(/* id 8, wireType 0 =*/64).bool(message.spoligotype43MatchBlast);
+            if (message.spoligotype98MatchBlast != null && Object.hasOwnProperty.call(message, "spoligotype98MatchBlast"))
+                writer.uint32(/* id 9, wireType 0 =*/72).bool(message.spoligotype98MatchBlast);
+            if (message.spoligotypeBloinBlast != null && message.spoligotypeBloinBlast.length) {
+                writer.uint32(/* id 10, wireType 2 =*/82).fork();
                 for (let i = 0; i < message.spoligotypeBloinBlast.length; ++i)
                     writer.bool(message.spoligotypeBloinBlast[i]);
                 writer.ldelim();
             }
             if (message.crispr != null && message.crispr.length)
                 for (let i = 0; i < message.crispr.length; ++i)
-                    $root.api.CrisprPart.encode(message.crispr[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+                    $root.api.CrisprPart.encode(message.crispr[i], writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
             if (message.snp != null && message.snp.length)
                 for (let i = 0; i < message.snp.length; ++i)
-                    $root.api.Snp.encode(message.snp[i], writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
+                    $root.api.Snp.encode(message.snp[i], writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
             return writer;
         };
 
@@ -8327,6 +8381,32 @@ export const api = $root.api = (() => {
                         message.spoligotype98Blast.push(reader.bool());
                     break;
                 case 6:
+                    if (!(message.spoligotype43Crispr && message.spoligotype43Crispr.length))
+                        message.spoligotype43Crispr = [];
+                    if ((tag & 7) === 2) {
+                        let end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.spoligotype43Crispr.push(reader.bool());
+                    } else
+                        message.spoligotype43Crispr.push(reader.bool());
+                    break;
+                case 7:
+                    if (!(message.spoligotype98Crispr && message.spoligotype98Crispr.length))
+                        message.spoligotype98Crispr = [];
+                    if ((tag & 7) === 2) {
+                        let end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.spoligotype98Crispr.push(reader.bool());
+                    } else
+                        message.spoligotype98Crispr.push(reader.bool());
+                    break;
+                case 8:
+                    message.spoligotype43MatchBlast = reader.bool();
+                    break;
+                case 9:
+                    message.spoligotype98MatchBlast = reader.bool();
+                    break;
+                case 10:
                     if (!(message.spoligotypeBloinBlast && message.spoligotypeBloinBlast.length))
                         message.spoligotypeBloinBlast = [];
                     if ((tag & 7) === 2) {
@@ -8336,12 +8416,12 @@ export const api = $root.api = (() => {
                     } else
                         message.spoligotypeBloinBlast.push(reader.bool());
                     break;
-                case 7:
+                case 11:
                     if (!(message.crispr && message.crispr.length))
                         message.crispr = [];
                     message.crispr.push($root.api.CrisprPart.decode(reader, reader.uint32()));
                     break;
-                case 8:
+                case 12:
                     if (!(message.snp && message.snp.length))
                         message.snp = [];
                     message.snp.push($root.api.Snp.decode(reader, reader.uint32()));
@@ -8416,6 +8496,26 @@ export const api = $root.api = (() => {
                     if (typeof message.spoligotype98Blast[i] !== "boolean")
                         return "spoligotype98Blast: boolean[] expected";
             }
+            if (message.spoligotype43Crispr != null && message.hasOwnProperty("spoligotype43Crispr")) {
+                if (!Array.isArray(message.spoligotype43Crispr))
+                    return "spoligotype43Crispr: array expected";
+                for (let i = 0; i < message.spoligotype43Crispr.length; ++i)
+                    if (typeof message.spoligotype43Crispr[i] !== "boolean")
+                        return "spoligotype43Crispr: boolean[] expected";
+            }
+            if (message.spoligotype98Crispr != null && message.hasOwnProperty("spoligotype98Crispr")) {
+                if (!Array.isArray(message.spoligotype98Crispr))
+                    return "spoligotype98Crispr: array expected";
+                for (let i = 0; i < message.spoligotype98Crispr.length; ++i)
+                    if (typeof message.spoligotype98Crispr[i] !== "boolean")
+                        return "spoligotype98Crispr: boolean[] expected";
+            }
+            if (message.spoligotype43MatchBlast != null && message.hasOwnProperty("spoligotype43MatchBlast"))
+                if (typeof message.spoligotype43MatchBlast !== "boolean")
+                    return "spoligotype43MatchBlast: boolean expected";
+            if (message.spoligotype98MatchBlast != null && message.hasOwnProperty("spoligotype98MatchBlast"))
+                if (typeof message.spoligotype98MatchBlast !== "boolean")
+                    return "spoligotype98MatchBlast: boolean expected";
             if (message.spoligotypeBloinBlast != null && message.hasOwnProperty("spoligotypeBloinBlast")) {
                 if (!Array.isArray(message.spoligotypeBloinBlast))
                     return "spoligotypeBloinBlast: array expected";
@@ -8492,6 +8592,24 @@ export const api = $root.api = (() => {
                 for (let i = 0; i < object.spoligotype98Blast.length; ++i)
                     message.spoligotype98Blast[i] = Boolean(object.spoligotype98Blast[i]);
             }
+            if (object.spoligotype43Crispr) {
+                if (!Array.isArray(object.spoligotype43Crispr))
+                    throw TypeError(".api.StrainResult.spoligotype43Crispr: array expected");
+                message.spoligotype43Crispr = [];
+                for (let i = 0; i < object.spoligotype43Crispr.length; ++i)
+                    message.spoligotype43Crispr[i] = Boolean(object.spoligotype43Crispr[i]);
+            }
+            if (object.spoligotype98Crispr) {
+                if (!Array.isArray(object.spoligotype98Crispr))
+                    throw TypeError(".api.StrainResult.spoligotype98Crispr: array expected");
+                message.spoligotype98Crispr = [];
+                for (let i = 0; i < object.spoligotype98Crispr.length; ++i)
+                    message.spoligotype98Crispr[i] = Boolean(object.spoligotype98Crispr[i]);
+            }
+            if (object.spoligotype43MatchBlast != null)
+                message.spoligotype43MatchBlast = Boolean(object.spoligotype43MatchBlast);
+            if (object.spoligotype98MatchBlast != null)
+                message.spoligotype98MatchBlast = Boolean(object.spoligotype98MatchBlast);
             if (object.spoligotypeBloinBlast) {
                 if (!Array.isArray(object.spoligotypeBloinBlast))
                     throw TypeError(".api.StrainResult.spoligotypeBloinBlast: array expected");
@@ -8540,12 +8658,17 @@ export const api = $root.api = (() => {
                 object.insertionSequences = [];
                 object.spoligotype43Blast = [];
                 object.spoligotype98Blast = [];
+                object.spoligotype43Crispr = [];
+                object.spoligotype98Crispr = [];
                 object.spoligotypeBloinBlast = [];
                 object.crispr = [];
                 object.snp = [];
             }
-            if (options.defaults)
+            if (options.defaults) {
                 object.strainId = "";
+                object.spoligotype43MatchBlast = false;
+                object.spoligotype98MatchBlast = false;
+            }
             if (message.strainId != null && message.hasOwnProperty("strainId"))
                 object.strainId = message.strainId;
             if (message.missingGenes && message.missingGenes.length) {
@@ -8568,6 +8691,20 @@ export const api = $root.api = (() => {
                 for (let j = 0; j < message.spoligotype98Blast.length; ++j)
                     object.spoligotype98Blast[j] = message.spoligotype98Blast[j];
             }
+            if (message.spoligotype43Crispr && message.spoligotype43Crispr.length) {
+                object.spoligotype43Crispr = [];
+                for (let j = 0; j < message.spoligotype43Crispr.length; ++j)
+                    object.spoligotype43Crispr[j] = message.spoligotype43Crispr[j];
+            }
+            if (message.spoligotype98Crispr && message.spoligotype98Crispr.length) {
+                object.spoligotype98Crispr = [];
+                for (let j = 0; j < message.spoligotype98Crispr.length; ++j)
+                    object.spoligotype98Crispr[j] = message.spoligotype98Crispr[j];
+            }
+            if (message.spoligotype43MatchBlast != null && message.hasOwnProperty("spoligotype43MatchBlast"))
+                object.spoligotype43MatchBlast = message.spoligotype43MatchBlast;
+            if (message.spoligotype98MatchBlast != null && message.hasOwnProperty("spoligotype98MatchBlast"))
+                object.spoligotype98MatchBlast = message.spoligotype98MatchBlast;
             if (message.spoligotypeBloinBlast && message.spoligotypeBloinBlast.length) {
                 object.spoligotypeBloinBlast = [];
                 for (let j = 0; j < message.spoligotypeBloinBlast.length; ++j)

@@ -2681,8 +2681,8 @@ export namespace api {
         /** CrisprPart insertionSequence */
         insertionSequence?: (api.IInsertionSequenceCrisprPart|null);
 
-        /** CrisprPart namedEquence */
-        namedEquence?: (api.INamedSequenceCrisprPart|null);
+        /** CrisprPart namedSequence */
+        namedSequence?: (api.INamedSequenceCrisprPart|null);
 
         /** CrisprPart sequence */
         sequence?: (api.ISequenceCrisprPart|null);
@@ -2709,8 +2709,8 @@ export namespace api {
         /** CrisprPart insertionSequence. */
         public insertionSequence?: (api.IInsertionSequenceCrisprPart|null);
 
-        /** CrisprPart namedEquence. */
-        public namedEquence?: (api.INamedSequenceCrisprPart|null);
+        /** CrisprPart namedSequence. */
+        public namedSequence?: (api.INamedSequenceCrisprPart|null);
 
         /** CrisprPart sequence. */
         public sequence?: (api.ISequenceCrisprPart|null);
@@ -2719,7 +2719,7 @@ export namespace api {
         public gene?: (api.IGeneCrisprPart|null);
 
         /** CrisprPart part. */
-        public part?: ("directRepeat"|"spacer"|"insertionSequence"|"namedEquence"|"sequence"|"gene");
+        public part?: ("directRepeat"|"spacer"|"insertionSequence"|"namedSequence"|"sequence"|"gene");
 
         /**
          * Creates a new CrisprPart instance using the specified properties.
@@ -3488,6 +3488,18 @@ export namespace api {
         /** StrainResult spoligotype98Blast */
         spoligotype98Blast?: (boolean[]|null);
 
+        /** StrainResult spoligotype43Crispr */
+        spoligotype43Crispr?: (boolean[]|null);
+
+        /** StrainResult spoligotype98Crispr */
+        spoligotype98Crispr?: (boolean[]|null);
+
+        /** StrainResult spoligotype43MatchBlast */
+        spoligotype43MatchBlast?: (boolean|null);
+
+        /** StrainResult spoligotype98MatchBlast */
+        spoligotype98MatchBlast?: (boolean|null);
+
         /** StrainResult spoligotypeBloinBlast */
         spoligotypeBloinBlast?: (boolean[]|null);
 
@@ -3521,6 +3533,18 @@ export namespace api {
 
         /** StrainResult spoligotype98Blast. */
         public spoligotype98Blast: boolean[];
+
+        /** StrainResult spoligotype43Crispr. */
+        public spoligotype43Crispr: boolean[];
+
+        /** StrainResult spoligotype98Crispr. */
+        public spoligotype98Crispr: boolean[];
+
+        /** StrainResult spoligotype43MatchBlast. */
+        public spoligotype43MatchBlast: boolean;
+
+        /** StrainResult spoligotype98MatchBlast. */
+        public spoligotype98MatchBlast: boolean;
 
         /** StrainResult spoligotypeBloinBlast. */
         public spoligotypeBloinBlast: boolean[];

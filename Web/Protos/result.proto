@@ -17,7 +17,7 @@ message CrisprPart{
     DirectRepeatCrisprPart direct_repeat = 1;
     SpacerCrisprPart spacer = 2;
     InsertionSequenceCrisprPart insertion_sequence = 3;
-    NamedSequenceCrisprPart named_equence = 4;
+    NamedSequenceCrisprPart named_sequence = 4;
     SequenceCrisprPart sequence = 5;
     GeneCrisprPart gene = 6;
   }
@@ -60,7 +60,11 @@ message StrainResult{
   repeated InsertionSequence insertion_sequences = 3;
   repeated bool spoligotype43_blast = 4;
   repeated bool spoligotype98_blast = 5;
-  repeated bool spoligotype_bloin_blast = 6;
-  repeated CrisprPart crispr = 7;
-  repeated Snp snp = 8;
+  repeated bool spoligotype43_crispr = 6;
+  repeated bool spoligotype98_crispr = 7;
+  bool spoligotype43_match_blast = 8;
+  bool spoligotype98_match_blast = 9;
+  repeated bool spoligotype_bloin_blast = 10;
+  repeated CrisprPart crispr = 11;
+  repeated Snp snp = 12;
 }

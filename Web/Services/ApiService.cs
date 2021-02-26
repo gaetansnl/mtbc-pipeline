@@ -72,7 +72,11 @@ namespace Web.Services
             foreach (var id in nodes)
             {
                 var position = idToPosition.ContainsKey(id) ? idToPosition[id] : _gg.NetworkVertices[id];
-                response.Graph.Nodes.Add(new Node() {Id = id, Name = _gg.Vertices.GetValueOrDefault(id, "VIRTUAL"), PositionX = position.Item1, PositionY = position.Item2});
+                response.Graph.Nodes.Add(new Node()
+                {
+                    Id = id, Name = _gg.Vertices.GetValueOrDefault(id, "VIRTUAL"), PositionX = position.Item1,
+                    PositionY = position.Item2
+                });
             }
 
             var i = 1;
@@ -84,21 +88,24 @@ namespace Web.Services
 
             return response;
         }
- private static LiteDatabase db = new LiteDatabase(@"C:\Users\Gaetan\RiderProjects\API\Indexer\bin\Debug\net5.0\db");
+
+        private static LiteDatabase db =
+            new LiteDatabase(@"C:\Users\Gaetan\RiderProjects\API\Indexer\bin\Debug\net5.0\db");
+
         public override async Task<ListSnpReply> ListSnp(ListSnpRequest request, ServerCallContext context)
         {
-           
             var driver = new LiteDbDriver(db);
             var list = await driver.ListSnp();
-            
-            var configuration = new MapperConfiguration(cfg => 
+
+            var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<SnpData, Snp>(MemberList.None);
                 cfg.CreateMap<DoiCitation, Study>(MemberList.None);
                 cfg.CreateMap<DoiCitation.Author, Author>(MemberList.None);
                 cfg.CreateMap<SnpData.Annotation, SnpAnnotation>(MemberList.None);
                 cfg.ForAllPropertyMaps(
-                    map => map.DestinationType.IsGenericType && map.DestinationType.GetGenericTypeDefinition() == typeof(RepeatedField<>),
+                    map => map.DestinationType.IsGenericType &&
+                           map.DestinationType.GetGenericTypeDefinition() == typeof(RepeatedField<>),
                     (map, options) => options.UseDestinationValue());
             });
             configuration.AssertConfigurationIsValid();
@@ -108,13 +115,13 @@ namespace Web.Services
             reply.Snps.AddRange(gg);
             return reply;
         }
+
         public override async Task<GetStrainReply> GetStrain(GetStrainRequest request, ServerCallContext context)
         {
-           
             var driver = new LiteDbDriver(db);
             var result = await driver.GetResult(request.Id);
 
-            var configuration = new MapperConfiguration(cfg => 
+            var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<SnpData, Snp>(MemberList.None);
                 cfg.CreateMap<DoiCitation, Study>(MemberList.None);
@@ -122,8 +129,11 @@ namespace Web.Services
                 cfg.CreateMap<SnpData.Annotation, SnpAnnotation>(MemberList.None);
                 cfg.CreateMap<AnalysisData, StrainResult>(MemberList.None);
                 cfg.CreateMap<AnalysisData.InsertionSequence, InsertionSequence>(MemberList.None);
-                cfg.CreateMap<AnalysisData.InsertionSequence.PrefixedPosition, InsertionSequencePosition>(MemberList.None);
-                cfg.CreateMap<CrisprPartData, CrisprPart>(MemberList.None);
+                cfg.CreateMap<AnalysisData.InsertionSequence.PrefixedPosition, InsertionSequencePosition>(MemberList
+                    .None);
+                // Fix problem with oneof
+                cfg.CreateMap<CrisprPartData, CrisprPart>(MemberList.None).ForAllMembers(opts =>
+                    opts.Condition((src, dest, srcMember) => srcMember != null));
                 cfg.CreateMap<CrisprPartData.SequencePart, SequenceCrisprPart>(MemberList.None);
                 cfg.CreateMap<CrisprPartData.SpacerPart, SpacerCrisprPart>(MemberList.None);
                 cfg.CreateMap<CrisprPartData.DirectRepeatPart, DirectRepeatCrisprPart>(MemberList.None);
@@ -133,7 +143,8 @@ namespace Web.Services
                 cfg.CreateMap<CrisprPartData.GenePart, GeneCrisprPart>(MemberList.None);
                 cfg.CreateMap<GeneData, Gene>(MemberList.None);
                 cfg.ForAllPropertyMaps(
-                    map => map.DestinationType.IsGenericType && map.DestinationType.GetGenericTypeDefinition() == typeof(RepeatedField<>),
+                    map => map.DestinationType.IsGenericType &&
+                           map.DestinationType.GetGenericTypeDefinition() == typeof(RepeatedField<>),
                     (map, options) => options.UseDestinationValue());
             });
             configuration.AssertConfigurationIsValid();
@@ -143,6 +154,5 @@ namespace Web.Services
             reply.Result = gg;
             return reply;
         }
-        
     }
 }
