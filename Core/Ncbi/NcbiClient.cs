@@ -35,6 +35,9 @@ namespace Core.Ncbi
             run.Size = NcbiParserUtils.ToNullableInt(runNode.Attributes?["size"]?.Value);
             run.PublishedAt = NcbiParserUtils.ToNullableDate(runNode.Attributes?["published"]?.Value);
             run.Title = runNode.SelectSingleNode("TITLE")?.InnerText;
+            run.ReadsPerSpot = NcbiParserUtils.ToNullableInt(runNode.SelectSingleNode("Statistics")?.Attributes?["nreads"]?.Value);
+            /* Technically wrong*/
+            run.AverageReadLength = NcbiParserUtils.ToNullableInt(runNode.SelectSingleNode("Statistics")?.FirstChild?.Attributes?["average"]?.Value);
             run.DownloadUrl = runNode
                 .SelectSingleNode("//SRAFile[@sratoolkit='1']/Alternatives[@access_type='anonymous']/@url")?.InnerText;
 

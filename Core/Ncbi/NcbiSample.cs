@@ -5,11 +5,11 @@ namespace Core.Ncbi
 {
     public class NcbiSample
     {
-        public string? Accession;
-        public string? Title;
-        public string? TaxonId;
-        public string? ScientificName;
-        public Dictionary<string, string> RawAttributes = new();
+        public string? Accession { get; set; }
+        public string? Title { get; set; }
+        public string? TaxonId { get; set; }
+        public string? ScientificName { get; set; }
+        public Dictionary<string, string> RawAttributes  { get; set; }= new();
 
         public DateTime? CollectedAt =>
             NcbiParserUtils.ToNullableDate(NcbiParserUtils.DictionnaryFallbackGet(RawAttributes, "collection_date"));

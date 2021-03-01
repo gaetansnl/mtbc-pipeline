@@ -1,0 +1,43 @@
+﻿syntax = "proto3";
+package api;
+option csharp_namespace = "Web";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+message NcbiRun {
+  string accession = 1;
+  NcbiExperiment experiment = 2;
+  google.protobuf.StringValue title = 3;
+  int32 total_bases = 4;
+  int32 total_spots = 5;
+  int32 size = 6;
+  repeated NcbiSample samples = 7;
+  google.protobuf.Timestamp published_at = 8;
+  int32 reads_per_spot = 9;
+  int32 average_read_length = 10;
+  int32 total_reads = 11;
+  google.protobuf.StringValue link = 12; 
+}
+message NcbiExperiment{
+  string accession = 1;
+  google.protobuf.StringValue center_name= 2;
+  google.protobuf.StringValue title= 3;
+  NcbiStudy Study= 4;
+}
+message NcbiStudy {
+   string accession = 1;
+  google.protobuf.StringValue alias= 2;
+  google.protobuf.StringValue center_name= 3;
+  google.protobuf.StringValue title= 4;
+  google.protobuf.StringValue abstract= 5;
+  google.protobuf.StringValue project_name= 6;
+}
+message NcbiSample {
+  string accession = 1;
+  google.protobuf.StringValue title = 2;
+  google.protobuf.StringValue taxon_id = 3;
+  google.protobuf.StringValue scientific_name = 4;
+  google.protobuf.Timestamp collected_at = 5;
+  google.protobuf.StringValue strain = 6;
+  google.protobuf.StringValue location = 7;
+}

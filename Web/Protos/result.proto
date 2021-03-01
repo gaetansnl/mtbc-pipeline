@@ -2,6 +2,7 @@
 package api;
 option csharp_namespace = "Web";
 import "data.proto";
+import "ncbi.proto";
 
 message InsertionSequencePosition{
   int32 position = 1;
@@ -56,15 +57,16 @@ message Range{
 
 message StrainResult{
   string strain_id = 1;
-  repeated Gene missing_genes = 2;
-  repeated InsertionSequence insertion_sequences = 3;
-  repeated bool spoligotype43_blast = 4;
-  repeated bool spoligotype98_blast = 5;
-  repeated bool spoligotype43_crispr = 6;
-  repeated bool spoligotype98_crispr = 7;
-  bool spoligotype43_match_blast = 8;
-  bool spoligotype98_match_blast = 9;
-  repeated bool spoligotype_bloin_blast = 10;
-  repeated CrisprPart crispr = 11;
-  repeated Snp snp = 12;
+  NcbiRun run = 2;
+  repeated Gene missing_genes = 3;
+  repeated InsertionSequence insertion_sequences = 4;
+  repeated bool spoligotype43_blast = 5;
+  repeated bool spoligotype98_blast = 6;
+  repeated bool spoligotype43_crispr = 7;
+  repeated bool spoligotype98_crispr = 8;
+  bool spoligotype43_match_blast = 9;
+  bool spoligotype98_match_blast = 10;
+  repeated bool spoligotype_bloin_blast = 11;
+  repeated CrisprPart crispr = 12;
+  repeated Snp snp = 13;
 }

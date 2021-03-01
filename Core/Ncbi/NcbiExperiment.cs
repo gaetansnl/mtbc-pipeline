@@ -2,9 +2,9 @@
 {
     public class NcbiExperiment
     {
-        public string? Accession;
-        public string? CenterName;
-        public string? Title;
-        public NcbiStudy? Study;
+        public string? Accession{ get; set; }
+        public string? CenterName{ get; set; }
+        public string? Title{ get; set; }
+        public NcbiStudy? Study{ get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Core.Doi;
+using Core.Ncbi;
 using EasyCaching.Core;
 using EasyCaching.LiteDB;
 using Indexer.Data;
@@ -26,11 +27,20 @@ namespace Indexer
                         FileName = "doi.db"
                     };
                 }, "doi");
+                option.UseLiteDB(c =>
+                {
+                    c.DBConfig = new LiteDBDBOptions
+                    {
+                        FileName = "ncbi.db"
+                    };
+                }, "ncbi");
             });
             IServiceProvider serviceProvider = services.BuildServiceProvider();
             var factory = serviceProvider.GetService<IEasyCachingProviderFactory>();
             
             var doiClient = new DoiClient(factory.GetCachingProvider("doi"));
+            var ncbiClient = new NcbiClient(factory.GetCachingProvider("ncbi"));
+            ncbiClient.AllowQuery = true;
             var config = Configuration.FromYaml("C:\\Users\\Gaetan\\RiderProjects\\API\\Web\\Data\\config.yaml");
             var db = new LiteDatabase("db");
             var driver = new LiteDbDriver(db);
@@ -41,7 +51,7 @@ namespace Indexer
             // var geneIndexer = new FastaGeneIndexer(driver, "NC_000962.3", "C:\\Users\\Gaetan\\RiderProjects\\API\\Web\\Data\\genes\\H37Rv.fasta");
             // await geneIndexer.Index();
             //
-            var strainIndexer = new StrainIndexer(config, driver);
+            var strainIndexer = new StrainIndexer(config, driver, ncbiClient);
             await strainIndexer.Index();
 
 

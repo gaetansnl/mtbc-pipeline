@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
+using Core.Ncbi;
 using Indexer.Data;
 using MTBC.Configuration;
 
@@ -14,11 +16,13 @@ namespace Indexer
     {
         protected Configuration Config;
         protected LiteDbDriver Database;
+        protected NcbiClient NcbiClient;
 
-        public StrainIndexer(Configuration config, LiteDbDriver database)
+        public StrainIndexer(Configuration config, LiteDbDriver database, NcbiClient ncbiClient)
         {
             Config = config;
             Database = database;
+            NcbiClient = ncbiClient;
         }
 
         public List<bool> RealSpol98(AnalysisData data)
@@ -83,8 +87,10 @@ namespace Indexer
 
                 result.Spoligotype43Crispr = RealSpol43(result);
                 result.Spoligotype98Crispr = RealSpol98(result);
+                result.Run = await NcbiClient.FindRunByAccession(result.Id);
                 await Database.Index(result);
-                Console.WriteLine("gg");
+                Console.WriteLine($"Indexed ${file}");
+                Thread.Sleep(500);
             }
         }
     }

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Core;
 using Core.Doi;
+using Core.Ncbi;
 using Google.Protobuf.Collections;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Indexer;
 using Indexer.Data;
@@ -142,6 +145,11 @@ namespace Web.Services
                 cfg.CreateMap<CrisprPartData.SequenceRange, Range>(MemberList.None);
                 cfg.CreateMap<CrisprPartData.GenePart, GeneCrisprPart>(MemberList.None);
                 cfg.CreateMap<GeneData, Gene>(MemberList.None);
+                cfg.CreateMap<Core.Ncbi.NcbiExperiment, NcbiExperiment>(MemberList.None);
+                cfg.CreateMap<Core.Ncbi.NcbiRun, NcbiRun>(MemberList.None);
+                cfg.CreateMap<Core.Ncbi.NcbiSample, NcbiSample>(MemberList.None);
+                cfg.CreateMap<Core.Ncbi.NcbiStudy, NcbiStudy>(MemberList.None);
+                cfg.CreateMap<DateTime, Timestamp>().ConvertUsing(x => x.ToUniversalTime().ToTimestamp()); 
                 cfg.ForAllPropertyMaps(
                     map => map.DestinationType.IsGenericType &&
                            map.DestinationType.GetGenericTypeDefinition() == typeof(RepeatedField<>),

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Core.Ncbi;
 
 namespace Indexer.Data
 {
@@ -8,8 +9,9 @@ namespace Indexer.Data
         public string Id => StrainId;
         public string StrainId { get; init; }
         
-        public List<string> SnpSpdi { get; set; }
+        public List<string> SnpSpdi { get; init; }
         public List<SnpData> Snp { get; set; }
+        public NcbiRun? Run { get; set; }
         
         public List<string> MissingGeneTags{ get; init; }
         public List<GeneData> MissingGenes{ get; set; }

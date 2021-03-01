@@ -3476,6 +3476,9 @@ export namespace api {
         /** StrainResult strainId */
         strainId?: (string|null);
 
+        /** StrainResult run */
+        run?: (api.INcbiRun|null);
+
         /** StrainResult missingGenes */
         missingGenes?: (api.IGene[]|null);
 
@@ -3521,6 +3524,9 @@ export namespace api {
 
         /** StrainResult strainId. */
         public strainId: string;
+
+        /** StrainResult run. */
+        public run?: (api.INcbiRun|null);
 
         /** StrainResult missingGenes. */
         public missingGenes: api.IGene[];
@@ -3621,6 +3627,516 @@ export namespace api {
 
         /**
          * Converts this StrainResult to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a NcbiRun. */
+    interface INcbiRun {
+
+        /** NcbiRun accession */
+        accession?: (string|null);
+
+        /** NcbiRun experiment */
+        experiment?: (api.INcbiExperiment|null);
+
+        /** NcbiRun title */
+        title?: (google.protobuf.IStringValue|null);
+
+        /** NcbiRun totalBases */
+        totalBases?: (number|null);
+
+        /** NcbiRun totalSpots */
+        totalSpots?: (number|null);
+
+        /** NcbiRun size */
+        size?: (number|null);
+
+        /** NcbiRun samples */
+        samples?: (api.INcbiSample[]|null);
+
+        /** NcbiRun publishedAt */
+        publishedAt?: (google.protobuf.ITimestamp|null);
+
+        /** NcbiRun readsPerSpot */
+        readsPerSpot?: (number|null);
+
+        /** NcbiRun averageReadLength */
+        averageReadLength?: (number|null);
+
+        /** NcbiRun totalReads */
+        totalReads?: (number|null);
+
+        /** NcbiRun link */
+        link?: (google.protobuf.IStringValue|null);
+    }
+
+    /** Represents a NcbiRun. */
+    class NcbiRun implements INcbiRun {
+
+        /**
+         * Constructs a new NcbiRun.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.INcbiRun);
+
+        /** NcbiRun accession. */
+        public accession: string;
+
+        /** NcbiRun experiment. */
+        public experiment?: (api.INcbiExperiment|null);
+
+        /** NcbiRun title. */
+        public title?: (google.protobuf.IStringValue|null);
+
+        /** NcbiRun totalBases. */
+        public totalBases: number;
+
+        /** NcbiRun totalSpots. */
+        public totalSpots: number;
+
+        /** NcbiRun size. */
+        public size: number;
+
+        /** NcbiRun samples. */
+        public samples: api.INcbiSample[];
+
+        /** NcbiRun publishedAt. */
+        public publishedAt?: (google.protobuf.ITimestamp|null);
+
+        /** NcbiRun readsPerSpot. */
+        public readsPerSpot: number;
+
+        /** NcbiRun averageReadLength. */
+        public averageReadLength: number;
+
+        /** NcbiRun totalReads. */
+        public totalReads: number;
+
+        /** NcbiRun link. */
+        public link?: (google.protobuf.IStringValue|null);
+
+        /**
+         * Creates a new NcbiRun instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns NcbiRun instance
+         */
+        public static create(properties?: api.INcbiRun): api.NcbiRun;
+
+        /**
+         * Encodes the specified NcbiRun message. Does not implicitly {@link api.NcbiRun.verify|verify} messages.
+         * @param message NcbiRun message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.INcbiRun, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified NcbiRun message, length delimited. Does not implicitly {@link api.NcbiRun.verify|verify} messages.
+         * @param message NcbiRun message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.INcbiRun, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a NcbiRun message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns NcbiRun
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.NcbiRun;
+
+        /**
+         * Decodes a NcbiRun message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns NcbiRun
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.NcbiRun;
+
+        /**
+         * Verifies a NcbiRun message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a NcbiRun message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns NcbiRun
+         */
+        public static fromObject(object: { [k: string]: any }): api.NcbiRun;
+
+        /**
+         * Creates a plain object from a NcbiRun message. Also converts values to other types if specified.
+         * @param message NcbiRun
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.NcbiRun, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this NcbiRun to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a NcbiExperiment. */
+    interface INcbiExperiment {
+
+        /** NcbiExperiment accession */
+        accession?: (string|null);
+
+        /** NcbiExperiment centerName */
+        centerName?: (google.protobuf.IStringValue|null);
+
+        /** NcbiExperiment title */
+        title?: (google.protobuf.IStringValue|null);
+
+        /** NcbiExperiment Study */
+        Study?: (api.INcbiStudy|null);
+    }
+
+    /** Represents a NcbiExperiment. */
+    class NcbiExperiment implements INcbiExperiment {
+
+        /**
+         * Constructs a new NcbiExperiment.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.INcbiExperiment);
+
+        /** NcbiExperiment accession. */
+        public accession: string;
+
+        /** NcbiExperiment centerName. */
+        public centerName?: (google.protobuf.IStringValue|null);
+
+        /** NcbiExperiment title. */
+        public title?: (google.protobuf.IStringValue|null);
+
+        /** NcbiExperiment Study. */
+        public Study?: (api.INcbiStudy|null);
+
+        /**
+         * Creates a new NcbiExperiment instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns NcbiExperiment instance
+         */
+        public static create(properties?: api.INcbiExperiment): api.NcbiExperiment;
+
+        /**
+         * Encodes the specified NcbiExperiment message. Does not implicitly {@link api.NcbiExperiment.verify|verify} messages.
+         * @param message NcbiExperiment message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.INcbiExperiment, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified NcbiExperiment message, length delimited. Does not implicitly {@link api.NcbiExperiment.verify|verify} messages.
+         * @param message NcbiExperiment message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.INcbiExperiment, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a NcbiExperiment message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns NcbiExperiment
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.NcbiExperiment;
+
+        /**
+         * Decodes a NcbiExperiment message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns NcbiExperiment
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.NcbiExperiment;
+
+        /**
+         * Verifies a NcbiExperiment message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a NcbiExperiment message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns NcbiExperiment
+         */
+        public static fromObject(object: { [k: string]: any }): api.NcbiExperiment;
+
+        /**
+         * Creates a plain object from a NcbiExperiment message. Also converts values to other types if specified.
+         * @param message NcbiExperiment
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.NcbiExperiment, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this NcbiExperiment to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a NcbiStudy. */
+    interface INcbiStudy {
+
+        /** NcbiStudy accession */
+        accession?: (string|null);
+
+        /** NcbiStudy alias */
+        alias?: (google.protobuf.IStringValue|null);
+
+        /** NcbiStudy centerName */
+        centerName?: (google.protobuf.IStringValue|null);
+
+        /** NcbiStudy title */
+        title?: (google.protobuf.IStringValue|null);
+
+        /** NcbiStudy abstract */
+        abstract?: (google.protobuf.IStringValue|null);
+
+        /** NcbiStudy projectName */
+        projectName?: (google.protobuf.IStringValue|null);
+    }
+
+    /** Represents a NcbiStudy. */
+    class NcbiStudy implements INcbiStudy {
+
+        /**
+         * Constructs a new NcbiStudy.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.INcbiStudy);
+
+        /** NcbiStudy accession. */
+        public accession: string;
+
+        /** NcbiStudy alias. */
+        public alias?: (google.protobuf.IStringValue|null);
+
+        /** NcbiStudy centerName. */
+        public centerName?: (google.protobuf.IStringValue|null);
+
+        /** NcbiStudy title. */
+        public title?: (google.protobuf.IStringValue|null);
+
+        /** NcbiStudy abstract. */
+        public abstract?: (google.protobuf.IStringValue|null);
+
+        /** NcbiStudy projectName. */
+        public projectName?: (google.protobuf.IStringValue|null);
+
+        /**
+         * Creates a new NcbiStudy instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns NcbiStudy instance
+         */
+        public static create(properties?: api.INcbiStudy): api.NcbiStudy;
+
+        /**
+         * Encodes the specified NcbiStudy message. Does not implicitly {@link api.NcbiStudy.verify|verify} messages.
+         * @param message NcbiStudy message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.INcbiStudy, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified NcbiStudy message, length delimited. Does not implicitly {@link api.NcbiStudy.verify|verify} messages.
+         * @param message NcbiStudy message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.INcbiStudy, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a NcbiStudy message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns NcbiStudy
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.NcbiStudy;
+
+        /**
+         * Decodes a NcbiStudy message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns NcbiStudy
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.NcbiStudy;
+
+        /**
+         * Verifies a NcbiStudy message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a NcbiStudy message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns NcbiStudy
+         */
+        public static fromObject(object: { [k: string]: any }): api.NcbiStudy;
+
+        /**
+         * Creates a plain object from a NcbiStudy message. Also converts values to other types if specified.
+         * @param message NcbiStudy
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.NcbiStudy, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this NcbiStudy to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a NcbiSample. */
+    interface INcbiSample {
+
+        /** NcbiSample accession */
+        accession?: (string|null);
+
+        /** NcbiSample title */
+        title?: (google.protobuf.IStringValue|null);
+
+        /** NcbiSample taxonId */
+        taxonId?: (google.protobuf.IStringValue|null);
+
+        /** NcbiSample scientificName */
+        scientificName?: (google.protobuf.IStringValue|null);
+
+        /** NcbiSample collectedAt */
+        collectedAt?: (google.protobuf.ITimestamp|null);
+
+        /** NcbiSample strain */
+        strain?: (google.protobuf.IStringValue|null);
+
+        /** NcbiSample location */
+        location?: (google.protobuf.IStringValue|null);
+    }
+
+    /** Represents a NcbiSample. */
+    class NcbiSample implements INcbiSample {
+
+        /**
+         * Constructs a new NcbiSample.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.INcbiSample);
+
+        /** NcbiSample accession. */
+        public accession: string;
+
+        /** NcbiSample title. */
+        public title?: (google.protobuf.IStringValue|null);
+
+        /** NcbiSample taxonId. */
+        public taxonId?: (google.protobuf.IStringValue|null);
+
+        /** NcbiSample scientificName. */
+        public scientificName?: (google.protobuf.IStringValue|null);
+
+        /** NcbiSample collectedAt. */
+        public collectedAt?: (google.protobuf.ITimestamp|null);
+
+        /** NcbiSample strain. */
+        public strain?: (google.protobuf.IStringValue|null);
+
+        /** NcbiSample location. */
+        public location?: (google.protobuf.IStringValue|null);
+
+        /**
+         * Creates a new NcbiSample instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns NcbiSample instance
+         */
+        public static create(properties?: api.INcbiSample): api.NcbiSample;
+
+        /**
+         * Encodes the specified NcbiSample message. Does not implicitly {@link api.NcbiSample.verify|verify} messages.
+         * @param message NcbiSample message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.INcbiSample, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified NcbiSample message, length delimited. Does not implicitly {@link api.NcbiSample.verify|verify} messages.
+         * @param message NcbiSample message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.INcbiSample, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a NcbiSample message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns NcbiSample
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.NcbiSample;
+
+        /**
+         * Decodes a NcbiSample message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns NcbiSample
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.NcbiSample;
+
+        /**
+         * Verifies a NcbiSample message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a NcbiSample message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns NcbiSample
+         */
+        public static fromObject(object: { [k: string]: any }): api.NcbiSample;
+
+        /**
+         * Creates a plain object from a NcbiSample message. Also converts values to other types if specified.
+         * @param message NcbiSample
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.NcbiSample, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this NcbiSample to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

@@ -8108,6 +8108,7 @@ export const api = $root.api = (() => {
          * @memberof api
          * @interface IStrainResult
          * @property {string|null} [strainId] StrainResult strainId
+         * @property {api.INcbiRun|null} [run] StrainResult run
          * @property {Array.<api.IGene>|null} [missingGenes] StrainResult missingGenes
          * @property {Array.<api.IInsertionSequence>|null} [insertionSequences] StrainResult insertionSequences
          * @property {Array.<boolean>|null} [spoligotype43Blast] StrainResult spoligotype43Blast
@@ -8152,6 +8153,14 @@ export const api = $root.api = (() => {
          * @instance
          */
         StrainResult.prototype.strainId = "";
+
+        /**
+         * StrainResult run.
+         * @member {api.INcbiRun|null|undefined} run
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.run = null;
 
         /**
          * StrainResult missingGenes.
@@ -8267,52 +8276,54 @@ export const api = $root.api = (() => {
                 writer = $Writer.create();
             if (message.strainId != null && Object.hasOwnProperty.call(message, "strainId"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.strainId);
+            if (message.run != null && Object.hasOwnProperty.call(message, "run"))
+                $root.api.NcbiRun.encode(message.run, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             if (message.missingGenes != null && message.missingGenes.length)
                 for (let i = 0; i < message.missingGenes.length; ++i)
-                    $root.api.Gene.encode(message.missingGenes[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                    $root.api.Gene.encode(message.missingGenes[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             if (message.insertionSequences != null && message.insertionSequences.length)
                 for (let i = 0; i < message.insertionSequences.length; ++i)
-                    $root.api.InsertionSequence.encode(message.insertionSequences[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                    $root.api.InsertionSequence.encode(message.insertionSequences[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             if (message.spoligotype43Blast != null && message.spoligotype43Blast.length) {
-                writer.uint32(/* id 4, wireType 2 =*/34).fork();
+                writer.uint32(/* id 5, wireType 2 =*/42).fork();
                 for (let i = 0; i < message.spoligotype43Blast.length; ++i)
                     writer.bool(message.spoligotype43Blast[i]);
                 writer.ldelim();
             }
             if (message.spoligotype98Blast != null && message.spoligotype98Blast.length) {
-                writer.uint32(/* id 5, wireType 2 =*/42).fork();
+                writer.uint32(/* id 6, wireType 2 =*/50).fork();
                 for (let i = 0; i < message.spoligotype98Blast.length; ++i)
                     writer.bool(message.spoligotype98Blast[i]);
                 writer.ldelim();
             }
             if (message.spoligotype43Crispr != null && message.spoligotype43Crispr.length) {
-                writer.uint32(/* id 6, wireType 2 =*/50).fork();
+                writer.uint32(/* id 7, wireType 2 =*/58).fork();
                 for (let i = 0; i < message.spoligotype43Crispr.length; ++i)
                     writer.bool(message.spoligotype43Crispr[i]);
                 writer.ldelim();
             }
             if (message.spoligotype98Crispr != null && message.spoligotype98Crispr.length) {
-                writer.uint32(/* id 7, wireType 2 =*/58).fork();
+                writer.uint32(/* id 8, wireType 2 =*/66).fork();
                 for (let i = 0; i < message.spoligotype98Crispr.length; ++i)
                     writer.bool(message.spoligotype98Crispr[i]);
                 writer.ldelim();
             }
             if (message.spoligotype43MatchBlast != null && Object.hasOwnProperty.call(message, "spoligotype43MatchBlast"))
-                writer.uint32(/* id 8, wireType 0 =*/64).bool(message.spoligotype43MatchBlast);
+                writer.uint32(/* id 9, wireType 0 =*/72).bool(message.spoligotype43MatchBlast);
             if (message.spoligotype98MatchBlast != null && Object.hasOwnProperty.call(message, "spoligotype98MatchBlast"))
-                writer.uint32(/* id 9, wireType 0 =*/72).bool(message.spoligotype98MatchBlast);
+                writer.uint32(/* id 10, wireType 0 =*/80).bool(message.spoligotype98MatchBlast);
             if (message.spoligotypeBloinBlast != null && message.spoligotypeBloinBlast.length) {
-                writer.uint32(/* id 10, wireType 2 =*/82).fork();
+                writer.uint32(/* id 11, wireType 2 =*/90).fork();
                 for (let i = 0; i < message.spoligotypeBloinBlast.length; ++i)
                     writer.bool(message.spoligotypeBloinBlast[i]);
                 writer.ldelim();
             }
             if (message.crispr != null && message.crispr.length)
                 for (let i = 0; i < message.crispr.length; ++i)
-                    $root.api.CrisprPart.encode(message.crispr[i], writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
+                    $root.api.CrisprPart.encode(message.crispr[i], writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
             if (message.snp != null && message.snp.length)
                 for (let i = 0; i < message.snp.length; ++i)
-                    $root.api.Snp.encode(message.snp[i], writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
+                    $root.api.Snp.encode(message.snp[i], writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
             return writer;
         };
 
@@ -8351,16 +8362,19 @@ export const api = $root.api = (() => {
                     message.strainId = reader.string();
                     break;
                 case 2:
+                    message.run = $root.api.NcbiRun.decode(reader, reader.uint32());
+                    break;
+                case 3:
                     if (!(message.missingGenes && message.missingGenes.length))
                         message.missingGenes = [];
                     message.missingGenes.push($root.api.Gene.decode(reader, reader.uint32()));
                     break;
-                case 3:
+                case 4:
                     if (!(message.insertionSequences && message.insertionSequences.length))
                         message.insertionSequences = [];
                     message.insertionSequences.push($root.api.InsertionSequence.decode(reader, reader.uint32()));
                     break;
-                case 4:
+                case 5:
                     if (!(message.spoligotype43Blast && message.spoligotype43Blast.length))
                         message.spoligotype43Blast = [];
                     if ((tag & 7) === 2) {
@@ -8370,7 +8384,7 @@ export const api = $root.api = (() => {
                     } else
                         message.spoligotype43Blast.push(reader.bool());
                     break;
-                case 5:
+                case 6:
                     if (!(message.spoligotype98Blast && message.spoligotype98Blast.length))
                         message.spoligotype98Blast = [];
                     if ((tag & 7) === 2) {
@@ -8380,7 +8394,7 @@ export const api = $root.api = (() => {
                     } else
                         message.spoligotype98Blast.push(reader.bool());
                     break;
-                case 6:
+                case 7:
                     if (!(message.spoligotype43Crispr && message.spoligotype43Crispr.length))
                         message.spoligotype43Crispr = [];
                     if ((tag & 7) === 2) {
@@ -8390,7 +8404,7 @@ export const api = $root.api = (() => {
                     } else
                         message.spoligotype43Crispr.push(reader.bool());
                     break;
-                case 7:
+                case 8:
                     if (!(message.spoligotype98Crispr && message.spoligotype98Crispr.length))
                         message.spoligotype98Crispr = [];
                     if ((tag & 7) === 2) {
@@ -8400,13 +8414,13 @@ export const api = $root.api = (() => {
                     } else
                         message.spoligotype98Crispr.push(reader.bool());
                     break;
-                case 8:
+                case 9:
                     message.spoligotype43MatchBlast = reader.bool();
                     break;
-                case 9:
+                case 10:
                     message.spoligotype98MatchBlast = reader.bool();
                     break;
-                case 10:
+                case 11:
                     if (!(message.spoligotypeBloinBlast && message.spoligotypeBloinBlast.length))
                         message.spoligotypeBloinBlast = [];
                     if ((tag & 7) === 2) {
@@ -8416,12 +8430,12 @@ export const api = $root.api = (() => {
                     } else
                         message.spoligotypeBloinBlast.push(reader.bool());
                     break;
-                case 11:
+                case 12:
                     if (!(message.crispr && message.crispr.length))
                         message.crispr = [];
                     message.crispr.push($root.api.CrisprPart.decode(reader, reader.uint32()));
                     break;
-                case 12:
+                case 13:
                     if (!(message.snp && message.snp.length))
                         message.snp = [];
                     message.snp.push($root.api.Snp.decode(reader, reader.uint32()));
@@ -8464,6 +8478,11 @@ export const api = $root.api = (() => {
             if (message.strainId != null && message.hasOwnProperty("strainId"))
                 if (!$util.isString(message.strainId))
                     return "strainId: string expected";
+            if (message.run != null && message.hasOwnProperty("run")) {
+                let error = $root.api.NcbiRun.verify(message.run);
+                if (error)
+                    return "run." + error;
+            }
             if (message.missingGenes != null && message.hasOwnProperty("missingGenes")) {
                 if (!Array.isArray(message.missingGenes))
                     return "missingGenes: array expected";
@@ -8558,6 +8577,11 @@ export const api = $root.api = (() => {
             let message = new $root.api.StrainResult();
             if (object.strainId != null)
                 message.strainId = String(object.strainId);
+            if (object.run != null) {
+                if (typeof object.run !== "object")
+                    throw TypeError(".api.StrainResult.run: object expected");
+                message.run = $root.api.NcbiRun.fromObject(object.run);
+            }
             if (object.missingGenes) {
                 if (!Array.isArray(object.missingGenes))
                     throw TypeError(".api.StrainResult.missingGenes: array expected");
@@ -8666,11 +8690,14 @@ export const api = $root.api = (() => {
             }
             if (options.defaults) {
                 object.strainId = "";
+                object.run = null;
                 object.spoligotype43MatchBlast = false;
                 object.spoligotype98MatchBlast = false;
             }
             if (message.strainId != null && message.hasOwnProperty("strainId"))
                 object.strainId = message.strainId;
+            if (message.run != null && message.hasOwnProperty("run"))
+                object.run = $root.api.NcbiRun.toObject(message.run, options);
             if (message.missingGenes && message.missingGenes.length) {
                 object.missingGenes = [];
                 for (let j = 0; j < message.missingGenes.length; ++j)
@@ -8735,6 +8762,1420 @@ export const api = $root.api = (() => {
         };
 
         return StrainResult;
+    })();
+
+    api.NcbiRun = (function() {
+
+        /**
+         * Properties of a NcbiRun.
+         * @memberof api
+         * @interface INcbiRun
+         * @property {string|null} [accession] NcbiRun accession
+         * @property {api.INcbiExperiment|null} [experiment] NcbiRun experiment
+         * @property {google.protobuf.IStringValue|null} [title] NcbiRun title
+         * @property {number|null} [totalBases] NcbiRun totalBases
+         * @property {number|null} [totalSpots] NcbiRun totalSpots
+         * @property {number|null} [size] NcbiRun size
+         * @property {Array.<api.INcbiSample>|null} [samples] NcbiRun samples
+         * @property {google.protobuf.ITimestamp|null} [publishedAt] NcbiRun publishedAt
+         * @property {number|null} [readsPerSpot] NcbiRun readsPerSpot
+         * @property {number|null} [averageReadLength] NcbiRun averageReadLength
+         * @property {number|null} [totalReads] NcbiRun totalReads
+         * @property {google.protobuf.IStringValue|null} [link] NcbiRun link
+         */
+
+        /**
+         * Constructs a new NcbiRun.
+         * @memberof api
+         * @classdesc Represents a NcbiRun.
+         * @implements INcbiRun
+         * @constructor
+         * @param {api.INcbiRun=} [properties] Properties to set
+         */
+        function NcbiRun(properties) {
+            this.samples = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * NcbiRun accession.
+         * @member {string} accession
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.accession = "";
+
+        /**
+         * NcbiRun experiment.
+         * @member {api.INcbiExperiment|null|undefined} experiment
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.experiment = null;
+
+        /**
+         * NcbiRun title.
+         * @member {google.protobuf.IStringValue|null|undefined} title
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.title = null;
+
+        /**
+         * NcbiRun totalBases.
+         * @member {number} totalBases
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.totalBases = 0;
+
+        /**
+         * NcbiRun totalSpots.
+         * @member {number} totalSpots
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.totalSpots = 0;
+
+        /**
+         * NcbiRun size.
+         * @member {number} size
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.size = 0;
+
+        /**
+         * NcbiRun samples.
+         * @member {Array.<api.INcbiSample>} samples
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.samples = $util.emptyArray;
+
+        /**
+         * NcbiRun publishedAt.
+         * @member {google.protobuf.ITimestamp|null|undefined} publishedAt
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.publishedAt = null;
+
+        /**
+         * NcbiRun readsPerSpot.
+         * @member {number} readsPerSpot
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.readsPerSpot = 0;
+
+        /**
+         * NcbiRun averageReadLength.
+         * @member {number} averageReadLength
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.averageReadLength = 0;
+
+        /**
+         * NcbiRun totalReads.
+         * @member {number} totalReads
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.totalReads = 0;
+
+        /**
+         * NcbiRun link.
+         * @member {google.protobuf.IStringValue|null|undefined} link
+         * @memberof api.NcbiRun
+         * @instance
+         */
+        NcbiRun.prototype.link = null;
+
+        /**
+         * Creates a new NcbiRun instance using the specified properties.
+         * @function create
+         * @memberof api.NcbiRun
+         * @static
+         * @param {api.INcbiRun=} [properties] Properties to set
+         * @returns {api.NcbiRun} NcbiRun instance
+         */
+        NcbiRun.create = function create(properties) {
+            return new NcbiRun(properties);
+        };
+
+        /**
+         * Encodes the specified NcbiRun message. Does not implicitly {@link api.NcbiRun.verify|verify} messages.
+         * @function encode
+         * @memberof api.NcbiRun
+         * @static
+         * @param {api.INcbiRun} message NcbiRun message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NcbiRun.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.accession != null && Object.hasOwnProperty.call(message, "accession"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.accession);
+            if (message.experiment != null && Object.hasOwnProperty.call(message, "experiment"))
+                $root.api.NcbiExperiment.encode(message.experiment, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.title != null && Object.hasOwnProperty.call(message, "title"))
+                $root.google.protobuf.StringValue.encode(message.title, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.totalBases != null && Object.hasOwnProperty.call(message, "totalBases"))
+                writer.uint32(/* id 4, wireType 0 =*/32).int32(message.totalBases);
+            if (message.totalSpots != null && Object.hasOwnProperty.call(message, "totalSpots"))
+                writer.uint32(/* id 5, wireType 0 =*/40).int32(message.totalSpots);
+            if (message.size != null && Object.hasOwnProperty.call(message, "size"))
+                writer.uint32(/* id 6, wireType 0 =*/48).int32(message.size);
+            if (message.samples != null && message.samples.length)
+                for (let i = 0; i < message.samples.length; ++i)
+                    $root.api.NcbiSample.encode(message.samples[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+            if (message.publishedAt != null && Object.hasOwnProperty.call(message, "publishedAt"))
+                $root.google.protobuf.Timestamp.encode(message.publishedAt, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
+            if (message.readsPerSpot != null && Object.hasOwnProperty.call(message, "readsPerSpot"))
+                writer.uint32(/* id 9, wireType 0 =*/72).int32(message.readsPerSpot);
+            if (message.averageReadLength != null && Object.hasOwnProperty.call(message, "averageReadLength"))
+                writer.uint32(/* id 10, wireType 0 =*/80).int32(message.averageReadLength);
+            if (message.totalReads != null && Object.hasOwnProperty.call(message, "totalReads"))
+                writer.uint32(/* id 11, wireType 0 =*/88).int32(message.totalReads);
+            if (message.link != null && Object.hasOwnProperty.call(message, "link"))
+                $root.google.protobuf.StringValue.encode(message.link, writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified NcbiRun message, length delimited. Does not implicitly {@link api.NcbiRun.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.NcbiRun
+         * @static
+         * @param {api.INcbiRun} message NcbiRun message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NcbiRun.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a NcbiRun message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.NcbiRun
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.NcbiRun} NcbiRun
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NcbiRun.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.NcbiRun();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.accession = reader.string();
+                    break;
+                case 2:
+                    message.experiment = $root.api.NcbiExperiment.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    message.title = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 4:
+                    message.totalBases = reader.int32();
+                    break;
+                case 5:
+                    message.totalSpots = reader.int32();
+                    break;
+                case 6:
+                    message.size = reader.int32();
+                    break;
+                case 7:
+                    if (!(message.samples && message.samples.length))
+                        message.samples = [];
+                    message.samples.push($root.api.NcbiSample.decode(reader, reader.uint32()));
+                    break;
+                case 8:
+                    message.publishedAt = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                case 9:
+                    message.readsPerSpot = reader.int32();
+                    break;
+                case 10:
+                    message.averageReadLength = reader.int32();
+                    break;
+                case 11:
+                    message.totalReads = reader.int32();
+                    break;
+                case 12:
+                    message.link = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a NcbiRun message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.NcbiRun
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.NcbiRun} NcbiRun
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NcbiRun.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a NcbiRun message.
+         * @function verify
+         * @memberof api.NcbiRun
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        NcbiRun.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.accession != null && message.hasOwnProperty("accession"))
+                if (!$util.isString(message.accession))
+                    return "accession: string expected";
+            if (message.experiment != null && message.hasOwnProperty("experiment")) {
+                let error = $root.api.NcbiExperiment.verify(message.experiment);
+                if (error)
+                    return "experiment." + error;
+            }
+            if (message.title != null && message.hasOwnProperty("title")) {
+                let error = $root.google.protobuf.StringValue.verify(message.title);
+                if (error)
+                    return "title." + error;
+            }
+            if (message.totalBases != null && message.hasOwnProperty("totalBases"))
+                if (!$util.isInteger(message.totalBases))
+                    return "totalBases: integer expected";
+            if (message.totalSpots != null && message.hasOwnProperty("totalSpots"))
+                if (!$util.isInteger(message.totalSpots))
+                    return "totalSpots: integer expected";
+            if (message.size != null && message.hasOwnProperty("size"))
+                if (!$util.isInteger(message.size))
+                    return "size: integer expected";
+            if (message.samples != null && message.hasOwnProperty("samples")) {
+                if (!Array.isArray(message.samples))
+                    return "samples: array expected";
+                for (let i = 0; i < message.samples.length; ++i) {
+                    let error = $root.api.NcbiSample.verify(message.samples[i]);
+                    if (error)
+                        return "samples." + error;
+                }
+            }
+            if (message.publishedAt != null && message.hasOwnProperty("publishedAt")) {
+                let error = $root.google.protobuf.Timestamp.verify(message.publishedAt);
+                if (error)
+                    return "publishedAt." + error;
+            }
+            if (message.readsPerSpot != null && message.hasOwnProperty("readsPerSpot"))
+                if (!$util.isInteger(message.readsPerSpot))
+                    return "readsPerSpot: integer expected";
+            if (message.averageReadLength != null && message.hasOwnProperty("averageReadLength"))
+                if (!$util.isInteger(message.averageReadLength))
+                    return "averageReadLength: integer expected";
+            if (message.totalReads != null && message.hasOwnProperty("totalReads"))
+                if (!$util.isInteger(message.totalReads))
+                    return "totalReads: integer expected";
+            if (message.link != null && message.hasOwnProperty("link")) {
+                let error = $root.google.protobuf.StringValue.verify(message.link);
+                if (error)
+                    return "link." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a NcbiRun message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.NcbiRun
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.NcbiRun} NcbiRun
+         */
+        NcbiRun.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.NcbiRun)
+                return object;
+            let message = new $root.api.NcbiRun();
+            if (object.accession != null)
+                message.accession = String(object.accession);
+            if (object.experiment != null) {
+                if (typeof object.experiment !== "object")
+                    throw TypeError(".api.NcbiRun.experiment: object expected");
+                message.experiment = $root.api.NcbiExperiment.fromObject(object.experiment);
+            }
+            if (object.title != null) {
+                if (typeof object.title !== "object")
+                    throw TypeError(".api.NcbiRun.title: object expected");
+                message.title = $root.google.protobuf.StringValue.fromObject(object.title);
+            }
+            if (object.totalBases != null)
+                message.totalBases = object.totalBases | 0;
+            if (object.totalSpots != null)
+                message.totalSpots = object.totalSpots | 0;
+            if (object.size != null)
+                message.size = object.size | 0;
+            if (object.samples) {
+                if (!Array.isArray(object.samples))
+                    throw TypeError(".api.NcbiRun.samples: array expected");
+                message.samples = [];
+                for (let i = 0; i < object.samples.length; ++i) {
+                    if (typeof object.samples[i] !== "object")
+                        throw TypeError(".api.NcbiRun.samples: object expected");
+                    message.samples[i] = $root.api.NcbiSample.fromObject(object.samples[i]);
+                }
+            }
+            if (object.publishedAt != null) {
+                if (typeof object.publishedAt !== "object")
+                    throw TypeError(".api.NcbiRun.publishedAt: object expected");
+                message.publishedAt = $root.google.protobuf.Timestamp.fromObject(object.publishedAt);
+            }
+            if (object.readsPerSpot != null)
+                message.readsPerSpot = object.readsPerSpot | 0;
+            if (object.averageReadLength != null)
+                message.averageReadLength = object.averageReadLength | 0;
+            if (object.totalReads != null)
+                message.totalReads = object.totalReads | 0;
+            if (object.link != null) {
+                if (typeof object.link !== "object")
+                    throw TypeError(".api.NcbiRun.link: object expected");
+                message.link = $root.google.protobuf.StringValue.fromObject(object.link);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a NcbiRun message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.NcbiRun
+         * @static
+         * @param {api.NcbiRun} message NcbiRun
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        NcbiRun.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults)
+                object.samples = [];
+            if (options.defaults) {
+                object.accession = "";
+                object.experiment = null;
+                object.title = null;
+                object.totalBases = 0;
+                object.totalSpots = 0;
+                object.size = 0;
+                object.publishedAt = null;
+                object.readsPerSpot = 0;
+                object.averageReadLength = 0;
+                object.totalReads = 0;
+                object.link = null;
+            }
+            if (message.accession != null && message.hasOwnProperty("accession"))
+                object.accession = message.accession;
+            if (message.experiment != null && message.hasOwnProperty("experiment"))
+                object.experiment = $root.api.NcbiExperiment.toObject(message.experiment, options);
+            if (message.title != null && message.hasOwnProperty("title"))
+                object.title = $root.google.protobuf.StringValue.toObject(message.title, options);
+            if (message.totalBases != null && message.hasOwnProperty("totalBases"))
+                object.totalBases = message.totalBases;
+            if (message.totalSpots != null && message.hasOwnProperty("totalSpots"))
+                object.totalSpots = message.totalSpots;
+            if (message.size != null && message.hasOwnProperty("size"))
+                object.size = message.size;
+            if (message.samples && message.samples.length) {
+                object.samples = [];
+                for (let j = 0; j < message.samples.length; ++j)
+                    object.samples[j] = $root.api.NcbiSample.toObject(message.samples[j], options);
+            }
+            if (message.publishedAt != null && message.hasOwnProperty("publishedAt"))
+                object.publishedAt = $root.google.protobuf.Timestamp.toObject(message.publishedAt, options);
+            if (message.readsPerSpot != null && message.hasOwnProperty("readsPerSpot"))
+                object.readsPerSpot = message.readsPerSpot;
+            if (message.averageReadLength != null && message.hasOwnProperty("averageReadLength"))
+                object.averageReadLength = message.averageReadLength;
+            if (message.totalReads != null && message.hasOwnProperty("totalReads"))
+                object.totalReads = message.totalReads;
+            if (message.link != null && message.hasOwnProperty("link"))
+                object.link = $root.google.protobuf.StringValue.toObject(message.link, options);
+            return object;
+        };
+
+        /**
+         * Converts this NcbiRun to JSON.
+         * @function toJSON
+         * @memberof api.NcbiRun
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        NcbiRun.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return NcbiRun;
+    })();
+
+    api.NcbiExperiment = (function() {
+
+        /**
+         * Properties of a NcbiExperiment.
+         * @memberof api
+         * @interface INcbiExperiment
+         * @property {string|null} [accession] NcbiExperiment accession
+         * @property {google.protobuf.IStringValue|null} [centerName] NcbiExperiment centerName
+         * @property {google.protobuf.IStringValue|null} [title] NcbiExperiment title
+         * @property {api.INcbiStudy|null} [Study] NcbiExperiment Study
+         */
+
+        /**
+         * Constructs a new NcbiExperiment.
+         * @memberof api
+         * @classdesc Represents a NcbiExperiment.
+         * @implements INcbiExperiment
+         * @constructor
+         * @param {api.INcbiExperiment=} [properties] Properties to set
+         */
+        function NcbiExperiment(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * NcbiExperiment accession.
+         * @member {string} accession
+         * @memberof api.NcbiExperiment
+         * @instance
+         */
+        NcbiExperiment.prototype.accession = "";
+
+        /**
+         * NcbiExperiment centerName.
+         * @member {google.protobuf.IStringValue|null|undefined} centerName
+         * @memberof api.NcbiExperiment
+         * @instance
+         */
+        NcbiExperiment.prototype.centerName = null;
+
+        /**
+         * NcbiExperiment title.
+         * @member {google.protobuf.IStringValue|null|undefined} title
+         * @memberof api.NcbiExperiment
+         * @instance
+         */
+        NcbiExperiment.prototype.title = null;
+
+        /**
+         * NcbiExperiment Study.
+         * @member {api.INcbiStudy|null|undefined} Study
+         * @memberof api.NcbiExperiment
+         * @instance
+         */
+        NcbiExperiment.prototype.Study = null;
+
+        /**
+         * Creates a new NcbiExperiment instance using the specified properties.
+         * @function create
+         * @memberof api.NcbiExperiment
+         * @static
+         * @param {api.INcbiExperiment=} [properties] Properties to set
+         * @returns {api.NcbiExperiment} NcbiExperiment instance
+         */
+        NcbiExperiment.create = function create(properties) {
+            return new NcbiExperiment(properties);
+        };
+
+        /**
+         * Encodes the specified NcbiExperiment message. Does not implicitly {@link api.NcbiExperiment.verify|verify} messages.
+         * @function encode
+         * @memberof api.NcbiExperiment
+         * @static
+         * @param {api.INcbiExperiment} message NcbiExperiment message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NcbiExperiment.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.accession != null && Object.hasOwnProperty.call(message, "accession"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.accession);
+            if (message.centerName != null && Object.hasOwnProperty.call(message, "centerName"))
+                $root.google.protobuf.StringValue.encode(message.centerName, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.title != null && Object.hasOwnProperty.call(message, "title"))
+                $root.google.protobuf.StringValue.encode(message.title, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.Study != null && Object.hasOwnProperty.call(message, "Study"))
+                $root.api.NcbiStudy.encode(message.Study, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified NcbiExperiment message, length delimited. Does not implicitly {@link api.NcbiExperiment.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.NcbiExperiment
+         * @static
+         * @param {api.INcbiExperiment} message NcbiExperiment message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NcbiExperiment.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a NcbiExperiment message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.NcbiExperiment
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.NcbiExperiment} NcbiExperiment
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NcbiExperiment.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.NcbiExperiment();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.accession = reader.string();
+                    break;
+                case 2:
+                    message.centerName = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    message.title = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 4:
+                    message.Study = $root.api.NcbiStudy.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a NcbiExperiment message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.NcbiExperiment
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.NcbiExperiment} NcbiExperiment
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NcbiExperiment.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a NcbiExperiment message.
+         * @function verify
+         * @memberof api.NcbiExperiment
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        NcbiExperiment.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.accession != null && message.hasOwnProperty("accession"))
+                if (!$util.isString(message.accession))
+                    return "accession: string expected";
+            if (message.centerName != null && message.hasOwnProperty("centerName")) {
+                let error = $root.google.protobuf.StringValue.verify(message.centerName);
+                if (error)
+                    return "centerName." + error;
+            }
+            if (message.title != null && message.hasOwnProperty("title")) {
+                let error = $root.google.protobuf.StringValue.verify(message.title);
+                if (error)
+                    return "title." + error;
+            }
+            if (message.Study != null && message.hasOwnProperty("Study")) {
+                let error = $root.api.NcbiStudy.verify(message.Study);
+                if (error)
+                    return "Study." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a NcbiExperiment message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.NcbiExperiment
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.NcbiExperiment} NcbiExperiment
+         */
+        NcbiExperiment.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.NcbiExperiment)
+                return object;
+            let message = new $root.api.NcbiExperiment();
+            if (object.accession != null)
+                message.accession = String(object.accession);
+            if (object.centerName != null) {
+                if (typeof object.centerName !== "object")
+                    throw TypeError(".api.NcbiExperiment.centerName: object expected");
+                message.centerName = $root.google.protobuf.StringValue.fromObject(object.centerName);
+            }
+            if (object.title != null) {
+                if (typeof object.title !== "object")
+                    throw TypeError(".api.NcbiExperiment.title: object expected");
+                message.title = $root.google.protobuf.StringValue.fromObject(object.title);
+            }
+            if (object.Study != null) {
+                if (typeof object.Study !== "object")
+                    throw TypeError(".api.NcbiExperiment.Study: object expected");
+                message.Study = $root.api.NcbiStudy.fromObject(object.Study);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a NcbiExperiment message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.NcbiExperiment
+         * @static
+         * @param {api.NcbiExperiment} message NcbiExperiment
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        NcbiExperiment.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.accession = "";
+                object.centerName = null;
+                object.title = null;
+                object.Study = null;
+            }
+            if (message.accession != null && message.hasOwnProperty("accession"))
+                object.accession = message.accession;
+            if (message.centerName != null && message.hasOwnProperty("centerName"))
+                object.centerName = $root.google.protobuf.StringValue.toObject(message.centerName, options);
+            if (message.title != null && message.hasOwnProperty("title"))
+                object.title = $root.google.protobuf.StringValue.toObject(message.title, options);
+            if (message.Study != null && message.hasOwnProperty("Study"))
+                object.Study = $root.api.NcbiStudy.toObject(message.Study, options);
+            return object;
+        };
+
+        /**
+         * Converts this NcbiExperiment to JSON.
+         * @function toJSON
+         * @memberof api.NcbiExperiment
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        NcbiExperiment.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return NcbiExperiment;
+    })();
+
+    api.NcbiStudy = (function() {
+
+        /**
+         * Properties of a NcbiStudy.
+         * @memberof api
+         * @interface INcbiStudy
+         * @property {string|null} [accession] NcbiStudy accession
+         * @property {google.protobuf.IStringValue|null} [alias] NcbiStudy alias
+         * @property {google.protobuf.IStringValue|null} [centerName] NcbiStudy centerName
+         * @property {google.protobuf.IStringValue|null} [title] NcbiStudy title
+         * @property {google.protobuf.IStringValue|null} [abstract] NcbiStudy abstract
+         * @property {google.protobuf.IStringValue|null} [projectName] NcbiStudy projectName
+         */
+
+        /**
+         * Constructs a new NcbiStudy.
+         * @memberof api
+         * @classdesc Represents a NcbiStudy.
+         * @implements INcbiStudy
+         * @constructor
+         * @param {api.INcbiStudy=} [properties] Properties to set
+         */
+        function NcbiStudy(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * NcbiStudy accession.
+         * @member {string} accession
+         * @memberof api.NcbiStudy
+         * @instance
+         */
+        NcbiStudy.prototype.accession = "";
+
+        /**
+         * NcbiStudy alias.
+         * @member {google.protobuf.IStringValue|null|undefined} alias
+         * @memberof api.NcbiStudy
+         * @instance
+         */
+        NcbiStudy.prototype.alias = null;
+
+        /**
+         * NcbiStudy centerName.
+         * @member {google.protobuf.IStringValue|null|undefined} centerName
+         * @memberof api.NcbiStudy
+         * @instance
+         */
+        NcbiStudy.prototype.centerName = null;
+
+        /**
+         * NcbiStudy title.
+         * @member {google.protobuf.IStringValue|null|undefined} title
+         * @memberof api.NcbiStudy
+         * @instance
+         */
+        NcbiStudy.prototype.title = null;
+
+        /**
+         * NcbiStudy abstract.
+         * @member {google.protobuf.IStringValue|null|undefined} abstract
+         * @memberof api.NcbiStudy
+         * @instance
+         */
+        NcbiStudy.prototype.abstract = null;
+
+        /**
+         * NcbiStudy projectName.
+         * @member {google.protobuf.IStringValue|null|undefined} projectName
+         * @memberof api.NcbiStudy
+         * @instance
+         */
+        NcbiStudy.prototype.projectName = null;
+
+        /**
+         * Creates a new NcbiStudy instance using the specified properties.
+         * @function create
+         * @memberof api.NcbiStudy
+         * @static
+         * @param {api.INcbiStudy=} [properties] Properties to set
+         * @returns {api.NcbiStudy} NcbiStudy instance
+         */
+        NcbiStudy.create = function create(properties) {
+            return new NcbiStudy(properties);
+        };
+
+        /**
+         * Encodes the specified NcbiStudy message. Does not implicitly {@link api.NcbiStudy.verify|verify} messages.
+         * @function encode
+         * @memberof api.NcbiStudy
+         * @static
+         * @param {api.INcbiStudy} message NcbiStudy message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NcbiStudy.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.accession != null && Object.hasOwnProperty.call(message, "accession"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.accession);
+            if (message.alias != null && Object.hasOwnProperty.call(message, "alias"))
+                $root.google.protobuf.StringValue.encode(message.alias, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.centerName != null && Object.hasOwnProperty.call(message, "centerName"))
+                $root.google.protobuf.StringValue.encode(message.centerName, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.title != null && Object.hasOwnProperty.call(message, "title"))
+                $root.google.protobuf.StringValue.encode(message.title, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.abstract != null && Object.hasOwnProperty.call(message, "abstract"))
+                $root.google.protobuf.StringValue.encode(message.abstract, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+            if (message.projectName != null && Object.hasOwnProperty.call(message, "projectName"))
+                $root.google.protobuf.StringValue.encode(message.projectName, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified NcbiStudy message, length delimited. Does not implicitly {@link api.NcbiStudy.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.NcbiStudy
+         * @static
+         * @param {api.INcbiStudy} message NcbiStudy message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NcbiStudy.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a NcbiStudy message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.NcbiStudy
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.NcbiStudy} NcbiStudy
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NcbiStudy.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.NcbiStudy();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.accession = reader.string();
+                    break;
+                case 2:
+                    message.alias = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    message.centerName = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 4:
+                    message.title = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 5:
+                    message.abstract = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 6:
+                    message.projectName = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a NcbiStudy message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.NcbiStudy
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.NcbiStudy} NcbiStudy
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NcbiStudy.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a NcbiStudy message.
+         * @function verify
+         * @memberof api.NcbiStudy
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        NcbiStudy.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.accession != null && message.hasOwnProperty("accession"))
+                if (!$util.isString(message.accession))
+                    return "accession: string expected";
+            if (message.alias != null && message.hasOwnProperty("alias")) {
+                let error = $root.google.protobuf.StringValue.verify(message.alias);
+                if (error)
+                    return "alias." + error;
+            }
+            if (message.centerName != null && message.hasOwnProperty("centerName")) {
+                let error = $root.google.protobuf.StringValue.verify(message.centerName);
+                if (error)
+                    return "centerName." + error;
+            }
+            if (message.title != null && message.hasOwnProperty("title")) {
+                let error = $root.google.protobuf.StringValue.verify(message.title);
+                if (error)
+                    return "title." + error;
+            }
+            if (message.abstract != null && message.hasOwnProperty("abstract")) {
+                let error = $root.google.protobuf.StringValue.verify(message.abstract);
+                if (error)
+                    return "abstract." + error;
+            }
+            if (message.projectName != null && message.hasOwnProperty("projectName")) {
+                let error = $root.google.protobuf.StringValue.verify(message.projectName);
+                if (error)
+                    return "projectName." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a NcbiStudy message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.NcbiStudy
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.NcbiStudy} NcbiStudy
+         */
+        NcbiStudy.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.NcbiStudy)
+                return object;
+            let message = new $root.api.NcbiStudy();
+            if (object.accession != null)
+                message.accession = String(object.accession);
+            if (object.alias != null) {
+                if (typeof object.alias !== "object")
+                    throw TypeError(".api.NcbiStudy.alias: object expected");
+                message.alias = $root.google.protobuf.StringValue.fromObject(object.alias);
+            }
+            if (object.centerName != null) {
+                if (typeof object.centerName !== "object")
+                    throw TypeError(".api.NcbiStudy.centerName: object expected");
+                message.centerName = $root.google.protobuf.StringValue.fromObject(object.centerName);
+            }
+            if (object.title != null) {
+                if (typeof object.title !== "object")
+                    throw TypeError(".api.NcbiStudy.title: object expected");
+                message.title = $root.google.protobuf.StringValue.fromObject(object.title);
+            }
+            if (object.abstract != null) {
+                if (typeof object.abstract !== "object")
+                    throw TypeError(".api.NcbiStudy.abstract: object expected");
+                message.abstract = $root.google.protobuf.StringValue.fromObject(object.abstract);
+            }
+            if (object.projectName != null) {
+                if (typeof object.projectName !== "object")
+                    throw TypeError(".api.NcbiStudy.projectName: object expected");
+                message.projectName = $root.google.protobuf.StringValue.fromObject(object.projectName);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a NcbiStudy message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.NcbiStudy
+         * @static
+         * @param {api.NcbiStudy} message NcbiStudy
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        NcbiStudy.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.accession = "";
+                object.alias = null;
+                object.centerName = null;
+                object.title = null;
+                object.abstract = null;
+                object.projectName = null;
+            }
+            if (message.accession != null && message.hasOwnProperty("accession"))
+                object.accession = message.accession;
+            if (message.alias != null && message.hasOwnProperty("alias"))
+                object.alias = $root.google.protobuf.StringValue.toObject(message.alias, options);
+            if (message.centerName != null && message.hasOwnProperty("centerName"))
+                object.centerName = $root.google.protobuf.StringValue.toObject(message.centerName, options);
+            if (message.title != null && message.hasOwnProperty("title"))
+                object.title = $root.google.protobuf.StringValue.toObject(message.title, options);
+            if (message.abstract != null && message.hasOwnProperty("abstract"))
+                object.abstract = $root.google.protobuf.StringValue.toObject(message.abstract, options);
+            if (message.projectName != null && message.hasOwnProperty("projectName"))
+                object.projectName = $root.google.protobuf.StringValue.toObject(message.projectName, options);
+            return object;
+        };
+
+        /**
+         * Converts this NcbiStudy to JSON.
+         * @function toJSON
+         * @memberof api.NcbiStudy
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        NcbiStudy.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return NcbiStudy;
+    })();
+
+    api.NcbiSample = (function() {
+
+        /**
+         * Properties of a NcbiSample.
+         * @memberof api
+         * @interface INcbiSample
+         * @property {string|null} [accession] NcbiSample accession
+         * @property {google.protobuf.IStringValue|null} [title] NcbiSample title
+         * @property {google.protobuf.IStringValue|null} [taxonId] NcbiSample taxonId
+         * @property {google.protobuf.IStringValue|null} [scientificName] NcbiSample scientificName
+         * @property {google.protobuf.ITimestamp|null} [collectedAt] NcbiSample collectedAt
+         * @property {google.protobuf.IStringValue|null} [strain] NcbiSample strain
+         * @property {google.protobuf.IStringValue|null} [location] NcbiSample location
+         */
+
+        /**
+         * Constructs a new NcbiSample.
+         * @memberof api
+         * @classdesc Represents a NcbiSample.
+         * @implements INcbiSample
+         * @constructor
+         * @param {api.INcbiSample=} [properties] Properties to set
+         */
+        function NcbiSample(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * NcbiSample accession.
+         * @member {string} accession
+         * @memberof api.NcbiSample
+         * @instance
+         */
+        NcbiSample.prototype.accession = "";
+
+        /**
+         * NcbiSample title.
+         * @member {google.protobuf.IStringValue|null|undefined} title
+         * @memberof api.NcbiSample
+         * @instance
+         */
+        NcbiSample.prototype.title = null;
+
+        /**
+         * NcbiSample taxonId.
+         * @member {google.protobuf.IStringValue|null|undefined} taxonId
+         * @memberof api.NcbiSample
+         * @instance
+         */
+        NcbiSample.prototype.taxonId = null;
+
+        /**
+         * NcbiSample scientificName.
+         * @member {google.protobuf.IStringValue|null|undefined} scientificName
+         * @memberof api.NcbiSample
+         * @instance
+         */
+        NcbiSample.prototype.scientificName = null;
+
+        /**
+         * NcbiSample collectedAt.
+         * @member {google.protobuf.ITimestamp|null|undefined} collectedAt
+         * @memberof api.NcbiSample
+         * @instance
+         */
+        NcbiSample.prototype.collectedAt = null;
+
+        /**
+         * NcbiSample strain.
+         * @member {google.protobuf.IStringValue|null|undefined} strain
+         * @memberof api.NcbiSample
+         * @instance
+         */
+        NcbiSample.prototype.strain = null;
+
+        /**
+         * NcbiSample location.
+         * @member {google.protobuf.IStringValue|null|undefined} location
+         * @memberof api.NcbiSample
+         * @instance
+         */
+        NcbiSample.prototype.location = null;
+
+        /**
+         * Creates a new NcbiSample instance using the specified properties.
+         * @function create
+         * @memberof api.NcbiSample
+         * @static
+         * @param {api.INcbiSample=} [properties] Properties to set
+         * @returns {api.NcbiSample} NcbiSample instance
+         */
+        NcbiSample.create = function create(properties) {
+            return new NcbiSample(properties);
+        };
+
+        /**
+         * Encodes the specified NcbiSample message. Does not implicitly {@link api.NcbiSample.verify|verify} messages.
+         * @function encode
+         * @memberof api.NcbiSample
+         * @static
+         * @param {api.INcbiSample} message NcbiSample message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NcbiSample.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.accession != null && Object.hasOwnProperty.call(message, "accession"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.accession);
+            if (message.title != null && Object.hasOwnProperty.call(message, "title"))
+                $root.google.protobuf.StringValue.encode(message.title, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.taxonId != null && Object.hasOwnProperty.call(message, "taxonId"))
+                $root.google.protobuf.StringValue.encode(message.taxonId, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.scientificName != null && Object.hasOwnProperty.call(message, "scientificName"))
+                $root.google.protobuf.StringValue.encode(message.scientificName, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.collectedAt != null && Object.hasOwnProperty.call(message, "collectedAt"))
+                $root.google.protobuf.Timestamp.encode(message.collectedAt, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+            if (message.strain != null && Object.hasOwnProperty.call(message, "strain"))
+                $root.google.protobuf.StringValue.encode(message.strain, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            if (message.location != null && Object.hasOwnProperty.call(message, "location"))
+                $root.google.protobuf.StringValue.encode(message.location, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified NcbiSample message, length delimited. Does not implicitly {@link api.NcbiSample.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.NcbiSample
+         * @static
+         * @param {api.INcbiSample} message NcbiSample message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        NcbiSample.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a NcbiSample message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.NcbiSample
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.NcbiSample} NcbiSample
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NcbiSample.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.NcbiSample();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.accession = reader.string();
+                    break;
+                case 2:
+                    message.title = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    message.taxonId = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 4:
+                    message.scientificName = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 5:
+                    message.collectedAt = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                case 6:
+                    message.strain = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 7:
+                    message.location = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a NcbiSample message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.NcbiSample
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.NcbiSample} NcbiSample
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        NcbiSample.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a NcbiSample message.
+         * @function verify
+         * @memberof api.NcbiSample
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        NcbiSample.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.accession != null && message.hasOwnProperty("accession"))
+                if (!$util.isString(message.accession))
+                    return "accession: string expected";
+            if (message.title != null && message.hasOwnProperty("title")) {
+                let error = $root.google.protobuf.StringValue.verify(message.title);
+                if (error)
+                    return "title." + error;
+            }
+            if (message.taxonId != null && message.hasOwnProperty("taxonId")) {
+                let error = $root.google.protobuf.StringValue.verify(message.taxonId);
+                if (error)
+                    return "taxonId." + error;
+            }
+            if (message.scientificName != null && message.hasOwnProperty("scientificName")) {
+                let error = $root.google.protobuf.StringValue.verify(message.scientificName);
+                if (error)
+                    return "scientificName." + error;
+            }
+            if (message.collectedAt != null && message.hasOwnProperty("collectedAt")) {
+                let error = $root.google.protobuf.Timestamp.verify(message.collectedAt);
+                if (error)
+                    return "collectedAt." + error;
+            }
+            if (message.strain != null && message.hasOwnProperty("strain")) {
+                let error = $root.google.protobuf.StringValue.verify(message.strain);
+                if (error)
+                    return "strain." + error;
+            }
+            if (message.location != null && message.hasOwnProperty("location")) {
+                let error = $root.google.protobuf.StringValue.verify(message.location);
+                if (error)
+                    return "location." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a NcbiSample message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.NcbiSample
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.NcbiSample} NcbiSample
+         */
+        NcbiSample.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.NcbiSample)
+                return object;
+            let message = new $root.api.NcbiSample();
+            if (object.accession != null)
+                message.accession = String(object.accession);
+            if (object.title != null) {
+                if (typeof object.title !== "object")
+                    throw TypeError(".api.NcbiSample.title: object expected");
+                message.title = $root.google.protobuf.StringValue.fromObject(object.title);
+            }
+            if (object.taxonId != null) {
+                if (typeof object.taxonId !== "object")
+                    throw TypeError(".api.NcbiSample.taxonId: object expected");
+                message.taxonId = $root.google.protobuf.StringValue.fromObject(object.taxonId);
+            }
+            if (object.scientificName != null) {
+                if (typeof object.scientificName !== "object")
+                    throw TypeError(".api.NcbiSample.scientificName: object expected");
+                message.scientificName = $root.google.protobuf.StringValue.fromObject(object.scientificName);
+            }
+            if (object.collectedAt != null) {
+                if (typeof object.collectedAt !== "object")
+                    throw TypeError(".api.NcbiSample.collectedAt: object expected");
+                message.collectedAt = $root.google.protobuf.Timestamp.fromObject(object.collectedAt);
+            }
+            if (object.strain != null) {
+                if (typeof object.strain !== "object")
+                    throw TypeError(".api.NcbiSample.strain: object expected");
+                message.strain = $root.google.protobuf.StringValue.fromObject(object.strain);
+            }
+            if (object.location != null) {
+                if (typeof object.location !== "object")
+                    throw TypeError(".api.NcbiSample.location: object expected");
+                message.location = $root.google.protobuf.StringValue.fromObject(object.location);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a NcbiSample message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.NcbiSample
+         * @static
+         * @param {api.NcbiSample} message NcbiSample
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        NcbiSample.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.accession = "";
+                object.title = null;
+                object.taxonId = null;
+                object.scientificName = null;
+                object.collectedAt = null;
+                object.strain = null;
+                object.location = null;
+            }
+            if (message.accession != null && message.hasOwnProperty("accession"))
+                object.accession = message.accession;
+            if (message.title != null && message.hasOwnProperty("title"))
+                object.title = $root.google.protobuf.StringValue.toObject(message.title, options);
+            if (message.taxonId != null && message.hasOwnProperty("taxonId"))
+                object.taxonId = $root.google.protobuf.StringValue.toObject(message.taxonId, options);
+            if (message.scientificName != null && message.hasOwnProperty("scientificName"))
+                object.scientificName = $root.google.protobuf.StringValue.toObject(message.scientificName, options);
+            if (message.collectedAt != null && message.hasOwnProperty("collectedAt"))
+                object.collectedAt = $root.google.protobuf.Timestamp.toObject(message.collectedAt, options);
+            if (message.strain != null && message.hasOwnProperty("strain"))
+                object.strain = $root.google.protobuf.StringValue.toObject(message.strain, options);
+            if (message.location != null && message.hasOwnProperty("location"))
+                object.location = $root.google.protobuf.StringValue.toObject(message.location, options);
+            return object;
+        };
+
+        /**
+         * Converts this NcbiSample to JSON.
+         * @function toJSON
+         * @memberof api.NcbiSample
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        NcbiSample.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return NcbiSample;
     })();
 
     return api;
