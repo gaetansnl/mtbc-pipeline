@@ -21,9 +21,9 @@ namespace Core.Ncbi
             if (!match.Success) return null;
 
             var latitude = double.Parse(match.Groups[1].Value, NumberStyles.Any, CultureInfo.InvariantCulture) *
-                           (match.Groups[3].Value == "N" ? 1 : -1);
+                           (match.Groups[2].Value == "N" ? 1 : -1);
             var longitude = double.Parse(match.Groups[3].Value, NumberStyles.Any, CultureInfo.InvariantCulture) *
-                            (match.Groups[3].Value == "E" ? 1 : -1);
+                            (match.Groups[4].Value == "E" ? 1 : -1);
             return new Coordinate(latitude, longitude);
         }
     }

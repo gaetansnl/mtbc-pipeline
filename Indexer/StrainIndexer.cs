@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.Ncbi;
 using Indexer.Data;
+using Indexer.Utils;
 using MTBC.Configuration;
 
 namespace Indexer
@@ -17,12 +18,15 @@ namespace Indexer
         protected Configuration Config;
         protected LiteDbDriver Database;
         protected NcbiClient NcbiClient;
+        protected CountryCodeHelper CountryCodeHelper;
 
-        public StrainIndexer(Configuration config, LiteDbDriver database, NcbiClient ncbiClient)
+        public StrainIndexer(Configuration config, LiteDbDriver database, NcbiClient ncbiClient,
+            CountryCodeHelper countryCodeHelper)
         {
             Config = config;
             Database = database;
             NcbiClient = ncbiClient;
+            CountryCodeHelper = countryCodeHelper;
         }
 
         public List<bool> RealSpol98(AnalysisData data)
@@ -31,7 +35,7 @@ namespace Indexer
             foreach (var part in data.Crispr)
             {
                 if (part.Spacer == null || part.Spacer.Id > 98) continue;
-                result[part.Spacer.Id-1] = true;
+                result[part.Spacer.Id - 1] = true;
             }
 
             return result;
@@ -48,7 +52,7 @@ namespace Indexer
             };
             for (int i = 0; i < 43; i++)
             {
-                result[i] = spol98[positions[i]-1];
+                result[i] = spol98[positions[i] - 1];
             }
 
             return result;
@@ -88,9 +92,16 @@ namespace Indexer
                 result.Spoligotype43Crispr = RealSpol43(result);
                 result.Spoligotype98Crispr = RealSpol98(result);
                 result.Run = await NcbiClient.FindRunByAccession(result.Id);
+
+                var coordinates = result.Run?.Samples[0]?.Coordinates;
+
+                result.CountryCode = CountryCodeHelper.LookupCountryCode(
+                    result.Run?.Samples[0]?.Location,
+                     coordinates.HasValue ? (long)coordinates?.Latitude :null,
+                    coordinates.HasValue ?(long) coordinates?.Longitude:null);
+
                 await Database.Index(result);
                 Console.WriteLine($"Indexed ${file}");
-                Thread.Sleep(100);
             }
         }
     }

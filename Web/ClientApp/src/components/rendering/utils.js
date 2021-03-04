@@ -18,7 +18,7 @@ export const findNodeIn = (nodes, scale, from, to) => {
     return nodes.filter((node) => {
         const xScaled = node.x * scale;
         const yScaled = node.y * scale;
-        return fromXPos < xScaled && xScaled < toXPos && fromYPos < yScaled && yScaled < toYPos;
+        return !node.hidden && fromXPos < xScaled && xScaled < toXPos && fromYPos < yScaled && yScaled < toYPos;
     });
 };
 

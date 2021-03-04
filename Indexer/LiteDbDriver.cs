@@ -17,9 +17,10 @@ namespace Indexer
         {
             Database = database;
             Database.GetCollection<SnpData>("snp");
-            Database.GetCollection<AnalysisData>("result").EnsureIndex("$.StrainId");
+            var result = Database.GetCollection<AnalysisData>("result");
+            result.EnsureIndex("$.StrainId");
             Database.GetCollection<AnalysisData>("gene");
-            
+
             BsonMapper.Global.Entity<AnalysisData>().DbRef(x => x.Snp, "snp");
             BsonMapper.Global.Entity<AnalysisData>().DbRef(x => x.MissingGenes, "gene");
         }
@@ -72,20 +73,12 @@ namespace Indexer
             return collection.Find(Query.All(), limit: 100).ToList();
         }
 
-        protected BsonExpression KeywordToQuery(KeywordCondition condition, string value)
-        {
-            return condition.Field switch
-            {
-                KeywordCondition.KeywordField.ACCESSION => Query.EQ("StrainId", value)
-            };
-        }
-
-        protected BsonExpression? ConditionToQuery(Condition condition)
+        protected BsonExpression? ConditionToQuery(Condition condition, Dictionary<string, BsonValue> args)
         {
             BsonExpression main;
             if (condition.Bool != null)
             {
-                var expressions = condition.Bool.Conditions.Select(v => ConditionToQuery(v)).Where(v => v != null)
+                var expressions = condition.Bool.Conditions.Select(v => ConditionToQuery(v, args)).Where(v => v != null)
                     .Select(e => e!).ToArray();
                 if (expressions.Length == 0) return null;
                 if (expressions.Length == 1) main = expressions[0];
@@ -101,10 +94,19 @@ namespace Indexer
             }
             else if (condition.Keyword != null)
             {
-                var conditions = condition.Keyword.Values.Select(v => KeywordToQuery(condition.Keyword, v)).ToArray();
-                if (conditions.Length == 0) return null;
-                if (conditions.Length == 1) main = conditions[0];
-                else main = condition.Keyword.AllOf ? Query.And(conditions) : Query.Or(conditions);
+                if (condition.Keyword.Values.Count == 0) return null;
+                var key = "p" + (args.Count + 1);
+                args.Add(key, new BsonArray(condition.Keyword.Values.Select(v => new BsonValue(v))));
+                Func<string, string> fieldCondition =field => $"{field} IN @{key}";
+                Func<string, string> arrayCondition = field =>
+                    condition.Keyword.AllOf
+                        ? $"LENGTH(EXCEPT(@{key}, {field})) = 0"
+                        : $"{field} ANY IN @{key}";
+                main = condition.Keyword.Field switch
+                {
+                    KeywordCondition.KeywordField.ACCESSION => BsonExpression.Create(fieldCondition("$.StrainId")),
+                    KeywordCondition.KeywordField.SNP_SPDI => BsonExpression.Create(arrayCondition("$.SnpSpdi[*]"))
+                };
             }
             else
             {
@@ -117,8 +119,15 @@ namespace Indexer
         public async Task<List<string>> Search(Condition condition)
         {
             var collection = Database.GetCollection<AnalysisData>("result");
-            var query = ConditionToQuery(condition);
+            var gg = new Dictionary<string, BsonValue>();
+            var query = ConditionToQuery(condition, gg);
+            foreach (var (k, v) in gg)
+            {
+                query.Parameters[k] = v;
+            }
+
             if (query == null) return new List<string>();
+            Console.WriteLine(collection.Query().Where(query).Select(v => v.Id).GetPlan().ToString());
             return collection.Query().Where(query).Select(v => v.Id).ToList();
         }
 

@@ -43,6 +43,16 @@ const items: { title: string; default: () => api.IStrainCondition }[] = [
                 values: []
             },
         }),
+    },
+    {
+        title: "SPDI",
+        default: () => ({
+            negate: false,
+            keyword: {
+                field: api.KeywordStrainField.SNP_SPDI,
+                values: []
+            },
+        }),
     }
 ];
 

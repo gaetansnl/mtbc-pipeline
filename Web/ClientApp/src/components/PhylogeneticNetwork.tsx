@@ -32,13 +32,13 @@ function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodesSelected, selected
         let visibleCount = 0;
         if (values) {
             values.graph?.nodes.forEach((v) => {
-                const hidden = v.id > 1600;
+                const hidden =  v.name === 'VIRTUAL';
                 nodes[v.id] = {
                     id: v.id,
                     name: v.name,
                     x: v.positionX,
                     y: v.positionY,
-                    hidden: v.id > 1600,
+                    hidden,
                 };
                 hidden ? hiddenCount++ : visibleCount++;
             });

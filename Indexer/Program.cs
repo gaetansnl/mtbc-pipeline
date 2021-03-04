@@ -6,6 +6,7 @@ using Core.Ncbi;
 using EasyCaching.Core;
 using EasyCaching.LiteDB;
 using Indexer.Data;
+using Indexer.Utils;
 using LiteDB;
 using Microsoft.Extensions.DependencyInjection;
 using MTBC.Configuration;
@@ -44,6 +45,7 @@ namespace Indexer
             var config = Configuration.FromYaml("C:\\Users\\Gaetan\\RiderProjects\\API\\Web\\Data\\config.yaml");
             var db = new LiteDatabase("db");
             var driver = new LiteDbDriver(db);
+            var countryHelper = new CountryCodeHelper();
             
             // var snpIndexer = new SnpIndexer(config, driver, doiClient);
             // await snpIndexer.Index();
@@ -51,7 +53,7 @@ namespace Indexer
             // var geneIndexer = new FastaGeneIndexer(driver, "NC_000962.3", "C:\\Users\\Gaetan\\RiderProjects\\API\\Web\\Data\\genes\\H37Rv.fasta");
             // await geneIndexer.Index();
             //
-            var strainIndexer = new StrainIndexer(config, driver, ncbiClient);
+            var strainIndexer = new StrainIndexer(config, driver, ncbiClient,countryHelper);
             await strainIndexer.Index();
 
 

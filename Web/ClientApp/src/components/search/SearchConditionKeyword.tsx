@@ -1,20 +1,30 @@
 import React from "react";
-import { Select } from "antd";
+import { Button, Select } from "antd";
 import SearchConditionContainer from "./SearchConditionContainer";
 import { getDefaultHandlers, SearchConditionChangeCallback, updateCondition } from "./state";
 import { api } from "state/grpc";
 
-const keywordConditionInfo : {[key: number]: {title: string, valuesPlaceholder?: string}}={
-    [api.KeywordStrainField.ACCESSION]:{
+const keywordConditionInfo: {
+    [key: number]: {
+        title: string;
+        valuesPlaceholder?: string;
+        separators?: string[];
+        enableAllOf?: boolean;
+    };
+} = {
+    [api.KeywordStrainField.ACCESSION]: {
         title: "Accession number",
+        separators: [",", "\n"],
     },
-    [api.KeywordStrainField.COUNTRY_CODE]:{
+    [api.KeywordStrainField.COUNTRY_CODE]: {
         title: "Country",
     },
-    [api.KeywordStrainField.GENE_LOCUS_TAG]:{
-        title: "Gene locus tag",
-    }
-}
+    [api.KeywordStrainField.SNP_SPDI]: {
+        title: "SPDI",
+        separators: [","],
+        enableAllOf: true,
+    },
+};
 
 function SearchConditionKeyword({
     rootCondition,
@@ -37,20 +47,45 @@ function SearchConditionKeyword({
             })
         );
     };
-    const fieldInfo = keywordCondition?.field != null && keywordConditionInfo[keywordCondition?.field];
-    if(!fieldInfo) return null;
+    const toggleAllOf = () => {
+        onChange(
+            updateCondition(rootCondition, condition, {
+                ...condition,
+                keyword: {
+                    ...condition?.keyword,
+                    allOf: !condition?.keyword?.allOf,
+                },
+            })
+        );
+    };
+    const fieldInfo =
+        keywordCondition?.field != null && keywordConditionInfo[keywordCondition?.field];
+    if (!fieldInfo) return null;
     return (
         <React.Fragment>
             <SearchConditionContainer
                 title={fieldInfo.title}
                 condition={condition}
+                extra={
+                    fieldInfo.enableAllOf && (
+                        <Button
+                            size="small"
+                            type={keywordCondition?.allOf ? "primary" : "default"}
+                            onClick={toggleAllOf}
+                        >
+                            ALL OF
+                        </Button>
+                    )
+                }
                 {...getDefaultHandlers(rootCondition, condition, onChange)}
             >
                 <Select
+                    maxTagCount="responsive"
                     mode="tags"
                     style={{ width: "100%" }}
                     value={keywordCondition?.values || []}
                     onChange={handleChange}
+                    tokenSeparators={fieldInfo.separators}
                     placeholder={fieldInfo.valuesPlaceholder || fieldInfo.title}
                 />
             </SearchConditionContainer>

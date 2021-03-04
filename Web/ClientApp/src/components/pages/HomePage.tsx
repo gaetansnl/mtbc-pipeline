@@ -37,6 +37,7 @@ function HomePage(props: any) {
     const currentSelectedNodes = selectedNodes.length ? selectedNodes : searchedNodes;
     useEffect(() => setInfoOpened(currentSelectedNodes.length > 0), [currentSelectedNodes.length]);
 
+console.log(currentSelectedNodes);
     return (
         <Layout style={{ height: "100%" }}>
             <Sider width={300} style={{ padding: 15 }}>
