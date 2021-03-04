@@ -121,6 +121,7 @@ export default React.memo(function PixiGraph({
                         edgeColor={edgeColor}
                         nodeColor={selectedNodeColor}
                         scale={scale}
+                        onClick={onNodesClick}
                     />
                 </PixiDrawableRect>
             </Container>

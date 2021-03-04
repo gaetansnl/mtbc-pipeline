@@ -1,10 +1,15 @@
-﻿using System.IO.Compression;
+﻿using System;
+using System.IO.Compression;
+using Indexer;
+using LiteDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Web.Services;
+using Web.Utils;
 
 namespace Web
 {
@@ -21,6 +26,19 @@ namespace Web
                 options.ResponseCompressionAlgorithm = "gzip";
             });
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+            services.AddAutoMapper(typeof(GrpcMapper));
+
+
+            services.AddSingleton<LiteDbDriver, LiteDbDriver>((provider) =>
+            {
+                var db = new LiteDatabase(@"C:\Users\Gaetan\RiderProjects\API\Indexer\bin\Debug\net5.0\db");
+                return new LiteDbDriver(db);
+            });
+            services.AddSingleton<NexusGraph, NexusGraph>((provider) =>
+            {
+                return new NexusGraph("C:\\Users\\Gaetan\\Downloads\\tb-tools\\results\\phylogenetic_network.nexus",
+                    provider.GetService<ILogger<NexusGraph>>() ?? throw new InvalidOperationException());
+            });
 
             services.AddCors(o => o.AddPolicy("AllowAll", builder =>
             {
@@ -38,13 +56,13 @@ namespace Web
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseRouting();
             app.UseCors();
-            
+
             app.UseGrpcWeb();
 
             app.UseEndpoints(endpoints =>

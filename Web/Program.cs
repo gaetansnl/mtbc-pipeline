@@ -1,13 +1,18 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Web.Utils;
 
 namespace Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var webHost = CreateHostBuilder(args).Build();
+            await webHost.Services.GetRequiredService<NexusGraph>().InitAsync();
+            await webHost.RunAsync();
         }
 
         // Additional configuration is required to successfully run gRPC on macOS.

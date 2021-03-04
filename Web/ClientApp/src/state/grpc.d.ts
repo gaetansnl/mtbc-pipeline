@@ -654,7 +654,7 @@ export namespace api {
     interface ISearchRequest {
 
         /** SearchRequest condition */
-        condition?: (api.IBoolStrainCondition|null);
+        condition?: (api.IStrainCondition|null);
     }
 
     /** Represents a SearchRequest. */
@@ -667,7 +667,7 @@ export namespace api {
         constructor(properties?: api.ISearchRequest);
 
         /** SearchRequest condition. */
-        public condition?: (api.IBoolStrainCondition|null);
+        public condition?: (api.IStrainCondition|null);
 
         /**
          * Creates a new SearchRequest instance using the specified properties.
@@ -742,6 +742,9 @@ export namespace api {
 
     /** Properties of a SearchReply. */
     interface ISearchReply {
+
+        /** SearchReply ids */
+        ids?: (string[]|null);
     }
 
     /** Represents a SearchReply. */
@@ -752,6 +755,9 @@ export namespace api {
          * @param [properties] Properties to set
          */
         constructor(properties?: api.ISearchReply);
+
+        /** SearchReply ids. */
+        public ids: string[];
 
         /**
          * Creates a new SearchReply instance using the specified properties.
@@ -1142,26 +1148,20 @@ export namespace api {
         /** StrainCondition negate */
         negate?: (boolean|null);
 
-        /** StrainCondition accession */
-        accession?: (api.IAccessionCondition|null);
-
-        /** StrainCondition biosample */
-        biosample?: (api.IBiosampleCondition|null);
-
-        /** StrainCondition country */
-        country?: (api.ICountryCondition|null);
+        /** StrainCondition keyword */
+        keyword?: (api.IKeywordStrainCondition|null);
 
         /** StrainCondition date */
-        date?: (api.IDateCondition|null);
-
-        /** StrainCondition gene */
-        gene?: (api.IGeneStrainCondition|null);
-
-        /** StrainCondition lineage */
-        lineage?: (api.ILineageStrainCondition|null);
+        date?: (api.IDateStrainCondition|null);
 
         /** StrainCondition bool */
         bool?: (api.IBoolStrainCondition|null);
+
+        /** StrainCondition insertionSequence */
+        insertionSequence?: (api.IInsertionSequenceStrainCondition|null);
+
+        /** StrainCondition lineage */
+        lineage?: (api.ILineageStrainCondition|null);
     }
 
     /** Represents a StrainCondition. */
@@ -1176,29 +1176,23 @@ export namespace api {
         /** StrainCondition negate. */
         public negate: boolean;
 
-        /** StrainCondition accession. */
-        public accession?: (api.IAccessionCondition|null);
-
-        /** StrainCondition biosample. */
-        public biosample?: (api.IBiosampleCondition|null);
-
-        /** StrainCondition country. */
-        public country?: (api.ICountryCondition|null);
+        /** StrainCondition keyword. */
+        public keyword?: (api.IKeywordStrainCondition|null);
 
         /** StrainCondition date. */
-        public date?: (api.IDateCondition|null);
-
-        /** StrainCondition gene. */
-        public gene?: (api.IGeneStrainCondition|null);
-
-        /** StrainCondition lineage. */
-        public lineage?: (api.ILineageStrainCondition|null);
+        public date?: (api.IDateStrainCondition|null);
 
         /** StrainCondition bool. */
         public bool?: (api.IBoolStrainCondition|null);
 
+        /** StrainCondition insertionSequence. */
+        public insertionSequence?: (api.IInsertionSequenceStrainCondition|null);
+
+        /** StrainCondition lineage. */
+        public lineage?: (api.ILineageStrainCondition|null);
+
         /** StrainCondition condition. */
-        public condition?: ("accession"|"biosample"|"country"|"date"|"gene"|"lineage"|"bool");
+        public condition?: ("keyword"|"date"|"bool"|"insertionSequence"|"lineage");
 
         /**
          * Creates a new StrainCondition instance using the specified properties.
@@ -1367,457 +1361,103 @@ export namespace api {
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a DateCondition. */
-    interface IDateCondition {
+    /** Properties of an InsertionSequenceStrainCondition. */
+    interface IInsertionSequenceStrainCondition {
 
-        /** DateCondition from */
-        from?: (google.protobuf.ITimestamp|null);
+        /** InsertionSequenceStrainCondition name */
+        name?: (string|null);
 
-        /** DateCondition to */
-        to?: (google.protobuf.ITimestamp|null);
+        /** InsertionSequenceStrainCondition position */
+        position?: (number|null);
+
+        /** InsertionSequenceStrainCondition prefix */
+        prefix?: (string|null);
     }
 
-    /** Represents a DateCondition. */
-    class DateCondition implements IDateCondition {
+    /** Represents an InsertionSequenceStrainCondition. */
+    class InsertionSequenceStrainCondition implements IInsertionSequenceStrainCondition {
 
         /**
-         * Constructs a new DateCondition.
+         * Constructs a new InsertionSequenceStrainCondition.
          * @param [properties] Properties to set
          */
-        constructor(properties?: api.IDateCondition);
+        constructor(properties?: api.IInsertionSequenceStrainCondition);
 
-        /** DateCondition from. */
-        public from?: (google.protobuf.ITimestamp|null);
+        /** InsertionSequenceStrainCondition name. */
+        public name: string;
 
-        /** DateCondition to. */
-        public to?: (google.protobuf.ITimestamp|null);
+        /** InsertionSequenceStrainCondition position. */
+        public position: number;
+
+        /** InsertionSequenceStrainCondition prefix. */
+        public prefix: string;
 
         /**
-         * Creates a new DateCondition instance using the specified properties.
+         * Creates a new InsertionSequenceStrainCondition instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns DateCondition instance
+         * @returns InsertionSequenceStrainCondition instance
          */
-        public static create(properties?: api.IDateCondition): api.DateCondition;
+        public static create(properties?: api.IInsertionSequenceStrainCondition): api.InsertionSequenceStrainCondition;
 
         /**
-         * Encodes the specified DateCondition message. Does not implicitly {@link api.DateCondition.verify|verify} messages.
-         * @param message DateCondition message or plain object to encode
+         * Encodes the specified InsertionSequenceStrainCondition message. Does not implicitly {@link api.InsertionSequenceStrainCondition.verify|verify} messages.
+         * @param message InsertionSequenceStrainCondition message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: api.IDateCondition, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: api.IInsertionSequenceStrainCondition, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified DateCondition message, length delimited. Does not implicitly {@link api.DateCondition.verify|verify} messages.
-         * @param message DateCondition message or plain object to encode
+         * Encodes the specified InsertionSequenceStrainCondition message, length delimited. Does not implicitly {@link api.InsertionSequenceStrainCondition.verify|verify} messages.
+         * @param message InsertionSequenceStrainCondition message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: api.IDateCondition, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: api.IInsertionSequenceStrainCondition, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a DateCondition message from the specified reader or buffer.
+         * Decodes an InsertionSequenceStrainCondition message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns DateCondition
+         * @returns InsertionSequenceStrainCondition
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.DateCondition;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.InsertionSequenceStrainCondition;
 
         /**
-         * Decodes a DateCondition message from the specified reader or buffer, length delimited.
+         * Decodes an InsertionSequenceStrainCondition message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns DateCondition
+         * @returns InsertionSequenceStrainCondition
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.DateCondition;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.InsertionSequenceStrainCondition;
 
         /**
-         * Verifies a DateCondition message.
+         * Verifies an InsertionSequenceStrainCondition message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a DateCondition message from a plain object. Also converts values to their respective internal types.
+         * Creates an InsertionSequenceStrainCondition message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns DateCondition
+         * @returns InsertionSequenceStrainCondition
          */
-        public static fromObject(object: { [k: string]: any }): api.DateCondition;
+        public static fromObject(object: { [k: string]: any }): api.InsertionSequenceStrainCondition;
 
         /**
-         * Creates a plain object from a DateCondition message. Also converts values to other types if specified.
-         * @param message DateCondition
+         * Creates a plain object from an InsertionSequenceStrainCondition message. Also converts values to other types if specified.
+         * @param message InsertionSequenceStrainCondition
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: api.DateCondition, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: api.InsertionSequenceStrainCondition, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this DateCondition to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a CountryCondition. */
-    interface ICountryCondition {
-
-        /** CountryCondition isoCodes */
-        isoCodes?: (string[]|null);
-    }
-
-    /** Represents a CountryCondition. */
-    class CountryCondition implements ICountryCondition {
-
-        /**
-         * Constructs a new CountryCondition.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: api.ICountryCondition);
-
-        /** CountryCondition isoCodes. */
-        public isoCodes: string[];
-
-        /**
-         * Creates a new CountryCondition instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns CountryCondition instance
-         */
-        public static create(properties?: api.ICountryCondition): api.CountryCondition;
-
-        /**
-         * Encodes the specified CountryCondition message. Does not implicitly {@link api.CountryCondition.verify|verify} messages.
-         * @param message CountryCondition message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: api.ICountryCondition, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified CountryCondition message, length delimited. Does not implicitly {@link api.CountryCondition.verify|verify} messages.
-         * @param message CountryCondition message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: api.ICountryCondition, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a CountryCondition message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns CountryCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.CountryCondition;
-
-        /**
-         * Decodes a CountryCondition message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns CountryCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.CountryCondition;
-
-        /**
-         * Verifies a CountryCondition message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a CountryCondition message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns CountryCondition
-         */
-        public static fromObject(object: { [k: string]: any }): api.CountryCondition;
-
-        /**
-         * Creates a plain object from a CountryCondition message. Also converts values to other types if specified.
-         * @param message CountryCondition
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: api.CountryCondition, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this CountryCondition to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of an AccessionCondition. */
-    interface IAccessionCondition {
-
-        /** AccessionCondition accessionNumbers */
-        accessionNumbers?: (string[]|null);
-    }
-
-    /** Represents an AccessionCondition. */
-    class AccessionCondition implements IAccessionCondition {
-
-        /**
-         * Constructs a new AccessionCondition.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: api.IAccessionCondition);
-
-        /** AccessionCondition accessionNumbers. */
-        public accessionNumbers: string[];
-
-        /**
-         * Creates a new AccessionCondition instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns AccessionCondition instance
-         */
-        public static create(properties?: api.IAccessionCondition): api.AccessionCondition;
-
-        /**
-         * Encodes the specified AccessionCondition message. Does not implicitly {@link api.AccessionCondition.verify|verify} messages.
-         * @param message AccessionCondition message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: api.IAccessionCondition, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified AccessionCondition message, length delimited. Does not implicitly {@link api.AccessionCondition.verify|verify} messages.
-         * @param message AccessionCondition message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: api.IAccessionCondition, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes an AccessionCondition message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns AccessionCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.AccessionCondition;
-
-        /**
-         * Decodes an AccessionCondition message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns AccessionCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.AccessionCondition;
-
-        /**
-         * Verifies an AccessionCondition message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates an AccessionCondition message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns AccessionCondition
-         */
-        public static fromObject(object: { [k: string]: any }): api.AccessionCondition;
-
-        /**
-         * Creates a plain object from an AccessionCondition message. Also converts values to other types if specified.
-         * @param message AccessionCondition
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: api.AccessionCondition, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this AccessionCondition to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a BiosampleCondition. */
-    interface IBiosampleCondition {
-
-        /** BiosampleCondition accessionNumbers */
-        accessionNumbers?: (string[]|null);
-    }
-
-    /** Represents a BiosampleCondition. */
-    class BiosampleCondition implements IBiosampleCondition {
-
-        /**
-         * Constructs a new BiosampleCondition.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: api.IBiosampleCondition);
-
-        /** BiosampleCondition accessionNumbers. */
-        public accessionNumbers: string[];
-
-        /**
-         * Creates a new BiosampleCondition instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns BiosampleCondition instance
-         */
-        public static create(properties?: api.IBiosampleCondition): api.BiosampleCondition;
-
-        /**
-         * Encodes the specified BiosampleCondition message. Does not implicitly {@link api.BiosampleCondition.verify|verify} messages.
-         * @param message BiosampleCondition message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: api.IBiosampleCondition, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified BiosampleCondition message, length delimited. Does not implicitly {@link api.BiosampleCondition.verify|verify} messages.
-         * @param message BiosampleCondition message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: api.IBiosampleCondition, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a BiosampleCondition message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns BiosampleCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.BiosampleCondition;
-
-        /**
-         * Decodes a BiosampleCondition message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns BiosampleCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.BiosampleCondition;
-
-        /**
-         * Verifies a BiosampleCondition message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a BiosampleCondition message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns BiosampleCondition
-         */
-        public static fromObject(object: { [k: string]: any }): api.BiosampleCondition;
-
-        /**
-         * Creates a plain object from a BiosampleCondition message. Also converts values to other types if specified.
-         * @param message BiosampleCondition
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: api.BiosampleCondition, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this BiosampleCondition to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a GeneStrainCondition. */
-    interface IGeneStrainCondition {
-
-        /** GeneStrainCondition accessionNumbers */
-        accessionNumbers?: (string[]|null);
-    }
-
-    /** Represents a GeneStrainCondition. */
-    class GeneStrainCondition implements IGeneStrainCondition {
-
-        /**
-         * Constructs a new GeneStrainCondition.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: api.IGeneStrainCondition);
-
-        /** GeneStrainCondition accessionNumbers. */
-        public accessionNumbers: string[];
-
-        /**
-         * Creates a new GeneStrainCondition instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns GeneStrainCondition instance
-         */
-        public static create(properties?: api.IGeneStrainCondition): api.GeneStrainCondition;
-
-        /**
-         * Encodes the specified GeneStrainCondition message. Does not implicitly {@link api.GeneStrainCondition.verify|verify} messages.
-         * @param message GeneStrainCondition message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: api.IGeneStrainCondition, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified GeneStrainCondition message, length delimited. Does not implicitly {@link api.GeneStrainCondition.verify|verify} messages.
-         * @param message GeneStrainCondition message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: api.IGeneStrainCondition, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a GeneStrainCondition message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns GeneStrainCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.GeneStrainCondition;
-
-        /**
-         * Decodes a GeneStrainCondition message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns GeneStrainCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.GeneStrainCondition;
-
-        /**
-         * Verifies a GeneStrainCondition message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a GeneStrainCondition message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns GeneStrainCondition
-         */
-        public static fromObject(object: { [k: string]: any }): api.GeneStrainCondition;
-
-        /**
-         * Creates a plain object from a GeneStrainCondition message. Also converts values to other types if specified.
-         * @param message GeneStrainCondition
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: api.GeneStrainCondition, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this GeneStrainCondition to JSON.
+         * Converts this InsertionSequenceStrainCondition to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -1826,11 +1466,11 @@ export namespace api {
     /** Properties of a LineageStrainCondition. */
     interface ILineageStrainCondition {
 
-        /** LineageStrainCondition classificationName */
-        classificationName?: (string|null);
+        /** LineageStrainCondition doi */
+        doi?: (string|null);
 
-        /** LineageStrainCondition name */
-        name?: (string|null);
+        /** LineageStrainCondition lineage */
+        lineage?: (string|null);
     }
 
     /** Represents a LineageStrainCondition. */
@@ -1842,11 +1482,11 @@ export namespace api {
          */
         constructor(properties?: api.ILineageStrainCondition);
 
-        /** LineageStrainCondition classificationName. */
-        public classificationName: string;
+        /** LineageStrainCondition doi. */
+        public doi: string;
 
-        /** LineageStrainCondition name. */
-        public name: string;
+        /** LineageStrainCondition lineage. */
+        public lineage: string;
 
         /**
          * Creates a new LineageStrainCondition instance using the specified properties.
@@ -1914,6 +1554,233 @@ export namespace api {
 
         /**
          * Converts this LineageStrainCondition to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** KeywordStrainField enum. */
+    enum KeywordStrainField {
+        ACCESSION = 0,
+        COUNTRY_CODE = 1,
+        GENE_LOCUS_TAG = 2,
+        GENE_ID = 3,
+        SIT = 4,
+        SNP_POSITION = 5,
+        SNP_SPDI = 6,
+        SNP_STUDY_DOI = 7,
+        INSERTION_SEQUENCE_NAME = 8,
+        SPOL_43_BLAST = 9,
+        SPOL_98_BLAST = 10,
+        SPOL_BLOIN_BLAST = 11,
+        SPOL_43_CRISPR = 12,
+        SPOL_98_CRISPR = 13
+    }
+
+    /** DateStrainField enum. */
+    enum DateStrainField {
+        PUBLISHED_AT = 0
+    }
+
+    /** Properties of a DateStrainCondition. */
+    interface IDateStrainCondition {
+
+        /** DateStrainCondition field */
+        field?: (api.DateStrainField|null);
+
+        /** DateStrainCondition from */
+        from?: (google.protobuf.ITimestamp|null);
+
+        /** DateStrainCondition to */
+        to?: (google.protobuf.ITimestamp|null);
+    }
+
+    /** Represents a DateStrainCondition. */
+    class DateStrainCondition implements IDateStrainCondition {
+
+        /**
+         * Constructs a new DateStrainCondition.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.IDateStrainCondition);
+
+        /** DateStrainCondition field. */
+        public field: api.DateStrainField;
+
+        /** DateStrainCondition from. */
+        public from?: (google.protobuf.ITimestamp|null);
+
+        /** DateStrainCondition to. */
+        public to?: (google.protobuf.ITimestamp|null);
+
+        /**
+         * Creates a new DateStrainCondition instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DateStrainCondition instance
+         */
+        public static create(properties?: api.IDateStrainCondition): api.DateStrainCondition;
+
+        /**
+         * Encodes the specified DateStrainCondition message. Does not implicitly {@link api.DateStrainCondition.verify|verify} messages.
+         * @param message DateStrainCondition message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.IDateStrainCondition, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DateStrainCondition message, length delimited. Does not implicitly {@link api.DateStrainCondition.verify|verify} messages.
+         * @param message DateStrainCondition message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.IDateStrainCondition, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DateStrainCondition message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DateStrainCondition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.DateStrainCondition;
+
+        /**
+         * Decodes a DateStrainCondition message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DateStrainCondition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.DateStrainCondition;
+
+        /**
+         * Verifies a DateStrainCondition message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DateStrainCondition message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DateStrainCondition
+         */
+        public static fromObject(object: { [k: string]: any }): api.DateStrainCondition;
+
+        /**
+         * Creates a plain object from a DateStrainCondition message. Also converts values to other types if specified.
+         * @param message DateStrainCondition
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.DateStrainCondition, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DateStrainCondition to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a KeywordStrainCondition. */
+    interface IKeywordStrainCondition {
+
+        /** KeywordStrainCondition field */
+        field?: (api.KeywordStrainField|null);
+
+        /** KeywordStrainCondition allOf */
+        allOf?: (boolean|null);
+
+        /** KeywordStrainCondition values */
+        values?: (string[]|null);
+    }
+
+    /** Represents a KeywordStrainCondition. */
+    class KeywordStrainCondition implements IKeywordStrainCondition {
+
+        /**
+         * Constructs a new KeywordStrainCondition.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.IKeywordStrainCondition);
+
+        /** KeywordStrainCondition field. */
+        public field: api.KeywordStrainField;
+
+        /** KeywordStrainCondition allOf. */
+        public allOf: boolean;
+
+        /** KeywordStrainCondition values. */
+        public values: string[];
+
+        /**
+         * Creates a new KeywordStrainCondition instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns KeywordStrainCondition instance
+         */
+        public static create(properties?: api.IKeywordStrainCondition): api.KeywordStrainCondition;
+
+        /**
+         * Encodes the specified KeywordStrainCondition message. Does not implicitly {@link api.KeywordStrainCondition.verify|verify} messages.
+         * @param message KeywordStrainCondition message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.IKeywordStrainCondition, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified KeywordStrainCondition message, length delimited. Does not implicitly {@link api.KeywordStrainCondition.verify|verify} messages.
+         * @param message KeywordStrainCondition message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.IKeywordStrainCondition, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a KeywordStrainCondition message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns KeywordStrainCondition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.KeywordStrainCondition;
+
+        /**
+         * Decodes a KeywordStrainCondition message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns KeywordStrainCondition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.KeywordStrainCondition;
+
+        /**
+         * Verifies a KeywordStrainCondition message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a KeywordStrainCondition message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns KeywordStrainCondition
+         */
+        public static fromObject(object: { [k: string]: any }): api.KeywordStrainCondition;
+
+        /**
+         * Creates a plain object from a KeywordStrainCondition message. Also converts values to other types if specified.
+         * @param message KeywordStrainCondition
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.KeywordStrainCondition, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this KeywordStrainCondition to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

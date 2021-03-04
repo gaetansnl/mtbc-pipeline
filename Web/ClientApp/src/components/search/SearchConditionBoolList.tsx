@@ -1,6 +1,6 @@
 import React from "react";
 import { SearchConditionChangeCallback } from "./state";
-import SearchConditionAccession from "./SearchConditionAccession";
+import SearchConditionKeyword from "./SearchConditionKeyword";
 import { api } from "state/grpc";
 import { Space } from "antd";
 import SearchConditionBool from "./SearchConditionBool";
@@ -20,9 +20,9 @@ function SearchConditionBoolList({
         <React.Fragment>
             <Space direction="vertical" style={{ width: "100%" }}>
                 {boolCondition.conditions?.map((condition) => {
-                    if (condition.accession)
+                    if (condition.keyword)
                         return (
-                            <SearchConditionAccession
+                            <SearchConditionKeyword
                                 rootCondition={rootCondition}
                                 condition={condition}
                                 onChange={onChange}

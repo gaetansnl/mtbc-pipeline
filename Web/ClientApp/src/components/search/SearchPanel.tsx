@@ -1,27 +1,29 @@
-import React, { useState } from "react";
-import { Button, Space } from "antd";
+import React, {useState} from "react";
+import {Button, Space} from "antd";
 import SearchConditionBoolList from "./SearchConditionBoolList";
-import { SearchConditionAddButton } from "./SearchConditionAddButton";
-import { api } from "state/grpc";
+import {SearchConditionAddButton} from "./SearchConditionAddButton";
+import {api} from "state/grpc";
 
-function SearchPanel(props: any) {
-    const [state, setState] = useState({
+function SearchPanel({onSearch}: { onSearch: (value: api.IStrainCondition) => any }) {
+    const [state, setState] = useState<api.IStrainCondition>({
         negate: false,
         bool: {
             operator: api.BoolOperator.AND,
             conditions: [
                 {
                     negate: false,
-                    accession: {
-                        accessionNumbers: ["fdsdf"],
+                    keyword: {
+                        field: api.KeywordStrainField.ACCESSION,
+                        values: ['ERR245662']
                     },
                 },
             ],
         },
-    } as api.IStrainCondition);
+    });
+
     return (
         <React.Fragment>
-            <Space direction="vertical" style={{ width: "100%" }}>
+            <Space direction="vertical" style={{width: "100%"}}>
                 <SearchConditionBoolList
                     rootCondition={state}
                     condition={state}
@@ -32,9 +34,9 @@ function SearchPanel(props: any) {
                     condition={state}
                     onChange={(v) => setState(v)}
                 >
-                    <Button style={{ width: "100%" }}>Add filter</Button>
+                    <Button style={{width: "100%"}}>Add filter</Button>
                 </SearchConditionAddButton>
-                <Button style={{ width: "100%" }} type="primary">
+                <Button style={{width: "100%"}} type="primary" onClick={() => onSearch && onSearch(state)}>
                     Search
                 </Button>
             </Space>

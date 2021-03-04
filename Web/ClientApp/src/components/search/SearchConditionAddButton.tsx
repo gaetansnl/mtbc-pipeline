@@ -1,24 +1,16 @@
-import { Menu, Dropdown } from "antd";
-import React, { ReactChild } from "react";
-import { api } from "state/grpc";
-import { addCondition, SearchConditionChangeCallback } from "./state";
+import {Dropdown, Menu} from "antd";
+import React, {ReactChild} from "react";
+import {api} from "state/grpc";
+import {addCondition, SearchConditionChangeCallback} from "./state";
 
 const items: { title: string; default: () => api.IStrainCondition }[] = [
     {
         title: "Accession",
         default: () => ({
             negate: false,
-            accession: {
-                accessionNumbers: [],
-            },
-        }),
-    },
-    {
-        title: "Biosample",
-        default: () => ({
-            negate: false,
-            biosample: {
-                accessionNumbers: [],
+            keyword: {
+                field: api.KeywordStrainField.ACCESSION,
+                values: []
             },
         }),
     },
@@ -26,18 +18,9 @@ const items: { title: string; default: () => api.IStrainCondition }[] = [
         title: "Country",
         default: () => ({
             negate: false,
-            country: {
-                isoCodes: [],
-            },
-        }),
-    },
-    {
-        title: "Date",
-        default: () => ({
-            negate: false,
-            date: {
-                from: null,
-                to: null,
+            keyword: {
+                field: api.KeywordStrainField.COUNTRY_CODE,
+                values: []
             },
         }),
     },
@@ -52,24 +35,15 @@ const items: { title: string; default: () => api.IStrainCondition }[] = [
         }),
     },
     {
-        title: "Gene",
+        title: "Gene Tag",
         default: () => ({
             negate: false,
-            gene: {
-                accessionNumbers: [],
+            keyword: {
+                field: api.KeywordStrainField.GENE_LOCUS_TAG,
+                values: []
             },
         }),
-    },
-    {
-        title: "Lineage",
-        default: () => ({
-            negate: false,
-            lineage: {
-                classificationName: "",
-                name: "",
-            },
-        }),
-    },
+    }
 ];
 
 export const SearchConditionAddButton = ({

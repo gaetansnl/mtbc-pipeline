@@ -90,7 +90,7 @@ namespace Indexer
                 result.Run = await NcbiClient.FindRunByAccession(result.Id);
                 await Database.Index(result);
                 Console.WriteLine($"Indexed ${file}");
-                Thread.Sleep(500);
+                Thread.Sleep(100);
             }
         }
     }

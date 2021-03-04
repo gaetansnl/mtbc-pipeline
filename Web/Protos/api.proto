@@ -35,9 +35,9 @@ message GetStrainReply{
 }
 
 message SearchRequest {
-  BoolStrainCondition condition = 1;
+  StrainCondition condition = 1;
 }
 message SearchReply {
-
+  repeated string ids = 1;
 }
 

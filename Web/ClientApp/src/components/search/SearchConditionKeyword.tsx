@@ -4,7 +4,19 @@ import SearchConditionContainer from "./SearchConditionContainer";
 import { getDefaultHandlers, SearchConditionChangeCallback, updateCondition } from "./state";
 import { api } from "state/grpc";
 
-function SearchConditionAccession({
+const keywordConditionInfo : {[key: number]: {title: string, valuesPlaceholder?: string}}={
+    [api.KeywordStrainField.ACCESSION]:{
+        title: "Accession number",
+    },
+    [api.KeywordStrainField.COUNTRY_CODE]:{
+        title: "Country",
+    },
+    [api.KeywordStrainField.GENE_LOCUS_TAG]:{
+        title: "Gene locus tag",
+    }
+}
+
+function SearchConditionKeyword({
     rootCondition,
     condition,
     onChange,
@@ -13,37 +25,40 @@ function SearchConditionAccession({
     condition: api.IStrainCondition;
     onChange: SearchConditionChangeCallback;
 }) {
-    const accessionCondition = condition.accession;
-    const handleChange = (accessionNumbers: string[]) => {
+    const keywordCondition = condition.keyword;
+    const handleChange = (values: string[]) => {
         onChange(
             updateCondition(rootCondition, condition, {
                 ...condition,
-                accession: {
-                    accessionNumbers,
+                keyword: {
+                    ...condition?.keyword,
+                    values,
                 },
             })
         );
     };
+    const fieldInfo = keywordCondition?.field != null && keywordConditionInfo[keywordCondition?.field];
+    if(!fieldInfo) return null;
     return (
         <React.Fragment>
             <SearchConditionContainer
-                title="Accession"
+                title={fieldInfo.title}
                 condition={condition}
                 {...getDefaultHandlers(rootCondition, condition, onChange)}
             >
                 <Select
                     mode="tags"
                     style={{ width: "100%" }}
-                    value={accessionCondition?.accessionNumbers || []}
+                    value={keywordCondition?.values || []}
                     onChange={handleChange}
-                    placeholder="Accession number"
+                    placeholder={fieldInfo.valuesPlaceholder || fieldInfo.title}
                 />
             </SearchConditionContainer>
         </React.Fragment>
     );
 }
 
-SearchConditionAccession.propTypes = {};
+SearchConditionKeyword.propTypes = {};
 
-SearchConditionAccession.defaultProps = {};
-export default SearchConditionAccession;
+SearchConditionKeyword.defaultProps = {};
+export default SearchConditionKeyword;

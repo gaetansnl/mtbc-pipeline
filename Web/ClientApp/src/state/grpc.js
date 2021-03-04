@@ -1342,7 +1342,7 @@ export const api = $root.api = (() => {
          * Properties of a SearchRequest.
          * @memberof api
          * @interface ISearchRequest
-         * @property {api.IBoolStrainCondition|null} [condition] SearchRequest condition
+         * @property {api.IStrainCondition|null} [condition] SearchRequest condition
          */
 
         /**
@@ -1362,7 +1362,7 @@ export const api = $root.api = (() => {
 
         /**
          * SearchRequest condition.
-         * @member {api.IBoolStrainCondition|null|undefined} condition
+         * @member {api.IStrainCondition|null|undefined} condition
          * @memberof api.SearchRequest
          * @instance
          */
@@ -1393,7 +1393,7 @@ export const api = $root.api = (() => {
             if (!writer)
                 writer = $Writer.create();
             if (message.condition != null && Object.hasOwnProperty.call(message, "condition"))
-                $root.api.BoolStrainCondition.encode(message.condition, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+                $root.api.StrainCondition.encode(message.condition, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             return writer;
         };
 
@@ -1429,7 +1429,7 @@ export const api = $root.api = (() => {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.condition = $root.api.BoolStrainCondition.decode(reader, reader.uint32());
+                    message.condition = $root.api.StrainCondition.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1467,7 +1467,7 @@ export const api = $root.api = (() => {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.condition != null && message.hasOwnProperty("condition")) {
-                let error = $root.api.BoolStrainCondition.verify(message.condition);
+                let error = $root.api.StrainCondition.verify(message.condition);
                 if (error)
                     return "condition." + error;
             }
@@ -1489,7 +1489,7 @@ export const api = $root.api = (() => {
             if (object.condition != null) {
                 if (typeof object.condition !== "object")
                     throw TypeError(".api.SearchRequest.condition: object expected");
-                message.condition = $root.api.BoolStrainCondition.fromObject(object.condition);
+                message.condition = $root.api.StrainCondition.fromObject(object.condition);
             }
             return message;
         };
@@ -1510,7 +1510,7 @@ export const api = $root.api = (() => {
             if (options.defaults)
                 object.condition = null;
             if (message.condition != null && message.hasOwnProperty("condition"))
-                object.condition = $root.api.BoolStrainCondition.toObject(message.condition, options);
+                object.condition = $root.api.StrainCondition.toObject(message.condition, options);
             return object;
         };
 
@@ -1534,6 +1534,7 @@ export const api = $root.api = (() => {
          * Properties of a SearchReply.
          * @memberof api
          * @interface ISearchReply
+         * @property {Array.<string>|null} [ids] SearchReply ids
          */
 
         /**
@@ -1545,11 +1546,20 @@ export const api = $root.api = (() => {
          * @param {api.ISearchReply=} [properties] Properties to set
          */
         function SearchReply(properties) {
+            this.ids = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
+
+        /**
+         * SearchReply ids.
+         * @member {Array.<string>} ids
+         * @memberof api.SearchReply
+         * @instance
+         */
+        SearchReply.prototype.ids = $util.emptyArray;
 
         /**
          * Creates a new SearchReply instance using the specified properties.
@@ -1575,6 +1585,9 @@ export const api = $root.api = (() => {
         SearchReply.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.ids != null && message.ids.length)
+                for (let i = 0; i < message.ids.length; ++i)
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.ids[i]);
             return writer;
         };
 
@@ -1609,6 +1622,11 @@ export const api = $root.api = (() => {
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
+                case 1:
+                    if (!(message.ids && message.ids.length))
+                        message.ids = [];
+                    message.ids.push(reader.string());
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1644,6 +1662,13 @@ export const api = $root.api = (() => {
         SearchReply.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.ids != null && message.hasOwnProperty("ids")) {
+                if (!Array.isArray(message.ids))
+                    return "ids: array expected";
+                for (let i = 0; i < message.ids.length; ++i)
+                    if (!$util.isString(message.ids[i]))
+                        return "ids: string[] expected";
+            }
             return null;
         };
 
@@ -1658,7 +1683,15 @@ export const api = $root.api = (() => {
         SearchReply.fromObject = function fromObject(object) {
             if (object instanceof $root.api.SearchReply)
                 return object;
-            return new $root.api.SearchReply();
+            let message = new $root.api.SearchReply();
+            if (object.ids) {
+                if (!Array.isArray(object.ids))
+                    throw TypeError(".api.SearchReply.ids: array expected");
+                message.ids = [];
+                for (let i = 0; i < object.ids.length; ++i)
+                    message.ids[i] = String(object.ids[i]);
+            }
+            return message;
         };
 
         /**
@@ -1670,8 +1703,18 @@ export const api = $root.api = (() => {
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        SearchReply.toObject = function toObject() {
-            return {};
+        SearchReply.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults)
+                object.ids = [];
+            if (message.ids && message.ids.length) {
+                object.ids = [];
+                for (let j = 0; j < message.ids.length; ++j)
+                    object.ids[j] = message.ids[j];
+            }
+            return object;
         };
 
         /**
@@ -2447,13 +2490,11 @@ export const api = $root.api = (() => {
          * @memberof api
          * @interface IStrainCondition
          * @property {boolean|null} [negate] StrainCondition negate
-         * @property {api.IAccessionCondition|null} [accession] StrainCondition accession
-         * @property {api.IBiosampleCondition|null} [biosample] StrainCondition biosample
-         * @property {api.ICountryCondition|null} [country] StrainCondition country
-         * @property {api.IDateCondition|null} [date] StrainCondition date
-         * @property {api.IGeneStrainCondition|null} [gene] StrainCondition gene
-         * @property {api.ILineageStrainCondition|null} [lineage] StrainCondition lineage
+         * @property {api.IKeywordStrainCondition|null} [keyword] StrainCondition keyword
+         * @property {api.IDateStrainCondition|null} [date] StrainCondition date
          * @property {api.IBoolStrainCondition|null} [bool] StrainCondition bool
+         * @property {api.IInsertionSequenceStrainCondition|null} [insertionSequence] StrainCondition insertionSequence
+         * @property {api.ILineageStrainCondition|null} [lineage] StrainCondition lineage
          */
 
         /**
@@ -2480,52 +2521,20 @@ export const api = $root.api = (() => {
         StrainCondition.prototype.negate = false;
 
         /**
-         * StrainCondition accession.
-         * @member {api.IAccessionCondition|null|undefined} accession
+         * StrainCondition keyword.
+         * @member {api.IKeywordStrainCondition|null|undefined} keyword
          * @memberof api.StrainCondition
          * @instance
          */
-        StrainCondition.prototype.accession = null;
-
-        /**
-         * StrainCondition biosample.
-         * @member {api.IBiosampleCondition|null|undefined} biosample
-         * @memberof api.StrainCondition
-         * @instance
-         */
-        StrainCondition.prototype.biosample = null;
-
-        /**
-         * StrainCondition country.
-         * @member {api.ICountryCondition|null|undefined} country
-         * @memberof api.StrainCondition
-         * @instance
-         */
-        StrainCondition.prototype.country = null;
+        StrainCondition.prototype.keyword = null;
 
         /**
          * StrainCondition date.
-         * @member {api.IDateCondition|null|undefined} date
+         * @member {api.IDateStrainCondition|null|undefined} date
          * @memberof api.StrainCondition
          * @instance
          */
         StrainCondition.prototype.date = null;
-
-        /**
-         * StrainCondition gene.
-         * @member {api.IGeneStrainCondition|null|undefined} gene
-         * @memberof api.StrainCondition
-         * @instance
-         */
-        StrainCondition.prototype.gene = null;
-
-        /**
-         * StrainCondition lineage.
-         * @member {api.ILineageStrainCondition|null|undefined} lineage
-         * @memberof api.StrainCondition
-         * @instance
-         */
-        StrainCondition.prototype.lineage = null;
 
         /**
          * StrainCondition bool.
@@ -2535,17 +2544,33 @@ export const api = $root.api = (() => {
          */
         StrainCondition.prototype.bool = null;
 
+        /**
+         * StrainCondition insertionSequence.
+         * @member {api.IInsertionSequenceStrainCondition|null|undefined} insertionSequence
+         * @memberof api.StrainCondition
+         * @instance
+         */
+        StrainCondition.prototype.insertionSequence = null;
+
+        /**
+         * StrainCondition lineage.
+         * @member {api.ILineageStrainCondition|null|undefined} lineage
+         * @memberof api.StrainCondition
+         * @instance
+         */
+        StrainCondition.prototype.lineage = null;
+
         // OneOf field names bound to virtual getters and setters
         let $oneOfFields;
 
         /**
          * StrainCondition condition.
-         * @member {"accession"|"biosample"|"country"|"date"|"gene"|"lineage"|"bool"|undefined} condition
+         * @member {"keyword"|"date"|"bool"|"insertionSequence"|"lineage"|undefined} condition
          * @memberof api.StrainCondition
          * @instance
          */
         Object.defineProperty(StrainCondition.prototype, "condition", {
-            get: $util.oneOfGetter($oneOfFields = ["accession", "biosample", "country", "date", "gene", "lineage", "bool"]),
+            get: $util.oneOfGetter($oneOfFields = ["keyword", "date", "bool", "insertionSequence", "lineage"]),
             set: $util.oneOfSetter($oneOfFields)
         });
 
@@ -2575,20 +2600,16 @@ export const api = $root.api = (() => {
                 writer = $Writer.create();
             if (message.negate != null && Object.hasOwnProperty.call(message, "negate"))
                 writer.uint32(/* id 1, wireType 0 =*/8).bool(message.negate);
-            if (message.accession != null && Object.hasOwnProperty.call(message, "accession"))
-                $root.api.AccessionCondition.encode(message.accession, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-            if (message.biosample != null && Object.hasOwnProperty.call(message, "biosample"))
-                $root.api.BiosampleCondition.encode(message.biosample, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
-            if (message.country != null && Object.hasOwnProperty.call(message, "country"))
-                $root.api.CountryCondition.encode(message.country, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.keyword != null && Object.hasOwnProperty.call(message, "keyword"))
+                $root.api.KeywordStrainCondition.encode(message.keyword, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             if (message.date != null && Object.hasOwnProperty.call(message, "date"))
-                $root.api.DateCondition.encode(message.date, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
-            if (message.gene != null && Object.hasOwnProperty.call(message, "gene"))
-                $root.api.GeneStrainCondition.encode(message.gene, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
-            if (message.lineage != null && Object.hasOwnProperty.call(message, "lineage"))
-                $root.api.LineageStrainCondition.encode(message.lineage, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+                $root.api.DateStrainCondition.encode(message.date, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             if (message.bool != null && Object.hasOwnProperty.call(message, "bool"))
-                $root.api.BoolStrainCondition.encode(message.bool, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
+                $root.api.BoolStrainCondition.encode(message.bool, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.insertionSequence != null && Object.hasOwnProperty.call(message, "insertionSequence"))
+                $root.api.InsertionSequenceStrainCondition.encode(message.insertionSequence, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+            if (message.lineage != null && Object.hasOwnProperty.call(message, "lineage"))
+                $root.api.LineageStrainCondition.encode(message.lineage, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
             return writer;
         };
 
@@ -2627,25 +2648,19 @@ export const api = $root.api = (() => {
                     message.negate = reader.bool();
                     break;
                 case 2:
-                    message.accession = $root.api.AccessionCondition.decode(reader, reader.uint32());
+                    message.keyword = $root.api.KeywordStrainCondition.decode(reader, reader.uint32());
                     break;
                 case 3:
-                    message.biosample = $root.api.BiosampleCondition.decode(reader, reader.uint32());
+                    message.date = $root.api.DateStrainCondition.decode(reader, reader.uint32());
                     break;
                 case 4:
-                    message.country = $root.api.CountryCondition.decode(reader, reader.uint32());
+                    message.bool = $root.api.BoolStrainCondition.decode(reader, reader.uint32());
                     break;
                 case 5:
-                    message.date = $root.api.DateCondition.decode(reader, reader.uint32());
+                    message.insertionSequence = $root.api.InsertionSequenceStrainCondition.decode(reader, reader.uint32());
                     break;
                 case 6:
-                    message.gene = $root.api.GeneStrainCondition.decode(reader, reader.uint32());
-                    break;
-                case 7:
                     message.lineage = $root.api.LineageStrainCondition.decode(reader, reader.uint32());
-                    break;
-                case 8:
-                    message.bool = $root.api.BoolStrainCondition.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -2686,32 +2701,12 @@ export const api = $root.api = (() => {
             if (message.negate != null && message.hasOwnProperty("negate"))
                 if (typeof message.negate !== "boolean")
                     return "negate: boolean expected";
-            if (message.accession != null && message.hasOwnProperty("accession")) {
+            if (message.keyword != null && message.hasOwnProperty("keyword")) {
                 properties.condition = 1;
                 {
-                    let error = $root.api.AccessionCondition.verify(message.accession);
+                    let error = $root.api.KeywordStrainCondition.verify(message.keyword);
                     if (error)
-                        return "accession." + error;
-                }
-            }
-            if (message.biosample != null && message.hasOwnProperty("biosample")) {
-                if (properties.condition === 1)
-                    return "condition: multiple values";
-                properties.condition = 1;
-                {
-                    let error = $root.api.BiosampleCondition.verify(message.biosample);
-                    if (error)
-                        return "biosample." + error;
-                }
-            }
-            if (message.country != null && message.hasOwnProperty("country")) {
-                if (properties.condition === 1)
-                    return "condition: multiple values";
-                properties.condition = 1;
-                {
-                    let error = $root.api.CountryCondition.verify(message.country);
-                    if (error)
-                        return "country." + error;
+                        return "keyword." + error;
                 }
             }
             if (message.date != null && message.hasOwnProperty("date")) {
@@ -2719,29 +2714,9 @@ export const api = $root.api = (() => {
                     return "condition: multiple values";
                 properties.condition = 1;
                 {
-                    let error = $root.api.DateCondition.verify(message.date);
+                    let error = $root.api.DateStrainCondition.verify(message.date);
                     if (error)
                         return "date." + error;
-                }
-            }
-            if (message.gene != null && message.hasOwnProperty("gene")) {
-                if (properties.condition === 1)
-                    return "condition: multiple values";
-                properties.condition = 1;
-                {
-                    let error = $root.api.GeneStrainCondition.verify(message.gene);
-                    if (error)
-                        return "gene." + error;
-                }
-            }
-            if (message.lineage != null && message.hasOwnProperty("lineage")) {
-                if (properties.condition === 1)
-                    return "condition: multiple values";
-                properties.condition = 1;
-                {
-                    let error = $root.api.LineageStrainCondition.verify(message.lineage);
-                    if (error)
-                        return "lineage." + error;
                 }
             }
             if (message.bool != null && message.hasOwnProperty("bool")) {
@@ -2752,6 +2727,26 @@ export const api = $root.api = (() => {
                     let error = $root.api.BoolStrainCondition.verify(message.bool);
                     if (error)
                         return "bool." + error;
+                }
+            }
+            if (message.insertionSequence != null && message.hasOwnProperty("insertionSequence")) {
+                if (properties.condition === 1)
+                    return "condition: multiple values";
+                properties.condition = 1;
+                {
+                    let error = $root.api.InsertionSequenceStrainCondition.verify(message.insertionSequence);
+                    if (error)
+                        return "insertionSequence." + error;
+                }
+            }
+            if (message.lineage != null && message.hasOwnProperty("lineage")) {
+                if (properties.condition === 1)
+                    return "condition: multiple values";
+                properties.condition = 1;
+                {
+                    let error = $root.api.LineageStrainCondition.verify(message.lineage);
+                    if (error)
+                        return "lineage." + error;
                 }
             }
             return null;
@@ -2771,40 +2766,30 @@ export const api = $root.api = (() => {
             let message = new $root.api.StrainCondition();
             if (object.negate != null)
                 message.negate = Boolean(object.negate);
-            if (object.accession != null) {
-                if (typeof object.accession !== "object")
-                    throw TypeError(".api.StrainCondition.accession: object expected");
-                message.accession = $root.api.AccessionCondition.fromObject(object.accession);
-            }
-            if (object.biosample != null) {
-                if (typeof object.biosample !== "object")
-                    throw TypeError(".api.StrainCondition.biosample: object expected");
-                message.biosample = $root.api.BiosampleCondition.fromObject(object.biosample);
-            }
-            if (object.country != null) {
-                if (typeof object.country !== "object")
-                    throw TypeError(".api.StrainCondition.country: object expected");
-                message.country = $root.api.CountryCondition.fromObject(object.country);
+            if (object.keyword != null) {
+                if (typeof object.keyword !== "object")
+                    throw TypeError(".api.StrainCondition.keyword: object expected");
+                message.keyword = $root.api.KeywordStrainCondition.fromObject(object.keyword);
             }
             if (object.date != null) {
                 if (typeof object.date !== "object")
                     throw TypeError(".api.StrainCondition.date: object expected");
-                message.date = $root.api.DateCondition.fromObject(object.date);
-            }
-            if (object.gene != null) {
-                if (typeof object.gene !== "object")
-                    throw TypeError(".api.StrainCondition.gene: object expected");
-                message.gene = $root.api.GeneStrainCondition.fromObject(object.gene);
-            }
-            if (object.lineage != null) {
-                if (typeof object.lineage !== "object")
-                    throw TypeError(".api.StrainCondition.lineage: object expected");
-                message.lineage = $root.api.LineageStrainCondition.fromObject(object.lineage);
+                message.date = $root.api.DateStrainCondition.fromObject(object.date);
             }
             if (object.bool != null) {
                 if (typeof object.bool !== "object")
                     throw TypeError(".api.StrainCondition.bool: object expected");
                 message.bool = $root.api.BoolStrainCondition.fromObject(object.bool);
+            }
+            if (object.insertionSequence != null) {
+                if (typeof object.insertionSequence !== "object")
+                    throw TypeError(".api.StrainCondition.insertionSequence: object expected");
+                message.insertionSequence = $root.api.InsertionSequenceStrainCondition.fromObject(object.insertionSequence);
+            }
+            if (object.lineage != null) {
+                if (typeof object.lineage !== "object")
+                    throw TypeError(".api.StrainCondition.lineage: object expected");
+                message.lineage = $root.api.LineageStrainCondition.fromObject(object.lineage);
             }
             return message;
         };
@@ -2826,40 +2811,30 @@ export const api = $root.api = (() => {
                 object.negate = false;
             if (message.negate != null && message.hasOwnProperty("negate"))
                 object.negate = message.negate;
-            if (message.accession != null && message.hasOwnProperty("accession")) {
-                object.accession = $root.api.AccessionCondition.toObject(message.accession, options);
+            if (message.keyword != null && message.hasOwnProperty("keyword")) {
+                object.keyword = $root.api.KeywordStrainCondition.toObject(message.keyword, options);
                 if (options.oneofs)
-                    object.condition = "accession";
-            }
-            if (message.biosample != null && message.hasOwnProperty("biosample")) {
-                object.biosample = $root.api.BiosampleCondition.toObject(message.biosample, options);
-                if (options.oneofs)
-                    object.condition = "biosample";
-            }
-            if (message.country != null && message.hasOwnProperty("country")) {
-                object.country = $root.api.CountryCondition.toObject(message.country, options);
-                if (options.oneofs)
-                    object.condition = "country";
+                    object.condition = "keyword";
             }
             if (message.date != null && message.hasOwnProperty("date")) {
-                object.date = $root.api.DateCondition.toObject(message.date, options);
+                object.date = $root.api.DateStrainCondition.toObject(message.date, options);
                 if (options.oneofs)
                     object.condition = "date";
-            }
-            if (message.gene != null && message.hasOwnProperty("gene")) {
-                object.gene = $root.api.GeneStrainCondition.toObject(message.gene, options);
-                if (options.oneofs)
-                    object.condition = "gene";
-            }
-            if (message.lineage != null && message.hasOwnProperty("lineage")) {
-                object.lineage = $root.api.LineageStrainCondition.toObject(message.lineage, options);
-                if (options.oneofs)
-                    object.condition = "lineage";
             }
             if (message.bool != null && message.hasOwnProperty("bool")) {
                 object.bool = $root.api.BoolStrainCondition.toObject(message.bool, options);
                 if (options.oneofs)
                     object.condition = "bool";
+            }
+            if (message.insertionSequence != null && message.hasOwnProperty("insertionSequence")) {
+                object.insertionSequence = $root.api.InsertionSequenceStrainCondition.toObject(message.insertionSequence, options);
+                if (options.oneofs)
+                    object.condition = "insertionSequence";
+            }
+            if (message.lineage != null && message.hasOwnProperty("lineage")) {
+                object.lineage = $root.api.LineageStrainCondition.toObject(message.lineage, options);
+                if (options.oneofs)
+                    object.condition = "lineage";
             }
             return object;
         };
@@ -2948,7 +2923,7 @@ export const api = $root.api = (() => {
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.operator);
             if (message.conditions != null && message.conditions.length)
                 for (let i = 0; i < message.conditions.length; ++i)
-                    $root.api.StrainCondition.encode(message.conditions[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                    $root.api.StrainCondition.encode(message.conditions[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             return writer;
         };
 
@@ -2986,7 +2961,7 @@ export const api = $root.api = (() => {
                 case 1:
                     message.operator = reader.int32();
                     break;
-                case 3:
+                case 2:
                     if (!(message.conditions && message.conditions.length))
                         message.conditions = [];
                     message.conditions.push($root.api.StrainCondition.decode(reader, reader.uint32()));
@@ -3122,25 +3097,26 @@ export const api = $root.api = (() => {
         return BoolStrainCondition;
     })();
 
-    api.DateCondition = (function() {
+    api.InsertionSequenceStrainCondition = (function() {
 
         /**
-         * Properties of a DateCondition.
+         * Properties of an InsertionSequenceStrainCondition.
          * @memberof api
-         * @interface IDateCondition
-         * @property {google.protobuf.ITimestamp|null} [from] DateCondition from
-         * @property {google.protobuf.ITimestamp|null} [to] DateCondition to
+         * @interface IInsertionSequenceStrainCondition
+         * @property {string|null} [name] InsertionSequenceStrainCondition name
+         * @property {number|null} [position] InsertionSequenceStrainCondition position
+         * @property {string|null} [prefix] InsertionSequenceStrainCondition prefix
          */
 
         /**
-         * Constructs a new DateCondition.
+         * Constructs a new InsertionSequenceStrainCondition.
          * @memberof api
-         * @classdesc Represents a DateCondition.
-         * @implements IDateCondition
+         * @classdesc Represents an InsertionSequenceStrainCondition.
+         * @implements IInsertionSequenceStrainCondition
          * @constructor
-         * @param {api.IDateCondition=} [properties] Properties to set
+         * @param {api.IInsertionSequenceStrainCondition=} [properties] Properties to set
          */
-        function DateCondition(properties) {
+        function InsertionSequenceStrainCondition(properties) {
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -3148,88 +3124,101 @@ export const api = $root.api = (() => {
         }
 
         /**
-         * DateCondition from.
-         * @member {google.protobuf.ITimestamp|null|undefined} from
-         * @memberof api.DateCondition
+         * InsertionSequenceStrainCondition name.
+         * @member {string} name
+         * @memberof api.InsertionSequenceStrainCondition
          * @instance
          */
-        DateCondition.prototype.from = null;
+        InsertionSequenceStrainCondition.prototype.name = "";
 
         /**
-         * DateCondition to.
-         * @member {google.protobuf.ITimestamp|null|undefined} to
-         * @memberof api.DateCondition
+         * InsertionSequenceStrainCondition position.
+         * @member {number} position
+         * @memberof api.InsertionSequenceStrainCondition
          * @instance
          */
-        DateCondition.prototype.to = null;
+        InsertionSequenceStrainCondition.prototype.position = 0;
 
         /**
-         * Creates a new DateCondition instance using the specified properties.
+         * InsertionSequenceStrainCondition prefix.
+         * @member {string} prefix
+         * @memberof api.InsertionSequenceStrainCondition
+         * @instance
+         */
+        InsertionSequenceStrainCondition.prototype.prefix = "";
+
+        /**
+         * Creates a new InsertionSequenceStrainCondition instance using the specified properties.
          * @function create
-         * @memberof api.DateCondition
+         * @memberof api.InsertionSequenceStrainCondition
          * @static
-         * @param {api.IDateCondition=} [properties] Properties to set
-         * @returns {api.DateCondition} DateCondition instance
+         * @param {api.IInsertionSequenceStrainCondition=} [properties] Properties to set
+         * @returns {api.InsertionSequenceStrainCondition} InsertionSequenceStrainCondition instance
          */
-        DateCondition.create = function create(properties) {
-            return new DateCondition(properties);
+        InsertionSequenceStrainCondition.create = function create(properties) {
+            return new InsertionSequenceStrainCondition(properties);
         };
 
         /**
-         * Encodes the specified DateCondition message. Does not implicitly {@link api.DateCondition.verify|verify} messages.
+         * Encodes the specified InsertionSequenceStrainCondition message. Does not implicitly {@link api.InsertionSequenceStrainCondition.verify|verify} messages.
          * @function encode
-         * @memberof api.DateCondition
+         * @memberof api.InsertionSequenceStrainCondition
          * @static
-         * @param {api.IDateCondition} message DateCondition message or plain object to encode
+         * @param {api.IInsertionSequenceStrainCondition} message InsertionSequenceStrainCondition message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        DateCondition.encode = function encode(message, writer) {
+        InsertionSequenceStrainCondition.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.from != null && Object.hasOwnProperty.call(message, "from"))
-                $root.google.protobuf.Timestamp.encode(message.from, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
-            if (message.to != null && Object.hasOwnProperty.call(message, "to"))
-                $root.google.protobuf.Timestamp.encode(message.to, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
+            if (message.position != null && Object.hasOwnProperty.call(message, "position"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.position);
+            if (message.prefix != null && Object.hasOwnProperty.call(message, "prefix"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.prefix);
             return writer;
         };
 
         /**
-         * Encodes the specified DateCondition message, length delimited. Does not implicitly {@link api.DateCondition.verify|verify} messages.
+         * Encodes the specified InsertionSequenceStrainCondition message, length delimited. Does not implicitly {@link api.InsertionSequenceStrainCondition.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof api.DateCondition
+         * @memberof api.InsertionSequenceStrainCondition
          * @static
-         * @param {api.IDateCondition} message DateCondition message or plain object to encode
+         * @param {api.IInsertionSequenceStrainCondition} message InsertionSequenceStrainCondition message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        DateCondition.encodeDelimited = function encodeDelimited(message, writer) {
+        InsertionSequenceStrainCondition.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a DateCondition message from the specified reader or buffer.
+         * Decodes an InsertionSequenceStrainCondition message from the specified reader or buffer.
          * @function decode
-         * @memberof api.DateCondition
+         * @memberof api.InsertionSequenceStrainCondition
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {api.DateCondition} DateCondition
+         * @returns {api.InsertionSequenceStrainCondition} InsertionSequenceStrainCondition
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        DateCondition.decode = function decode(reader, length) {
+        InsertionSequenceStrainCondition.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.DateCondition();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.InsertionSequenceStrainCondition();
             while (reader.pos < end) {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.from = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    message.name = reader.string();
                     break;
                 case 2:
-                    message.to = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    message.position = reader.int32();
+                    break;
+                case 3:
+                    message.prefix = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -3240,918 +3229,104 @@ export const api = $root.api = (() => {
         };
 
         /**
-         * Decodes a DateCondition message from the specified reader or buffer, length delimited.
+         * Decodes an InsertionSequenceStrainCondition message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof api.DateCondition
+         * @memberof api.InsertionSequenceStrainCondition
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {api.DateCondition} DateCondition
+         * @returns {api.InsertionSequenceStrainCondition} InsertionSequenceStrainCondition
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        DateCondition.decodeDelimited = function decodeDelimited(reader) {
+        InsertionSequenceStrainCondition.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a DateCondition message.
+         * Verifies an InsertionSequenceStrainCondition message.
          * @function verify
-         * @memberof api.DateCondition
+         * @memberof api.InsertionSequenceStrainCondition
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        DateCondition.verify = function verify(message) {
+        InsertionSequenceStrainCondition.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.from != null && message.hasOwnProperty("from")) {
-                let error = $root.google.protobuf.Timestamp.verify(message.from);
-                if (error)
-                    return "from." + error;
-            }
-            if (message.to != null && message.hasOwnProperty("to")) {
-                let error = $root.google.protobuf.Timestamp.verify(message.to);
-                if (error)
-                    return "to." + error;
-            }
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.position != null && message.hasOwnProperty("position"))
+                if (!$util.isInteger(message.position))
+                    return "position: integer expected";
+            if (message.prefix != null && message.hasOwnProperty("prefix"))
+                if (!$util.isString(message.prefix))
+                    return "prefix: string expected";
             return null;
         };
 
         /**
-         * Creates a DateCondition message from a plain object. Also converts values to their respective internal types.
+         * Creates an InsertionSequenceStrainCondition message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof api.DateCondition
+         * @memberof api.InsertionSequenceStrainCondition
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {api.DateCondition} DateCondition
+         * @returns {api.InsertionSequenceStrainCondition} InsertionSequenceStrainCondition
          */
-        DateCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.DateCondition)
+        InsertionSequenceStrainCondition.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.InsertionSequenceStrainCondition)
                 return object;
-            let message = new $root.api.DateCondition();
-            if (object.from != null) {
-                if (typeof object.from !== "object")
-                    throw TypeError(".api.DateCondition.from: object expected");
-                message.from = $root.google.protobuf.Timestamp.fromObject(object.from);
-            }
-            if (object.to != null) {
-                if (typeof object.to !== "object")
-                    throw TypeError(".api.DateCondition.to: object expected");
-                message.to = $root.google.protobuf.Timestamp.fromObject(object.to);
-            }
+            let message = new $root.api.InsertionSequenceStrainCondition();
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.position != null)
+                message.position = object.position | 0;
+            if (object.prefix != null)
+                message.prefix = String(object.prefix);
             return message;
         };
 
         /**
-         * Creates a plain object from a DateCondition message. Also converts values to other types if specified.
+         * Creates a plain object from an InsertionSequenceStrainCondition message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof api.DateCondition
+         * @memberof api.InsertionSequenceStrainCondition
          * @static
-         * @param {api.DateCondition} message DateCondition
+         * @param {api.InsertionSequenceStrainCondition} message InsertionSequenceStrainCondition
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        DateCondition.toObject = function toObject(message, options) {
+        InsertionSequenceStrainCondition.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             let object = {};
             if (options.defaults) {
-                object.from = null;
-                object.to = null;
+                object.name = "";
+                object.position = 0;
+                object.prefix = "";
             }
-            if (message.from != null && message.hasOwnProperty("from"))
-                object.from = $root.google.protobuf.Timestamp.toObject(message.from, options);
-            if (message.to != null && message.hasOwnProperty("to"))
-                object.to = $root.google.protobuf.Timestamp.toObject(message.to, options);
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.position != null && message.hasOwnProperty("position"))
+                object.position = message.position;
+            if (message.prefix != null && message.hasOwnProperty("prefix"))
+                object.prefix = message.prefix;
             return object;
         };
 
         /**
-         * Converts this DateCondition to JSON.
+         * Converts this InsertionSequenceStrainCondition to JSON.
          * @function toJSON
-         * @memberof api.DateCondition
+         * @memberof api.InsertionSequenceStrainCondition
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        DateCondition.prototype.toJSON = function toJSON() {
+        InsertionSequenceStrainCondition.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return DateCondition;
-    })();
-
-    api.CountryCondition = (function() {
-
-        /**
-         * Properties of a CountryCondition.
-         * @memberof api
-         * @interface ICountryCondition
-         * @property {Array.<string>|null} [isoCodes] CountryCondition isoCodes
-         */
-
-        /**
-         * Constructs a new CountryCondition.
-         * @memberof api
-         * @classdesc Represents a CountryCondition.
-         * @implements ICountryCondition
-         * @constructor
-         * @param {api.ICountryCondition=} [properties] Properties to set
-         */
-        function CountryCondition(properties) {
-            this.isoCodes = [];
-            if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * CountryCondition isoCodes.
-         * @member {Array.<string>} isoCodes
-         * @memberof api.CountryCondition
-         * @instance
-         */
-        CountryCondition.prototype.isoCodes = $util.emptyArray;
-
-        /**
-         * Creates a new CountryCondition instance using the specified properties.
-         * @function create
-         * @memberof api.CountryCondition
-         * @static
-         * @param {api.ICountryCondition=} [properties] Properties to set
-         * @returns {api.CountryCondition} CountryCondition instance
-         */
-        CountryCondition.create = function create(properties) {
-            return new CountryCondition(properties);
-        };
-
-        /**
-         * Encodes the specified CountryCondition message. Does not implicitly {@link api.CountryCondition.verify|verify} messages.
-         * @function encode
-         * @memberof api.CountryCondition
-         * @static
-         * @param {api.ICountryCondition} message CountryCondition message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CountryCondition.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.isoCodes != null && message.isoCodes.length)
-                for (let i = 0; i < message.isoCodes.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.isoCodes[i]);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified CountryCondition message, length delimited. Does not implicitly {@link api.CountryCondition.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof api.CountryCondition
-         * @static
-         * @param {api.ICountryCondition} message CountryCondition message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CountryCondition.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a CountryCondition message from the specified reader or buffer.
-         * @function decode
-         * @memberof api.CountryCondition
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {api.CountryCondition} CountryCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CountryCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.CountryCondition();
-            while (reader.pos < end) {
-                let tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    if (!(message.isoCodes && message.isoCodes.length))
-                        message.isoCodes = [];
-                    message.isoCodes.push(reader.string());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a CountryCondition message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof api.CountryCondition
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {api.CountryCondition} CountryCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CountryCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a CountryCondition message.
-         * @function verify
-         * @memberof api.CountryCondition
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        CountryCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.isoCodes != null && message.hasOwnProperty("isoCodes")) {
-                if (!Array.isArray(message.isoCodes))
-                    return "isoCodes: array expected";
-                for (let i = 0; i < message.isoCodes.length; ++i)
-                    if (!$util.isString(message.isoCodes[i]))
-                        return "isoCodes: string[] expected";
-            }
-            return null;
-        };
-
-        /**
-         * Creates a CountryCondition message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof api.CountryCondition
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {api.CountryCondition} CountryCondition
-         */
-        CountryCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.CountryCondition)
-                return object;
-            let message = new $root.api.CountryCondition();
-            if (object.isoCodes) {
-                if (!Array.isArray(object.isoCodes))
-                    throw TypeError(".api.CountryCondition.isoCodes: array expected");
-                message.isoCodes = [];
-                for (let i = 0; i < object.isoCodes.length; ++i)
-                    message.isoCodes[i] = String(object.isoCodes[i]);
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a CountryCondition message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof api.CountryCondition
-         * @static
-         * @param {api.CountryCondition} message CountryCondition
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        CountryCondition.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            let object = {};
-            if (options.arrays || options.defaults)
-                object.isoCodes = [];
-            if (message.isoCodes && message.isoCodes.length) {
-                object.isoCodes = [];
-                for (let j = 0; j < message.isoCodes.length; ++j)
-                    object.isoCodes[j] = message.isoCodes[j];
-            }
-            return object;
-        };
-
-        /**
-         * Converts this CountryCondition to JSON.
-         * @function toJSON
-         * @memberof api.CountryCondition
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        CountryCondition.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return CountryCondition;
-    })();
-
-    api.AccessionCondition = (function() {
-
-        /**
-         * Properties of an AccessionCondition.
-         * @memberof api
-         * @interface IAccessionCondition
-         * @property {Array.<string>|null} [accessionNumbers] AccessionCondition accessionNumbers
-         */
-
-        /**
-         * Constructs a new AccessionCondition.
-         * @memberof api
-         * @classdesc Represents an AccessionCondition.
-         * @implements IAccessionCondition
-         * @constructor
-         * @param {api.IAccessionCondition=} [properties] Properties to set
-         */
-        function AccessionCondition(properties) {
-            this.accessionNumbers = [];
-            if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * AccessionCondition accessionNumbers.
-         * @member {Array.<string>} accessionNumbers
-         * @memberof api.AccessionCondition
-         * @instance
-         */
-        AccessionCondition.prototype.accessionNumbers = $util.emptyArray;
-
-        /**
-         * Creates a new AccessionCondition instance using the specified properties.
-         * @function create
-         * @memberof api.AccessionCondition
-         * @static
-         * @param {api.IAccessionCondition=} [properties] Properties to set
-         * @returns {api.AccessionCondition} AccessionCondition instance
-         */
-        AccessionCondition.create = function create(properties) {
-            return new AccessionCondition(properties);
-        };
-
-        /**
-         * Encodes the specified AccessionCondition message. Does not implicitly {@link api.AccessionCondition.verify|verify} messages.
-         * @function encode
-         * @memberof api.AccessionCondition
-         * @static
-         * @param {api.IAccessionCondition} message AccessionCondition message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        AccessionCondition.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.accessionNumbers != null && message.accessionNumbers.length)
-                for (let i = 0; i < message.accessionNumbers.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.accessionNumbers[i]);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified AccessionCondition message, length delimited. Does not implicitly {@link api.AccessionCondition.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof api.AccessionCondition
-         * @static
-         * @param {api.IAccessionCondition} message AccessionCondition message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        AccessionCondition.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes an AccessionCondition message from the specified reader or buffer.
-         * @function decode
-         * @memberof api.AccessionCondition
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {api.AccessionCondition} AccessionCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        AccessionCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.AccessionCondition();
-            while (reader.pos < end) {
-                let tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    if (!(message.accessionNumbers && message.accessionNumbers.length))
-                        message.accessionNumbers = [];
-                    message.accessionNumbers.push(reader.string());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes an AccessionCondition message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof api.AccessionCondition
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {api.AccessionCondition} AccessionCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        AccessionCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies an AccessionCondition message.
-         * @function verify
-         * @memberof api.AccessionCondition
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        AccessionCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.accessionNumbers != null && message.hasOwnProperty("accessionNumbers")) {
-                if (!Array.isArray(message.accessionNumbers))
-                    return "accessionNumbers: array expected";
-                for (let i = 0; i < message.accessionNumbers.length; ++i)
-                    if (!$util.isString(message.accessionNumbers[i]))
-                        return "accessionNumbers: string[] expected";
-            }
-            return null;
-        };
-
-        /**
-         * Creates an AccessionCondition message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof api.AccessionCondition
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {api.AccessionCondition} AccessionCondition
-         */
-        AccessionCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.AccessionCondition)
-                return object;
-            let message = new $root.api.AccessionCondition();
-            if (object.accessionNumbers) {
-                if (!Array.isArray(object.accessionNumbers))
-                    throw TypeError(".api.AccessionCondition.accessionNumbers: array expected");
-                message.accessionNumbers = [];
-                for (let i = 0; i < object.accessionNumbers.length; ++i)
-                    message.accessionNumbers[i] = String(object.accessionNumbers[i]);
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from an AccessionCondition message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof api.AccessionCondition
-         * @static
-         * @param {api.AccessionCondition} message AccessionCondition
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        AccessionCondition.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            let object = {};
-            if (options.arrays || options.defaults)
-                object.accessionNumbers = [];
-            if (message.accessionNumbers && message.accessionNumbers.length) {
-                object.accessionNumbers = [];
-                for (let j = 0; j < message.accessionNumbers.length; ++j)
-                    object.accessionNumbers[j] = message.accessionNumbers[j];
-            }
-            return object;
-        };
-
-        /**
-         * Converts this AccessionCondition to JSON.
-         * @function toJSON
-         * @memberof api.AccessionCondition
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        AccessionCondition.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return AccessionCondition;
-    })();
-
-    api.BiosampleCondition = (function() {
-
-        /**
-         * Properties of a BiosampleCondition.
-         * @memberof api
-         * @interface IBiosampleCondition
-         * @property {Array.<string>|null} [accessionNumbers] BiosampleCondition accessionNumbers
-         */
-
-        /**
-         * Constructs a new BiosampleCondition.
-         * @memberof api
-         * @classdesc Represents a BiosampleCondition.
-         * @implements IBiosampleCondition
-         * @constructor
-         * @param {api.IBiosampleCondition=} [properties] Properties to set
-         */
-        function BiosampleCondition(properties) {
-            this.accessionNumbers = [];
-            if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BiosampleCondition accessionNumbers.
-         * @member {Array.<string>} accessionNumbers
-         * @memberof api.BiosampleCondition
-         * @instance
-         */
-        BiosampleCondition.prototype.accessionNumbers = $util.emptyArray;
-
-        /**
-         * Creates a new BiosampleCondition instance using the specified properties.
-         * @function create
-         * @memberof api.BiosampleCondition
-         * @static
-         * @param {api.IBiosampleCondition=} [properties] Properties to set
-         * @returns {api.BiosampleCondition} BiosampleCondition instance
-         */
-        BiosampleCondition.create = function create(properties) {
-            return new BiosampleCondition(properties);
-        };
-
-        /**
-         * Encodes the specified BiosampleCondition message. Does not implicitly {@link api.BiosampleCondition.verify|verify} messages.
-         * @function encode
-         * @memberof api.BiosampleCondition
-         * @static
-         * @param {api.IBiosampleCondition} message BiosampleCondition message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BiosampleCondition.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.accessionNumbers != null && message.accessionNumbers.length)
-                for (let i = 0; i < message.accessionNumbers.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.accessionNumbers[i]);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BiosampleCondition message, length delimited. Does not implicitly {@link api.BiosampleCondition.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof api.BiosampleCondition
-         * @static
-         * @param {api.IBiosampleCondition} message BiosampleCondition message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BiosampleCondition.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BiosampleCondition message from the specified reader or buffer.
-         * @function decode
-         * @memberof api.BiosampleCondition
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {api.BiosampleCondition} BiosampleCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BiosampleCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.BiosampleCondition();
-            while (reader.pos < end) {
-                let tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    if (!(message.accessionNumbers && message.accessionNumbers.length))
-                        message.accessionNumbers = [];
-                    message.accessionNumbers.push(reader.string());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BiosampleCondition message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof api.BiosampleCondition
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {api.BiosampleCondition} BiosampleCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BiosampleCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BiosampleCondition message.
-         * @function verify
-         * @memberof api.BiosampleCondition
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BiosampleCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.accessionNumbers != null && message.hasOwnProperty("accessionNumbers")) {
-                if (!Array.isArray(message.accessionNumbers))
-                    return "accessionNumbers: array expected";
-                for (let i = 0; i < message.accessionNumbers.length; ++i)
-                    if (!$util.isString(message.accessionNumbers[i]))
-                        return "accessionNumbers: string[] expected";
-            }
-            return null;
-        };
-
-        /**
-         * Creates a BiosampleCondition message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof api.BiosampleCondition
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {api.BiosampleCondition} BiosampleCondition
-         */
-        BiosampleCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.BiosampleCondition)
-                return object;
-            let message = new $root.api.BiosampleCondition();
-            if (object.accessionNumbers) {
-                if (!Array.isArray(object.accessionNumbers))
-                    throw TypeError(".api.BiosampleCondition.accessionNumbers: array expected");
-                message.accessionNumbers = [];
-                for (let i = 0; i < object.accessionNumbers.length; ++i)
-                    message.accessionNumbers[i] = String(object.accessionNumbers[i]);
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BiosampleCondition message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof api.BiosampleCondition
-         * @static
-         * @param {api.BiosampleCondition} message BiosampleCondition
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BiosampleCondition.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            let object = {};
-            if (options.arrays || options.defaults)
-                object.accessionNumbers = [];
-            if (message.accessionNumbers && message.accessionNumbers.length) {
-                object.accessionNumbers = [];
-                for (let j = 0; j < message.accessionNumbers.length; ++j)
-                    object.accessionNumbers[j] = message.accessionNumbers[j];
-            }
-            return object;
-        };
-
-        /**
-         * Converts this BiosampleCondition to JSON.
-         * @function toJSON
-         * @memberof api.BiosampleCondition
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BiosampleCondition.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BiosampleCondition;
-    })();
-
-    api.GeneStrainCondition = (function() {
-
-        /**
-         * Properties of a GeneStrainCondition.
-         * @memberof api
-         * @interface IGeneStrainCondition
-         * @property {Array.<string>|null} [accessionNumbers] GeneStrainCondition accessionNumbers
-         */
-
-        /**
-         * Constructs a new GeneStrainCondition.
-         * @memberof api
-         * @classdesc Represents a GeneStrainCondition.
-         * @implements IGeneStrainCondition
-         * @constructor
-         * @param {api.IGeneStrainCondition=} [properties] Properties to set
-         */
-        function GeneStrainCondition(properties) {
-            this.accessionNumbers = [];
-            if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * GeneStrainCondition accessionNumbers.
-         * @member {Array.<string>} accessionNumbers
-         * @memberof api.GeneStrainCondition
-         * @instance
-         */
-        GeneStrainCondition.prototype.accessionNumbers = $util.emptyArray;
-
-        /**
-         * Creates a new GeneStrainCondition instance using the specified properties.
-         * @function create
-         * @memberof api.GeneStrainCondition
-         * @static
-         * @param {api.IGeneStrainCondition=} [properties] Properties to set
-         * @returns {api.GeneStrainCondition} GeneStrainCondition instance
-         */
-        GeneStrainCondition.create = function create(properties) {
-            return new GeneStrainCondition(properties);
-        };
-
-        /**
-         * Encodes the specified GeneStrainCondition message. Does not implicitly {@link api.GeneStrainCondition.verify|verify} messages.
-         * @function encode
-         * @memberof api.GeneStrainCondition
-         * @static
-         * @param {api.IGeneStrainCondition} message GeneStrainCondition message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GeneStrainCondition.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.accessionNumbers != null && message.accessionNumbers.length)
-                for (let i = 0; i < message.accessionNumbers.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.accessionNumbers[i]);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified GeneStrainCondition message, length delimited. Does not implicitly {@link api.GeneStrainCondition.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof api.GeneStrainCondition
-         * @static
-         * @param {api.IGeneStrainCondition} message GeneStrainCondition message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        GeneStrainCondition.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a GeneStrainCondition message from the specified reader or buffer.
-         * @function decode
-         * @memberof api.GeneStrainCondition
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {api.GeneStrainCondition} GeneStrainCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GeneStrainCondition.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.GeneStrainCondition();
-            while (reader.pos < end) {
-                let tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    if (!(message.accessionNumbers && message.accessionNumbers.length))
-                        message.accessionNumbers = [];
-                    message.accessionNumbers.push(reader.string());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a GeneStrainCondition message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof api.GeneStrainCondition
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {api.GeneStrainCondition} GeneStrainCondition
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        GeneStrainCondition.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a GeneStrainCondition message.
-         * @function verify
-         * @memberof api.GeneStrainCondition
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        GeneStrainCondition.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.accessionNumbers != null && message.hasOwnProperty("accessionNumbers")) {
-                if (!Array.isArray(message.accessionNumbers))
-                    return "accessionNumbers: array expected";
-                for (let i = 0; i < message.accessionNumbers.length; ++i)
-                    if (!$util.isString(message.accessionNumbers[i]))
-                        return "accessionNumbers: string[] expected";
-            }
-            return null;
-        };
-
-        /**
-         * Creates a GeneStrainCondition message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof api.GeneStrainCondition
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {api.GeneStrainCondition} GeneStrainCondition
-         */
-        GeneStrainCondition.fromObject = function fromObject(object) {
-            if (object instanceof $root.api.GeneStrainCondition)
-                return object;
-            let message = new $root.api.GeneStrainCondition();
-            if (object.accessionNumbers) {
-                if (!Array.isArray(object.accessionNumbers))
-                    throw TypeError(".api.GeneStrainCondition.accessionNumbers: array expected");
-                message.accessionNumbers = [];
-                for (let i = 0; i < object.accessionNumbers.length; ++i)
-                    message.accessionNumbers[i] = String(object.accessionNumbers[i]);
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a GeneStrainCondition message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof api.GeneStrainCondition
-         * @static
-         * @param {api.GeneStrainCondition} message GeneStrainCondition
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        GeneStrainCondition.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            let object = {};
-            if (options.arrays || options.defaults)
-                object.accessionNumbers = [];
-            if (message.accessionNumbers && message.accessionNumbers.length) {
-                object.accessionNumbers = [];
-                for (let j = 0; j < message.accessionNumbers.length; ++j)
-                    object.accessionNumbers[j] = message.accessionNumbers[j];
-            }
-            return object;
-        };
-
-        /**
-         * Converts this GeneStrainCondition to JSON.
-         * @function toJSON
-         * @memberof api.GeneStrainCondition
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        GeneStrainCondition.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return GeneStrainCondition;
+        return InsertionSequenceStrainCondition;
     })();
 
     api.LineageStrainCondition = (function() {
@@ -4160,8 +3335,8 @@ export const api = $root.api = (() => {
          * Properties of a LineageStrainCondition.
          * @memberof api
          * @interface ILineageStrainCondition
-         * @property {string|null} [classificationName] LineageStrainCondition classificationName
-         * @property {string|null} [name] LineageStrainCondition name
+         * @property {string|null} [doi] LineageStrainCondition doi
+         * @property {string|null} [lineage] LineageStrainCondition lineage
          */
 
         /**
@@ -4180,20 +3355,20 @@ export const api = $root.api = (() => {
         }
 
         /**
-         * LineageStrainCondition classificationName.
-         * @member {string} classificationName
+         * LineageStrainCondition doi.
+         * @member {string} doi
          * @memberof api.LineageStrainCondition
          * @instance
          */
-        LineageStrainCondition.prototype.classificationName = "";
+        LineageStrainCondition.prototype.doi = "";
 
         /**
-         * LineageStrainCondition name.
-         * @member {string} name
+         * LineageStrainCondition lineage.
+         * @member {string} lineage
          * @memberof api.LineageStrainCondition
          * @instance
          */
-        LineageStrainCondition.prototype.name = "";
+        LineageStrainCondition.prototype.lineage = "";
 
         /**
          * Creates a new LineageStrainCondition instance using the specified properties.
@@ -4219,10 +3394,10 @@ export const api = $root.api = (() => {
         LineageStrainCondition.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.classificationName != null && Object.hasOwnProperty.call(message, "classificationName"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.classificationName);
-            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
+            if (message.doi != null && Object.hasOwnProperty.call(message, "doi"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.doi);
+            if (message.lineage != null && Object.hasOwnProperty.call(message, "lineage"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.lineage);
             return writer;
         };
 
@@ -4258,10 +3433,10 @@ export const api = $root.api = (() => {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.classificationName = reader.string();
+                    message.doi = reader.string();
                     break;
                 case 2:
-                    message.name = reader.string();
+                    message.lineage = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -4298,12 +3473,12 @@ export const api = $root.api = (() => {
         LineageStrainCondition.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.classificationName != null && message.hasOwnProperty("classificationName"))
-                if (!$util.isString(message.classificationName))
-                    return "classificationName: string expected";
-            if (message.name != null && message.hasOwnProperty("name"))
-                if (!$util.isString(message.name))
-                    return "name: string expected";
+            if (message.doi != null && message.hasOwnProperty("doi"))
+                if (!$util.isString(message.doi))
+                    return "doi: string expected";
+            if (message.lineage != null && message.hasOwnProperty("lineage"))
+                if (!$util.isString(message.lineage))
+                    return "lineage: string expected";
             return null;
         };
 
@@ -4319,10 +3494,10 @@ export const api = $root.api = (() => {
             if (object instanceof $root.api.LineageStrainCondition)
                 return object;
             let message = new $root.api.LineageStrainCondition();
-            if (object.classificationName != null)
-                message.classificationName = String(object.classificationName);
-            if (object.name != null)
-                message.name = String(object.name);
+            if (object.doi != null)
+                message.doi = String(object.doi);
+            if (object.lineage != null)
+                message.lineage = String(object.lineage);
             return message;
         };
 
@@ -4340,13 +3515,13 @@ export const api = $root.api = (() => {
                 options = {};
             let object = {};
             if (options.defaults) {
-                object.classificationName = "";
-                object.name = "";
+                object.doi = "";
+                object.lineage = "";
             }
-            if (message.classificationName != null && message.hasOwnProperty("classificationName"))
-                object.classificationName = message.classificationName;
-            if (message.name != null && message.hasOwnProperty("name"))
-                object.name = message.name;
+            if (message.doi != null && message.hasOwnProperty("doi"))
+                object.doi = message.doi;
+            if (message.lineage != null && message.hasOwnProperty("lineage"))
+                object.lineage = message.lineage;
             return object;
         };
 
@@ -4362,6 +3537,628 @@ export const api = $root.api = (() => {
         };
 
         return LineageStrainCondition;
+    })();
+
+    /**
+     * KeywordStrainField enum.
+     * @name api.KeywordStrainField
+     * @enum {number}
+     * @property {number} ACCESSION=0 ACCESSION value
+     * @property {number} COUNTRY_CODE=1 COUNTRY_CODE value
+     * @property {number} GENE_LOCUS_TAG=2 GENE_LOCUS_TAG value
+     * @property {number} GENE_ID=3 GENE_ID value
+     * @property {number} SIT=4 SIT value
+     * @property {number} SNP_POSITION=5 SNP_POSITION value
+     * @property {number} SNP_SPDI=6 SNP_SPDI value
+     * @property {number} SNP_STUDY_DOI=7 SNP_STUDY_DOI value
+     * @property {number} INSERTION_SEQUENCE_NAME=8 INSERTION_SEQUENCE_NAME value
+     * @property {number} SPOL_43_BLAST=9 SPOL_43_BLAST value
+     * @property {number} SPOL_98_BLAST=10 SPOL_98_BLAST value
+     * @property {number} SPOL_BLOIN_BLAST=11 SPOL_BLOIN_BLAST value
+     * @property {number} SPOL_43_CRISPR=12 SPOL_43_CRISPR value
+     * @property {number} SPOL_98_CRISPR=13 SPOL_98_CRISPR value
+     */
+    api.KeywordStrainField = (function() {
+        const valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "ACCESSION"] = 0;
+        values[valuesById[1] = "COUNTRY_CODE"] = 1;
+        values[valuesById[2] = "GENE_LOCUS_TAG"] = 2;
+        values[valuesById[3] = "GENE_ID"] = 3;
+        values[valuesById[4] = "SIT"] = 4;
+        values[valuesById[5] = "SNP_POSITION"] = 5;
+        values[valuesById[6] = "SNP_SPDI"] = 6;
+        values[valuesById[7] = "SNP_STUDY_DOI"] = 7;
+        values[valuesById[8] = "INSERTION_SEQUENCE_NAME"] = 8;
+        values[valuesById[9] = "SPOL_43_BLAST"] = 9;
+        values[valuesById[10] = "SPOL_98_BLAST"] = 10;
+        values[valuesById[11] = "SPOL_BLOIN_BLAST"] = 11;
+        values[valuesById[12] = "SPOL_43_CRISPR"] = 12;
+        values[valuesById[13] = "SPOL_98_CRISPR"] = 13;
+        return values;
+    })();
+
+    /**
+     * DateStrainField enum.
+     * @name api.DateStrainField
+     * @enum {number}
+     * @property {number} PUBLISHED_AT=0 PUBLISHED_AT value
+     */
+    api.DateStrainField = (function() {
+        const valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "PUBLISHED_AT"] = 0;
+        return values;
+    })();
+
+    api.DateStrainCondition = (function() {
+
+        /**
+         * Properties of a DateStrainCondition.
+         * @memberof api
+         * @interface IDateStrainCondition
+         * @property {api.DateStrainField|null} [field] DateStrainCondition field
+         * @property {google.protobuf.ITimestamp|null} [from] DateStrainCondition from
+         * @property {google.protobuf.ITimestamp|null} [to] DateStrainCondition to
+         */
+
+        /**
+         * Constructs a new DateStrainCondition.
+         * @memberof api
+         * @classdesc Represents a DateStrainCondition.
+         * @implements IDateStrainCondition
+         * @constructor
+         * @param {api.IDateStrainCondition=} [properties] Properties to set
+         */
+        function DateStrainCondition(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DateStrainCondition field.
+         * @member {api.DateStrainField} field
+         * @memberof api.DateStrainCondition
+         * @instance
+         */
+        DateStrainCondition.prototype.field = 0;
+
+        /**
+         * DateStrainCondition from.
+         * @member {google.protobuf.ITimestamp|null|undefined} from
+         * @memberof api.DateStrainCondition
+         * @instance
+         */
+        DateStrainCondition.prototype.from = null;
+
+        /**
+         * DateStrainCondition to.
+         * @member {google.protobuf.ITimestamp|null|undefined} to
+         * @memberof api.DateStrainCondition
+         * @instance
+         */
+        DateStrainCondition.prototype.to = null;
+
+        /**
+         * Creates a new DateStrainCondition instance using the specified properties.
+         * @function create
+         * @memberof api.DateStrainCondition
+         * @static
+         * @param {api.IDateStrainCondition=} [properties] Properties to set
+         * @returns {api.DateStrainCondition} DateStrainCondition instance
+         */
+        DateStrainCondition.create = function create(properties) {
+            return new DateStrainCondition(properties);
+        };
+
+        /**
+         * Encodes the specified DateStrainCondition message. Does not implicitly {@link api.DateStrainCondition.verify|verify} messages.
+         * @function encode
+         * @memberof api.DateStrainCondition
+         * @static
+         * @param {api.IDateStrainCondition} message DateStrainCondition message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DateStrainCondition.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.field != null && Object.hasOwnProperty.call(message, "field"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.field);
+            if (message.from != null && Object.hasOwnProperty.call(message, "from"))
+                $root.google.protobuf.Timestamp.encode(message.from, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.to != null && Object.hasOwnProperty.call(message, "to"))
+                $root.google.protobuf.Timestamp.encode(message.to, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DateStrainCondition message, length delimited. Does not implicitly {@link api.DateStrainCondition.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.DateStrainCondition
+         * @static
+         * @param {api.IDateStrainCondition} message DateStrainCondition message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DateStrainCondition.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DateStrainCondition message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.DateStrainCondition
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.DateStrainCondition} DateStrainCondition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DateStrainCondition.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.DateStrainCondition();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.field = reader.int32();
+                    break;
+                case 2:
+                    message.from = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    message.to = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DateStrainCondition message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.DateStrainCondition
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.DateStrainCondition} DateStrainCondition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DateStrainCondition.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DateStrainCondition message.
+         * @function verify
+         * @memberof api.DateStrainCondition
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DateStrainCondition.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.field != null && message.hasOwnProperty("field"))
+                switch (message.field) {
+                default:
+                    return "field: enum value expected";
+                case 0:
+                    break;
+                }
+            if (message.from != null && message.hasOwnProperty("from")) {
+                let error = $root.google.protobuf.Timestamp.verify(message.from);
+                if (error)
+                    return "from." + error;
+            }
+            if (message.to != null && message.hasOwnProperty("to")) {
+                let error = $root.google.protobuf.Timestamp.verify(message.to);
+                if (error)
+                    return "to." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a DateStrainCondition message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.DateStrainCondition
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.DateStrainCondition} DateStrainCondition
+         */
+        DateStrainCondition.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.DateStrainCondition)
+                return object;
+            let message = new $root.api.DateStrainCondition();
+            switch (object.field) {
+            case "PUBLISHED_AT":
+            case 0:
+                message.field = 0;
+                break;
+            }
+            if (object.from != null) {
+                if (typeof object.from !== "object")
+                    throw TypeError(".api.DateStrainCondition.from: object expected");
+                message.from = $root.google.protobuf.Timestamp.fromObject(object.from);
+            }
+            if (object.to != null) {
+                if (typeof object.to !== "object")
+                    throw TypeError(".api.DateStrainCondition.to: object expected");
+                message.to = $root.google.protobuf.Timestamp.fromObject(object.to);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DateStrainCondition message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.DateStrainCondition
+         * @static
+         * @param {api.DateStrainCondition} message DateStrainCondition
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DateStrainCondition.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.field = options.enums === String ? "PUBLISHED_AT" : 0;
+                object.from = null;
+                object.to = null;
+            }
+            if (message.field != null && message.hasOwnProperty("field"))
+                object.field = options.enums === String ? $root.api.DateStrainField[message.field] : message.field;
+            if (message.from != null && message.hasOwnProperty("from"))
+                object.from = $root.google.protobuf.Timestamp.toObject(message.from, options);
+            if (message.to != null && message.hasOwnProperty("to"))
+                object.to = $root.google.protobuf.Timestamp.toObject(message.to, options);
+            return object;
+        };
+
+        /**
+         * Converts this DateStrainCondition to JSON.
+         * @function toJSON
+         * @memberof api.DateStrainCondition
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DateStrainCondition.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return DateStrainCondition;
+    })();
+
+    api.KeywordStrainCondition = (function() {
+
+        /**
+         * Properties of a KeywordStrainCondition.
+         * @memberof api
+         * @interface IKeywordStrainCondition
+         * @property {api.KeywordStrainField|null} [field] KeywordStrainCondition field
+         * @property {boolean|null} [allOf] KeywordStrainCondition allOf
+         * @property {Array.<string>|null} [values] KeywordStrainCondition values
+         */
+
+        /**
+         * Constructs a new KeywordStrainCondition.
+         * @memberof api
+         * @classdesc Represents a KeywordStrainCondition.
+         * @implements IKeywordStrainCondition
+         * @constructor
+         * @param {api.IKeywordStrainCondition=} [properties] Properties to set
+         */
+        function KeywordStrainCondition(properties) {
+            this.values = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * KeywordStrainCondition field.
+         * @member {api.KeywordStrainField} field
+         * @memberof api.KeywordStrainCondition
+         * @instance
+         */
+        KeywordStrainCondition.prototype.field = 0;
+
+        /**
+         * KeywordStrainCondition allOf.
+         * @member {boolean} allOf
+         * @memberof api.KeywordStrainCondition
+         * @instance
+         */
+        KeywordStrainCondition.prototype.allOf = false;
+
+        /**
+         * KeywordStrainCondition values.
+         * @member {Array.<string>} values
+         * @memberof api.KeywordStrainCondition
+         * @instance
+         */
+        KeywordStrainCondition.prototype.values = $util.emptyArray;
+
+        /**
+         * Creates a new KeywordStrainCondition instance using the specified properties.
+         * @function create
+         * @memberof api.KeywordStrainCondition
+         * @static
+         * @param {api.IKeywordStrainCondition=} [properties] Properties to set
+         * @returns {api.KeywordStrainCondition} KeywordStrainCondition instance
+         */
+        KeywordStrainCondition.create = function create(properties) {
+            return new KeywordStrainCondition(properties);
+        };
+
+        /**
+         * Encodes the specified KeywordStrainCondition message. Does not implicitly {@link api.KeywordStrainCondition.verify|verify} messages.
+         * @function encode
+         * @memberof api.KeywordStrainCondition
+         * @static
+         * @param {api.IKeywordStrainCondition} message KeywordStrainCondition message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        KeywordStrainCondition.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.field != null && Object.hasOwnProperty.call(message, "field"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.field);
+            if (message.allOf != null && Object.hasOwnProperty.call(message, "allOf"))
+                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.allOf);
+            if (message.values != null && message.values.length)
+                for (let i = 0; i < message.values.length; ++i)
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.values[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified KeywordStrainCondition message, length delimited. Does not implicitly {@link api.KeywordStrainCondition.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.KeywordStrainCondition
+         * @static
+         * @param {api.IKeywordStrainCondition} message KeywordStrainCondition message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        KeywordStrainCondition.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a KeywordStrainCondition message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.KeywordStrainCondition
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.KeywordStrainCondition} KeywordStrainCondition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        KeywordStrainCondition.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.KeywordStrainCondition();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.field = reader.int32();
+                    break;
+                case 2:
+                    message.allOf = reader.bool();
+                    break;
+                case 3:
+                    if (!(message.values && message.values.length))
+                        message.values = [];
+                    message.values.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a KeywordStrainCondition message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.KeywordStrainCondition
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.KeywordStrainCondition} KeywordStrainCondition
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        KeywordStrainCondition.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a KeywordStrainCondition message.
+         * @function verify
+         * @memberof api.KeywordStrainCondition
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        KeywordStrainCondition.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.field != null && message.hasOwnProperty("field"))
+                switch (message.field) {
+                default:
+                    return "field: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                    break;
+                }
+            if (message.allOf != null && message.hasOwnProperty("allOf"))
+                if (typeof message.allOf !== "boolean")
+                    return "allOf: boolean expected";
+            if (message.values != null && message.hasOwnProperty("values")) {
+                if (!Array.isArray(message.values))
+                    return "values: array expected";
+                for (let i = 0; i < message.values.length; ++i)
+                    if (!$util.isString(message.values[i]))
+                        return "values: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a KeywordStrainCondition message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.KeywordStrainCondition
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.KeywordStrainCondition} KeywordStrainCondition
+         */
+        KeywordStrainCondition.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.KeywordStrainCondition)
+                return object;
+            let message = new $root.api.KeywordStrainCondition();
+            switch (object.field) {
+            case "ACCESSION":
+            case 0:
+                message.field = 0;
+                break;
+            case "COUNTRY_CODE":
+            case 1:
+                message.field = 1;
+                break;
+            case "GENE_LOCUS_TAG":
+            case 2:
+                message.field = 2;
+                break;
+            case "GENE_ID":
+            case 3:
+                message.field = 3;
+                break;
+            case "SIT":
+            case 4:
+                message.field = 4;
+                break;
+            case "SNP_POSITION":
+            case 5:
+                message.field = 5;
+                break;
+            case "SNP_SPDI":
+            case 6:
+                message.field = 6;
+                break;
+            case "SNP_STUDY_DOI":
+            case 7:
+                message.field = 7;
+                break;
+            case "INSERTION_SEQUENCE_NAME":
+            case 8:
+                message.field = 8;
+                break;
+            case "SPOL_43_BLAST":
+            case 9:
+                message.field = 9;
+                break;
+            case "SPOL_98_BLAST":
+            case 10:
+                message.field = 10;
+                break;
+            case "SPOL_BLOIN_BLAST":
+            case 11:
+                message.field = 11;
+                break;
+            case "SPOL_43_CRISPR":
+            case 12:
+                message.field = 12;
+                break;
+            case "SPOL_98_CRISPR":
+            case 13:
+                message.field = 13;
+                break;
+            }
+            if (object.allOf != null)
+                message.allOf = Boolean(object.allOf);
+            if (object.values) {
+                if (!Array.isArray(object.values))
+                    throw TypeError(".api.KeywordStrainCondition.values: array expected");
+                message.values = [];
+                for (let i = 0; i < object.values.length; ++i)
+                    message.values[i] = String(object.values[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a KeywordStrainCondition message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.KeywordStrainCondition
+         * @static
+         * @param {api.KeywordStrainCondition} message KeywordStrainCondition
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        KeywordStrainCondition.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults)
+                object.values = [];
+            if (options.defaults) {
+                object.field = options.enums === String ? "ACCESSION" : 0;
+                object.allOf = false;
+            }
+            if (message.field != null && message.hasOwnProperty("field"))
+                object.field = options.enums === String ? $root.api.KeywordStrainField[message.field] : message.field;
+            if (message.allOf != null && message.hasOwnProperty("allOf"))
+                object.allOf = message.allOf;
+            if (message.values && message.values.length) {
+                object.values = [];
+                for (let j = 0; j < message.values.length; ++j)
+                    object.values[j] = message.values[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this KeywordStrainCondition to JSON.
+         * @function toJSON
+         * @memberof api.KeywordStrainCondition
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        KeywordStrainCondition.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return KeywordStrainCondition;
     })();
 
     api.Snp = (function() {

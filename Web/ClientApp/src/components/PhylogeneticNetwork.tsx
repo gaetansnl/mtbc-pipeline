@@ -1,5 +1,5 @@
 ﻿// @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { client } from "state/state";
 import { Stage, Container } from "@inlet/react-pixi";
 import PixiGraph from "components/rendering/PixiGraph";
@@ -7,9 +7,10 @@ import PixiViewport from "components/rendering/PixiViewport";
 import PhylogeneticNetworkInfo from "components/PhylogeneticNetworkInfo";
 import useResizeObserver from "use-resize-observer";
 import { api } from "../state/grpc";
-const gg = []
+
 const preventDefault = (e) => e.preventDefault();
-function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodesSelected, selectedNodeIds }) {
+
+function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodesSelected, selectedNodeNames }) {
     let [values, setValues] = useState<api.IHelloReply>(null);
     let [graph, setGraph] = useState(null);
     let [zoomLevel, setZoomLevel] = useState(null);
@@ -47,6 +48,22 @@ function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodesSelected, selected
             setGraph({ nodes, edges, hiddenCount, visibleCount });
         }
     }, [values]);
+
+    const selectedNodeIds = useMemo(() => {
+        return (
+            values?.graph?.nodes
+                ?.filter((v) => selectedNodeNames.includes(v.name))
+                .map((v) => v.id) || []
+        );
+    }, [selectedNodeNames, values?.graph?.nodes]);
+
+    const handleNodeSelected = useCallback((v) => onNodesSelected && onNodesSelected(v), [
+        onNodesSelected,
+    ]);
+    const handleNodeClick = useCallback((v) => onNodesSelected && onNodesSelected([v]), [
+        onNodesSelected,
+    ]);
+
     return (
         <React.Fragment>
             <div
@@ -77,12 +94,8 @@ function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodesSelected, selected
                                         nodeSize={zoomLevel < 4 ? 12 : 5}
                                         selectedNodeSize={zoomLevel < 4 ? 20 : 5}
                                         selectedNodesIds={selectedNodeIds}
-                                        onNodesSelected={(v) => {
-                                            onNodesSelected(v);
-                                        }}
-                                        onNodeClick={(v) => {
-                                            onNodesSelected([v]);
-                                        }}
+                                        onNodesSelected={handleNodeSelected}
+                                        onNodeClick={handleNodeClick}
                                     />
                                 )}
                             </Container>
