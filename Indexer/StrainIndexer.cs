@@ -29,7 +29,7 @@ namespace Indexer
             CountryCodeHelper = countryCodeHelper;
         }
 
-        public List<bool> RealSpol98(AnalysisData data)
+        public List<bool> RealSpol98(EnrichedAnalysisData data)
         {
             List<bool> result = Enumerable.Repeat(false, 98).ToList();
             foreach (var part in data.Crispr)
@@ -41,7 +41,7 @@ namespace Indexer
             return result;
         }
 
-        public List<bool> RealSpol43(AnalysisData data)
+        public List<bool> RealSpol43(EnrichedAnalysisData data)
         {
             List<bool> spol98 = RealSpol98(data);
             List<bool> result = Enumerable.Repeat(false, 43).ToList();
@@ -66,7 +66,7 @@ namespace Indexer
             foreach (var file in files)
             {
                 using FileStream openStream = File.OpenRead(file);
-                var result = await JsonSerializer.DeserializeAsync<AnalysisData>(openStream,
+                var result = await JsonSerializer.DeserializeAsync<EnrichedAnalysisData>(openStream,
                     new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase});
 
                 if (result == null)
@@ -76,7 +76,8 @@ namespace Indexer
 
                 result.Snp = (await Database.ListSnpById(result.SnpSpdi)).OrderBy(v => v.Position).ToList();
                 // if (result.Snp.Count != result.SnpSpdi.Count) throw new Exception("Snp not found");
-
+                result.SnpWithoutAnnotation =
+                    result.Snp.Select(v => v with {Annotations = new List<SnpData.Annotation>()}).ToList();
                 result.MissingGenes = (await Database.ListGenesByLocus(result.MissingGeneTags)).OrderBy(v => v.LocusTag)
                     .ToList();
                 if (result.MissingGeneTags.Count != result.MissingGenes.Count) throw new Exception("Gene not found");
@@ -100,8 +101,8 @@ namespace Indexer
                      coordinates.HasValue ? (long)coordinates?.Latitude :null,
                     coordinates.HasValue ?(long) coordinates?.Longitude:null);
 
+                Console.WriteLine($"Enriched {file}");
                 await Database.Index(result);
-                Console.WriteLine($"Indexed ${file}");
             }
         }
     }

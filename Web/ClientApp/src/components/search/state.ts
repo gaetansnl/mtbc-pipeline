@@ -1,4 +1,5 @@
 import { api } from "../../state/grpc";
+import { map } from "lodash-es";
 
 export type SearchConditionChangeCallback = (condition: api.IStrainCondition) => any;
 
@@ -94,3 +95,57 @@ export function createDate(value: Date) {
 export function toDate(date: { seconds: number; nanos: number }) {
     return new Date(date.seconds * 1000 + date.nanos / 1000000);
 }
+
+export const keywordConditionInfo: {
+    [key: string]: {
+        title: string;
+        valuesPlaceholder?: string;
+        separators?: string[];
+        enableAllOf?: boolean;
+    };
+} = {
+    [api.KeywordStrainField.ACCESSION]: {
+        title: "Accession",
+        separators: [",", "\n"],
+    },
+    [api.KeywordStrainField.COUNTRY_CODE]: {
+        title: "Country",
+    },
+    [api.KeywordStrainField.SNP_SPDI]: {
+        title: "SPDI",
+        separators: [","],
+        enableAllOf: true,
+    },
+    [api.KeywordStrainField.GENE_ID]: {
+        title: "Gene accession",
+        separators: [","],
+        enableAllOf: true,
+    },
+    [api.KeywordStrainField.GENE_LOCUS_TAG]: {
+        title: "Gene locus tag",
+        separators: [","],
+        enableAllOf: true,
+    },
+    [api.KeywordStrainField.SNP_POSITION]: {
+        title: "Snp position",
+        separators: [","],
+        enableAllOf: true,
+    },
+    [api.KeywordStrainField.INSERTION_SEQUENCE_NAME]: {
+        title: "Insertion sequence name",
+        separators: [","],
+        enableAllOf: true,
+    },
+};
+
+export const keywordDefault = map(keywordConditionInfo, (value, key) => ({
+    title: keywordConditionInfo[key].title,
+    default: () => ({
+        negate: false,
+        keyword: {
+            field: Number(key),
+            values: [],
+        },
+    }),
+}));
+console.log(keywordDefault);

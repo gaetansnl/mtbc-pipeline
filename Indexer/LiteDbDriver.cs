@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Indexer.Data;
 using Indexer.Search;
 using LiteDB;
+using Microsoft.Extensions.Caching.Memory;
 using MoreLinq;
 
 namespace Indexer
@@ -12,65 +13,75 @@ namespace Indexer
     public class LiteDbDriver
     {
         protected LiteDatabase Database;
+        protected  ILiteCollection<EnrichedAnalysisData> AnalysisData;
+        protected  ILiteCollection<SnpData> SnpData;
+        protected  ILiteCollection<GeneData> GeneData;
 
         public LiteDbDriver(LiteDatabase database)
         {
             Database = database;
-            Database.GetCollection<SnpData>("snp");
-            var result = Database.GetCollection<AnalysisData>("result");
-            result.EnsureIndex("$.StrainId");
-            Database.GetCollection<AnalysisData>("gene");
+            SnpData = Database.GetCollection<SnpData>("snp");
+            SnpData.EnsureIndex(v => v.Id);
+            
+            AnalysisData = Database.GetCollection<EnrichedAnalysisData>("result");
+            AnalysisData.EnsureIndex("$.StrainId");
+            
+            GeneData = Database.GetCollection<GeneData>("gene");
+            GeneData.EnsureIndex(v => v.LocusTag);
 
-            BsonMapper.Global.Entity<AnalysisData>().DbRef(x => x.Snp, "snp");
-            BsonMapper.Global.Entity<AnalysisData>().DbRef(x => x.MissingGenes, "gene");
+            BsonMapper.Global.Entity<EnrichedAnalysisData>().DbRef(x => x.Snp, "snp");
+            BsonMapper.Global.Entity<EnrichedAnalysisData>().DbRef(x => x.MissingGenes, "gene");
         }
 
         public async Task Index(SnpData snpData)
         {
-            var collection = Database.GetCollection<SnpData>("snp");
-            var existing = collection.FindById(snpData.Id);
+            var existing = SnpData.FindById(snpData.Id);
             if (existing != null)
             {
                 existing = existing with
                 {
                     Annotations = existing.Annotations.Concat(snpData.Annotations).Distinct().ToList()
                 };
-                collection.Update(existing);
+                SnpData.Update(existing);
             }
             else
             {
-                collection.Insert(snpData);
+                SnpData.Insert(snpData);
             }
         }
 
-        public async Task Index(AnalysisData result)
+        public async Task Index(EnrichedAnalysisData result)
         {
-            var collection = Database.GetCollection<AnalysisData>("result");
-            var existing = collection.FindById(result.StrainId);
+            var existing = AnalysisData.FindById(result.StrainId);
             if (existing != null)
             {
-                collection.Delete(existing.Id);
+                AnalysisData.Delete(existing.Id);
             }
 
-            collection.Insert(result);
+            AnalysisData.Insert(result);
+        }
+        
+        public async Task Index(List<EnrichedAnalysisData> result)
+        {
+            var ids = result.Select(v => v.Id).ToList();
+            AnalysisData.DeleteMany(v => ids.Contains(v.Id));
+            AnalysisData.InsertBulk(result);
         }
 
         public async Task Index(GeneData gene)
         {
-            var collection = Database.GetCollection<GeneData>("gene");
-            var existing = collection.FindById(gene.Id);
+            var existing = GeneData.FindById(gene.Id);
             if (existing != null)
             {
-                collection.Delete(existing.Id);
+                GeneData.Delete(existing.Id);
             }
 
-            collection.Insert(gene);
+            GeneData.Insert(gene);
         }
 
         public async Task<List<SnpData>> ListSnp(int page = 0)
         {
-            var collection = Database.GetCollection<SnpData>("snp");
-            return collection.Find(Query.All(), limit: 100).ToList();
+            return SnpData.Find(Query.All(), limit: 100).ToList();
         }
 
         protected BsonExpression? ConditionToQuery(Condition condition, Dictionary<string, BsonValue> args)
@@ -105,7 +116,12 @@ namespace Indexer
                 main = condition.Keyword.Field switch
                 {
                     KeywordCondition.KeywordField.ACCESSION => BsonExpression.Create(fieldCondition("$.StrainId")),
-                    KeywordCondition.KeywordField.SNP_SPDI => BsonExpression.Create(arrayCondition("$.SnpSpdi[*]"))
+                    KeywordCondition.KeywordField.SNP_SPDI => BsonExpression.Create(arrayCondition("$.SnpSpdi[*]")),
+                    KeywordCondition.KeywordField.COUNTRY_CODE => BsonExpression.Create(fieldCondition("$.CountryCode")),
+                    KeywordCondition.KeywordField.GENE_ID => BsonExpression.Create($"({arrayCondition("$.MissingGenes[*].$id")})=false"),
+                    KeywordCondition.KeywordField.GENE_LOCUS_TAG => BsonExpression.Create($"({arrayCondition("$.MissingGeneTags[*]")})=false"),
+                    KeywordCondition.KeywordField.SNP_POSITION => BsonExpression.Create(arrayCondition("MAP($.SnpWithoutAnnotation[*]=>STRING(@.Position))")),
+                    KeywordCondition.KeywordField.INSERTION_SEQUENCE_NAME => BsonExpression.Create(arrayCondition("$.InsertionSequences[*].Name")),
                 };
             }
             else
@@ -118,43 +134,41 @@ namespace Indexer
 
         public async Task<List<string>> Search(Condition condition)
         {
-            var collection = Database.GetCollection<AnalysisData>("result");
-            var gg = new Dictionary<string, BsonValue>();
-            var query = ConditionToQuery(condition, gg);
-            foreach (var (k, v) in gg)
-            {
-                query.Parameters[k] = v;
-            }
+            var args = new Dictionary<string, BsonValue>();
+            var query = ConditionToQuery(condition, args);
+            foreach (var (k, v) in args) query.Parameters[k] = v;
 
             if (query == null) return new List<string>();
-            Console.WriteLine(collection.Query().Where(query).Select(v => v.Id).GetPlan().ToString());
-            return collection.Query().Where(query).Select(v => v.Id).ToList();
+            Console.WriteLine(AnalysisData.Query().Where(query).Select(v => v.Id).GetPlan().ToString());
+            return AnalysisData.Query().Where(query).Select(v => v.Id).ToList();
         }
 
-
+       MemoryCache SnpCache =new (new MemoryCacheOptions
+               {
+                   SizeLimit = 1024
+               });     
         public async Task<List<SnpData>> ListSnpById(List<string> ids)
         {
-            var collection = Database.GetCollection<SnpData>("snp");
-            return collection.Find(v => ids.Contains(v.Id)).ToList();
+            var found = ids.Select(v => SnpCache.TryGetValue(v, out var value) ? value:null).OfType<SnpData>().ToList();
+            var notFound = ids.Where(v => found.All(x => x.Id != v)).ToList();
+            var requested = SnpData.Find(v => notFound.Contains(v.Id)).ToList();
+            requested.ForEach(v => SnpCache.Set(v.Id, v, new MemoryCacheEntryOptions{Size = 1}));
+            return requested.Concat(found).ToList();
         }
 
         public async Task<List<GeneData>> ListGenesByLocus(List<string> locus)
         {
-            var collection = Database.GetCollection<GeneData>("gene");
-            return collection.Find(v => locus.Contains(v.LocusTag)).ToList();
+            return GeneData.Find(v => locus.Contains(v.LocusTag)).ToList();
         }
 
         public async Task<GeneData?> GetGeneByLocus(string locus)
         {
-            var collection = Database.GetCollection<GeneData>("gene");
-            return collection.FindOne(v => locus == v.LocusTag);
+            return GeneData.FindOne(v => locus == v.LocusTag);
         }
 
-
-        public async Task<AnalysisData?> GetResult(string id)
+        public async Task<EnrichedAnalysisData?> GetResult(string id)
         {
-            var collection = Database.GetCollection<AnalysisData>("result");
-            return collection.Include(v => v.Snp).Include(v => v.MissingGenes).FindById(id);
+            return AnalysisData.Include(v => v.Snp).Include(v => v.MissingGenes).FindById(id);
         }
     }
 }

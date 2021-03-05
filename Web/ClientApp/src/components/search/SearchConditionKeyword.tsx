@@ -1,30 +1,8 @@
 import React from "react";
 import { Button, Select } from "antd";
 import SearchConditionContainer from "./SearchConditionContainer";
-import { getDefaultHandlers, SearchConditionChangeCallback, updateCondition } from "./state";
+import { getDefaultHandlers, keywordConditionInfo, SearchConditionChangeCallback, updateCondition } from "./state";
 import { api } from "state/grpc";
-
-const keywordConditionInfo: {
-    [key: number]: {
-        title: string;
-        valuesPlaceholder?: string;
-        separators?: string[];
-        enableAllOf?: boolean;
-    };
-} = {
-    [api.KeywordStrainField.ACCESSION]: {
-        title: "Accession number",
-        separators: [",", "\n"],
-    },
-    [api.KeywordStrainField.COUNTRY_CODE]: {
-        title: "Country",
-    },
-    [api.KeywordStrainField.SNP_SPDI]: {
-        title: "SPDI",
-        separators: [","],
-        enableAllOf: true,
-    },
-};
 
 function SearchConditionKeyword({
     rootCondition,

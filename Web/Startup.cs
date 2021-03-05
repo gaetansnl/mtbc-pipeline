@@ -78,7 +78,7 @@ namespace Web
                 spa.Options.DevServerPort = 4000;
                 if (env.IsDevelopment())
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                    // spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
         }

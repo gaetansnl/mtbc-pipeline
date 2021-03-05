@@ -1,31 +1,12 @@
 import {Dropdown, Menu} from "antd";
 import React, {ReactChild} from "react";
 import {api} from "state/grpc";
-import {addCondition, SearchConditionChangeCallback} from "./state";
+import {addCondition, keywordDefault, SearchConditionChangeCallback} from "./state";
 
-const items: { title: string; default: () => api.IStrainCondition }[] = [
-    {
-        title: "Accession",
-        default: () => ({
-            negate: false,
-            keyword: {
-                field: api.KeywordStrainField.ACCESSION,
-                values: []
-            },
-        }),
-    },
-    {
-        title: "Country",
-        default: () => ({
-            negate: false,
-            keyword: {
-                field: api.KeywordStrainField.COUNTRY_CODE,
-                values: []
-            },
-        }),
-    },
+const items: { title: string, subtitle?: string; default: () => api.IStrainCondition }[] = [
     {
         title: "Boolean",
+        subtitle: "Combine other filters",
         default: () => ({
             negate: false,
             bool: {
@@ -34,26 +15,7 @@ const items: { title: string; default: () => api.IStrainCondition }[] = [
             },
         }),
     },
-    {
-        title: "Gene Tag",
-        default: () => ({
-            negate: false,
-            keyword: {
-                field: api.KeywordStrainField.GENE_LOCUS_TAG,
-                values: []
-            },
-        }),
-    },
-    {
-        title: "SPDI",
-        default: () => ({
-            negate: false,
-            keyword: {
-                field: api.KeywordStrainField.SNP_SPDI,
-                values: []
-            },
-        }),
-    }
+    ...keywordDefault
 ];
 
 export const SearchConditionAddButton = ({
@@ -77,6 +39,7 @@ export const SearchConditionAddButton = ({
                         }
                     >
                         {v.title}
+                        {v.subtitle && <small><br/>{v.subtitle}</small>}
                     </Menu.Item>
                 );
             })}

@@ -18,9 +18,9 @@ namespace Web
             
             CreateMap<Indexer.Data.SnpData, Snp>(MemberList.None);
             CreateMap<Indexer.Data.SnpData.Annotation, SnpAnnotation>(MemberList.None);
-            CreateMap<Indexer.Data.AnalysisData, StrainResult>(MemberList.None);
-            CreateMap<Indexer.Data.AnalysisData.InsertionSequence, InsertionSequence>(MemberList.None);
-            CreateMap<Indexer.Data.AnalysisData.InsertionSequence.PrefixedPosition, InsertionSequencePosition>(MemberList
+            CreateMap<Indexer.Data.EnrichedAnalysisData, StrainResult>(MemberList.None);
+            CreateMap<Indexer.Data.EnrichedAnalysisData.InsertionSequence, InsertionSequence>(MemberList.None);
+            CreateMap<Indexer.Data.EnrichedAnalysisData.InsertionSequence.PrefixedPosition, InsertionSequencePosition>(MemberList
                 .None);
             // Fix problem with oneof
             CreateMap<Indexer.Data.CrisprPartData, CrisprPart>(MemberList.None).ForAllMembers(opts =>
