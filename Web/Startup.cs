@@ -1,10 +1,13 @@
 ﻿using System;
 using System.IO.Compression;
+using System.Linq;
 using Indexer;
 using LiteDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,8 +18,12 @@ namespace Web
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc((options) =>
@@ -25,18 +32,24 @@ namespace Web
                 options.ResponseCompressionLevel = CompressionLevel.Optimal;
                 options.ResponseCompressionAlgorithm = "gzip";
             });
+
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
+            
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
             services.AddAutoMapper(typeof(GrpcMapper));
 
-
             services.AddSingleton<LiteDbDriver, LiteDbDriver>((provider) =>
             {
-                var db = new LiteDatabase(@"C:\Users\Gaetan\RiderProjects\API\Indexer\bin\Debug\net5.0\db");
+                var db = new LiteDatabase(Configuration["Database:LiteDB:Path"]);
                 return new LiteDbDriver(db);
             });
             services.AddSingleton<NexusGraph, NexusGraph>((provider) =>
             {
-                return new NexusGraph("C:\\Users\\Gaetan\\Downloads\\tb-tools\\results\\phylogenetic_network.nexus",
+                return new NexusGraph(Configuration["Network:Path"],
                     provider.GetService<ILogger<NexusGraph>>() ?? throw new InvalidOperationException());
             });
 
@@ -52,6 +65,8 @@ namespace Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseResponseCompression();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -64,21 +79,21 @@ namespace Web
             app.UseCors();
 
             app.UseGrpcWeb();
-
-            app.UseEndpoints(endpoints =>
+            
+          app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<ApiService>()
                     .RequireCors("AllowAll")
                     .EnableGrpcWeb();
-            });
-
+            });     
+          
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
                 spa.Options.DevServerPort = 4000;
                 if (env.IsDevelopment())
                 {
-                    // spa.UseReactDevelopmentServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4000");
                 }
             });
         }

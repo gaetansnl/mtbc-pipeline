@@ -1,7 +1,7 @@
 import { RPCImpl } from "protobufjs";
 import { ChunkParser, ChunkType } from "./ChunkParser";
 import { api } from "./grpc";
-const serverUrl = "http://localhost:5000";
+const serverUrl = `//${window.location.host}`;
 
 /* Hack to use grpc-web format https://github.com/grpc/grpc-web/issues/80*/
 
