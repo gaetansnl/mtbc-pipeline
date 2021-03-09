@@ -1,28 +1,28 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Layout, Space, Typography } from "antd";
+import React, {useCallback, useEffect, useState} from "react";
+import {Layout, Space, Spin, Typography} from "antd";
 import PhylogeneticNetwork from "components/PhylogeneticNetwork";
 import SearchPanel from "components/search/SearchPanel";
 import PhylogeneticNetworkSettings from "components/PhylogeneticNetworkSettings";
 import StrainInfo from "components/StrainInfo";
-import { useQuery } from "react-query";
-import { api } from "state/grpc";
-import { client } from "state/state";
+import {useQuery} from "react-query";
+import {api} from "state/grpc";
+import {client} from "state/state";
 
-const { Sider } = Layout;
+const {Sider} = Layout;
 
 function HomePage(props: any) {
-    const [networkSettings, setNetworkSettings] = useState({ precision: 4 });
+    const [networkSettings, setNetworkSettings] = useState({precision: 4});
     const edgePrecision = 2 * Math.pow(10, -(networkSettings.precision / 2) - 2);
     let [selectedNodes, setSelectedNodes] = useState<any>([]);
     let [searchedNodes, setSearchedNodes] = useState<any>([]);
     let [infoOpened, setInfoOpened] = useState<boolean>(false);
 
     let [currentSearch, setCurrentSearch] = useState<api.IStrainCondition | null>(null);
-    const { isLoading, isError, data, error, remove } = useQuery(
+    const {isLoading, isError, data, error, remove} = useQuery(
         ["search", currentSearch],
         async () => {
             if (!currentSearch) return null;
-            return client.search({ condition: currentSearch });
+            return client.search({condition: currentSearch});
         },
         {
             staleTime: Number.POSITIVE_INFINITY,
@@ -37,11 +37,11 @@ function HomePage(props: any) {
     const currentSelectedNodes = selectedNodes.length ? selectedNodes : searchedNodes;
     useEffect(() => setInfoOpened(currentSelectedNodes.length > 0), [currentSelectedNodes.length]);
 
-console.log(currentSelectedNodes);
+    console.log(currentSelectedNodes);
     return (
-        <Layout style={{ height: "100%" }}>
-            <Sider width={300} style={{ padding: 15 }}>
-                <Space direction="vertical" style={{ width: "100%" }}>
+        <Layout style={{height: "100%"}}>
+            <Sider width={300} style={{padding: 15}}>
+                <Space direction="vertical" style={{width: "100%"}}> <Spin spinning={isLoading} delay={500}>
                     <Typography.Text>
                         <b>Display configuration</b>
                     </Typography.Text>
@@ -53,12 +53,15 @@ console.log(currentSelectedNodes);
                     <Typography.Text>
                         <b>Filter</b>
                     </Typography.Text>
+
                     <SearchPanel
                         onSearch={(v) => {
                             setSelectedNodes([]);
                             setCurrentSearch(v);
                         }}
                     />
+                </Spin>
+
                 </Space>
             </Sider>
             <Layout>
@@ -70,9 +73,9 @@ console.log(currentSelectedNodes);
                 />
             </Layout>
             {infoOpened && (
-                <Sider width={500} style={{ height: "100%", overflowY: "scroll" }}>
+                <Sider width={500} style={{height: "100%", overflowY: "scroll"}}>
                     {currentSelectedNodes.length === 1 && (
-                        <StrainInfo id={currentSelectedNodes[0]} />
+                        <StrainInfo id={currentSelectedNodes[0]}/>
                     )}
                 </Sider>
             )}

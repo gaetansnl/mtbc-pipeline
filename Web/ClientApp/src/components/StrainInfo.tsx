@@ -1,4 +1,4 @@
-import { Button, Collapse, Descriptions, Spin, Tag, Typography } from "antd";
+import { Button, Collapse, Descriptions, Spin, Tag, Tooltip, Typography } from "antd";
 import React from "react";
 import { useQuery } from "react-query";
 import { client } from "../state/state";
@@ -114,10 +114,35 @@ function StrainInfo({ id }: { id: string }) {
                     <InsertionSequencesFoundList insertionSequences={strain.insertionSequences} />
                 )}
             </Collapse.Panel>
-            <Collapse.Panel header="CRISPR" key="7">
+            <Collapse.Panel header="Lineages" key="7">
+                <Descriptions column={1}>
+                    {strain.lineages
+                        ?.filter((v) => v.lineages?.length)
+                        .map((v) => {
+                            return (
+                                <Descriptions.Item
+                                    label={
+                                        <Tooltip title={v.study?.title}>
+                                            <a
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                href={v.study?.url || undefined}
+                                            >
+                                                {v.name?.value || v.key}
+                                            </a>
+                                        </Tooltip>
+                                    }
+                                >
+                                    {v.lineages?.join(",")}
+                                </Descriptions.Item>
+                            );
+                        })}
+                </Descriptions>
+            </Collapse.Panel>
+            <Collapse.Panel header="CRISPR" key="8">
                 {strain.crispr && <CrisprViewer crisprParts={strain.crispr} />}
             </Collapse.Panel>
-            <Collapse.Panel header="Spoligotyping in silico (CRISPR reconstruction)" key="8">
+            <Collapse.Panel header="Spoligotyping in silico (CRISPR reconstruction)" key="9">
                 <Typography.Text>
                     <b>Spoligotyping 43 (CRISPR build)</b>
                 </Typography.Text>
@@ -131,7 +156,7 @@ function StrainInfo({ id }: { id: string }) {
                     <SpoligotypingDisplay spoligotyping={strain.spoligotype98Crispr} />
                 )}
             </Collapse.Panel>
-            <Collapse.Panel header="Spoligotyping in silico (Blast)" key="9">
+            <Collapse.Panel header="Spoligotyping in silico (Blast)" key="10">
                 <Typography.Text>
                     <b>Spoligotyping 43 (Blast)</b>{" "}
                     {!strain.spoligotype43MatchBlast && (

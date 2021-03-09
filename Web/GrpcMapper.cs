@@ -20,6 +20,7 @@ namespace Web
             CreateMap<Indexer.Data.SnpData.Annotation, SnpAnnotation>(MemberList.None);
             CreateMap<Indexer.Data.EnrichedAnalysisData, StrainResult>(MemberList.None);
             CreateMap<Indexer.Data.EnrichedAnalysisData.InsertionSequence, InsertionSequence>(MemberList.None);
+            CreateMap<Indexer.Data.EnrichedAnalysisData.Lineage, Lineage>(MemberList.None);
             CreateMap<Indexer.Data.EnrichedAnalysisData.InsertionSequence.PrefixedPosition, InsertionSequencePosition>(MemberList
                 .None);
             // Fix problem with oneof

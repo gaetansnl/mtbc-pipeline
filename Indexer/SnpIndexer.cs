@@ -47,8 +47,8 @@ namespace Indexer
             if (Config.Snp == null) return;
             foreach (var snpSource in Config.Snp)
             {
-                if (snpSource?.CsvFile == null) continue;
-                foreach (var file in snpSource.CsvFile)
+                if (snpSource?.TsvFile == null) continue;
+                foreach (var file in snpSource.TsvFile)
                 {
                     if (file == null) continue;
                     var path = Config.ResolvePath(file);

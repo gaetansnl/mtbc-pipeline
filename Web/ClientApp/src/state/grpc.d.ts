@@ -3337,6 +3337,114 @@ export namespace api {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a Lineage. */
+    interface ILineage {
+
+        /** Lineage key */
+        key?: (string|null);
+
+        /** Lineage name */
+        name?: (google.protobuf.IStringValue|null);
+
+        /** Lineage lineages */
+        lineages?: (string[]|null);
+
+        /** Lineage study */
+        study?: (api.IStudy|null);
+    }
+
+    /** Represents a Lineage. */
+    class Lineage implements ILineage {
+
+        /**
+         * Constructs a new Lineage.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.ILineage);
+
+        /** Lineage key. */
+        public key: string;
+
+        /** Lineage name. */
+        public name?: (google.protobuf.IStringValue|null);
+
+        /** Lineage lineages. */
+        public lineages: string[];
+
+        /** Lineage study. */
+        public study?: (api.IStudy|null);
+
+        /**
+         * Creates a new Lineage instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Lineage instance
+         */
+        public static create(properties?: api.ILineage): api.Lineage;
+
+        /**
+         * Encodes the specified Lineage message. Does not implicitly {@link api.Lineage.verify|verify} messages.
+         * @param message Lineage message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.ILineage, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Lineage message, length delimited. Does not implicitly {@link api.Lineage.verify|verify} messages.
+         * @param message Lineage message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.ILineage, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Lineage message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Lineage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.Lineage;
+
+        /**
+         * Decodes a Lineage message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Lineage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.Lineage;
+
+        /**
+         * Verifies a Lineage message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Lineage message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Lineage
+         */
+        public static fromObject(object: { [k: string]: any }): api.Lineage;
+
+        /**
+         * Creates a plain object from a Lineage message. Also converts values to other types if specified.
+         * @param message Lineage
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.Lineage, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Lineage to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a StrainResult. */
     interface IStrainResult {
 
@@ -3378,6 +3486,9 @@ export namespace api {
 
         /** StrainResult snp */
         snp?: (api.ISnp[]|null);
+
+        /** StrainResult lineages */
+        lineages?: (api.ILineage[]|null);
     }
 
     /** Represents a StrainResult. */
@@ -3427,6 +3538,9 @@ export namespace api {
 
         /** StrainResult snp. */
         public snp: api.ISnp[];
+
+        /** StrainResult lineages. */
+        public lineages: api.ILineage[];
 
         /**
          * Creates a new StrainResult instance using the specified properties.

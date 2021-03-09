@@ -2,14 +2,89 @@
 snp:
   - study:
       doi: doi.org/10.1093/gbe/evy145
-    csv_file:
-      - ./snp/Ates.csv
+    tsv_file:
+      - ./snp/Ates.tsv
   - study:
       doi: doi.org/10.1371/journal.pone.0214088
-    csv_file:
-      - ./snp/Borrell.csv
-      - ./snp/Borrell_indels.csv
+    tsv_file:
+      - ./snp/Borrell.tsv
+      - ./snp/Borrell_indels.tsv
   - study:
       doi: doi.org/10.7717/peerj.1905
-    csv_file:
-      - ./snp/Coker.csv  
+    tsv_file:
+      - ./snp/Coker.tsv
+  - tsv_file:
+      - ./snp/Coll.tsv
+      - ./snp/Coll_full.tsv
+      - ./snp/Coll_l1.tsv
+      - ./snp/Coll_other.tsv
+  - tsv_file:
+      - ./snp/comas.tsv
+  - study:
+      doi: doi.org/10.1101/2020.06.10.141788
+    tsv_file:
+      - ./snp/CoscollaDR.tsv
+      - ./snp/CoscollaL56.tsv # Study ???
+      - ./snp/CoscollaL9.tsv # Study ???
+  - study:
+      doi: doi.org/10.3201/eid2303.160679
+    tsv_file:
+      - ./snp/Congo.tsv
+  - study:
+      doi: doi.org/10.1128/JB.188.2.759-772.2006
+    tsv_file:
+      - ./snp/Filliol.tsv
+  - study:
+      doi: doi.org/10.1101/2020.09.29.293274
+    tsv_file:
+      - ./snp/Freschi.tsv
+  - study:
+      doi: doi.org/10.1371/journal.pone.0039855
+    tsv_file:
+      - ./snp/Homolka.tsv # Le fichier ne contient pas la bonne référence quand c'est un gène qui est définit comme "complement", et il en manque car ça dépasse window_size
+  - study:
+      doi: doi.org/10.7717/peerj.5895
+    tsv_file:
+      - ./snp/Kohl.tsv
+  - study:
+      doi: doi.org/10.1371/journal.pone.0201146
+    tsv_file:
+      - ./snp/Koster.tsv
+  - tsv_file:
+      - ./snp/L6Animal.tsv
+  - study:
+      doi: doi.org/10.1101/213850
+    tsv_file:
+      - ./snp/Lipworth.tsv
+  - tsv_file:
+      - ./snp/Merker.tsv
+  - tsv_file:
+      - ./snp/Palittapongarnpim.tsv
+      - ./snp/Palittapongarnpim_full.tsv
+  - tsv_file:
+      - ./snp/PGG.tsv
+  - tsv_file:
+      - ./snp/Shitikov.tsv
+  - study:
+      doi: doi.org/10.1038/ng.3704
+    tsv_file:
+      - ./snp/Stucki.tsv
+  - study:
+      doi: doi.org/10.1038/s41598-020-64895-4
+    tsv_file:
+      - ./snp/Tantivitayakul.tsv
+  - tsv_file:
+      - ./snp/tlyA.tsv
+lineages:
+#  - key: palittapongarnpim
+#    doi:
+#  - key: shitikov
+#    doi:
+  - key: stucki
+    name: Stucki
+    doi: doi.org/10.1038/ng.3704
+#  - key: coscolla
+#    doi:
+  - key: lipworth
+    name: Lipworth
+    doi: doi.org/10.1101/213850

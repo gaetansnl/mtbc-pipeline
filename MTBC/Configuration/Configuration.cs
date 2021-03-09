@@ -12,6 +12,7 @@ namespace MTBC.Configuration
         public List<SnpSource>? Snp;
         public List<GeneSource>? Gene;
         public List<ReferenceSource>? Reference;
+        public List<LineageSource>? Lineages;
         public string? AnalysisResultPath;
 
         public string ResolvePath(string path)

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Doi;
 using Core.Ncbi;
 using Indexer.Data;
 using Indexer.Utils;
@@ -19,14 +20,16 @@ namespace Indexer
         protected LiteDbDriver Database;
         protected NcbiClient NcbiClient;
         protected CountryCodeHelper CountryCodeHelper;
+        protected DoiClient DoiClient;
 
         public StrainIndexer(Configuration config, LiteDbDriver database, NcbiClient ncbiClient,
-            CountryCodeHelper countryCodeHelper)
+            CountryCodeHelper countryCodeHelper, DoiClient doiClient)
         {
             Config = config;
             Database = database;
             NcbiClient = ncbiClient;
             CountryCodeHelper = countryCodeHelper;
+            DoiClient = doiClient;
         }
 
         public List<bool> RealSpol98(EnrichedAnalysisData data)
@@ -98,8 +101,16 @@ namespace Indexer
 
                 result.CountryCode = CountryCodeHelper.LookupCountryCode(
                     result.Run?.Samples[0]?.Location,
-                     coordinates.HasValue ? (long)coordinates?.Latitude :null,
-                    coordinates.HasValue ?(long) coordinates?.Longitude:null);
+                    coordinates.HasValue ? (long) coordinates?.Latitude : null,
+                    coordinates.HasValue ? (long) coordinates?.Longitude : null);
+
+                foreach (var lineage in result.Lineages)
+                {
+                    var info = Config.Lineages.FirstOrDefault(v => v.Key == lineage.Key);
+                    if (info == null) continue;
+                    lineage.Name = info.Name;
+                    lineage.Study = await DoiClient.GetCitation(info.Doi);
+                }
 
                 Console.WriteLine($"Enriched {file}");
                 await Database.Index(result);

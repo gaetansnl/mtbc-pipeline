@@ -3,6 +3,7 @@ package api;
 option csharp_namespace = "Web";
 import "data.proto";
 import "ncbi.proto";
+import "google/protobuf/wrappers.proto";
 
 message InsertionSequencePosition{
   int32 position = 1;
@@ -55,6 +56,13 @@ message Range{
   int32 to = 2;
 }
 
+message Lineage {
+  string key = 1;
+  google.protobuf.StringValue name = 2;
+  repeated string lineages = 3;
+  Study study = 4;
+}
+
 message StrainResult{
   string strain_id = 1;
   NcbiRun run = 2;
@@ -69,4 +77,5 @@ message StrainResult{
   repeated bool spoligotype_bloin_blast = 11;
   repeated CrisprPart crispr = 12;
   repeated Snp snp = 13;
+  repeated Lineage lineages = 14;
 }

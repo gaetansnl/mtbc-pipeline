@@ -22,6 +22,7 @@ namespace Indexer
             Database = database;
             SnpData = Database.GetCollection<SnpData>("snp");
             SnpData.EnsureIndex(v => v.Id);
+            Database.Mapper.Entity<SnpData>().Ignore(v => v.NcbiUrl);
             
             AnalysisData = Database.GetCollection<EnrichedAnalysisData>("result");
             AnalysisData.EnsureIndex("$.StrainId");
@@ -107,7 +108,15 @@ namespace Indexer
             {
                 if (condition.Keyword.Values.Count == 0) return null;
                 var key = "p" + (args.Count + 1);
-                args.Add(key, new BsonArray(condition.Keyword.Values.Select(v => new BsonValue(v))));
+                if (condition.Keyword.Field == KeywordCondition.KeywordField.SNP_POSITION)
+                {
+                    args.Add(key, new BsonArray(condition.Keyword.Values.Select(v => new BsonValue(int.Parse(v)))));
+                }
+                else
+                {
+                    args.Add(key, new BsonArray(condition.Keyword.Values.Select(v => new BsonValue(v))));
+                }
+                
                 Func<string, string> fieldCondition =field => $"{field} IN @{key}";
                 Func<string, string> arrayCondition = field =>
                     condition.Keyword.AllOf
@@ -120,8 +129,9 @@ namespace Indexer
                     KeywordCondition.KeywordField.COUNTRY_CODE => BsonExpression.Create(fieldCondition("$.CountryCode")),
                     KeywordCondition.KeywordField.GENE_ID => BsonExpression.Create($"({arrayCondition("$.MissingGenes[*].$id")})=false"),
                     KeywordCondition.KeywordField.GENE_LOCUS_TAG => BsonExpression.Create($"({arrayCondition("$.MissingGeneTags[*]")})=false"),
-                    KeywordCondition.KeywordField.SNP_POSITION => BsonExpression.Create(arrayCondition("MAP($.SnpWithoutAnnotation[*]=>STRING(@.Position))")),
+                    KeywordCondition.KeywordField.SNP_POSITION => BsonExpression.Create(arrayCondition("$.SnpWithoutAnnotation[*].Position")),
                     KeywordCondition.KeywordField.INSERTION_SEQUENCE_NAME => BsonExpression.Create(arrayCondition("$.InsertionSequences[*].Name")),
+                    _ => throw new ArgumentOutOfRangeException()
                 };
             }
             else

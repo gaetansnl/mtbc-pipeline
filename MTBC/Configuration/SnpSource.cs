@@ -4,7 +4,7 @@ namespace MTBC.Configuration
 {
     public class SnpSource
     {
-        public List<string>? CsvFile;
+        public List<string>? TsvFile;
         public Study? Study;
     }
 }

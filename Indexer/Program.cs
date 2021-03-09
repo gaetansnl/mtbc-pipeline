@@ -53,7 +53,7 @@ namespace Indexer
             // var geneIndexer = new FastaGeneIndexer(driver, "NC_000962.3", "C:\\Users\\Gaetan\\RiderProjects\\API\\Web\\Data\\genes\\H37Rv.fasta");
             // await geneIndexer.Index();
             
-            var strainIndexer = new StrainIndexer(config, driver, ncbiClient,countryHelper);
+            var strainIndexer = new StrainIndexer(config, driver, ncbiClient,countryHelper, doiClient);
             await strainIndexer.Index();
 
 

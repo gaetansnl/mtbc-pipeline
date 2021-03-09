@@ -7898,6 +7898,287 @@ export const api = $root.api = (() => {
         return Range;
     })();
 
+    api.Lineage = (function() {
+
+        /**
+         * Properties of a Lineage.
+         * @memberof api
+         * @interface ILineage
+         * @property {string|null} [key] Lineage key
+         * @property {google.protobuf.IStringValue|null} [name] Lineage name
+         * @property {Array.<string>|null} [lineages] Lineage lineages
+         * @property {api.IStudy|null} [study] Lineage study
+         */
+
+        /**
+         * Constructs a new Lineage.
+         * @memberof api
+         * @classdesc Represents a Lineage.
+         * @implements ILineage
+         * @constructor
+         * @param {api.ILineage=} [properties] Properties to set
+         */
+        function Lineage(properties) {
+            this.lineages = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Lineage key.
+         * @member {string} key
+         * @memberof api.Lineage
+         * @instance
+         */
+        Lineage.prototype.key = "";
+
+        /**
+         * Lineage name.
+         * @member {google.protobuf.IStringValue|null|undefined} name
+         * @memberof api.Lineage
+         * @instance
+         */
+        Lineage.prototype.name = null;
+
+        /**
+         * Lineage lineages.
+         * @member {Array.<string>} lineages
+         * @memberof api.Lineage
+         * @instance
+         */
+        Lineage.prototype.lineages = $util.emptyArray;
+
+        /**
+         * Lineage study.
+         * @member {api.IStudy|null|undefined} study
+         * @memberof api.Lineage
+         * @instance
+         */
+        Lineage.prototype.study = null;
+
+        /**
+         * Creates a new Lineage instance using the specified properties.
+         * @function create
+         * @memberof api.Lineage
+         * @static
+         * @param {api.ILineage=} [properties] Properties to set
+         * @returns {api.Lineage} Lineage instance
+         */
+        Lineage.create = function create(properties) {
+            return new Lineage(properties);
+        };
+
+        /**
+         * Encodes the specified Lineage message. Does not implicitly {@link api.Lineage.verify|verify} messages.
+         * @function encode
+         * @memberof api.Lineage
+         * @static
+         * @param {api.ILineage} message Lineage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Lineage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.key != null && Object.hasOwnProperty.call(message, "key"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.key);
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                $root.google.protobuf.StringValue.encode(message.name, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.lineages != null && message.lineages.length)
+                for (let i = 0; i < message.lineages.length; ++i)
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.lineages[i]);
+            if (message.study != null && Object.hasOwnProperty.call(message, "study"))
+                $root.api.Study.encode(message.study, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Lineage message, length delimited. Does not implicitly {@link api.Lineage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.Lineage
+         * @static
+         * @param {api.ILineage} message Lineage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Lineage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Lineage message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.Lineage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.Lineage} Lineage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Lineage.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.Lineage();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.key = reader.string();
+                    break;
+                case 2:
+                    message.name = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    if (!(message.lineages && message.lineages.length))
+                        message.lineages = [];
+                    message.lineages.push(reader.string());
+                    break;
+                case 4:
+                    message.study = $root.api.Study.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Lineage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.Lineage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.Lineage} Lineage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Lineage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Lineage message.
+         * @function verify
+         * @memberof api.Lineage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Lineage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.key != null && message.hasOwnProperty("key"))
+                if (!$util.isString(message.key))
+                    return "key: string expected";
+            if (message.name != null && message.hasOwnProperty("name")) {
+                let error = $root.google.protobuf.StringValue.verify(message.name);
+                if (error)
+                    return "name." + error;
+            }
+            if (message.lineages != null && message.hasOwnProperty("lineages")) {
+                if (!Array.isArray(message.lineages))
+                    return "lineages: array expected";
+                for (let i = 0; i < message.lineages.length; ++i)
+                    if (!$util.isString(message.lineages[i]))
+                        return "lineages: string[] expected";
+            }
+            if (message.study != null && message.hasOwnProperty("study")) {
+                let error = $root.api.Study.verify(message.study);
+                if (error)
+                    return "study." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a Lineage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.Lineage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.Lineage} Lineage
+         */
+        Lineage.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.Lineage)
+                return object;
+            let message = new $root.api.Lineage();
+            if (object.key != null)
+                message.key = String(object.key);
+            if (object.name != null) {
+                if (typeof object.name !== "object")
+                    throw TypeError(".api.Lineage.name: object expected");
+                message.name = $root.google.protobuf.StringValue.fromObject(object.name);
+            }
+            if (object.lineages) {
+                if (!Array.isArray(object.lineages))
+                    throw TypeError(".api.Lineage.lineages: array expected");
+                message.lineages = [];
+                for (let i = 0; i < object.lineages.length; ++i)
+                    message.lineages[i] = String(object.lineages[i]);
+            }
+            if (object.study != null) {
+                if (typeof object.study !== "object")
+                    throw TypeError(".api.Lineage.study: object expected");
+                message.study = $root.api.Study.fromObject(object.study);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Lineage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.Lineage
+         * @static
+         * @param {api.Lineage} message Lineage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Lineage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults)
+                object.lineages = [];
+            if (options.defaults) {
+                object.key = "";
+                object.name = null;
+                object.study = null;
+            }
+            if (message.key != null && message.hasOwnProperty("key"))
+                object.key = message.key;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = $root.google.protobuf.StringValue.toObject(message.name, options);
+            if (message.lineages && message.lineages.length) {
+                object.lineages = [];
+                for (let j = 0; j < message.lineages.length; ++j)
+                    object.lineages[j] = message.lineages[j];
+            }
+            if (message.study != null && message.hasOwnProperty("study"))
+                object.study = $root.api.Study.toObject(message.study, options);
+            return object;
+        };
+
+        /**
+         * Converts this Lineage to JSON.
+         * @function toJSON
+         * @memberof api.Lineage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Lineage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Lineage;
+    })();
+
     api.StrainResult = (function() {
 
         /**
@@ -7917,6 +8198,7 @@ export const api = $root.api = (() => {
          * @property {Array.<boolean>|null} [spoligotypeBloinBlast] StrainResult spoligotypeBloinBlast
          * @property {Array.<api.ICrisprPart>|null} [crispr] StrainResult crispr
          * @property {Array.<api.ISnp>|null} [snp] StrainResult snp
+         * @property {Array.<api.ILineage>|null} [lineages] StrainResult lineages
          */
 
         /**
@@ -7937,6 +8219,7 @@ export const api = $root.api = (() => {
             this.spoligotypeBloinBlast = [];
             this.crispr = [];
             this.snp = [];
+            this.lineages = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -8048,6 +8331,14 @@ export const api = $root.api = (() => {
         StrainResult.prototype.snp = $util.emptyArray;
 
         /**
+         * StrainResult lineages.
+         * @member {Array.<api.ILineage>} lineages
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.lineages = $util.emptyArray;
+
+        /**
          * Creates a new StrainResult instance using the specified properties.
          * @function create
          * @memberof api.StrainResult
@@ -8121,6 +8412,9 @@ export const api = $root.api = (() => {
             if (message.snp != null && message.snp.length)
                 for (let i = 0; i < message.snp.length; ++i)
                     $root.api.Snp.encode(message.snp[i], writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
+            if (message.lineages != null && message.lineages.length)
+                for (let i = 0; i < message.lineages.length; ++i)
+                    $root.api.Lineage.encode(message.lineages[i], writer.uint32(/* id 14, wireType 2 =*/114).fork()).ldelim();
             return writer;
         };
 
@@ -8236,6 +8530,11 @@ export const api = $root.api = (() => {
                     if (!(message.snp && message.snp.length))
                         message.snp = [];
                     message.snp.push($root.api.Snp.decode(reader, reader.uint32()));
+                    break;
+                case 14:
+                    if (!(message.lineages && message.lineages.length))
+                        message.lineages = [];
+                    message.lineages.push($root.api.Lineage.decode(reader, reader.uint32()));
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -8357,6 +8656,15 @@ export const api = $root.api = (() => {
                         return "snp." + error;
                 }
             }
+            if (message.lineages != null && message.hasOwnProperty("lineages")) {
+                if (!Array.isArray(message.lineages))
+                    return "lineages: array expected";
+                for (let i = 0; i < message.lineages.length; ++i) {
+                    let error = $root.api.Lineage.verify(message.lineages[i]);
+                    if (error)
+                        return "lineages." + error;
+                }
+            }
             return null;
         };
 
@@ -8458,6 +8766,16 @@ export const api = $root.api = (() => {
                     message.snp[i] = $root.api.Snp.fromObject(object.snp[i]);
                 }
             }
+            if (object.lineages) {
+                if (!Array.isArray(object.lineages))
+                    throw TypeError(".api.StrainResult.lineages: array expected");
+                message.lineages = [];
+                for (let i = 0; i < object.lineages.length; ++i) {
+                    if (typeof object.lineages[i] !== "object")
+                        throw TypeError(".api.StrainResult.lineages: object expected");
+                    message.lineages[i] = $root.api.Lineage.fromObject(object.lineages[i]);
+                }
+            }
             return message;
         };
 
@@ -8484,6 +8802,7 @@ export const api = $root.api = (() => {
                 object.spoligotypeBloinBlast = [];
                 object.crispr = [];
                 object.snp = [];
+                object.lineages = [];
             }
             if (options.defaults) {
                 object.strainId = "";
@@ -8543,6 +8862,11 @@ export const api = $root.api = (() => {
                 object.snp = [];
                 for (let j = 0; j < message.snp.length; ++j)
                     object.snp[j] = $root.api.Snp.toObject(message.snp[j], options);
+            }
+            if (message.lineages && message.lineages.length) {
+                object.lineages = [];
+                for (let j = 0; j < message.lineages.length; ++j)
+                    object.lineages[j] = $root.api.Lineage.toObject(message.lineages[j], options);
             }
             return object;
         };
