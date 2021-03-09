@@ -49,8 +49,8 @@ const Edges = React.memo(
         applyProps: (instance, _, props) => {
             const { nodesById, edges, edgeColor, scale } = props;
             instance.clear();
-            instance.cacheAsBitmap = false;
-            instance.cacheAsBitmap = true;
+            // instance.cacheAsBitmap = false;
+            // instance.cacheAsBitmap = true;
             instance.lineStyle(2, edgeColor, 0.5);
             edges.forEach(([from, to]) => {
                 const fromNode = nodesById[from];
