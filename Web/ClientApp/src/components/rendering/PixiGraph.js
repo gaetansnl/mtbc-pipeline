@@ -3,6 +3,7 @@ import { Container, PixiComponent } from "@inlet/react-pixi";
 import { Graphics } from "pixi.js";
 import PixiDrawableRect from "components/rendering/PixiDrawableRect";
 import { findNodeAt, findNodeIn, findNodeMaxPosition } from "components/rendering/utils";
+import {uniqBy} from 'lodash-es';
 
 const Nodes = React.memo(
     PixiComponent("Nodes", {
@@ -90,11 +91,16 @@ export default React.memo(function PixiGraph({
         [nodeSize, nodes, onNodeClick, scale]
     );
     const handleSelection = useCallback(
-        (from, to) => {
-            const selectedNodes = findNodeIn(nodes, scale, from, to);
-            onNodesSelected && onNodesSelected(selectedNodes);
+        (from, to, { ctrlKey, shiftKey }) => {
+            const newSelectedNodes = findNodeIn(nodes, scale, from, to);
+            onNodesSelected &&
+                onNodesSelected(
+                    ctrlKey
+                        ? uniqBy([...newSelectedNodes, ...selectedNodes], v => v.name)
+                        : newSelectedNodes
+                );
         },
-        [nodes, onNodesSelected, scale]
+        [nodes, onNodesSelected, scale, selectedNodes]
     );
     /* We can use ParticleContainer to speed up node rendering */
     return (

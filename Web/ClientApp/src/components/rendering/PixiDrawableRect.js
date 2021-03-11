@@ -30,8 +30,11 @@ const PixiDrawableRect = ({ children, color, onEnd }) => {
         const newPosition = e.data.getLocalPosition(e.currentTarget);
         setCurrentPosition(asPoint(newPosition.x, newPosition.y));
     }, []);
-    const handleDragEnd = useCallback(() => {
-        isDragging && onEnd && onEnd(startPoint, currentPosition);
+    const handleDragEnd = useCallback((e) => {
+        isDragging && onEnd && onEnd(startPoint, currentPosition, {
+            ctrlKey: e.data.originalEvent.ctrlKey,
+            shiftKey: e.data.originalEvent.shiftKey
+        });
         setIsDragging(false);
     }, [currentPosition, isDragging, onEnd, startPoint]);
     const containsPoint = useCallback(() => true, []);
