@@ -8,11 +8,16 @@ interface GeneRowExtra {
     exclusivity: number;
 }
 
-function GeneRow({ gene,extra }: { gene: api.IGene; extra?: GeneRowExtra | null }) {
+function GeneRow({ gene, extra }: { gene: api.IGene; extra?: GeneRowExtra | null }) {
     return (
         <div style={{ height: 50, overflow: "hidden" }}>
-            <b>{gene.locusTag}</b> <Typography.Text type="secondary">({gene.id})</Typography.Text>
-            {extra?.exclusivity && <ExclusivityLabel value={extra?.exclusivity}/>}
+            <Typography.Text
+                copyable={{ text: gene.locusTag || undefined, tooltips: "Copy locus tag" }}
+            >
+                <b>{gene.locusTag}</b>
+            </Typography.Text>{" "}
+            <Typography.Text type="secondary"  copyable={{ text: gene.id || undefined, tooltips: "Copy accession" }}>({gene.id})</Typography.Text>
+            {extra?.exclusivity && <ExclusivityLabel value={extra?.exclusivity} />}
             <div>
                 <Typography.Text>{gene.description?.value}</Typography.Text>
             </div>

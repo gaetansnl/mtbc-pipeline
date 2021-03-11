@@ -1911,7 +1911,7 @@ export namespace api {
         INSERTION_SEQUENCE_NAME = 8,
         SPOL_43_BLAST = 9,
         SPOL_98_BLAST = 10,
-        SPOL_BLOIN_BLAST = 11,
+        SPOL_BLOUIN_BLAST = 11,
         SPOL_43_CRISPR = 12,
         SPOL_98_CRISPR = 13
     }
@@ -3826,8 +3826,8 @@ export namespace api {
         /** StrainResult spoligotype68MatchBlast */
         spoligotype68MatchBlast?: (boolean|null);
 
-        /** StrainResult spoligotypeBloinBlast */
-        spoligotypeBloinBlast?: (boolean[]|null);
+        /** StrainResult spoligotypeBlouinBlast */
+        spoligotypeBlouinBlast?: (boolean[]|null);
 
         /** StrainResult crispr */
         crispr?: (api.ICrisprPart[]|null);
@@ -3837,6 +3837,9 @@ export namespace api {
 
         /** StrainResult lineages */
         lineages?: (api.ILineage[]|null);
+
+        /** StrainResult country */
+        country?: (google.protobuf.IStringValue|null);
     }
 
     /** Represents a StrainResult. */
@@ -3887,8 +3890,8 @@ export namespace api {
         /** StrainResult spoligotype68MatchBlast. */
         public spoligotype68MatchBlast: boolean;
 
-        /** StrainResult spoligotypeBloinBlast. */
-        public spoligotypeBloinBlast: boolean[];
+        /** StrainResult spoligotypeBlouinBlast. */
+        public spoligotypeBlouinBlast: boolean[];
 
         /** StrainResult crispr. */
         public crispr: api.ICrisprPart[];
@@ -3898,6 +3901,9 @@ export namespace api {
 
         /** StrainResult lineages. */
         public lineages: api.ILineage[];
+
+        /** StrainResult country. */
+        public country?: (google.protobuf.IStringValue|null);
 
         /**
          * Creates a new StrainResult instance using the specified properties.

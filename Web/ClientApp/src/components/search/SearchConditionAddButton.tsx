@@ -1,9 +1,9 @@
-import {Dropdown, Menu} from "antd";
-import React, {ReactChild} from "react";
-import {api} from "state/grpc";
-import {addCondition, keywordDefault, SearchConditionChangeCallback} from "./state";
+import { Dropdown, Menu } from "antd";
+import React, { ReactChild } from "react";
+import { api } from "state/grpc";
+import { addCondition, keywordDefault, SearchConditionChangeCallback } from "./state";
 
-const items: { title: string, subtitle?: string; default: () => api.IStrainCondition }[] = [
+const items: { title: string; subtitle?: string; default: () => api.IStrainCondition }[] = [
     {
         title: "Boolean",
         subtitle: "Combine other filters",
@@ -15,7 +15,7 @@ const items: { title: string, subtitle?: string; default: () => api.IStrainCondi
             },
         }),
     },
-    ...keywordDefault
+    ...keywordDefault,
 ];
 
 export const SearchConditionAddButton = ({
@@ -39,14 +39,19 @@ export const SearchConditionAddButton = ({
                         }
                     >
                         {v.title}
-                        {v.subtitle && <small><br/>{v.subtitle}</small>}
+                        {v.subtitle && (
+                            <small>
+                                <br />
+                                {v.subtitle}
+                            </small>
+                        )}
                     </Menu.Item>
                 );
             })}
         </Menu>
     );
     return (
-        <Dropdown overlay={menu} placement="bottomCenter" arrow>
+        <Dropdown overlay={menu} placement="bottomCenter" arrow trigger={["click"]}>
             {children}
         </Dropdown>
     );

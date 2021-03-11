@@ -22,7 +22,7 @@ namespace Indexer.Search
 
             SPOL_43_BLAST = 9,
             SPOL_98_BLAST = 10,
-            SPOL_BLOIN_BLAST = 11,
+            SPOL_BLOUIN_BLAST = 11,
             SPOL_43_CRISPR = 12,
             SPOL_98_CRISPR = 13,
         }

@@ -30,7 +30,7 @@ function StrainInfo({ id }: { id: string }) {
                 <Descriptions column={1}>
                     <Descriptions.Item label="Run accession">
                         {run?.link?.value && run?.accession && (
-                            <Button
+                            <Typography.Text  copyable={{ text: run?.accession || undefined, tooltips: "Copy accession" }}>    <Button
                                 target="_blank"
                                 rel="noreferrer"
                                 size="small"
@@ -38,7 +38,7 @@ function StrainInfo({ id }: { id: string }) {
                                 type="link"
                             >
                                 {run?.accession || "-"}
-                            </Button>
+                            </Button></Typography.Text>
                         )}
                     </Descriptions.Item>
                     <Descriptions.Item label="Title">{run?.title?.value || "-"}</Descriptions.Item>
@@ -92,7 +92,8 @@ function StrainInfo({ id }: { id: string }) {
                         </Descriptions.Item>
                         <Descriptions.Item label="Strain">{v.strain?.value}</Descriptions.Item>
                         <Descriptions.Item label="Title">{v.title?.value}</Descriptions.Item>
-                        <Descriptions.Item label="Location">{v.location?.value}</Descriptions.Item>
+                        {/*<Descriptions.Item label="Location">{v.location?.value}</Descriptions.Item>*/}
+                        <Descriptions.Item label="Country">{strain.country?.value || "-"}</Descriptions.Item>
                         <Descriptions.Item label="Collected at">
                             {v.collectedAt ? (
                                 <ProtobufTimestampDisplay timestamp={v.collectedAt} />
@@ -133,7 +134,7 @@ function StrainInfo({ id }: { id: string }) {
                                         </Tooltip>
                                     }
                                 >
-                                    {v.lineages?.join(",")}
+                                    {v.lineages?.map(v => <Tag>{v}</Tag>)}
                                 </Descriptions.Item>
                             );
                         })}
@@ -191,10 +192,10 @@ function StrainInfo({ id }: { id: string }) {
                     <SpoligotypingDisplay spoligotyping={strain.spoligotype68Blast} />
                 )}
                 <Typography.Text>
-                    <b>Spoligotyping Bloin (Blast)</b>
+                    <b>Spoligotyping Blouin (Canetti) (Blast)</b>
                 </Typography.Text>
-                {strain.spoligotypeBloinBlast && (
-                    <SpoligotypingDisplay spoligotyping={strain.spoligotypeBloinBlast} />
+                {strain.spoligotypeBlouinBlast && (
+                    <SpoligotypingDisplay spoligotyping={strain.spoligotypeBlouinBlast} />
                 )}
             </Collapse.Panel>
         </Collapse>

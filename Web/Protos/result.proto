@@ -77,8 +77,9 @@ message StrainResult{
   bool spoligotype43_match_blast = 11;
   bool spoligotype98_match_blast = 12;
   bool spoligotype68_match_blast = 13;
-  repeated bool spoligotype_bloin_blast = 14;
+  repeated bool spoligotype_blouin_blast = 14;
   repeated CrisprPart crispr = 15;
   repeated Snp snp = 16;
   repeated Lineage lineages = 17;
+  google.protobuf.StringValue country = 18;
 }

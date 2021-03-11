@@ -4470,7 +4470,7 @@ export const api = $root.api = (() => {
      * @property {number} INSERTION_SEQUENCE_NAME=8 INSERTION_SEQUENCE_NAME value
      * @property {number} SPOL_43_BLAST=9 SPOL_43_BLAST value
      * @property {number} SPOL_98_BLAST=10 SPOL_98_BLAST value
-     * @property {number} SPOL_BLOIN_BLAST=11 SPOL_BLOIN_BLAST value
+     * @property {number} SPOL_BLOUIN_BLAST=11 SPOL_BLOUIN_BLAST value
      * @property {number} SPOL_43_CRISPR=12 SPOL_43_CRISPR value
      * @property {number} SPOL_98_CRISPR=13 SPOL_98_CRISPR value
      */
@@ -4487,7 +4487,7 @@ export const api = $root.api = (() => {
         values[valuesById[8] = "INSERTION_SEQUENCE_NAME"] = 8;
         values[valuesById[9] = "SPOL_43_BLAST"] = 9;
         values[valuesById[10] = "SPOL_98_BLAST"] = 10;
-        values[valuesById[11] = "SPOL_BLOIN_BLAST"] = 11;
+        values[valuesById[11] = "SPOL_BLOUIN_BLAST"] = 11;
         values[valuesById[12] = "SPOL_43_CRISPR"] = 12;
         values[valuesById[13] = "SPOL_98_CRISPR"] = 13;
         return values;
@@ -5007,7 +5007,7 @@ export const api = $root.api = (() => {
             case 10:
                 message.field = 10;
                 break;
-            case "SPOL_BLOIN_BLAST":
+            case "SPOL_BLOUIN_BLAST":
             case 11:
                 message.field = 11;
                 break;
@@ -9114,10 +9114,11 @@ export const api = $root.api = (() => {
          * @property {boolean|null} [spoligotype43MatchBlast] StrainResult spoligotype43MatchBlast
          * @property {boolean|null} [spoligotype98MatchBlast] StrainResult spoligotype98MatchBlast
          * @property {boolean|null} [spoligotype68MatchBlast] StrainResult spoligotype68MatchBlast
-         * @property {Array.<boolean>|null} [spoligotypeBloinBlast] StrainResult spoligotypeBloinBlast
+         * @property {Array.<boolean>|null} [spoligotypeBlouinBlast] StrainResult spoligotypeBlouinBlast
          * @property {Array.<api.ICrisprPart>|null} [crispr] StrainResult crispr
          * @property {Array.<api.ISnp>|null} [snp] StrainResult snp
          * @property {Array.<api.ILineage>|null} [lineages] StrainResult lineages
+         * @property {google.protobuf.IStringValue|null} [country] StrainResult country
          */
 
         /**
@@ -9137,7 +9138,7 @@ export const api = $root.api = (() => {
             this.spoligotype43Crispr = [];
             this.spoligotype98Crispr = [];
             this.spoligotype68Crispr = [];
-            this.spoligotypeBloinBlast = [];
+            this.spoligotypeBlouinBlast = [];
             this.crispr = [];
             this.snp = [];
             this.lineages = [];
@@ -9252,12 +9253,12 @@ export const api = $root.api = (() => {
         StrainResult.prototype.spoligotype68MatchBlast = false;
 
         /**
-         * StrainResult spoligotypeBloinBlast.
-         * @member {Array.<boolean>} spoligotypeBloinBlast
+         * StrainResult spoligotypeBlouinBlast.
+         * @member {Array.<boolean>} spoligotypeBlouinBlast
          * @memberof api.StrainResult
          * @instance
          */
-        StrainResult.prototype.spoligotypeBloinBlast = $util.emptyArray;
+        StrainResult.prototype.spoligotypeBlouinBlast = $util.emptyArray;
 
         /**
          * StrainResult crispr.
@@ -9282,6 +9283,14 @@ export const api = $root.api = (() => {
          * @instance
          */
         StrainResult.prototype.lineages = $util.emptyArray;
+
+        /**
+         * StrainResult country.
+         * @member {google.protobuf.IStringValue|null|undefined} country
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.country = null;
 
         /**
          * Creates a new StrainResult instance using the specified properties.
@@ -9359,10 +9368,10 @@ export const api = $root.api = (() => {
                 writer.uint32(/* id 12, wireType 0 =*/96).bool(message.spoligotype98MatchBlast);
             if (message.spoligotype68MatchBlast != null && Object.hasOwnProperty.call(message, "spoligotype68MatchBlast"))
                 writer.uint32(/* id 13, wireType 0 =*/104).bool(message.spoligotype68MatchBlast);
-            if (message.spoligotypeBloinBlast != null && message.spoligotypeBloinBlast.length) {
+            if (message.spoligotypeBlouinBlast != null && message.spoligotypeBlouinBlast.length) {
                 writer.uint32(/* id 14, wireType 2 =*/114).fork();
-                for (let i = 0; i < message.spoligotypeBloinBlast.length; ++i)
-                    writer.bool(message.spoligotypeBloinBlast[i]);
+                for (let i = 0; i < message.spoligotypeBlouinBlast.length; ++i)
+                    writer.bool(message.spoligotypeBlouinBlast[i]);
                 writer.ldelim();
             }
             if (message.crispr != null && message.crispr.length)
@@ -9374,6 +9383,8 @@ export const api = $root.api = (() => {
             if (message.lineages != null && message.lineages.length)
                 for (let i = 0; i < message.lineages.length; ++i)
                     $root.api.Lineage.encode(message.lineages[i], writer.uint32(/* id 17, wireType 2 =*/138).fork()).ldelim();
+            if (message.country != null && Object.hasOwnProperty.call(message, "country"))
+                $root.google.protobuf.StringValue.encode(message.country, writer.uint32(/* id 18, wireType 2 =*/146).fork()).ldelim();
             return writer;
         };
 
@@ -9494,14 +9505,14 @@ export const api = $root.api = (() => {
                     message.spoligotype68MatchBlast = reader.bool();
                     break;
                 case 14:
-                    if (!(message.spoligotypeBloinBlast && message.spoligotypeBloinBlast.length))
-                        message.spoligotypeBloinBlast = [];
+                    if (!(message.spoligotypeBlouinBlast && message.spoligotypeBlouinBlast.length))
+                        message.spoligotypeBlouinBlast = [];
                     if ((tag & 7) === 2) {
                         let end2 = reader.uint32() + reader.pos;
                         while (reader.pos < end2)
-                            message.spoligotypeBloinBlast.push(reader.bool());
+                            message.spoligotypeBlouinBlast.push(reader.bool());
                     } else
-                        message.spoligotypeBloinBlast.push(reader.bool());
+                        message.spoligotypeBlouinBlast.push(reader.bool());
                     break;
                 case 15:
                     if (!(message.crispr && message.crispr.length))
@@ -9517,6 +9528,9 @@ export const api = $root.api = (() => {
                     if (!(message.lineages && message.lineages.length))
                         message.lineages = [];
                     message.lineages.push($root.api.Lineage.decode(reader, reader.uint32()));
+                    break;
+                case 18:
+                    message.country = $root.google.protobuf.StringValue.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -9630,12 +9644,12 @@ export const api = $root.api = (() => {
             if (message.spoligotype68MatchBlast != null && message.hasOwnProperty("spoligotype68MatchBlast"))
                 if (typeof message.spoligotype68MatchBlast !== "boolean")
                     return "spoligotype68MatchBlast: boolean expected";
-            if (message.spoligotypeBloinBlast != null && message.hasOwnProperty("spoligotypeBloinBlast")) {
-                if (!Array.isArray(message.spoligotypeBloinBlast))
-                    return "spoligotypeBloinBlast: array expected";
-                for (let i = 0; i < message.spoligotypeBloinBlast.length; ++i)
-                    if (typeof message.spoligotypeBloinBlast[i] !== "boolean")
-                        return "spoligotypeBloinBlast: boolean[] expected";
+            if (message.spoligotypeBlouinBlast != null && message.hasOwnProperty("spoligotypeBlouinBlast")) {
+                if (!Array.isArray(message.spoligotypeBlouinBlast))
+                    return "spoligotypeBlouinBlast: array expected";
+                for (let i = 0; i < message.spoligotypeBlouinBlast.length; ++i)
+                    if (typeof message.spoligotypeBlouinBlast[i] !== "boolean")
+                        return "spoligotypeBlouinBlast: boolean[] expected";
             }
             if (message.crispr != null && message.hasOwnProperty("crispr")) {
                 if (!Array.isArray(message.crispr))
@@ -9663,6 +9677,11 @@ export const api = $root.api = (() => {
                     if (error)
                         return "lineages." + error;
                 }
+            }
+            if (message.country != null && message.hasOwnProperty("country")) {
+                let error = $root.google.protobuf.StringValue.verify(message.country);
+                if (error)
+                    return "country." + error;
             }
             return null;
         };
@@ -9754,12 +9773,12 @@ export const api = $root.api = (() => {
                 message.spoligotype98MatchBlast = Boolean(object.spoligotype98MatchBlast);
             if (object.spoligotype68MatchBlast != null)
                 message.spoligotype68MatchBlast = Boolean(object.spoligotype68MatchBlast);
-            if (object.spoligotypeBloinBlast) {
-                if (!Array.isArray(object.spoligotypeBloinBlast))
-                    throw TypeError(".api.StrainResult.spoligotypeBloinBlast: array expected");
-                message.spoligotypeBloinBlast = [];
-                for (let i = 0; i < object.spoligotypeBloinBlast.length; ++i)
-                    message.spoligotypeBloinBlast[i] = Boolean(object.spoligotypeBloinBlast[i]);
+            if (object.spoligotypeBlouinBlast) {
+                if (!Array.isArray(object.spoligotypeBlouinBlast))
+                    throw TypeError(".api.StrainResult.spoligotypeBlouinBlast: array expected");
+                message.spoligotypeBlouinBlast = [];
+                for (let i = 0; i < object.spoligotypeBlouinBlast.length; ++i)
+                    message.spoligotypeBlouinBlast[i] = Boolean(object.spoligotypeBlouinBlast[i]);
             }
             if (object.crispr) {
                 if (!Array.isArray(object.crispr))
@@ -9791,6 +9810,11 @@ export const api = $root.api = (() => {
                     message.lineages[i] = $root.api.Lineage.fromObject(object.lineages[i]);
                 }
             }
+            if (object.country != null) {
+                if (typeof object.country !== "object")
+                    throw TypeError(".api.StrainResult.country: object expected");
+                message.country = $root.google.protobuf.StringValue.fromObject(object.country);
+            }
             return message;
         };
 
@@ -9816,7 +9840,7 @@ export const api = $root.api = (() => {
                 object.spoligotype43Crispr = [];
                 object.spoligotype98Crispr = [];
                 object.spoligotype68Crispr = [];
-                object.spoligotypeBloinBlast = [];
+                object.spoligotypeBlouinBlast = [];
                 object.crispr = [];
                 object.snp = [];
                 object.lineages = [];
@@ -9827,6 +9851,7 @@ export const api = $root.api = (() => {
                 object.spoligotype43MatchBlast = false;
                 object.spoligotype98MatchBlast = false;
                 object.spoligotype68MatchBlast = false;
+                object.country = null;
             }
             if (message.strainId != null && message.hasOwnProperty("strainId"))
                 object.strainId = message.strainId;
@@ -9878,10 +9903,10 @@ export const api = $root.api = (() => {
                 object.spoligotype98MatchBlast = message.spoligotype98MatchBlast;
             if (message.spoligotype68MatchBlast != null && message.hasOwnProperty("spoligotype68MatchBlast"))
                 object.spoligotype68MatchBlast = message.spoligotype68MatchBlast;
-            if (message.spoligotypeBloinBlast && message.spoligotypeBloinBlast.length) {
-                object.spoligotypeBloinBlast = [];
-                for (let j = 0; j < message.spoligotypeBloinBlast.length; ++j)
-                    object.spoligotypeBloinBlast[j] = message.spoligotypeBloinBlast[j];
+            if (message.spoligotypeBlouinBlast && message.spoligotypeBlouinBlast.length) {
+                object.spoligotypeBlouinBlast = [];
+                for (let j = 0; j < message.spoligotypeBlouinBlast.length; ++j)
+                    object.spoligotypeBlouinBlast[j] = message.spoligotypeBlouinBlast[j];
             }
             if (message.crispr && message.crispr.length) {
                 object.crispr = [];
@@ -9898,6 +9923,8 @@ export const api = $root.api = (() => {
                 for (let j = 0; j < message.lineages.length; ++j)
                     object.lineages[j] = $root.api.Lineage.toObject(message.lineages[j], options);
             }
+            if (message.country != null && message.hasOwnProperty("country"))
+                object.country = $root.google.protobuf.StringValue.toObject(message.country, options);
             return object;
         };
 

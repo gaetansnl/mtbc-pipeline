@@ -16,7 +16,7 @@ namespace Indexer.Data
         public List<Lineage> Lineages{ get; init; }
         public List<bool> Spoligotype43Blast{ get; init; }
         public List<bool> Spoligotype98Blast{ get; init; }
-        public List<bool> SpoligotypeBloinBlast{ get; init; }
+        public List<bool> SpoligotypeBlouinBlast{ get; init; }
 
         public List<CrisprPartData> Crispr{ get; init; }
         

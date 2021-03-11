@@ -6,7 +6,8 @@ import SnpAnnotationList from "./SnpAnnotationList";
 function SnpDetailsButton({ snp, children }: { snp: api.ISnp; children: ReactChild }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const showModal = () => {
+    const showModal = (e:  React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        if(e.defaultPrevented) return;
         setIsModalVisible(true);
     };
 
@@ -17,7 +18,6 @@ function SnpDetailsButton({ snp, children }: { snp: api.ISnp; children: ReactChi
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-    console.log(snp);
     return (
         <>
             <span onClick={showModal}>{children}</span>

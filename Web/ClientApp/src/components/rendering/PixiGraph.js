@@ -3,7 +3,7 @@ import { Container, PixiComponent } from "@inlet/react-pixi";
 import { Graphics } from "pixi.js";
 import PixiDrawableRect from "components/rendering/PixiDrawableRect";
 import { findNodeAt, findNodeIn, findNodeMaxPosition } from "components/rendering/utils";
-import {uniqBy} from 'lodash-es';
+import {differenceBy, intersectionBy, uniqBy} from 'lodash-es';
 
 const Nodes = React.memo(
     PixiComponent("Nodes", {
@@ -31,7 +31,7 @@ const Nodes = React.memo(
             instance.clear();
             instance.cursor = "pointer";
             instance.beginFill(nodeColor);
-            instance.lineStyle(2, edgeColor, 1);
+            // instance.lineStyle(2, edgeColor, 1);
             nodes.forEach((node) => {
                 if (!node.hidden) {
                     instance.drawCircle(node.x * scale, node.y * scale, nodeSize);
@@ -93,12 +93,13 @@ export default React.memo(function PixiGraph({
     const handleSelection = useCallback(
         (from, to, { ctrlKey, shiftKey }) => {
             const newSelectedNodes = findNodeIn(nodes, scale, from, to);
-            onNodesSelected &&
-                onNodesSelected(
-                    ctrlKey
-                        ? uniqBy([...newSelectedNodes, ...selectedNodes], v => v.name)
-                        : newSelectedNodes
-                );
+            if(ctrlKey){
+                const union = uniqBy([...newSelectedNodes, ...selectedNodes], v => v.name);
+                const intersection = intersectionBy(newSelectedNodes, selectedNodes, v => v.name);
+                onNodesSelected(differenceBy(union, intersection, v => v.name))
+            }else{
+                onNodesSelected(newSelectedNodes)
+            }
         },
         [nodes, onNodesSelected, scale, selectedNodes]
     );

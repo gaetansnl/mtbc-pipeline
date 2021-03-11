@@ -7,6 +7,7 @@ import SnpList from "./SnpList";
 import GeneList from "./GeneList";
 import InsertionSequencesFoundList from "./InsertionSequencesFoundList";
 import { api } from "state/grpc";
+import StrainAccessionList from "./StrainAccessionList";
 
 function StrainComparaison({ ids }: { ids: string[] }) {
     const { isLoading, isError, data } = useQuery(
@@ -19,7 +20,7 @@ function StrainComparaison({ ids }: { ids: string[] }) {
     if (isError) return <GenericErrorMessage />;
     if (isLoading)
         return (
-            <Spin tip="Loading strain informations...">
+            <Spin tip={`Comparing ${ids.length} strains...`}>
                 <div style={{ width: "100%", height: 200 }} />
             </Spin>
         );
@@ -33,10 +34,17 @@ function StrainComparaison({ ids }: { ids: string[] }) {
     };
     return (
         <Collapse defaultActiveKey={["2"]}>
-            <Collapse.Panel header={`Selected strains (${ids.length || 0})`} key="1">
-                {ids.map((v) => (
-                    <Tag>{v}</Tag>
-                ))}
+            <Collapse.Panel
+                header={
+                    <Typography.Text
+                        copyable={{ text: ids.join("\n"), tooltips: "Copy accession list" }}
+                    >
+                        Selected strains ({ids.length || 0})
+                    </Typography.Text>
+                }
+                key="1"
+            >
+                <StrainAccessionList accession={ids} />
             </Collapse.Panel>
             <Collapse.Panel header={`Shared SNP (${data.sharedSnp.length || 0})`} key="2">
                 {data.sharedSnp && (

@@ -9,6 +9,7 @@ namespace Indexer.Data
     public record EnrichedAnalysisData: AnalysisData
     {
         public string? CountryCode { get; set; }
+        public string? Country { get; set; }
         public List<SnpData> SnpWithoutAnnotation { get; set; }
         public List<SnpData> Snp { get; set; }
         public NcbiRun? Run { get; set; }
