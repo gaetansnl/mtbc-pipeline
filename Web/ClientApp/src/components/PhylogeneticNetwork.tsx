@@ -32,7 +32,7 @@ function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodesSelected, selected
         let visibleCount = 0;
         if (values) {
             values.graph?.nodes.forEach((v) => {
-                const hidden =  v.name === 'VIRTUAL';
+                const hidden = v.name === "VIRTUAL";
                 nodes[v.id] = {
                     id: v.id,
                     name: v.name,
@@ -91,11 +91,12 @@ function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodesSelected, selected
                                 {graph && (
                                     <PixiGraph
                                         graph={graph}
-                                        nodeSize={zoomLevel < 4 ? 12 : 5}
-                                        selectedNodeSize={zoomLevel < 4 ? 30 : 5}
+                                        nodeSize={zoomLevel < 2 ? 12 : 5}
+                                        selectedNodeSize={zoomLevel < 2 ? 25 : 5}
                                         selectedNodesIds={selectedNodeIds}
                                         onNodesSelected={handleNodeSelected}
                                         onNodeClick={handleNodeClick}
+                                        increaseVisibility={zoomLevel <= 10}
                                     />
                                 )}
                             </Container>

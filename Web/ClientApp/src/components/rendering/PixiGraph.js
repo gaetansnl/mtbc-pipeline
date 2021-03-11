@@ -3,7 +3,7 @@ import { Container, PixiComponent } from "@inlet/react-pixi";
 import { Graphics } from "pixi.js";
 import PixiDrawableRect from "components/rendering/PixiDrawableRect";
 import { findNodeAt, findNodeIn, findNodeMaxPosition } from "components/rendering/utils";
-import {differenceBy, intersectionBy, uniqBy} from 'lodash-es';
+import { differenceBy, intersectionBy, uniqBy } from "lodash-es";
 
 const Nodes = React.memo(
     PixiComponent("Nodes", {
@@ -12,7 +12,7 @@ const Nodes = React.memo(
             instance.destroy();
         },
         applyProps: (instance, _, props) => {
-            const { nodes, nodeColor, edgeColor, nodeSize, scale } = props;
+            const { nodes, nodeColor, increaseVisibility, nodeSize, scale } = props;
 
             if (instance._clickEvent) {
                 instance.off("mousedown", instance._clickEvent);
@@ -31,10 +31,15 @@ const Nodes = React.memo(
             instance.clear();
             instance.cursor = "pointer";
             instance.beginFill(nodeColor);
-            // instance.lineStyle(2, edgeColor, 1);
+            if (!increaseVisibility) instance.lineStyle(2, 0x000000, 0.5);
             nodes.forEach((node) => {
                 if (!node.hidden) {
+                    if (increaseVisibility) instance.beginFill(nodeColor);
                     instance.drawCircle(node.x * scale, node.y * scale, nodeSize);
+                    if (increaseVisibility) {
+                        instance.beginFill(nodeColor, 0.5);
+                        instance.drawCircle(node.x * scale, node.y * scale, nodeSize * 2.5);
+                    }
                 }
             });
         },
@@ -67,6 +72,7 @@ export default React.memo(function PixiGraph({
     graph,
     edgeColor = 0x00eaff,
     nodeColor = 0x00ff78,
+    unselectedNodeColor = 0xB9B9B9,
     selectedNodeColor = 0xff0066,
     nodeSize = 10,
     selectedNodeSize = 10,
@@ -74,6 +80,7 @@ export default React.memo(function PixiGraph({
     size = 10000,
     onNodeClick,
     onNodesSelected,
+    increaseVisibility,
 }) {
     const nodes = useMemo(() => Object.values(graph.nodes), [graph]);
     const maxPosition = useMemo(() => findNodeMaxPosition(nodes), [nodes]);
@@ -93,12 +100,12 @@ export default React.memo(function PixiGraph({
     const handleSelection = useCallback(
         (from, to, { ctrlKey, shiftKey }) => {
             const newSelectedNodes = findNodeIn(nodes, scale, from, to);
-            if(ctrlKey){
-                const union = uniqBy([...newSelectedNodes, ...selectedNodes], v => v.name);
-                const intersection = intersectionBy(newSelectedNodes, selectedNodes, v => v.name);
-                onNodesSelected(differenceBy(union, intersection, v => v.name))
-            }else{
-                onNodesSelected(newSelectedNodes)
+            if (ctrlKey) {
+                const union = uniqBy([...newSelectedNodes, ...selectedNodes], (v) => v.name);
+                const intersection = intersectionBy(newSelectedNodes, selectedNodes, (v) => v.name);
+                onNodesSelected(differenceBy(union, intersection, (v) => v.name));
+            } else {
+                onNodesSelected(newSelectedNodes);
             }
         },
         [nodes, onNodesSelected, scale, selectedNodes]
@@ -118,7 +125,7 @@ export default React.memo(function PixiGraph({
                         nodes={nodes}
                         nodeSize={nodeSize}
                         edgeColor={edgeColor}
-                        nodeColor={nodeColor}
+                        nodeColor={selectedNodes.length > 0 ? unselectedNodeColor : nodeColor}
                         scale={scale}
                         onClick={onNodesClick}
                     />
@@ -129,6 +136,7 @@ export default React.memo(function PixiGraph({
                         nodeColor={selectedNodeColor}
                         scale={scale}
                         onClick={onNodesClick}
+                        increaseVisibility={increaseVisibility}
                     />
                 </PixiDrawableRect>
             </Container>

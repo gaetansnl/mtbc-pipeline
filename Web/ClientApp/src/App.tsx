@@ -7,6 +7,7 @@ import "./custom.css";
 import { SnpDatabasePage } from "components/pages/SnpDatabasePage";
 import { Link } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
+import MapPage from "components/pages/MapPage";
 
 const { Header, Content } = Layout;
 const queryClient = new QueryClient();
@@ -24,11 +25,15 @@ export default function App() {
                         <Menu.Item key="2">
                             <Link to={`/snp`}>SNP Database</Link>
                         </Menu.Item>
+                        <Menu.Item key="3">
+                            <Link to={`/map`}>Map</Link>
+                        </Menu.Item>
                     </Menu>
                 </Header>
-                <Content style={{ overflowY: "auto", overflowX:'hidden' }}>
+                <Content style={{ overflowY: "auto", overflowX: "hidden" }}>
                     <Route exact path="/" component={HomePage} />
                     <Route exact path="/snp" component={SnpDatabasePage} />
+                    <Route exact path="/snp" component={MapPage} />
                 </Content>
             </Layout>
         </QueryClientProvider>
