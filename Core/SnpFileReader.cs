@@ -15,8 +15,6 @@ namespace Core
             {
                 csv.Configuration.Delimiter = "\t";
                 var records = new List<Snp>();
-                await csv.ReadAsync();
-                csv.ReadHeader();
                 while (await csv.ReadAsync())
                 {
                     var record = SpdiParser.Parse(csv.GetField(0));

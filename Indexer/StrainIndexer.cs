@@ -10,6 +10,7 @@ using Core.Doi;
 using Core.Ncbi;
 using Indexer.Data;
 using Indexer.Utils;
+using MoreLinq;
 using MTBC.Configuration;
 
 namespace Indexer
@@ -95,6 +96,7 @@ namespace Indexer
 
                 result.Spoligotype43Crispr = RealSpol43(result);
                 result.Spoligotype98Crispr = RealSpol98(result);
+                result.InsertionSequenceTuples = result.InsertionSequences.SelectMany(x => x.Positions.Select(y => new Tuple<string, int>(x.Name, y.Position))).ToList();
                 result.Run = await NcbiClient.FindRunByAccession(result.Id);
 
                 var coordinates = result.Run?.Samples[0]?.Coordinates;

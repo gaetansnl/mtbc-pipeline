@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Two10.CountryLookup;
 
 namespace Indexer.Utils
@@ -6,16 +7,21 @@ namespace Indexer.Utils
     public class CountryCodeHelper
     {
         protected ReverseLookup ReverseLookup = new ReverseLookup();
+        protected  Dictionary<string, string> CountryCodes;
 
         public CountryCodeHelper()
         {
+            CountryCodes = ISO3166.Country.List.ToDictionary(v => v.Name, v => v.TwoLetterCode);
+            CountryCodes.Add("United Kingdom", "UK");
+            CountryCodes.Add("Russia", "RU");
+            CountryCodes.Add("USA", "US");
         }
 
         public string? LookupCountryCode(string? countryName)
         {
-            var country = ISO3166.Country.List.FirstOrDefault(v =>
-                countryName?.ToLower() != null && v.Name.ToLower().Contains(countryName.ToLower()));
-            return country?.TwoLetterCode;
+            var country = CountryCodes.FirstOrDefault(v =>
+                countryName?.ToLower() != null && countryName.ToLower().Contains(v.Key.ToLower()));
+             return country.Equals(default) ? null : country.Value;
         }
 
         public string? ThreeLetterToTwo(string? threeLetterCode)

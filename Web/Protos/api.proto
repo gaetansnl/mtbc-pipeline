@@ -11,6 +11,7 @@ service Api {
   rpc Search (SearchRequest) returns (SearchReply);
   rpc ListSnp (ListSnpRequest) returns (ListSnpReply);
   rpc GetStrain (GetStrainRequest) returns (GetStrainReply);
+  rpc CompareStrains (CompareStrainRequest) returns (CompareStrainReply);
 }
 
 message HelloRequest {
@@ -40,4 +41,14 @@ message SearchRequest {
 message SearchReply {
   repeated string ids = 1;
 }
+message CompareStrainRequest {
+  repeated string ids = 1;
+}
+message CompareStrainReply {
+  repeated Gene shared_missing_genes = 1;
+  repeated Snp shared_snp = 2;
+  repeated InsertionSequence shared_insertion_sequences = 3;
+}
+
+
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Indexer.Data;
@@ -7,15 +8,16 @@ using Indexer.Search;
 using LiteDB;
 using Microsoft.Extensions.Caching.Memory;
 using MoreLinq;
+using MoreLinq.Extensions;
 
 namespace Indexer
 {
     public class LiteDbDriver
     {
         protected LiteDatabase Database;
-        protected  ILiteCollection<EnrichedAnalysisData> AnalysisData;
-        protected  ILiteCollection<SnpData> SnpData;
-        protected  ILiteCollection<GeneData> GeneData;
+        protected ILiteCollection<EnrichedAnalysisData> AnalysisData;
+        protected ILiteCollection<SnpData> SnpData;
+        protected ILiteCollection<GeneData> GeneData;
 
         public LiteDbDriver(LiteDatabase database)
         {
@@ -23,10 +25,11 @@ namespace Indexer
             SnpData = Database.GetCollection<SnpData>("snp");
             SnpData.EnsureIndex(v => v.Id);
             Database.Mapper.Entity<SnpData>().Ignore(v => v.NcbiUrl);
-            
+
             AnalysisData = Database.GetCollection<EnrichedAnalysisData>("result");
             AnalysisData.EnsureIndex("$.StrainId");
-            
+
+
             GeneData = Database.GetCollection<GeneData>("gene");
             GeneData.EnsureIndex(v => v.LocusTag);
 
@@ -61,7 +64,7 @@ namespace Indexer
 
             AnalysisData.Insert(result);
         }
-        
+
         public async Task Index(List<EnrichedAnalysisData> result)
         {
             var ids = result.Select(v => v.Id).ToList();
@@ -116,8 +119,8 @@ namespace Indexer
                 {
                     args.Add(key, new BsonArray(condition.Keyword.Values.Select(v => new BsonValue(v))));
                 }
-                
-                Func<string, string> fieldCondition =field => $"{field} IN @{key}";
+
+                Func<string, string> fieldCondition = field => $"{field} IN @{key}";
                 Func<string, string> arrayCondition = field =>
                     condition.Keyword.AllOf
                         ? $"LENGTH(EXCEPT(@{key}, {field})) = 0"
@@ -126,11 +129,16 @@ namespace Indexer
                 {
                     KeywordCondition.KeywordField.ACCESSION => BsonExpression.Create(fieldCondition("$.StrainId")),
                     KeywordCondition.KeywordField.SNP_SPDI => BsonExpression.Create(arrayCondition("$.SnpSpdi[*]")),
-                    KeywordCondition.KeywordField.COUNTRY_CODE => BsonExpression.Create(fieldCondition("$.CountryCode")),
-                    KeywordCondition.KeywordField.GENE_ID => BsonExpression.Create($"({arrayCondition("$.MissingGenes[*].$id")})=false"),
-                    KeywordCondition.KeywordField.GENE_LOCUS_TAG => BsonExpression.Create($"({arrayCondition("$.MissingGeneTags[*]")})=false"),
-                    KeywordCondition.KeywordField.SNP_POSITION => BsonExpression.Create(arrayCondition("$.SnpWithoutAnnotation[*].Position")),
-                    KeywordCondition.KeywordField.INSERTION_SEQUENCE_NAME => BsonExpression.Create(arrayCondition("$.InsertionSequences[*].Name")),
+                    KeywordCondition.KeywordField.COUNTRY_CODE =>
+                        BsonExpression.Create(fieldCondition("$.CountryCode")),
+                    KeywordCondition.KeywordField.GENE_ID => BsonExpression.Create(
+                        $"({arrayCondition("$.MissingGenes[*].$id")})=false"),
+                    KeywordCondition.KeywordField.GENE_LOCUS_TAG => BsonExpression.Create(
+                        $"({arrayCondition("$.MissingGeneTags[*]")})=false"),
+                    KeywordCondition.KeywordField.SNP_POSITION => BsonExpression.Create(
+                        arrayCondition("$.SnpWithoutAnnotation[*].Position")),
+                    KeywordCondition.KeywordField.INSERTION_SEQUENCE_NAME => BsonExpression.Create(
+                        arrayCondition("$.InsertionSequences[*].Name")),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
@@ -149,26 +157,27 @@ namespace Indexer
             foreach (var (k, v) in args) query.Parameters[k] = v;
 
             if (query == null) return new List<string>();
-            Console.WriteLine(AnalysisData.Query().Where(query).Select(v => v.Id).GetPlan().ToString());
             return AnalysisData.Query().Where(query).Select(v => v.Id).ToList();
         }
 
-       MemoryCache SnpCache =new (new MemoryCacheOptions
-               {
-                   SizeLimit = 1024
-               });     
+        MemoryCache SnpCache = new(new MemoryCacheOptions
+        {
+            SizeLimit = 1024
+        });
+
         public async Task<List<SnpData>> ListSnpById(List<string> ids)
         {
-            var found = ids.Select(v => SnpCache.TryGetValue(v, out var value) ? value:null).OfType<SnpData>().ToList();
+            var found = ids.Select(v => SnpCache.TryGetValue(v, out var value) ? value : null).OfType<SnpData>()
+                .ToList();
             var notFound = ids.Where(v => found.All(x => x.Id != v)).ToList();
             var requested = SnpData.Find(v => notFound.Contains(v.Id)).ToList();
-            requested.ForEach(v => SnpCache.Set(v.Id, v, new MemoryCacheEntryOptions{Size = 1}));
-            return requested.Concat(found).ToList();
+            requested.ForEach(v => SnpCache.Set(v.Id, v, new MemoryCacheEntryOptions {Size = 1}));
+            return requested.Concat(found).OrderBy(v => v.Position).ToList();
         }
 
         public async Task<List<GeneData>> ListGenesByLocus(List<string> locus)
         {
-            return GeneData.Find(v => locus.Contains(v.LocusTag)).ToList();
+            return GeneData.Find(v => locus.Contains(v.LocusTag)).OrderBy(v => v.LocusTag).ToList();
         }
 
         public async Task<GeneData?> GetGeneByLocus(string locus)
@@ -179,6 +188,51 @@ namespace Indexer
         public async Task<EnrichedAnalysisData?> GetResult(string id)
         {
             return AnalysisData.Include(v => v.Snp).Include(v => v.MissingGenes).FindById(id);
+        }
+
+
+        public async Task<AnalysisComparaison> Compare(List<string> ids)
+        {
+            var query = AnalysisData
+                .Query()
+                .Where(v => ids.Contains(v.Id))
+                .Select(v => new {v.SnpSpdi, v.MissingGeneTags, v.InsertionSequenceTuples});
+            var first = query.FirstOrDefault();
+            if (first == null) return new AnalysisComparaison();
+            var result = query
+                .ToEnumerable()
+                .Skip(1)
+                .Aggregate(
+                    new
+                    {
+                        SharedSnp = new HashSet<string>(first.SnpSpdi),
+                        SharedIS = new HashSet<Tuple<string, int>>(first.InsertionSequenceTuples),
+                        SharedMissingGenes = new HashSet<string>(first.MissingGeneTags),
+                    },
+                    (h, e) =>
+                    {
+                        h.SharedSnp.IntersectWith(e.SnpSpdi);
+                        h.SharedIS.IntersectWith(e.InsertionSequenceTuples);
+                        h.SharedMissingGenes.IntersectWith(e.MissingGeneTags);
+                        return h;
+                    }
+                );
+
+            return new AnalysisComparaison
+            {
+                SharedSnp = await ListSnpById(result.SharedSnp.ToList()),
+                SharedInsertionSequences = result.SharedIS.GroupBy(v => v.Item1).Select(v =>
+                    new AnalysisData.InsertionSequence
+                    {
+                        Name = v.Key,
+                        Positions = v.Select(x => new AnalysisData.InsertionSequence.PrefixedPosition
+                        {
+                            Position = x.Item2,
+                            Prefix = ""
+                        }).ToList()
+                    }).ToList(),
+                SharedMissingGenes = await ListGenesByLocus(result.SharedMissingGenes.ToList())
+            };
         }
     }
 }

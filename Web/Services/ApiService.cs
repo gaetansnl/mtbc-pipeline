@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Grpc.Core;
@@ -46,6 +47,12 @@ namespace Web.Services
             GetStrainReply reply = new();
             reply.Result = _mapper.Map<StrainResult>(result);
             return reply;
+        }
+        
+        public override async Task<CompareStrainReply> CompareStrains(CompareStrainRequest request, ServerCallContext context)
+        {
+            var result = await _driver.Compare(request.Ids.ToList());
+            return _mapper.Map<CompareStrainReply>(result);
         }
         
         public override async Task<SearchReply> Search(SearchRequest request, ServerCallContext context)

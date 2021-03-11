@@ -70,12 +70,15 @@ message StrainResult{
   repeated InsertionSequence insertion_sequences = 4;
   repeated bool spoligotype43_blast = 5;
   repeated bool spoligotype98_blast = 6;
-  repeated bool spoligotype43_crispr = 7;
-  repeated bool spoligotype98_crispr = 8;
-  bool spoligotype43_match_blast = 9;
-  bool spoligotype98_match_blast = 10;
-  repeated bool spoligotype_bloin_blast = 11;
-  repeated CrisprPart crispr = 12;
-  repeated Snp snp = 13;
-  repeated Lineage lineages = 14;
+  repeated bool spoligotype68_blast = 7;
+  repeated bool spoligotype43_crispr = 8;
+  repeated bool spoligotype98_crispr = 9;
+  repeated bool spoligotype68_crispr = 10;
+  bool spoligotype43_match_blast = 11;
+  bool spoligotype98_match_blast = 12;
+  bool spoligotype68_match_blast = 13;
+  repeated bool spoligotype_bloin_blast = 14;
+  repeated CrisprPart crispr = 15;
+  repeated Snp snp = 16;
+  repeated Lineage lineages = 17;
 }

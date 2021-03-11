@@ -149,11 +149,17 @@ function StrainInfo({ id }: { id: string }) {
                 {strain.spoligotype43Crispr && (
                     <SpoligotypingDisplay spoligotyping={strain.spoligotype43Crispr} />
                 )}
+                {/*<Typography.Text>*/}
+                {/*    <b>Spoligotyping 98 (CRISPR build)</b>*/}
+                {/*</Typography.Text>*/}
+                {/*{strain.spoligotype98Crispr && (*/}
+                {/*    <SpoligotypingDisplay spoligotyping={strain.spoligotype98Crispr} />*/}
+                {/*)}*/}
                 <Typography.Text>
-                    <b>Spoligotyping 98 (CRISPR build)</b>
+                    <b>Spoligotyping 68 (CRISPR build)</b>
                 </Typography.Text>
-                {strain.spoligotype98Crispr && (
-                    <SpoligotypingDisplay spoligotyping={strain.spoligotype98Crispr} />
+                {strain.spoligotype68Crispr && (
+                    <SpoligotypingDisplay spoligotyping={strain.spoligotype68Crispr} />
                 )}
             </Collapse.Panel>
             <Collapse.Panel header="Spoligotyping in silico (Blast)" key="10">
@@ -166,14 +172,23 @@ function StrainInfo({ id }: { id: string }) {
                 {strain.spoligotype43Blast && (
                     <SpoligotypingDisplay spoligotyping={strain.spoligotype43Blast} />
                 )}
+                {/*<Typography.Text>*/}
+                {/*    <b>Spoligotyping 98 (Blast)</b>{" "}*/}
+                {/*    {!strain.spoligotype98MatchBlast && (*/}
+                {/*        <Tag color="error">Different from reconstruction</Tag>*/}
+                {/*    )}*/}
+                {/*</Typography.Text>*/}
+                {/*{strain.spoligotype98Blast && (*/}
+                {/*    <SpoligotypingDisplay spoligotyping={strain.spoligotype98Blast} />*/}
+                {/*)}*/}
                 <Typography.Text>
-                    <b>Spoligotyping 98 (Blast)</b>{" "}
-                    {!strain.spoligotype98MatchBlast && (
+                    <b>Spoligotyping 68 (Blast)</b>{" "}
+                    {!strain.spoligotype68MatchBlast && (
                         <Tag color="error">Different from reconstruction</Tag>
                     )}
                 </Typography.Text>
-                {strain.spoligotype98Blast && (
-                    <SpoligotypingDisplay spoligotyping={strain.spoligotype98Blast} />
+                {strain.spoligotype68Blast && (
+                    <SpoligotypingDisplay spoligotyping={strain.spoligotype68Blast} />
                 )}
                 <Typography.Text>
                     <b>Spoligotyping Bloin (Blast)</b>

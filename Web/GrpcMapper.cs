@@ -39,6 +39,7 @@ namespace Web
             CreateMap<StrainCondition, Indexer.Search.Condition>(MemberList.None);
             CreateMap<BoolStrainCondition, Indexer.Search.BoolCondition>(MemberList.None);
             CreateMap<KeywordStrainCondition, Indexer.Search.KeywordCondition>(MemberList.None);
+            CreateMap<Indexer.Data.AnalysisComparaison, CompareStrainReply>(MemberList.None);
 
             ForAllPropertyMaps(
                 map => map.DestinationType.IsGenericType &&

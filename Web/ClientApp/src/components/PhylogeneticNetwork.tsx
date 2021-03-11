@@ -92,7 +92,7 @@ function PhylogeneticNetwork({ edgePrecision = 0.0002, onNodesSelected, selected
                                     <PixiGraph
                                         graph={graph}
                                         nodeSize={zoomLevel < 4 ? 12 : 5}
-                                        selectedNodeSize={zoomLevel < 4 ? 20 : 5}
+                                        selectedNodeSize={zoomLevel < 4 ? 30 : 5}
                                         selectedNodesIds={selectedNodeIds}
                                         onNodesSelected={handleNodeSelected}
                                         onNodeClick={handleNodeClick}

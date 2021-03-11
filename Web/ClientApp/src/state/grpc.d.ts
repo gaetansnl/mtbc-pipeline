@@ -77,6 +77,20 @@ export namespace api {
          * @returns Promise
          */
         public getStrain(request: api.IGetStrainRequest): Promise<api.GetStrainReply>;
+
+        /**
+         * Calls CompareStrains.
+         * @param request CompareStrainRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and CompareStrainReply
+         */
+        public compareStrains(request: api.ICompareStrainRequest, callback: api.Api.CompareStrainsCallback): void;
+
+        /**
+         * Calls CompareStrains.
+         * @param request CompareStrainRequest message or plain object
+         * @returns Promise
+         */
+        public compareStrains(request: api.ICompareStrainRequest): Promise<api.CompareStrainReply>;
     }
 
     namespace Api {
@@ -108,6 +122,13 @@ export namespace api {
          * @param [response] GetStrainReply
          */
         type GetStrainCallback = (error: (Error|null), response?: api.GetStrainReply) => void;
+
+        /**
+         * Callback as used by {@link api.Api#compareStrains}.
+         * @param error Error, if any
+         * @param [response] CompareStrainReply
+         */
+        type CompareStrainsCallback = (error: (Error|null), response?: api.CompareStrainReply) => void;
     }
 
     /** Properties of a HelloRequest. */
@@ -825,6 +846,198 @@ export namespace api {
 
         /**
          * Converts this SearchReply to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a CompareStrainRequest. */
+    interface ICompareStrainRequest {
+
+        /** CompareStrainRequest ids */
+        ids?: (string[]|null);
+    }
+
+    /** Represents a CompareStrainRequest. */
+    class CompareStrainRequest implements ICompareStrainRequest {
+
+        /**
+         * Constructs a new CompareStrainRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.ICompareStrainRequest);
+
+        /** CompareStrainRequest ids. */
+        public ids: string[];
+
+        /**
+         * Creates a new CompareStrainRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns CompareStrainRequest instance
+         */
+        public static create(properties?: api.ICompareStrainRequest): api.CompareStrainRequest;
+
+        /**
+         * Encodes the specified CompareStrainRequest message. Does not implicitly {@link api.CompareStrainRequest.verify|verify} messages.
+         * @param message CompareStrainRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.ICompareStrainRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified CompareStrainRequest message, length delimited. Does not implicitly {@link api.CompareStrainRequest.verify|verify} messages.
+         * @param message CompareStrainRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.ICompareStrainRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a CompareStrainRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns CompareStrainRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.CompareStrainRequest;
+
+        /**
+         * Decodes a CompareStrainRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns CompareStrainRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.CompareStrainRequest;
+
+        /**
+         * Verifies a CompareStrainRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a CompareStrainRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns CompareStrainRequest
+         */
+        public static fromObject(object: { [k: string]: any }): api.CompareStrainRequest;
+
+        /**
+         * Creates a plain object from a CompareStrainRequest message. Also converts values to other types if specified.
+         * @param message CompareStrainRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.CompareStrainRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this CompareStrainRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a CompareStrainReply. */
+    interface ICompareStrainReply {
+
+        /** CompareStrainReply sharedMissingGenes */
+        sharedMissingGenes?: (api.IGene[]|null);
+
+        /** CompareStrainReply sharedSnp */
+        sharedSnp?: (api.ISnp[]|null);
+
+        /** CompareStrainReply sharedInsertionSequences */
+        sharedInsertionSequences?: (api.IInsertionSequence[]|null);
+    }
+
+    /** Represents a CompareStrainReply. */
+    class CompareStrainReply implements ICompareStrainReply {
+
+        /**
+         * Constructs a new CompareStrainReply.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.ICompareStrainReply);
+
+        /** CompareStrainReply sharedMissingGenes. */
+        public sharedMissingGenes: api.IGene[];
+
+        /** CompareStrainReply sharedSnp. */
+        public sharedSnp: api.ISnp[];
+
+        /** CompareStrainReply sharedInsertionSequences. */
+        public sharedInsertionSequences: api.IInsertionSequence[];
+
+        /**
+         * Creates a new CompareStrainReply instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns CompareStrainReply instance
+         */
+        public static create(properties?: api.ICompareStrainReply): api.CompareStrainReply;
+
+        /**
+         * Encodes the specified CompareStrainReply message. Does not implicitly {@link api.CompareStrainReply.verify|verify} messages.
+         * @param message CompareStrainReply message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.ICompareStrainReply, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified CompareStrainReply message, length delimited. Does not implicitly {@link api.CompareStrainReply.verify|verify} messages.
+         * @param message CompareStrainReply message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.ICompareStrainReply, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a CompareStrainReply message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns CompareStrainReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.CompareStrainReply;
+
+        /**
+         * Decodes a CompareStrainReply message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns CompareStrainReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.CompareStrainReply;
+
+        /**
+         * Verifies a CompareStrainReply message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a CompareStrainReply message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns CompareStrainReply
+         */
+        public static fromObject(object: { [k: string]: any }): api.CompareStrainReply;
+
+        /**
+         * Creates a plain object from a CompareStrainReply message. Also converts values to other types if specified.
+         * @param message CompareStrainReply
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.CompareStrainReply, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this CompareStrainReply to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -3466,17 +3679,26 @@ export namespace api {
         /** StrainResult spoligotype98Blast */
         spoligotype98Blast?: (boolean[]|null);
 
+        /** StrainResult spoligotype68Blast */
+        spoligotype68Blast?: (boolean[]|null);
+
         /** StrainResult spoligotype43Crispr */
         spoligotype43Crispr?: (boolean[]|null);
 
         /** StrainResult spoligotype98Crispr */
         spoligotype98Crispr?: (boolean[]|null);
 
+        /** StrainResult spoligotype68Crispr */
+        spoligotype68Crispr?: (boolean[]|null);
+
         /** StrainResult spoligotype43MatchBlast */
         spoligotype43MatchBlast?: (boolean|null);
 
         /** StrainResult spoligotype98MatchBlast */
         spoligotype98MatchBlast?: (boolean|null);
+
+        /** StrainResult spoligotype68MatchBlast */
+        spoligotype68MatchBlast?: (boolean|null);
 
         /** StrainResult spoligotypeBloinBlast */
         spoligotypeBloinBlast?: (boolean[]|null);
@@ -3518,17 +3740,26 @@ export namespace api {
         /** StrainResult spoligotype98Blast. */
         public spoligotype98Blast: boolean[];
 
+        /** StrainResult spoligotype68Blast. */
+        public spoligotype68Blast: boolean[];
+
         /** StrainResult spoligotype43Crispr. */
         public spoligotype43Crispr: boolean[];
 
         /** StrainResult spoligotype98Crispr. */
         public spoligotype98Crispr: boolean[];
 
+        /** StrainResult spoligotype68Crispr. */
+        public spoligotype68Crispr: boolean[];
+
         /** StrainResult spoligotype43MatchBlast. */
         public spoligotype43MatchBlast: boolean;
 
         /** StrainResult spoligotype98MatchBlast. */
         public spoligotype98MatchBlast: boolean;
+
+        /** StrainResult spoligotype68MatchBlast. */
+        public spoligotype68MatchBlast: boolean;
 
         /** StrainResult spoligotypeBloinBlast. */
         public spoligotypeBloinBlast: boolean[];

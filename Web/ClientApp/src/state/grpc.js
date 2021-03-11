@@ -180,6 +180,39 @@ export const api = $root.api = (() => {
          * @variation 2
          */
 
+        /**
+         * Callback as used by {@link api.Api#compareStrains}.
+         * @memberof api.Api
+         * @typedef CompareStrainsCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {api.CompareStrainReply} [response] CompareStrainReply
+         */
+
+        /**
+         * Calls CompareStrains.
+         * @function compareStrains
+         * @memberof api.Api
+         * @instance
+         * @param {api.ICompareStrainRequest} request CompareStrainRequest message or plain object
+         * @param {api.Api.CompareStrainsCallback} callback Node-style callback called with the error, if any, and CompareStrainReply
+         * @returns {undefined}
+         * @variation 1
+         */
+        Object.defineProperty(Api.prototype.compareStrains = function compareStrains(request, callback) {
+            return this.rpcCall(compareStrains, $root.api.CompareStrainRequest, $root.api.CompareStrainReply, request, callback);
+        }, "name", { value: "CompareStrains" });
+
+        /**
+         * Calls CompareStrains.
+         * @function compareStrains
+         * @memberof api.Api
+         * @instance
+         * @param {api.ICompareStrainRequest} request CompareStrainRequest message or plain object
+         * @returns {Promise<api.CompareStrainReply>} Promise
+         * @variation 2
+         */
+
         return Api;
     })();
 
@@ -1729,6 +1762,504 @@ export const api = $root.api = (() => {
         };
 
         return SearchReply;
+    })();
+
+    api.CompareStrainRequest = (function() {
+
+        /**
+         * Properties of a CompareStrainRequest.
+         * @memberof api
+         * @interface ICompareStrainRequest
+         * @property {Array.<string>|null} [ids] CompareStrainRequest ids
+         */
+
+        /**
+         * Constructs a new CompareStrainRequest.
+         * @memberof api
+         * @classdesc Represents a CompareStrainRequest.
+         * @implements ICompareStrainRequest
+         * @constructor
+         * @param {api.ICompareStrainRequest=} [properties] Properties to set
+         */
+        function CompareStrainRequest(properties) {
+            this.ids = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * CompareStrainRequest ids.
+         * @member {Array.<string>} ids
+         * @memberof api.CompareStrainRequest
+         * @instance
+         */
+        CompareStrainRequest.prototype.ids = $util.emptyArray;
+
+        /**
+         * Creates a new CompareStrainRequest instance using the specified properties.
+         * @function create
+         * @memberof api.CompareStrainRequest
+         * @static
+         * @param {api.ICompareStrainRequest=} [properties] Properties to set
+         * @returns {api.CompareStrainRequest} CompareStrainRequest instance
+         */
+        CompareStrainRequest.create = function create(properties) {
+            return new CompareStrainRequest(properties);
+        };
+
+        /**
+         * Encodes the specified CompareStrainRequest message. Does not implicitly {@link api.CompareStrainRequest.verify|verify} messages.
+         * @function encode
+         * @memberof api.CompareStrainRequest
+         * @static
+         * @param {api.ICompareStrainRequest} message CompareStrainRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CompareStrainRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.ids != null && message.ids.length)
+                for (let i = 0; i < message.ids.length; ++i)
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.ids[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified CompareStrainRequest message, length delimited. Does not implicitly {@link api.CompareStrainRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.CompareStrainRequest
+         * @static
+         * @param {api.ICompareStrainRequest} message CompareStrainRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CompareStrainRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a CompareStrainRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.CompareStrainRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.CompareStrainRequest} CompareStrainRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CompareStrainRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.CompareStrainRequest();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.ids && message.ids.length))
+                        message.ids = [];
+                    message.ids.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a CompareStrainRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.CompareStrainRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.CompareStrainRequest} CompareStrainRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CompareStrainRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a CompareStrainRequest message.
+         * @function verify
+         * @memberof api.CompareStrainRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        CompareStrainRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.ids != null && message.hasOwnProperty("ids")) {
+                if (!Array.isArray(message.ids))
+                    return "ids: array expected";
+                for (let i = 0; i < message.ids.length; ++i)
+                    if (!$util.isString(message.ids[i]))
+                        return "ids: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a CompareStrainRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.CompareStrainRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.CompareStrainRequest} CompareStrainRequest
+         */
+        CompareStrainRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.CompareStrainRequest)
+                return object;
+            let message = new $root.api.CompareStrainRequest();
+            if (object.ids) {
+                if (!Array.isArray(object.ids))
+                    throw TypeError(".api.CompareStrainRequest.ids: array expected");
+                message.ids = [];
+                for (let i = 0; i < object.ids.length; ++i)
+                    message.ids[i] = String(object.ids[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a CompareStrainRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.CompareStrainRequest
+         * @static
+         * @param {api.CompareStrainRequest} message CompareStrainRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        CompareStrainRequest.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults)
+                object.ids = [];
+            if (message.ids && message.ids.length) {
+                object.ids = [];
+                for (let j = 0; j < message.ids.length; ++j)
+                    object.ids[j] = message.ids[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this CompareStrainRequest to JSON.
+         * @function toJSON
+         * @memberof api.CompareStrainRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        CompareStrainRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return CompareStrainRequest;
+    })();
+
+    api.CompareStrainReply = (function() {
+
+        /**
+         * Properties of a CompareStrainReply.
+         * @memberof api
+         * @interface ICompareStrainReply
+         * @property {Array.<api.IGene>|null} [sharedMissingGenes] CompareStrainReply sharedMissingGenes
+         * @property {Array.<api.ISnp>|null} [sharedSnp] CompareStrainReply sharedSnp
+         * @property {Array.<api.IInsertionSequence>|null} [sharedInsertionSequences] CompareStrainReply sharedInsertionSequences
+         */
+
+        /**
+         * Constructs a new CompareStrainReply.
+         * @memberof api
+         * @classdesc Represents a CompareStrainReply.
+         * @implements ICompareStrainReply
+         * @constructor
+         * @param {api.ICompareStrainReply=} [properties] Properties to set
+         */
+        function CompareStrainReply(properties) {
+            this.sharedMissingGenes = [];
+            this.sharedSnp = [];
+            this.sharedInsertionSequences = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * CompareStrainReply sharedMissingGenes.
+         * @member {Array.<api.IGene>} sharedMissingGenes
+         * @memberof api.CompareStrainReply
+         * @instance
+         */
+        CompareStrainReply.prototype.sharedMissingGenes = $util.emptyArray;
+
+        /**
+         * CompareStrainReply sharedSnp.
+         * @member {Array.<api.ISnp>} sharedSnp
+         * @memberof api.CompareStrainReply
+         * @instance
+         */
+        CompareStrainReply.prototype.sharedSnp = $util.emptyArray;
+
+        /**
+         * CompareStrainReply sharedInsertionSequences.
+         * @member {Array.<api.IInsertionSequence>} sharedInsertionSequences
+         * @memberof api.CompareStrainReply
+         * @instance
+         */
+        CompareStrainReply.prototype.sharedInsertionSequences = $util.emptyArray;
+
+        /**
+         * Creates a new CompareStrainReply instance using the specified properties.
+         * @function create
+         * @memberof api.CompareStrainReply
+         * @static
+         * @param {api.ICompareStrainReply=} [properties] Properties to set
+         * @returns {api.CompareStrainReply} CompareStrainReply instance
+         */
+        CompareStrainReply.create = function create(properties) {
+            return new CompareStrainReply(properties);
+        };
+
+        /**
+         * Encodes the specified CompareStrainReply message. Does not implicitly {@link api.CompareStrainReply.verify|verify} messages.
+         * @function encode
+         * @memberof api.CompareStrainReply
+         * @static
+         * @param {api.ICompareStrainReply} message CompareStrainReply message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CompareStrainReply.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.sharedMissingGenes != null && message.sharedMissingGenes.length)
+                for (let i = 0; i < message.sharedMissingGenes.length; ++i)
+                    $root.api.Gene.encode(message.sharedMissingGenes[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            if (message.sharedSnp != null && message.sharedSnp.length)
+                for (let i = 0; i < message.sharedSnp.length; ++i)
+                    $root.api.Snp.encode(message.sharedSnp[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.sharedInsertionSequences != null && message.sharedInsertionSequences.length)
+                for (let i = 0; i < message.sharedInsertionSequences.length; ++i)
+                    $root.api.InsertionSequence.encode(message.sharedInsertionSequences[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified CompareStrainReply message, length delimited. Does not implicitly {@link api.CompareStrainReply.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.CompareStrainReply
+         * @static
+         * @param {api.ICompareStrainReply} message CompareStrainReply message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CompareStrainReply.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a CompareStrainReply message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.CompareStrainReply
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.CompareStrainReply} CompareStrainReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CompareStrainReply.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.CompareStrainReply();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.sharedMissingGenes && message.sharedMissingGenes.length))
+                        message.sharedMissingGenes = [];
+                    message.sharedMissingGenes.push($root.api.Gene.decode(reader, reader.uint32()));
+                    break;
+                case 2:
+                    if (!(message.sharedSnp && message.sharedSnp.length))
+                        message.sharedSnp = [];
+                    message.sharedSnp.push($root.api.Snp.decode(reader, reader.uint32()));
+                    break;
+                case 3:
+                    if (!(message.sharedInsertionSequences && message.sharedInsertionSequences.length))
+                        message.sharedInsertionSequences = [];
+                    message.sharedInsertionSequences.push($root.api.InsertionSequence.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a CompareStrainReply message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.CompareStrainReply
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.CompareStrainReply} CompareStrainReply
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CompareStrainReply.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a CompareStrainReply message.
+         * @function verify
+         * @memberof api.CompareStrainReply
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        CompareStrainReply.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.sharedMissingGenes != null && message.hasOwnProperty("sharedMissingGenes")) {
+                if (!Array.isArray(message.sharedMissingGenes))
+                    return "sharedMissingGenes: array expected";
+                for (let i = 0; i < message.sharedMissingGenes.length; ++i) {
+                    let error = $root.api.Gene.verify(message.sharedMissingGenes[i]);
+                    if (error)
+                        return "sharedMissingGenes." + error;
+                }
+            }
+            if (message.sharedSnp != null && message.hasOwnProperty("sharedSnp")) {
+                if (!Array.isArray(message.sharedSnp))
+                    return "sharedSnp: array expected";
+                for (let i = 0; i < message.sharedSnp.length; ++i) {
+                    let error = $root.api.Snp.verify(message.sharedSnp[i]);
+                    if (error)
+                        return "sharedSnp." + error;
+                }
+            }
+            if (message.sharedInsertionSequences != null && message.hasOwnProperty("sharedInsertionSequences")) {
+                if (!Array.isArray(message.sharedInsertionSequences))
+                    return "sharedInsertionSequences: array expected";
+                for (let i = 0; i < message.sharedInsertionSequences.length; ++i) {
+                    let error = $root.api.InsertionSequence.verify(message.sharedInsertionSequences[i]);
+                    if (error)
+                        return "sharedInsertionSequences." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a CompareStrainReply message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.CompareStrainReply
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.CompareStrainReply} CompareStrainReply
+         */
+        CompareStrainReply.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.CompareStrainReply)
+                return object;
+            let message = new $root.api.CompareStrainReply();
+            if (object.sharedMissingGenes) {
+                if (!Array.isArray(object.sharedMissingGenes))
+                    throw TypeError(".api.CompareStrainReply.sharedMissingGenes: array expected");
+                message.sharedMissingGenes = [];
+                for (let i = 0; i < object.sharedMissingGenes.length; ++i) {
+                    if (typeof object.sharedMissingGenes[i] !== "object")
+                        throw TypeError(".api.CompareStrainReply.sharedMissingGenes: object expected");
+                    message.sharedMissingGenes[i] = $root.api.Gene.fromObject(object.sharedMissingGenes[i]);
+                }
+            }
+            if (object.sharedSnp) {
+                if (!Array.isArray(object.sharedSnp))
+                    throw TypeError(".api.CompareStrainReply.sharedSnp: array expected");
+                message.sharedSnp = [];
+                for (let i = 0; i < object.sharedSnp.length; ++i) {
+                    if (typeof object.sharedSnp[i] !== "object")
+                        throw TypeError(".api.CompareStrainReply.sharedSnp: object expected");
+                    message.sharedSnp[i] = $root.api.Snp.fromObject(object.sharedSnp[i]);
+                }
+            }
+            if (object.sharedInsertionSequences) {
+                if (!Array.isArray(object.sharedInsertionSequences))
+                    throw TypeError(".api.CompareStrainReply.sharedInsertionSequences: array expected");
+                message.sharedInsertionSequences = [];
+                for (let i = 0; i < object.sharedInsertionSequences.length; ++i) {
+                    if (typeof object.sharedInsertionSequences[i] !== "object")
+                        throw TypeError(".api.CompareStrainReply.sharedInsertionSequences: object expected");
+                    message.sharedInsertionSequences[i] = $root.api.InsertionSequence.fromObject(object.sharedInsertionSequences[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a CompareStrainReply message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.CompareStrainReply
+         * @static
+         * @param {api.CompareStrainReply} message CompareStrainReply
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        CompareStrainReply.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults) {
+                object.sharedMissingGenes = [];
+                object.sharedSnp = [];
+                object.sharedInsertionSequences = [];
+            }
+            if (message.sharedMissingGenes && message.sharedMissingGenes.length) {
+                object.sharedMissingGenes = [];
+                for (let j = 0; j < message.sharedMissingGenes.length; ++j)
+                    object.sharedMissingGenes[j] = $root.api.Gene.toObject(message.sharedMissingGenes[j], options);
+            }
+            if (message.sharedSnp && message.sharedSnp.length) {
+                object.sharedSnp = [];
+                for (let j = 0; j < message.sharedSnp.length; ++j)
+                    object.sharedSnp[j] = $root.api.Snp.toObject(message.sharedSnp[j], options);
+            }
+            if (message.sharedInsertionSequences && message.sharedInsertionSequences.length) {
+                object.sharedInsertionSequences = [];
+                for (let j = 0; j < message.sharedInsertionSequences.length; ++j)
+                    object.sharedInsertionSequences[j] = $root.api.InsertionSequence.toObject(message.sharedInsertionSequences[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this CompareStrainReply to JSON.
+         * @function toJSON
+         * @memberof api.CompareStrainReply
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        CompareStrainReply.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return CompareStrainReply;
     })();
 
     api.Graph = (function() {
@@ -8191,10 +8722,13 @@ export const api = $root.api = (() => {
          * @property {Array.<api.IInsertionSequence>|null} [insertionSequences] StrainResult insertionSequences
          * @property {Array.<boolean>|null} [spoligotype43Blast] StrainResult spoligotype43Blast
          * @property {Array.<boolean>|null} [spoligotype98Blast] StrainResult spoligotype98Blast
+         * @property {Array.<boolean>|null} [spoligotype68Blast] StrainResult spoligotype68Blast
          * @property {Array.<boolean>|null} [spoligotype43Crispr] StrainResult spoligotype43Crispr
          * @property {Array.<boolean>|null} [spoligotype98Crispr] StrainResult spoligotype98Crispr
+         * @property {Array.<boolean>|null} [spoligotype68Crispr] StrainResult spoligotype68Crispr
          * @property {boolean|null} [spoligotype43MatchBlast] StrainResult spoligotype43MatchBlast
          * @property {boolean|null} [spoligotype98MatchBlast] StrainResult spoligotype98MatchBlast
+         * @property {boolean|null} [spoligotype68MatchBlast] StrainResult spoligotype68MatchBlast
          * @property {Array.<boolean>|null} [spoligotypeBloinBlast] StrainResult spoligotypeBloinBlast
          * @property {Array.<api.ICrisprPart>|null} [crispr] StrainResult crispr
          * @property {Array.<api.ISnp>|null} [snp] StrainResult snp
@@ -8214,8 +8748,10 @@ export const api = $root.api = (() => {
             this.insertionSequences = [];
             this.spoligotype43Blast = [];
             this.spoligotype98Blast = [];
+            this.spoligotype68Blast = [];
             this.spoligotype43Crispr = [];
             this.spoligotype98Crispr = [];
+            this.spoligotype68Crispr = [];
             this.spoligotypeBloinBlast = [];
             this.crispr = [];
             this.snp = [];
@@ -8275,6 +8811,14 @@ export const api = $root.api = (() => {
         StrainResult.prototype.spoligotype98Blast = $util.emptyArray;
 
         /**
+         * StrainResult spoligotype68Blast.
+         * @member {Array.<boolean>} spoligotype68Blast
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotype68Blast = $util.emptyArray;
+
+        /**
          * StrainResult spoligotype43Crispr.
          * @member {Array.<boolean>} spoligotype43Crispr
          * @memberof api.StrainResult
@@ -8291,6 +8835,14 @@ export const api = $root.api = (() => {
         StrainResult.prototype.spoligotype98Crispr = $util.emptyArray;
 
         /**
+         * StrainResult spoligotype68Crispr.
+         * @member {Array.<boolean>} spoligotype68Crispr
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotype68Crispr = $util.emptyArray;
+
+        /**
          * StrainResult spoligotype43MatchBlast.
          * @member {boolean} spoligotype43MatchBlast
          * @memberof api.StrainResult
@@ -8305,6 +8857,14 @@ export const api = $root.api = (() => {
          * @instance
          */
         StrainResult.prototype.spoligotype98MatchBlast = false;
+
+        /**
+         * StrainResult spoligotype68MatchBlast.
+         * @member {boolean} spoligotype68MatchBlast
+         * @memberof api.StrainResult
+         * @instance
+         */
+        StrainResult.prototype.spoligotype68MatchBlast = false;
 
         /**
          * StrainResult spoligotypeBloinBlast.
@@ -8384,37 +8944,51 @@ export const api = $root.api = (() => {
                     writer.bool(message.spoligotype98Blast[i]);
                 writer.ldelim();
             }
-            if (message.spoligotype43Crispr != null && message.spoligotype43Crispr.length) {
+            if (message.spoligotype68Blast != null && message.spoligotype68Blast.length) {
                 writer.uint32(/* id 7, wireType 2 =*/58).fork();
+                for (let i = 0; i < message.spoligotype68Blast.length; ++i)
+                    writer.bool(message.spoligotype68Blast[i]);
+                writer.ldelim();
+            }
+            if (message.spoligotype43Crispr != null && message.spoligotype43Crispr.length) {
+                writer.uint32(/* id 8, wireType 2 =*/66).fork();
                 for (let i = 0; i < message.spoligotype43Crispr.length; ++i)
                     writer.bool(message.spoligotype43Crispr[i]);
                 writer.ldelim();
             }
             if (message.spoligotype98Crispr != null && message.spoligotype98Crispr.length) {
-                writer.uint32(/* id 8, wireType 2 =*/66).fork();
+                writer.uint32(/* id 9, wireType 2 =*/74).fork();
                 for (let i = 0; i < message.spoligotype98Crispr.length; ++i)
                     writer.bool(message.spoligotype98Crispr[i]);
                 writer.ldelim();
             }
+            if (message.spoligotype68Crispr != null && message.spoligotype68Crispr.length) {
+                writer.uint32(/* id 10, wireType 2 =*/82).fork();
+                for (let i = 0; i < message.spoligotype68Crispr.length; ++i)
+                    writer.bool(message.spoligotype68Crispr[i]);
+                writer.ldelim();
+            }
             if (message.spoligotype43MatchBlast != null && Object.hasOwnProperty.call(message, "spoligotype43MatchBlast"))
-                writer.uint32(/* id 9, wireType 0 =*/72).bool(message.spoligotype43MatchBlast);
+                writer.uint32(/* id 11, wireType 0 =*/88).bool(message.spoligotype43MatchBlast);
             if (message.spoligotype98MatchBlast != null && Object.hasOwnProperty.call(message, "spoligotype98MatchBlast"))
-                writer.uint32(/* id 10, wireType 0 =*/80).bool(message.spoligotype98MatchBlast);
+                writer.uint32(/* id 12, wireType 0 =*/96).bool(message.spoligotype98MatchBlast);
+            if (message.spoligotype68MatchBlast != null && Object.hasOwnProperty.call(message, "spoligotype68MatchBlast"))
+                writer.uint32(/* id 13, wireType 0 =*/104).bool(message.spoligotype68MatchBlast);
             if (message.spoligotypeBloinBlast != null && message.spoligotypeBloinBlast.length) {
-                writer.uint32(/* id 11, wireType 2 =*/90).fork();
+                writer.uint32(/* id 14, wireType 2 =*/114).fork();
                 for (let i = 0; i < message.spoligotypeBloinBlast.length; ++i)
                     writer.bool(message.spoligotypeBloinBlast[i]);
                 writer.ldelim();
             }
             if (message.crispr != null && message.crispr.length)
                 for (let i = 0; i < message.crispr.length; ++i)
-                    $root.api.CrisprPart.encode(message.crispr[i], writer.uint32(/* id 12, wireType 2 =*/98).fork()).ldelim();
+                    $root.api.CrisprPart.encode(message.crispr[i], writer.uint32(/* id 15, wireType 2 =*/122).fork()).ldelim();
             if (message.snp != null && message.snp.length)
                 for (let i = 0; i < message.snp.length; ++i)
-                    $root.api.Snp.encode(message.snp[i], writer.uint32(/* id 13, wireType 2 =*/106).fork()).ldelim();
+                    $root.api.Snp.encode(message.snp[i], writer.uint32(/* id 16, wireType 2 =*/130).fork()).ldelim();
             if (message.lineages != null && message.lineages.length)
                 for (let i = 0; i < message.lineages.length; ++i)
-                    $root.api.Lineage.encode(message.lineages[i], writer.uint32(/* id 14, wireType 2 =*/114).fork()).ldelim();
+                    $root.api.Lineage.encode(message.lineages[i], writer.uint32(/* id 17, wireType 2 =*/138).fork()).ldelim();
             return writer;
         };
 
@@ -8486,6 +9060,16 @@ export const api = $root.api = (() => {
                         message.spoligotype98Blast.push(reader.bool());
                     break;
                 case 7:
+                    if (!(message.spoligotype68Blast && message.spoligotype68Blast.length))
+                        message.spoligotype68Blast = [];
+                    if ((tag & 7) === 2) {
+                        let end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.spoligotype68Blast.push(reader.bool());
+                    } else
+                        message.spoligotype68Blast.push(reader.bool());
+                    break;
+                case 8:
                     if (!(message.spoligotype43Crispr && message.spoligotype43Crispr.length))
                         message.spoligotype43Crispr = [];
                     if ((tag & 7) === 2) {
@@ -8495,7 +9079,7 @@ export const api = $root.api = (() => {
                     } else
                         message.spoligotype43Crispr.push(reader.bool());
                     break;
-                case 8:
+                case 9:
                     if (!(message.spoligotype98Crispr && message.spoligotype98Crispr.length))
                         message.spoligotype98Crispr = [];
                     if ((tag & 7) === 2) {
@@ -8505,13 +9089,26 @@ export const api = $root.api = (() => {
                     } else
                         message.spoligotype98Crispr.push(reader.bool());
                     break;
-                case 9:
-                    message.spoligotype43MatchBlast = reader.bool();
-                    break;
                 case 10:
-                    message.spoligotype98MatchBlast = reader.bool();
+                    if (!(message.spoligotype68Crispr && message.spoligotype68Crispr.length))
+                        message.spoligotype68Crispr = [];
+                    if ((tag & 7) === 2) {
+                        let end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.spoligotype68Crispr.push(reader.bool());
+                    } else
+                        message.spoligotype68Crispr.push(reader.bool());
                     break;
                 case 11:
+                    message.spoligotype43MatchBlast = reader.bool();
+                    break;
+                case 12:
+                    message.spoligotype98MatchBlast = reader.bool();
+                    break;
+                case 13:
+                    message.spoligotype68MatchBlast = reader.bool();
+                    break;
+                case 14:
                     if (!(message.spoligotypeBloinBlast && message.spoligotypeBloinBlast.length))
                         message.spoligotypeBloinBlast = [];
                     if ((tag & 7) === 2) {
@@ -8521,17 +9118,17 @@ export const api = $root.api = (() => {
                     } else
                         message.spoligotypeBloinBlast.push(reader.bool());
                     break;
-                case 12:
+                case 15:
                     if (!(message.crispr && message.crispr.length))
                         message.crispr = [];
                     message.crispr.push($root.api.CrisprPart.decode(reader, reader.uint32()));
                     break;
-                case 13:
+                case 16:
                     if (!(message.snp && message.snp.length))
                         message.snp = [];
                     message.snp.push($root.api.Snp.decode(reader, reader.uint32()));
                     break;
-                case 14:
+                case 17:
                     if (!(message.lineages && message.lineages.length))
                         message.lineages = [];
                     message.lineages.push($root.api.Lineage.decode(reader, reader.uint32()));
@@ -8611,6 +9208,13 @@ export const api = $root.api = (() => {
                     if (typeof message.spoligotype98Blast[i] !== "boolean")
                         return "spoligotype98Blast: boolean[] expected";
             }
+            if (message.spoligotype68Blast != null && message.hasOwnProperty("spoligotype68Blast")) {
+                if (!Array.isArray(message.spoligotype68Blast))
+                    return "spoligotype68Blast: array expected";
+                for (let i = 0; i < message.spoligotype68Blast.length; ++i)
+                    if (typeof message.spoligotype68Blast[i] !== "boolean")
+                        return "spoligotype68Blast: boolean[] expected";
+            }
             if (message.spoligotype43Crispr != null && message.hasOwnProperty("spoligotype43Crispr")) {
                 if (!Array.isArray(message.spoligotype43Crispr))
                     return "spoligotype43Crispr: array expected";
@@ -8625,12 +9229,22 @@ export const api = $root.api = (() => {
                     if (typeof message.spoligotype98Crispr[i] !== "boolean")
                         return "spoligotype98Crispr: boolean[] expected";
             }
+            if (message.spoligotype68Crispr != null && message.hasOwnProperty("spoligotype68Crispr")) {
+                if (!Array.isArray(message.spoligotype68Crispr))
+                    return "spoligotype68Crispr: array expected";
+                for (let i = 0; i < message.spoligotype68Crispr.length; ++i)
+                    if (typeof message.spoligotype68Crispr[i] !== "boolean")
+                        return "spoligotype68Crispr: boolean[] expected";
+            }
             if (message.spoligotype43MatchBlast != null && message.hasOwnProperty("spoligotype43MatchBlast"))
                 if (typeof message.spoligotype43MatchBlast !== "boolean")
                     return "spoligotype43MatchBlast: boolean expected";
             if (message.spoligotype98MatchBlast != null && message.hasOwnProperty("spoligotype98MatchBlast"))
                 if (typeof message.spoligotype98MatchBlast !== "boolean")
                     return "spoligotype98MatchBlast: boolean expected";
+            if (message.spoligotype68MatchBlast != null && message.hasOwnProperty("spoligotype68MatchBlast"))
+                if (typeof message.spoligotype68MatchBlast !== "boolean")
+                    return "spoligotype68MatchBlast: boolean expected";
             if (message.spoligotypeBloinBlast != null && message.hasOwnProperty("spoligotypeBloinBlast")) {
                 if (!Array.isArray(message.spoligotypeBloinBlast))
                     return "spoligotypeBloinBlast: array expected";
@@ -8721,6 +9335,13 @@ export const api = $root.api = (() => {
                 for (let i = 0; i < object.spoligotype98Blast.length; ++i)
                     message.spoligotype98Blast[i] = Boolean(object.spoligotype98Blast[i]);
             }
+            if (object.spoligotype68Blast) {
+                if (!Array.isArray(object.spoligotype68Blast))
+                    throw TypeError(".api.StrainResult.spoligotype68Blast: array expected");
+                message.spoligotype68Blast = [];
+                for (let i = 0; i < object.spoligotype68Blast.length; ++i)
+                    message.spoligotype68Blast[i] = Boolean(object.spoligotype68Blast[i]);
+            }
             if (object.spoligotype43Crispr) {
                 if (!Array.isArray(object.spoligotype43Crispr))
                     throw TypeError(".api.StrainResult.spoligotype43Crispr: array expected");
@@ -8735,10 +9356,19 @@ export const api = $root.api = (() => {
                 for (let i = 0; i < object.spoligotype98Crispr.length; ++i)
                     message.spoligotype98Crispr[i] = Boolean(object.spoligotype98Crispr[i]);
             }
+            if (object.spoligotype68Crispr) {
+                if (!Array.isArray(object.spoligotype68Crispr))
+                    throw TypeError(".api.StrainResult.spoligotype68Crispr: array expected");
+                message.spoligotype68Crispr = [];
+                for (let i = 0; i < object.spoligotype68Crispr.length; ++i)
+                    message.spoligotype68Crispr[i] = Boolean(object.spoligotype68Crispr[i]);
+            }
             if (object.spoligotype43MatchBlast != null)
                 message.spoligotype43MatchBlast = Boolean(object.spoligotype43MatchBlast);
             if (object.spoligotype98MatchBlast != null)
                 message.spoligotype98MatchBlast = Boolean(object.spoligotype98MatchBlast);
+            if (object.spoligotype68MatchBlast != null)
+                message.spoligotype68MatchBlast = Boolean(object.spoligotype68MatchBlast);
             if (object.spoligotypeBloinBlast) {
                 if (!Array.isArray(object.spoligotypeBloinBlast))
                     throw TypeError(".api.StrainResult.spoligotypeBloinBlast: array expected");
@@ -8797,8 +9427,10 @@ export const api = $root.api = (() => {
                 object.insertionSequences = [];
                 object.spoligotype43Blast = [];
                 object.spoligotype98Blast = [];
+                object.spoligotype68Blast = [];
                 object.spoligotype43Crispr = [];
                 object.spoligotype98Crispr = [];
+                object.spoligotype68Crispr = [];
                 object.spoligotypeBloinBlast = [];
                 object.crispr = [];
                 object.snp = [];
@@ -8809,6 +9441,7 @@ export const api = $root.api = (() => {
                 object.run = null;
                 object.spoligotype43MatchBlast = false;
                 object.spoligotype98MatchBlast = false;
+                object.spoligotype68MatchBlast = false;
             }
             if (message.strainId != null && message.hasOwnProperty("strainId"))
                 object.strainId = message.strainId;
@@ -8834,6 +9467,11 @@ export const api = $root.api = (() => {
                 for (let j = 0; j < message.spoligotype98Blast.length; ++j)
                     object.spoligotype98Blast[j] = message.spoligotype98Blast[j];
             }
+            if (message.spoligotype68Blast && message.spoligotype68Blast.length) {
+                object.spoligotype68Blast = [];
+                for (let j = 0; j < message.spoligotype68Blast.length; ++j)
+                    object.spoligotype68Blast[j] = message.spoligotype68Blast[j];
+            }
             if (message.spoligotype43Crispr && message.spoligotype43Crispr.length) {
                 object.spoligotype43Crispr = [];
                 for (let j = 0; j < message.spoligotype43Crispr.length; ++j)
@@ -8844,10 +9482,17 @@ export const api = $root.api = (() => {
                 for (let j = 0; j < message.spoligotype98Crispr.length; ++j)
                     object.spoligotype98Crispr[j] = message.spoligotype98Crispr[j];
             }
+            if (message.spoligotype68Crispr && message.spoligotype68Crispr.length) {
+                object.spoligotype68Crispr = [];
+                for (let j = 0; j < message.spoligotype68Crispr.length; ++j)
+                    object.spoligotype68Crispr[j] = message.spoligotype68Crispr[j];
+            }
             if (message.spoligotype43MatchBlast != null && message.hasOwnProperty("spoligotype43MatchBlast"))
                 object.spoligotype43MatchBlast = message.spoligotype43MatchBlast;
             if (message.spoligotype98MatchBlast != null && message.hasOwnProperty("spoligotype98MatchBlast"))
                 object.spoligotype98MatchBlast = message.spoligotype98MatchBlast;
+            if (message.spoligotype68MatchBlast != null && message.hasOwnProperty("spoligotype68MatchBlast"))
+                object.spoligotype68MatchBlast = message.spoligotype68MatchBlast;
             if (message.spoligotypeBloinBlast && message.spoligotypeBloinBlast.length) {
                 object.spoligotypeBloinBlast = [];
                 for (let j = 0; j < message.spoligotypeBloinBlast.length; ++j)

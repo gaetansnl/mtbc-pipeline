@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Doi;
 using Core.Ncbi;
@@ -55,7 +56,6 @@ namespace Indexer
             
             var strainIndexer = new StrainIndexer(config, driver, ncbiClient,countryHelper, doiClient);
             await strainIndexer.Index();
-
 
             Console.WriteLine("gg");
         }
