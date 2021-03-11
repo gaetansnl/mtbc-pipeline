@@ -10,12 +10,8 @@ import { api } from "state/grpc";
 import StrainAccessionList from "./StrainAccessionList";
 
 function StrainComparaison({ ids }: { ids: string[] }) {
-    const { isLoading, isError, data } = useQuery(
-        ["comparaison", ids],
-        () => client.compareStrains({ ids }),
-        {
-            staleTime: Number.POSITIVE_INFINITY,
-        }
+    const { isLoading, isError, data } = useQuery(["comparaison", ids], () =>
+        client.compareStrains({ ids })
     );
     if (isError) return <GenericErrorMessage />;
     if (isLoading)
@@ -80,4 +76,5 @@ function StrainComparaison({ ids }: { ids: string[] }) {
         </Collapse>
     );
 }
+
 export default React.memo(StrainComparaison);

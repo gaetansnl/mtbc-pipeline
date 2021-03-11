@@ -10,7 +10,17 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import MapPage from "components/pages/MapPage";
 
 const { Header, Content } = Layout;
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: Number.POSITIVE_INFINITY,
+            refetchInterval: false,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+        },
+    },
+});
 
 export default function App() {
     return (

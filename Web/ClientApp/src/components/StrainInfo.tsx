@@ -11,9 +11,7 @@ import CrisprViewer from "./CrisprViewer";
 import ProtobufTimestampDisplay from "ui/ProtobufTimestampDisplay";
 
 function StrainInfo({ id }: { id: string }) {
-    const { isLoading, isError, data } = useQuery(["strain", id], () => client.getStrain({ id }), {
-        staleTime: Number.POSITIVE_INFINITY,
-    });
+    const { isLoading, isError, data } = useQuery(["strain", id], () => client.getStrain({ id }));
     if (isError) return <GenericErrorMessage />;
     if (isLoading)
         return (
@@ -30,15 +28,23 @@ function StrainInfo({ id }: { id: string }) {
                 <Descriptions column={1}>
                     <Descriptions.Item label="Run accession">
                         {run?.link?.value && run?.accession && (
-                            <Typography.Text  copyable={{ text: run?.accession || undefined, tooltips: "Copy accession" }}>    <Button
-                                target="_blank"
-                                rel="noreferrer"
-                                size="small"
-                                href={run?.link.value}
-                                type="link"
+                            <Typography.Text
+                                copyable={{
+                                    text: run?.accession || undefined,
+                                    tooltips: "Copy accession",
+                                }}
                             >
-                                {run?.accession || "-"}
-                            </Button></Typography.Text>
+                                {" "}
+                                <Button
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    size="small"
+                                    href={run?.link.value}
+                                    type="link"
+                                >
+                                    {run?.accession || "-"}
+                                </Button>
+                            </Typography.Text>
                         )}
                     </Descriptions.Item>
                     <Descriptions.Item label="Title">{run?.title?.value || "-"}</Descriptions.Item>
@@ -93,7 +99,9 @@ function StrainInfo({ id }: { id: string }) {
                         <Descriptions.Item label="Strain">{v.strain?.value}</Descriptions.Item>
                         <Descriptions.Item label="Title">{v.title?.value}</Descriptions.Item>
                         {/*<Descriptions.Item label="Location">{v.location?.value}</Descriptions.Item>*/}
-                        <Descriptions.Item label="Country">{strain.country?.value || "-"}</Descriptions.Item>
+                        <Descriptions.Item label="Country">
+                            {strain.country?.value || "-"}
+                        </Descriptions.Item>
                         <Descriptions.Item label="Collected at">
                             {v.collectedAt ? (
                                 <ProtobufTimestampDisplay timestamp={v.collectedAt} />
@@ -134,7 +142,9 @@ function StrainInfo({ id }: { id: string }) {
                                         </Tooltip>
                                     }
                                 >
-                                    {v.lineages?.map(v => <Tag>{v}</Tag>)}
+                                    {v.lineages?.map((v) => (
+                                        <Tag>{v}</Tag>
+                                    ))}
                                 </Descriptions.Item>
                             );
                         })}

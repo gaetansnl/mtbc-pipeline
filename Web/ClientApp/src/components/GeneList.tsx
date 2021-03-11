@@ -16,7 +16,12 @@ function GeneRow({ gene, extra }: { gene: api.IGene; extra?: GeneRowExtra | null
             >
                 <b>{gene.locusTag}</b>
             </Typography.Text>{" "}
-            <Typography.Text type="secondary"  copyable={{ text: gene.id || undefined, tooltips: "Copy accession" }}>({gene.id})</Typography.Text>
+            <Typography.Text
+                type="secondary"
+                copyable={{ text: gene.id || undefined, tooltips: "Copy accession" }}
+            >
+                ({gene.id})
+            </Typography.Text>
             {extra?.exclusivity && <ExclusivityLabel value={extra?.exclusivity} />}
             <div>
                 <Typography.Text>{gene.description?.value}</Typography.Text>
@@ -34,7 +39,7 @@ function GeneList({
 }) {
     const renderRow = useCallback(
         (v: api.IGene) => <GeneRow gene={v} extra={extra && extra(v)} />,
-        []
+        [extra]
     );
     return <StaticVirtualizedList items={genes} renderRow={renderRow} rowHeight={50} />;
 }

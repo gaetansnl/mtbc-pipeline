@@ -15,7 +15,12 @@ function SnpRow({ snp, extra }: { snp: api.ISnp; extra?: SnpRowExtra | null }) {
         <div style={{ height: 50, overflow: "hidden" }}>
             <SnpDetailsButton snp={snp}>
                 <div style={{ cursor: "pointer" }}>
-                    <Typography.Text copyable={{ text: snp?.position?.toString() || undefined, tooltips: "Copy position" }}>
+                    <Typography.Text
+                        copyable={{
+                            text: snp?.position?.toString() || undefined,
+                            tooltips: "Copy position",
+                        }}
+                    >
                         <b>{snp.position}</b>
                     </Typography.Text>{" "}
                     <Typography.Text
@@ -47,10 +52,9 @@ function SnpList({
     snp: api.ISnp[];
     extra?: (v: api.ISnp) => SnpRowExtra | null | undefined;
 }) {
-    const renderRow = useCallback(
-        (v: api.ISnp) => <SnpRow snp={v} extra={extra && extra(v)} />,
-        []
-    );
+    const renderRow = useCallback((v: api.ISnp) => <SnpRow snp={v} extra={extra && extra(v)} />, [
+        extra,
+    ]);
     return <StaticVirtualizedList items={snp} renderRow={renderRow} rowHeight={50} />;
 }
 

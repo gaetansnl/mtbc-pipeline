@@ -14,7 +14,7 @@ function StaticVirtualizedList<T>({
     const rowVirtualizer = useVirtual({
         size: items.length,
         parentRef,
-        estimateSize: React.useCallback(() => rowHeight, []),
+        estimateSize: React.useCallback(() => rowHeight, [rowHeight]),
     });
 
     return (
