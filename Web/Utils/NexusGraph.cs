@@ -11,7 +11,7 @@ namespace Web.Utils
     public class NexusGraph
     {
         public readonly string Path;
-        protected NexusReader? Reader;
+        public NexusReader? Reader;
         private readonly ILogger<NexusGraph> _logger;
 
 
@@ -85,7 +85,8 @@ namespace Web.Utils
                 var position = idToPosition.ContainsKey(id) ? idToPosition[id] : Reader.NetworkVertices[id];
                 graph.Nodes.Add(new Node
                 {
-                    Id = id, Name = Reader.Vertices.GetValueOrDefault(id, "VIRTUAL"), PositionX = position.Item1,
+                    Id = id, Name = keepNode(id) ? Reader.Vertices.GetValueOrDefault(id, "VIRTUAL") : "VIRTUAL",
+                    PositionX = position.Item1,
                     PositionY = position.Item2
                 });
             }

@@ -44,10 +44,20 @@ message SearchReply {
 message CompareStrainRequest {
   repeated string ids = 1;
 }
+message MapFieldEntry {
+  string key = 1;
+  int32 value = 2;
+}
+
 message CompareStrainReply {
   repeated Gene shared_missing_genes = 1;
   repeated Snp shared_snp = 2;
   repeated InsertionSequence shared_insertion_sequences = 3;
+  repeated MapFieldEntry shared_missing_genes_exclusivity = 4;
+  repeated MapFieldEntry shared_snp_exclusivity = 5;
+  repeated MapFieldEntry shared_insertion_sequences_exclusivity = 6;
+  int32 TotalSelected = 7;
+  int32 Total = 8;
 }
 
 

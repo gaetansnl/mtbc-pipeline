@@ -1967,6 +1967,216 @@ export const api = $root.api = (() => {
         return CompareStrainRequest;
     })();
 
+    api.MapFieldEntry = (function() {
+
+        /**
+         * Properties of a MapFieldEntry.
+         * @memberof api
+         * @interface IMapFieldEntry
+         * @property {string|null} [key] MapFieldEntry key
+         * @property {number|null} [value] MapFieldEntry value
+         */
+
+        /**
+         * Constructs a new MapFieldEntry.
+         * @memberof api
+         * @classdesc Represents a MapFieldEntry.
+         * @implements IMapFieldEntry
+         * @constructor
+         * @param {api.IMapFieldEntry=} [properties] Properties to set
+         */
+        function MapFieldEntry(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * MapFieldEntry key.
+         * @member {string} key
+         * @memberof api.MapFieldEntry
+         * @instance
+         */
+        MapFieldEntry.prototype.key = "";
+
+        /**
+         * MapFieldEntry value.
+         * @member {number} value
+         * @memberof api.MapFieldEntry
+         * @instance
+         */
+        MapFieldEntry.prototype.value = 0;
+
+        /**
+         * Creates a new MapFieldEntry instance using the specified properties.
+         * @function create
+         * @memberof api.MapFieldEntry
+         * @static
+         * @param {api.IMapFieldEntry=} [properties] Properties to set
+         * @returns {api.MapFieldEntry} MapFieldEntry instance
+         */
+        MapFieldEntry.create = function create(properties) {
+            return new MapFieldEntry(properties);
+        };
+
+        /**
+         * Encodes the specified MapFieldEntry message. Does not implicitly {@link api.MapFieldEntry.verify|verify} messages.
+         * @function encode
+         * @memberof api.MapFieldEntry
+         * @static
+         * @param {api.IMapFieldEntry} message MapFieldEntry message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MapFieldEntry.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.key != null && Object.hasOwnProperty.call(message, "key"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.key);
+            if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.value);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified MapFieldEntry message, length delimited. Does not implicitly {@link api.MapFieldEntry.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof api.MapFieldEntry
+         * @static
+         * @param {api.IMapFieldEntry} message MapFieldEntry message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MapFieldEntry.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a MapFieldEntry message from the specified reader or buffer.
+         * @function decode
+         * @memberof api.MapFieldEntry
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {api.MapFieldEntry} MapFieldEntry
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MapFieldEntry.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.api.MapFieldEntry();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.key = reader.string();
+                    break;
+                case 2:
+                    message.value = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a MapFieldEntry message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof api.MapFieldEntry
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {api.MapFieldEntry} MapFieldEntry
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MapFieldEntry.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a MapFieldEntry message.
+         * @function verify
+         * @memberof api.MapFieldEntry
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        MapFieldEntry.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.key != null && message.hasOwnProperty("key"))
+                if (!$util.isString(message.key))
+                    return "key: string expected";
+            if (message.value != null && message.hasOwnProperty("value"))
+                if (!$util.isInteger(message.value))
+                    return "value: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a MapFieldEntry message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof api.MapFieldEntry
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {api.MapFieldEntry} MapFieldEntry
+         */
+        MapFieldEntry.fromObject = function fromObject(object) {
+            if (object instanceof $root.api.MapFieldEntry)
+                return object;
+            let message = new $root.api.MapFieldEntry();
+            if (object.key != null)
+                message.key = String(object.key);
+            if (object.value != null)
+                message.value = object.value | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a MapFieldEntry message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof api.MapFieldEntry
+         * @static
+         * @param {api.MapFieldEntry} message MapFieldEntry
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        MapFieldEntry.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.key = "";
+                object.value = 0;
+            }
+            if (message.key != null && message.hasOwnProperty("key"))
+                object.key = message.key;
+            if (message.value != null && message.hasOwnProperty("value"))
+                object.value = message.value;
+            return object;
+        };
+
+        /**
+         * Converts this MapFieldEntry to JSON.
+         * @function toJSON
+         * @memberof api.MapFieldEntry
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        MapFieldEntry.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return MapFieldEntry;
+    })();
+
     api.CompareStrainReply = (function() {
 
         /**
@@ -1976,6 +2186,11 @@ export const api = $root.api = (() => {
          * @property {Array.<api.IGene>|null} [sharedMissingGenes] CompareStrainReply sharedMissingGenes
          * @property {Array.<api.ISnp>|null} [sharedSnp] CompareStrainReply sharedSnp
          * @property {Array.<api.IInsertionSequence>|null} [sharedInsertionSequences] CompareStrainReply sharedInsertionSequences
+         * @property {Array.<api.IMapFieldEntry>|null} [sharedMissingGenesExclusivity] CompareStrainReply sharedMissingGenesExclusivity
+         * @property {Array.<api.IMapFieldEntry>|null} [sharedSnpExclusivity] CompareStrainReply sharedSnpExclusivity
+         * @property {Array.<api.IMapFieldEntry>|null} [sharedInsertionSequencesExclusivity] CompareStrainReply sharedInsertionSequencesExclusivity
+         * @property {number|null} [TotalSelected] CompareStrainReply TotalSelected
+         * @property {number|null} [Total] CompareStrainReply Total
          */
 
         /**
@@ -1990,6 +2205,9 @@ export const api = $root.api = (() => {
             this.sharedMissingGenes = [];
             this.sharedSnp = [];
             this.sharedInsertionSequences = [];
+            this.sharedMissingGenesExclusivity = [];
+            this.sharedSnpExclusivity = [];
+            this.sharedInsertionSequencesExclusivity = [];
             if (properties)
                 for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -2019,6 +2237,46 @@ export const api = $root.api = (() => {
          * @instance
          */
         CompareStrainReply.prototype.sharedInsertionSequences = $util.emptyArray;
+
+        /**
+         * CompareStrainReply sharedMissingGenesExclusivity.
+         * @member {Array.<api.IMapFieldEntry>} sharedMissingGenesExclusivity
+         * @memberof api.CompareStrainReply
+         * @instance
+         */
+        CompareStrainReply.prototype.sharedMissingGenesExclusivity = $util.emptyArray;
+
+        /**
+         * CompareStrainReply sharedSnpExclusivity.
+         * @member {Array.<api.IMapFieldEntry>} sharedSnpExclusivity
+         * @memberof api.CompareStrainReply
+         * @instance
+         */
+        CompareStrainReply.prototype.sharedSnpExclusivity = $util.emptyArray;
+
+        /**
+         * CompareStrainReply sharedInsertionSequencesExclusivity.
+         * @member {Array.<api.IMapFieldEntry>} sharedInsertionSequencesExclusivity
+         * @memberof api.CompareStrainReply
+         * @instance
+         */
+        CompareStrainReply.prototype.sharedInsertionSequencesExclusivity = $util.emptyArray;
+
+        /**
+         * CompareStrainReply TotalSelected.
+         * @member {number} TotalSelected
+         * @memberof api.CompareStrainReply
+         * @instance
+         */
+        CompareStrainReply.prototype.TotalSelected = 0;
+
+        /**
+         * CompareStrainReply Total.
+         * @member {number} Total
+         * @memberof api.CompareStrainReply
+         * @instance
+         */
+        CompareStrainReply.prototype.Total = 0;
 
         /**
          * Creates a new CompareStrainReply instance using the specified properties.
@@ -2053,6 +2311,19 @@ export const api = $root.api = (() => {
             if (message.sharedInsertionSequences != null && message.sharedInsertionSequences.length)
                 for (let i = 0; i < message.sharedInsertionSequences.length; ++i)
                     $root.api.InsertionSequence.encode(message.sharedInsertionSequences[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.sharedMissingGenesExclusivity != null && message.sharedMissingGenesExclusivity.length)
+                for (let i = 0; i < message.sharedMissingGenesExclusivity.length; ++i)
+                    $root.api.MapFieldEntry.encode(message.sharedMissingGenesExclusivity[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.sharedSnpExclusivity != null && message.sharedSnpExclusivity.length)
+                for (let i = 0; i < message.sharedSnpExclusivity.length; ++i)
+                    $root.api.MapFieldEntry.encode(message.sharedSnpExclusivity[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+            if (message.sharedInsertionSequencesExclusivity != null && message.sharedInsertionSequencesExclusivity.length)
+                for (let i = 0; i < message.sharedInsertionSequencesExclusivity.length; ++i)
+                    $root.api.MapFieldEntry.encode(message.sharedInsertionSequencesExclusivity[i], writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            if (message.TotalSelected != null && Object.hasOwnProperty.call(message, "TotalSelected"))
+                writer.uint32(/* id 7, wireType 0 =*/56).int32(message.TotalSelected);
+            if (message.Total != null && Object.hasOwnProperty.call(message, "Total"))
+                writer.uint32(/* id 8, wireType 0 =*/64).int32(message.Total);
             return writer;
         };
 
@@ -2101,6 +2372,27 @@ export const api = $root.api = (() => {
                     if (!(message.sharedInsertionSequences && message.sharedInsertionSequences.length))
                         message.sharedInsertionSequences = [];
                     message.sharedInsertionSequences.push($root.api.InsertionSequence.decode(reader, reader.uint32()));
+                    break;
+                case 4:
+                    if (!(message.sharedMissingGenesExclusivity && message.sharedMissingGenesExclusivity.length))
+                        message.sharedMissingGenesExclusivity = [];
+                    message.sharedMissingGenesExclusivity.push($root.api.MapFieldEntry.decode(reader, reader.uint32()));
+                    break;
+                case 5:
+                    if (!(message.sharedSnpExclusivity && message.sharedSnpExclusivity.length))
+                        message.sharedSnpExclusivity = [];
+                    message.sharedSnpExclusivity.push($root.api.MapFieldEntry.decode(reader, reader.uint32()));
+                    break;
+                case 6:
+                    if (!(message.sharedInsertionSequencesExclusivity && message.sharedInsertionSequencesExclusivity.length))
+                        message.sharedInsertionSequencesExclusivity = [];
+                    message.sharedInsertionSequencesExclusivity.push($root.api.MapFieldEntry.decode(reader, reader.uint32()));
+                    break;
+                case 7:
+                    message.TotalSelected = reader.int32();
+                    break;
+                case 8:
+                    message.Total = reader.int32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -2164,6 +2456,39 @@ export const api = $root.api = (() => {
                         return "sharedInsertionSequences." + error;
                 }
             }
+            if (message.sharedMissingGenesExclusivity != null && message.hasOwnProperty("sharedMissingGenesExclusivity")) {
+                if (!Array.isArray(message.sharedMissingGenesExclusivity))
+                    return "sharedMissingGenesExclusivity: array expected";
+                for (let i = 0; i < message.sharedMissingGenesExclusivity.length; ++i) {
+                    let error = $root.api.MapFieldEntry.verify(message.sharedMissingGenesExclusivity[i]);
+                    if (error)
+                        return "sharedMissingGenesExclusivity." + error;
+                }
+            }
+            if (message.sharedSnpExclusivity != null && message.hasOwnProperty("sharedSnpExclusivity")) {
+                if (!Array.isArray(message.sharedSnpExclusivity))
+                    return "sharedSnpExclusivity: array expected";
+                for (let i = 0; i < message.sharedSnpExclusivity.length; ++i) {
+                    let error = $root.api.MapFieldEntry.verify(message.sharedSnpExclusivity[i]);
+                    if (error)
+                        return "sharedSnpExclusivity." + error;
+                }
+            }
+            if (message.sharedInsertionSequencesExclusivity != null && message.hasOwnProperty("sharedInsertionSequencesExclusivity")) {
+                if (!Array.isArray(message.sharedInsertionSequencesExclusivity))
+                    return "sharedInsertionSequencesExclusivity: array expected";
+                for (let i = 0; i < message.sharedInsertionSequencesExclusivity.length; ++i) {
+                    let error = $root.api.MapFieldEntry.verify(message.sharedInsertionSequencesExclusivity[i]);
+                    if (error)
+                        return "sharedInsertionSequencesExclusivity." + error;
+                }
+            }
+            if (message.TotalSelected != null && message.hasOwnProperty("TotalSelected"))
+                if (!$util.isInteger(message.TotalSelected))
+                    return "TotalSelected: integer expected";
+            if (message.Total != null && message.hasOwnProperty("Total"))
+                if (!$util.isInteger(message.Total))
+                    return "Total: integer expected";
             return null;
         };
 
@@ -2209,6 +2534,40 @@ export const api = $root.api = (() => {
                     message.sharedInsertionSequences[i] = $root.api.InsertionSequence.fromObject(object.sharedInsertionSequences[i]);
                 }
             }
+            if (object.sharedMissingGenesExclusivity) {
+                if (!Array.isArray(object.sharedMissingGenesExclusivity))
+                    throw TypeError(".api.CompareStrainReply.sharedMissingGenesExclusivity: array expected");
+                message.sharedMissingGenesExclusivity = [];
+                for (let i = 0; i < object.sharedMissingGenesExclusivity.length; ++i) {
+                    if (typeof object.sharedMissingGenesExclusivity[i] !== "object")
+                        throw TypeError(".api.CompareStrainReply.sharedMissingGenesExclusivity: object expected");
+                    message.sharedMissingGenesExclusivity[i] = $root.api.MapFieldEntry.fromObject(object.sharedMissingGenesExclusivity[i]);
+                }
+            }
+            if (object.sharedSnpExclusivity) {
+                if (!Array.isArray(object.sharedSnpExclusivity))
+                    throw TypeError(".api.CompareStrainReply.sharedSnpExclusivity: array expected");
+                message.sharedSnpExclusivity = [];
+                for (let i = 0; i < object.sharedSnpExclusivity.length; ++i) {
+                    if (typeof object.sharedSnpExclusivity[i] !== "object")
+                        throw TypeError(".api.CompareStrainReply.sharedSnpExclusivity: object expected");
+                    message.sharedSnpExclusivity[i] = $root.api.MapFieldEntry.fromObject(object.sharedSnpExclusivity[i]);
+                }
+            }
+            if (object.sharedInsertionSequencesExclusivity) {
+                if (!Array.isArray(object.sharedInsertionSequencesExclusivity))
+                    throw TypeError(".api.CompareStrainReply.sharedInsertionSequencesExclusivity: array expected");
+                message.sharedInsertionSequencesExclusivity = [];
+                for (let i = 0; i < object.sharedInsertionSequencesExclusivity.length; ++i) {
+                    if (typeof object.sharedInsertionSequencesExclusivity[i] !== "object")
+                        throw TypeError(".api.CompareStrainReply.sharedInsertionSequencesExclusivity: object expected");
+                    message.sharedInsertionSequencesExclusivity[i] = $root.api.MapFieldEntry.fromObject(object.sharedInsertionSequencesExclusivity[i]);
+                }
+            }
+            if (object.TotalSelected != null)
+                message.TotalSelected = object.TotalSelected | 0;
+            if (object.Total != null)
+                message.Total = object.Total | 0;
             return message;
         };
 
@@ -2229,6 +2588,13 @@ export const api = $root.api = (() => {
                 object.sharedMissingGenes = [];
                 object.sharedSnp = [];
                 object.sharedInsertionSequences = [];
+                object.sharedMissingGenesExclusivity = [];
+                object.sharedSnpExclusivity = [];
+                object.sharedInsertionSequencesExclusivity = [];
+            }
+            if (options.defaults) {
+                object.TotalSelected = 0;
+                object.Total = 0;
             }
             if (message.sharedMissingGenes && message.sharedMissingGenes.length) {
                 object.sharedMissingGenes = [];
@@ -2245,6 +2611,25 @@ export const api = $root.api = (() => {
                 for (let j = 0; j < message.sharedInsertionSequences.length; ++j)
                     object.sharedInsertionSequences[j] = $root.api.InsertionSequence.toObject(message.sharedInsertionSequences[j], options);
             }
+            if (message.sharedMissingGenesExclusivity && message.sharedMissingGenesExclusivity.length) {
+                object.sharedMissingGenesExclusivity = [];
+                for (let j = 0; j < message.sharedMissingGenesExclusivity.length; ++j)
+                    object.sharedMissingGenesExclusivity[j] = $root.api.MapFieldEntry.toObject(message.sharedMissingGenesExclusivity[j], options);
+            }
+            if (message.sharedSnpExclusivity && message.sharedSnpExclusivity.length) {
+                object.sharedSnpExclusivity = [];
+                for (let j = 0; j < message.sharedSnpExclusivity.length; ++j)
+                    object.sharedSnpExclusivity[j] = $root.api.MapFieldEntry.toObject(message.sharedSnpExclusivity[j], options);
+            }
+            if (message.sharedInsertionSequencesExclusivity && message.sharedInsertionSequencesExclusivity.length) {
+                object.sharedInsertionSequencesExclusivity = [];
+                for (let j = 0; j < message.sharedInsertionSequencesExclusivity.length; ++j)
+                    object.sharedInsertionSequencesExclusivity[j] = $root.api.MapFieldEntry.toObject(message.sharedInsertionSequencesExclusivity[j], options);
+            }
+            if (message.TotalSelected != null && message.hasOwnProperty("TotalSelected"))
+                object.TotalSelected = message.TotalSelected;
+            if (message.Total != null && message.hasOwnProperty("Total"))
+                object.Total = message.Total;
             return object;
         };
 

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 
@@ -40,6 +42,7 @@ namespace Web
             CreateMap<BoolStrainCondition, Indexer.Search.BoolCondition>(MemberList.None);
             CreateMap<KeywordStrainCondition, Indexer.Search.KeywordCondition>(MemberList.None);
             CreateMap<Indexer.Data.AnalysisComparaison, CompareStrainReply>(MemberList.None);
+            CreateMap<KeyValuePair<string, int>, MapFieldEntry>().ConvertUsing(v => new MapFieldEntry{Key = v.Key, Value = v.Value});
 
             ForAllPropertyMaps(
                 map => map.DestinationType.IsGenericType &&

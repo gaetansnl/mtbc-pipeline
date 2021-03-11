@@ -79,7 +79,7 @@ namespace Indexer
                 }
 
                 result.Snp = (await Database.ListSnpById(result.SnpSpdi)).OrderBy(v => v.Position).ToList();
-                // if (result.Snp.Count != result.SnpSpdi.Count) throw new Exception("Snp not found");
+                if (result.Snp.Count != result.SnpSpdi.Count) throw new Exception("Snp not found");
                 result.SnpWithoutAnnotation =
                     result.Snp.Select(v => v with {Annotations = new List<SnpData.Annotation>()}).ToList();
                 result.MissingGenes = (await Database.ListGenesByLocus(result.MissingGeneTags)).OrderBy(v => v.LocusTag)

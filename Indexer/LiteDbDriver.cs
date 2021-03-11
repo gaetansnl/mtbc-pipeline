@@ -7,7 +7,6 @@ using Indexer.Data;
 using Indexer.Search;
 using LiteDB;
 using Microsoft.Extensions.Caching.Memory;
-using MoreLinq;
 using MoreLinq.Extensions;
 
 namespace Indexer
@@ -19,6 +18,11 @@ namespace Indexer
         protected ILiteCollection<SnpData> SnpData;
         protected ILiteCollection<GeneData> GeneData;
 
+        protected Lazy<Dictionary<string, int>> SnpStrainCount;
+        protected Lazy<Dictionary<Tuple<string, int>, int>> InsertionSequenceStrainCount;
+        protected Lazy<Dictionary<string, int>> MissingGeneStrainCount;
+        protected Lazy<int> TotalStrain;
+
         public LiteDbDriver(LiteDatabase database)
         {
             Database = database;
@@ -29,12 +33,48 @@ namespace Indexer
             AnalysisData = Database.GetCollection<EnrichedAnalysisData>("result");
             AnalysisData.EnsureIndex("$.StrainId");
 
-
             GeneData = Database.GetCollection<GeneData>("gene");
             GeneData.EnsureIndex(v => v.LocusTag);
 
             BsonMapper.Global.Entity<EnrichedAnalysisData>().DbRef(x => x.Snp, "snp");
             BsonMapper.Global.Entity<EnrichedAnalysisData>().DbRef(x => x.MissingGenes, "gene");
+
+            SnpStrainCount = new(() =>
+            {
+                return AnalysisData
+                    .Query()
+                    .Select(v => new {v.SnpSpdi})
+                    .ToEnumerable()
+                    .SelectMany(v => v.SnpSpdi)
+                    .GroupBy(v => v)
+                    .ToDictionary(v => v.Key, v => v.Count());
+            });
+            InsertionSequenceStrainCount = new(() =>
+            {
+                return AnalysisData
+                    .Query()
+                    .Select(v => new {v.InsertionSequenceTuples})
+                    .ToEnumerable()
+                    .SelectMany(v => v.InsertionSequenceTuples)
+                    .GroupBy(v => v)
+                    .ToDictionary(v => v.Key, v => v.Count());
+            });
+            MissingGeneStrainCount = new(() =>
+            {
+                return AnalysisData
+                    .Query()
+                    .Select(v => new {v.MissingGeneTags})
+                    .ToEnumerable()
+                    .SelectMany(v => v.MissingGeneTags)
+                    .GroupBy(v => v)
+                    .ToDictionary(v => v.Key, v => v.Count());
+            });
+            TotalStrain = new(() =>
+            {
+                return AnalysisData
+                    .Query()
+                    .Count();
+            });
         }
 
         public async Task Index(SnpData snpData)
@@ -190,6 +230,10 @@ namespace Indexer
             return AnalysisData.Include(v => v.Snp).Include(v => v.MissingGenes).FindById(id);
         }
 
+        public async Task<List<string>> ListResultAccession()
+        {
+            return AnalysisData.Query().Select(v => v.Id).ToList();
+        }
 
         public async Task<AnalysisComparaison> Compare(List<string> ids)
         {
@@ -197,8 +241,11 @@ namespace Indexer
                 .Query()
                 .Where(v => ids.Contains(v.Id))
                 .Select(v => new {v.SnpSpdi, v.MissingGeneTags, v.InsertionSequenceTuples});
+
             var first = query.FirstOrDefault();
             if (first == null) return new AnalysisComparaison();
+
+            var totalSelected = query.Count();
             var result = query
                 .ToEnumerable()
                 .Skip(1)
@@ -214,24 +261,35 @@ namespace Indexer
                         h.SharedSnp.IntersectWith(e.SnpSpdi);
                         h.SharedIS.IntersectWith(e.InsertionSequenceTuples);
                         h.SharedMissingGenes.IntersectWith(e.MissingGeneTags);
+
                         return h;
                     }
                 );
 
+            var insertionSequences = result.SharedIS.GroupBy(v => v.Item1).Select(v =>
+                new AnalysisData.InsertionSequence
+                {
+                    Name = v.Key,
+                    Positions = v.Select(x => new AnalysisData.InsertionSequence.PrefixedPosition
+                    {
+                        Position = x.Item2,
+                        Prefix = ""
+                    }).ToList()
+                }).ToList();
+
             return new AnalysisComparaison
             {
                 SharedSnp = await ListSnpById(result.SharedSnp.ToList()),
-                SharedInsertionSequences = result.SharedIS.GroupBy(v => v.Item1).Select(v =>
-                    new AnalysisData.InsertionSequence
-                    {
-                        Name = v.Key,
-                        Positions = v.Select(x => new AnalysisData.InsertionSequence.PrefixedPosition
-                        {
-                            Position = x.Item2,
-                            Prefix = ""
-                        }).ToList()
-                    }).ToList(),
-                SharedMissingGenes = await ListGenesByLocus(result.SharedMissingGenes.ToList())
+                SharedInsertionSequences = insertionSequences,
+                SharedMissingGenes = await ListGenesByLocus(result.SharedMissingGenes.ToList()),
+                SharedSnpExclusivity = result.SharedSnp.Select(v => (v, SnpStrainCount.Value[v] - totalSelected))
+                    .ToDictionary(),
+                SharedInsertionSequencesExclusivity = result.SharedIS.Select(v =>
+                    ($"{v.Item1}:{v.Item2}", InsertionSequenceStrainCount.Value[v] - totalSelected)).ToDictionary(),
+                SharedMissingGenesExclusivity = result.SharedMissingGenes
+                    .Select(v => (v, MissingGeneStrainCount.Value[v] - totalSelected)).ToDictionary(),
+                TotalSelected = totalSelected,
+                Total = TotalStrain.Value,
             };
         }
     }

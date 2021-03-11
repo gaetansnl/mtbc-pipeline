@@ -941,6 +941,102 @@ export namespace api {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a MapFieldEntry. */
+    interface IMapFieldEntry {
+
+        /** MapFieldEntry key */
+        key?: (string|null);
+
+        /** MapFieldEntry value */
+        value?: (number|null);
+    }
+
+    /** Represents a MapFieldEntry. */
+    class MapFieldEntry implements IMapFieldEntry {
+
+        /**
+         * Constructs a new MapFieldEntry.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: api.IMapFieldEntry);
+
+        /** MapFieldEntry key. */
+        public key: string;
+
+        /** MapFieldEntry value. */
+        public value: number;
+
+        /**
+         * Creates a new MapFieldEntry instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns MapFieldEntry instance
+         */
+        public static create(properties?: api.IMapFieldEntry): api.MapFieldEntry;
+
+        /**
+         * Encodes the specified MapFieldEntry message. Does not implicitly {@link api.MapFieldEntry.verify|verify} messages.
+         * @param message MapFieldEntry message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: api.IMapFieldEntry, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified MapFieldEntry message, length delimited. Does not implicitly {@link api.MapFieldEntry.verify|verify} messages.
+         * @param message MapFieldEntry message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: api.IMapFieldEntry, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a MapFieldEntry message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns MapFieldEntry
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): api.MapFieldEntry;
+
+        /**
+         * Decodes a MapFieldEntry message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns MapFieldEntry
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): api.MapFieldEntry;
+
+        /**
+         * Verifies a MapFieldEntry message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a MapFieldEntry message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns MapFieldEntry
+         */
+        public static fromObject(object: { [k: string]: any }): api.MapFieldEntry;
+
+        /**
+         * Creates a plain object from a MapFieldEntry message. Also converts values to other types if specified.
+         * @param message MapFieldEntry
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: api.MapFieldEntry, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this MapFieldEntry to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a CompareStrainReply. */
     interface ICompareStrainReply {
 
@@ -952,6 +1048,21 @@ export namespace api {
 
         /** CompareStrainReply sharedInsertionSequences */
         sharedInsertionSequences?: (api.IInsertionSequence[]|null);
+
+        /** CompareStrainReply sharedMissingGenesExclusivity */
+        sharedMissingGenesExclusivity?: (api.IMapFieldEntry[]|null);
+
+        /** CompareStrainReply sharedSnpExclusivity */
+        sharedSnpExclusivity?: (api.IMapFieldEntry[]|null);
+
+        /** CompareStrainReply sharedInsertionSequencesExclusivity */
+        sharedInsertionSequencesExclusivity?: (api.IMapFieldEntry[]|null);
+
+        /** CompareStrainReply TotalSelected */
+        TotalSelected?: (number|null);
+
+        /** CompareStrainReply Total */
+        Total?: (number|null);
     }
 
     /** Represents a CompareStrainReply. */
@@ -971,6 +1082,21 @@ export namespace api {
 
         /** CompareStrainReply sharedInsertionSequences. */
         public sharedInsertionSequences: api.IInsertionSequence[];
+
+        /** CompareStrainReply sharedMissingGenesExclusivity. */
+        public sharedMissingGenesExclusivity: api.IMapFieldEntry[];
+
+        /** CompareStrainReply sharedSnpExclusivity. */
+        public sharedSnpExclusivity: api.IMapFieldEntry[];
+
+        /** CompareStrainReply sharedInsertionSequencesExclusivity. */
+        public sharedInsertionSequencesExclusivity: api.IMapFieldEntry[];
+
+        /** CompareStrainReply TotalSelected. */
+        public TotalSelected: number;
+
+        /** CompareStrainReply Total. */
+        public Total: number;
 
         /**
          * Creates a new CompareStrainReply instance using the specified properties.

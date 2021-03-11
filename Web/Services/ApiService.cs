@@ -16,6 +16,7 @@ namespace Web.Services
         private readonly IMapper _mapper;
         private readonly LiteDbDriver _driver;
         private readonly NexusGraph _graph;
+        private HashSet<int>? DisplayedNodes = null;
 
         public ApiService(ILogger<ApiService> logger, IMapper mapper, LiteDbDriver driver, NexusGraph graph)
         {
@@ -27,8 +28,13 @@ namespace Web.Services
 
         public override async Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
         {
+            if (DisplayedNodes == null)
+            {
+                var allAccession = new HashSet<string>(await _driver.ListResultAccession());
+                DisplayedNodes = _graph.Reader.Vertices.Where(v => allAccession.Contains(v.Value)).Select(v => v.Key).ToHashSet();
+            }
             var response = new HelloReply();
-            response.Graph = _graph.GetSimplifiedGraph(request.ClusteringLevel, v => v < 1600);
+            response.Graph = _graph.GetSimplifiedGraph(request.ClusteringLevel, v => DisplayedNodes.Contains(v));
 
             return response;
         }

@@ -26,10 +26,6 @@ namespace Indexer
 
         public async Task IndexSnp(SnpSource source, Snp snp)
         {
-            if (snp.Spdi == "NC_000962.3:5074:C:T")
-            {
-                Console.WriteLine("gg");
-            }
             var doi = source.Study?.Doi;
             SnpData snpData = SnpData.FromSnp(snp);
             if (doi != null)
@@ -54,11 +50,8 @@ namespace Indexer
                 if (snpSource?.TsvFile == null) continue;
                 foreach (var file in snpSource.TsvFile)
                 {
-                    if (file == "./snp/Coll_l1.tsv")
-                    {
-                        Console.WriteLine(file);
-                    }
                     if (file == null) continue;
+                    Console.WriteLine(file);
                     var path = Config.ResolvePath(file);
                     var snps = await SnpFileReader.FromCsv(path);
                     foreach (var snp in snps)

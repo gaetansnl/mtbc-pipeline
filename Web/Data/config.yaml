@@ -38,6 +38,15 @@ snp:
       doi: doi.org/10.1101/2020.09.29.293274
     tsv_file:
       - ./snp/Freschi.tsv
+  - tsv_file:
+      - ./snp/GuyeuxL3_ERR2245388_h37Rv.tsv
+      - ./snp/GuyeuxL47_ERR2706954_mt18b.tsv
+      - ./snp/GuyeuxL6_SRR998631_mt18b.tsv
+      - ./snp/GuyeuxL7_ERR2704710_mt18b.tsv
+      - ./snp/GuyeuxL8_SRR1173284_h37Rv.tsv
+      - ./snp/GuyeuxLBCG_3BCG_S31_h37Rv.tsv
+      - ./snp/GuyeuxLBCG_4BCG_S43_h37Rv.tsv
+      - ./snp/GuyeuxLBCG_6BCG_S67_mt18b.tsv
   - study:
       doi: doi.org/10.1371/journal.pone.0039855
     tsv_file:
